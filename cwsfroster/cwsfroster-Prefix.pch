@@ -12,3 +12,11 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#import "AppDelegate.h"
+#import "NSManagedObject+Entity.h"
+#import "NSManagedObject+Query.h"
+//#import "Constants.h"
+//#import "ConstantsLocal.h"
+
+#define _appDelegate ((AppDelegate*)[UIApplication sharedApplication].delegate)

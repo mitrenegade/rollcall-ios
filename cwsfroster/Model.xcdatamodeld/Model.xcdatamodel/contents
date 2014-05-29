@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="12F45" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseBase" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="attendances" inverseEntity="Member" syncable="YES"/>
+    </entity>
+    <entity name="Member" representedClassName="Member" parentEntity="ParseBase" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="monthPaid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="member" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="payments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Payment" inverseName="member" inverseEntity="Payment" syncable="YES"/>
+    </entity>
+    <entity name="ParseBase" representedClassName="ParseBase" isAbstract="YES" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="parseID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pfUserID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+    </entity>
+    <entity name="Payment" representedClassName="Payment" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="payments" inverseEntity="Member" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Member" positionX="-54" positionY="18" width="128" height="133"/>
+        <element name="Attendance" positionX="-36" positionY="45" width="128" height="73"/>
+        <element name="Payment" positionX="-18" positionY="72" width="128" height="88"/>
+    </elements>
+</model>
