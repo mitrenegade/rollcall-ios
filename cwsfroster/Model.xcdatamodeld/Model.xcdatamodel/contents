@@ -3,6 +3,7 @@
     <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseBase" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="attendances" inverseEntity="Member" syncable="YES"/>
+        <relationship name="practice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="attendences" inverseEntity="Practice" syncable="YES"/>
     </entity>
     <entity name="Member" representedClassName="Member" parentEntity="ParseBase" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -23,10 +24,16 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="payments" inverseEntity="Member" syncable="YES"/>
     </entity>
+    <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendences" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="Attendance" positionX="-36" positionY="45" width="128" height="88"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="133"/>
-        <element name="Attendance" positionX="-36" positionY="45" width="128" height="73"/>
+        <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="88"/>
+        <element name="Practice" positionX="-36" positionY="54" width="128" height="88"/>
     </elements>
 </model>

@@ -7,12 +7,9 @@
 //
 
 #import "Member+Parse.h"
+#import "ParseBase+Parse.h"
 
 @implementation Member (Parse)
-
--(NSString *)className {
-    return @"Member";
-}
 
 +(Member *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;

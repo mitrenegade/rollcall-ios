@@ -1,5 +1,5 @@
 //
-//  Attendance.m
+//  Attendance+Parse.h
 //  cwsfroster
 //
 //  Created by Bobby Ren on 6/2/14.
@@ -7,14 +7,7 @@
 //
 
 #import "Attendance.h"
-#import "Member.h"
-#import "Practice.h"
 
-
-@implementation Attendance
-
-@dynamic date;
-@dynamic member;
-@dynamic practice;
+@interface Attendance (Parse)
 
 @end
