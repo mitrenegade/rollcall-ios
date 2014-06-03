@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "DashboardViewController.h"
 #import <Parse/Parse.h>
 
 @implementation AppDelegate
@@ -18,18 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    
     [Parse setApplicationId:@"1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
                   clientKey:@"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"];
-    
-    DashboardViewController * dashboard = [[DashboardViewController alloc] init];
-    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:dashboard];
-    
-    [self.window setRootViewController:nav];
     
     return YES;
 }
