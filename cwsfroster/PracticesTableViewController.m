@@ -132,9 +132,14 @@
 }
 
 -(void)didClickNew:(id)sender {
-    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
     NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:YES];
+    if ([[[Practice where:@{@"date":practiceDate}] all] count]) {
+        NSLog(@"Could not create practice, date already exists!");
+        return;
+    }
+    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
     practice.title = [Util simpleDateFormat:practiceDate];
+    practice.date = practiceDate;
 
     NSError *error;
     if ([_appDelegate.managedObjectContext save:&error]) {
