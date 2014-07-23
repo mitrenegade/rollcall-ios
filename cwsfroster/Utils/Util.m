@@ -66,5 +66,52 @@
     return [self timeAgo:date];
 }
 
++(NSDate *)beginningOfDate:(NSDate *)date localTimeZone:(BOOL)local {
+    // warning: DST
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components =
+    [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit |
+                           NSDayCalendarUnit) fromDate:date];
+    // if we want local time, offsets should be 0 from GMT
+    if (local)
+        [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [components setHour:0];
+    [components setMinute:0];
+    [components setSecond:0];
+    return [gregorian dateFromComponents:components];
+}
+
++(BOOL)date:(NSDate *)date containedInWeekOfDate:(NSDate *)targetDate {
+    // accounts for DST
+    // takes week span for targetDate, and determines if date is contained inside it
+
+    NSDate *start;
+    NSTimeInterval extends;
+    NSCalendar *cal=[NSCalendar autoupdatingCurrentCalendar];
+    [cal setFirstWeekday:2]; // forces monday to be the beginning of the week
+    [cal setTimeZone:[NSTimeZone localTimeZone]];
+    BOOL success= [cal rangeOfUnit:NSWeekCalendarUnit startDate:&start
+                          interval: &extends forDate:targetDate];
+    NSTimeInterval dateInSecs = [date timeIntervalSinceReferenceDate];
+    NSTimeInterval dayStartInSecs= [start timeIntervalSinceReferenceDate];
+    if(dateInSecs >= dayStartInSecs && dateInSecs <= (dayStartInSecs+extends)){
+        return YES;
+    }
+    else {
+        return NO;
+    }
+}
+
++(NSString*)weekdayStringFromDate:(NSDate*)date localTimeZone:(BOOL)local {
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    if (!local)
+        [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    NSDateComponents *comps = [gregorian components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekdayCalendarUnit) fromDate:date];
+    NSLog(@"Date: %@ weekday: %ld", date, (long)comps.weekday);
+    int weekday = [comps weekday];
+    // for some reason, weekday: 1 = sunday, 2 = mon, etc
+    return [@[@"Sat", @"Sun", @"Mon", @"Tues", @"Wed", @"Thurs", @"Fri", @"Sat", @"Sun"] objectAtIndex:weekday]; // weekday ranges from 1 to 7
+}
 
 @end

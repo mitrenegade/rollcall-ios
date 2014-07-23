@@ -7,4 +7,7 @@
 + (NSString *)timeAgo:(NSDate *)date;
 + (NSString *)simpleTimeAgo:(NSDate *)date;
 
++(NSDate *)beginningOfDate:(NSDate *)date localTimeZone:(BOOL)local;
++(BOOL)date:(NSDate *)date containedInWeekOfDate:(NSDate *)targetDate;
++(NSString*)weekdayStringFromDate:(NSDate*)date localTimeZone:(BOOL)local;
 @end

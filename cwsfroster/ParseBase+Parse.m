@@ -11,7 +11,7 @@
 @implementation ParseBase (Parse)
 
 -(NSString *)className {
-    return @"ParseBase";
+    return NSStringFromClass(self.class);
 }
 
 -(void)updateFromParse {

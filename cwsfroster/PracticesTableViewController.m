@@ -1,20 +1,21 @@
 //
-//  MembersTableViewController.m
+//  PracticesTableViewController.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 5/28/14.
+//  Created by Bobby Ren on 6/2/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
-#import "MembersTableViewController.h"
-#import "AddMemberViewController.h"
-#import "Member+Parse.h"
+#import "PracticesTableViewController.h"
+#import "Practice+Parse.h"
+#import "Attendance+Parse.h"
+#import "Util.h"
 
-@interface MembersTableViewController ()
+@interface PracticesTableViewController ()
 
 @end
 
-@implementation MembersTableViewController
+@implementation PracticesTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -34,9 +35,10 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
-    [self reloadMembers];
+    [self reloadPractices];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,44 +47,42 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)reloadMembers {
-    members = [[Member where:@{}] all];
+-(void)reloadPractices {
+    practices = [[Practice where:@{}] all];
 }
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return members.count + 1;
+    return [practices count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
-
+    
     // Configure the cell...
-
-    if (indexPath.row < [members count]) {
-        Member *member = members[indexPath.row];
-        cell.textLabel.text = member.name;
-    }
-    else {
-        cell.textLabel.text = @"Add new member";
-    }
-
-    return cell;}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == members.count) {
-        [self performSegueWithIdentifier:@"addNewMemberSegue" sender:self];
-    }
+    Practice *practice = practices[indexPath.row];
+    cell.textLabel.text = practice.title;
+    
+    return cell;
 }
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
 
 /*
 // Override to support editing the table view.
@@ -113,36 +113,26 @@
 }
 */
 
-
+/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"addNewMemberSegue"]) {
-        AddMemberViewController *controller = (AddMemberViewController *)segue.destinationViewController;
-        [controller setDelegate:self];
-    }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
+*/
 
-#pragma mark Delegate
--(void)saveNewMember:(NSString *)name {
-    Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    [member updateEntityWithParams:@{@"name":name}];
+-(void)didClickNew:(id)sender {
+    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+    NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:NO];
+    practice.title = [Util timeStringForDate:practiceDate];
 
     NSError *error;
     if ([_appDelegate.managedObjectContext save:&error]) {
-        [self reloadMembers];
+        [self reloadPractices];
         [self.tableView reloadData];
     }
-
-    [self.navigationController popViewControllerAnimated:YES];
 }
-
--(void)cancel {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 @end

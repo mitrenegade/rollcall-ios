@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="12F45" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AnU-gv-j61">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AnU-gv-j61">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
@@ -97,10 +97,10 @@
             </objects>
             <point key="canvasLocation" x="1007" y="-85"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Practices Table View Controller-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
-                <tableViewController id="qXS-mn-38d" sceneMemberID="viewController">
+                <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DdM-aG-yjc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -120,7 +120,13 @@
                             <outlet property="delegate" destination="qXS-mn-38d" id="fCG-zS-41o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="i0f-Z7-11a"/>
+                    <navigationItem key="navigationItem" id="i0f-Z7-11a">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="15r-SD-na8">
+                            <connections>
+                                <action selector="didClickNew:" destination="qXS-mn-38d" id="fYA-bO-hXe"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFN-h8-IyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
