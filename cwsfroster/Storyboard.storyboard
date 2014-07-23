@@ -127,10 +127,32 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="LA1-Ig-AeZ" kind="push" identifier="PracticesTableToAttendances" id="KbL-kg-klt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFN-h8-IyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="643"/>
+        </scene>
+        <!--Attendances View Controller-->
+        <scene sceneID="d8v-12-bDI">
+            <objects>
+                <viewController id="LA1-Ig-AeZ" customClass="AttendancesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hgj-gK-oYm"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Md-l6-K9q"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UMi-pn-bca">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="VEy-3i-Pwq"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hIQ-2y-RiI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1007" y="643"/>
         </scene>
         <!--Navigation Controller - Practices-->
         <scene sceneID="2yw-ik-mgm">

@@ -2,6 +2,27 @@
 
 @implementation Util
 
++(NSString *)simpleDateFormat:(NSDate *)date {
+    return [self simpleDateFormat:date local:YES];
+}
+
++(NSString *)simpleDateFormat:(NSDate *)date local:(BOOL)local{
+    // only check and generate once
+    static NSDateFormatter *simpleDateFormatter;
+    static dispatch_once_t a; dispatch_once(&a, ^{
+        if (!simpleDateFormatter) {
+            simpleDateFormatter = [[NSDateFormatter alloc] init];
+            [simpleDateFormatter setDateFormat:@"MM/dd"];
+        }
+    });
+    // update timezone if needed
+    if (local)
+        [simpleDateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    else
+        [simpleDateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [simpleDateFormatter stringFromDate:date];
+}
+
 +(NSString *)timeStringForDate:(NSDate *)date {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd/yy HH:mm"];
@@ -73,8 +94,9 @@
     NSDateComponents *components =
     [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit |
                            NSDayCalendarUnit) fromDate:date];
-    // if we want local time, offsets should be 0 from GMT
-    if (local)
+    if (local) // local timezone...may display with time offsets
+        [gregorian setTimeZone:[NSTimeZone localTimeZone]];
+    else
         [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
     [components setHour:0];
     [components setMinute:0];
