@@ -71,9 +71,13 @@
 
     if (indexPath.row < [members count]) {
         Member *member = members[indexPath.row];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+        cell.textLabel.textColor = [UIColor blackColor];
         cell.textLabel.text = member.name;
     }
     else {
+        cell.textLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.textColor = [UIColor grayColor];
         cell.textLabel.text = @"Add new member";
     }
 

@@ -93,16 +93,6 @@
 
 #pragma mark - Table view data source
 -(void)reloadMembers {
-#if 0
-    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    attendees = [self.practice.attendances sortedArrayUsingDescriptors:@[descriptor]];
-    members = [[[Member where:@{}] all] mutableCopy];
-    for (Attendance *a in attendees) {
-        Member *m = a.member;
-        if ([members containsObject:m])
-            [members removeObject:m];
-    }
-#else
     NSError *error;
     [self.memberFetcher performFetch:&error];
     [self.attendanceFetcher performFetch:&error];
@@ -135,7 +125,6 @@
     else {
         [self.tableView reloadData];
     }
-#endif
 }
 
 -(void)saveNewAttendanceForMember:(Member *)member {
@@ -172,13 +161,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    if (section == 0) {
-        // all members not in this practice
-//        return [members count];
-    }
-    else if (section == 1) {
-//        return [attendees count];
-    }
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.attendanceFetcher.sections objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
@@ -188,18 +170,10 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
 
     // Configure the cell...
-    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[indexPath.section];
-
-    Member *member;
-    if ([sectionTitle intValue] == DidNotAttend) { // not at practice
-//        member = members[row];
-    }
-    else if ([sectionTitle intValue] == DidAttend) { // current at practice
-//        Attendance *attendance = attendees[row];
-//        member = attendance.member;
-    }
-    member = ((Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath]).member;
+    Member *member = ((Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath]).member;
     cell.textLabel.text = member.name;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor blackColor];
 
     return cell;
 }
