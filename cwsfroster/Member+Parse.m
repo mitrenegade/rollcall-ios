@@ -13,7 +13,7 @@
 
 +(Member *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Member where:@{@"id":parseID}] all];
+    NSArray *objectArray = [[Member where:@{@"parseID":parseID}] all];
     Member *member;
     if ([objectArray count]) {
         member = [objectArray firstObject];

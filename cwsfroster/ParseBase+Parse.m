@@ -10,6 +10,11 @@
 
 @implementation ParseBase (Parse)
 
++(id)fromPFObject:(PFObject *)object {
+    NSLog(@"%s must be implemented by child class", __func__);
+    return nil;
+}
+
 -(NSString *)className {
     return NSStringFromClass(self.class);
 }
@@ -22,16 +27,19 @@
             [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if ([objects count]) {
                     self.pfObject = objects[0];
-                    completion(YES);
+                    if (completion)
+                        completion(YES);
                 }
                 else {
-                    completion(NO);
+                    if (completion)
+                        completion(NO);
                 }
             }];
         }
     }
     else {
-        completion(YES);
+        if (completion)
+            completion(YES);
     }
 }
 

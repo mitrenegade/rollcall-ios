@@ -13,7 +13,7 @@
 
 +(Practice *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Practice where:@{@"id":parseID}] all];
+    NSArray *objectArray = [[Practice where:@{@"parseID":parseID}] all];
     Practice *obj;
     if ([objectArray count]) {
         obj = [objectArray firstObject];
@@ -26,7 +26,7 @@
     return obj;
 }
 
--(void)updateFromParse {
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         self.date = [self.pfObject objectForKey:@"date"];
         self.title = [self.pfObject objectForKey:@"title"];

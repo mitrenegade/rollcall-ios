@@ -15,7 +15,7 @@
 
 +(Attendance *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Attendance where:@{@"id":parseID}] all];
+    NSArray *objectArray = [[Attendance where:@{@"parseID":parseID}] all];
     Attendance *obj;
     if ([objectArray count]) {
         obj = [objectArray firstObject];
@@ -28,7 +28,7 @@
     return obj;
 }
 
--(void)updateFromParse {
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         self.date = [self.pfObject objectForKey:@"date"];
         self.member = [self.pfObject objectForKey:@"member"];

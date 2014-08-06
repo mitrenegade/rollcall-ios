@@ -15,4 +15,6 @@
 
 @interface ParseBase (Parse) <PFObjectFactory>
 
++(id)fromPFObject:(PFObject *)object;
+
 @end
