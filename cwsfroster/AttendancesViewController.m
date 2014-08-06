@@ -80,8 +80,9 @@
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Attendance"];
     [request setPredicate:[NSPredicate predicateWithFormat:@"practice.parseID = %@", self.practice.parseID]];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"attended" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
     attendanceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"attended" cacheName:nil];
     NSError *error;
     [attendanceFetcher performFetch:&error];
@@ -159,10 +160,12 @@
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
+    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[section];
+    if ([sectionTitle intValue] == 0)
         return @"All members";
-    }
-    return @"Attendees";
+    else if ([sectionTitle intValue] == 1)
+        return @"Attendees";
+    return @"";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -205,10 +208,22 @@
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 
+    Attendance *attendance = [self.attendanceFetcher objectAtIndexPath:indexPath];
     if (section == 0) {
         // selecting a member
-        
+        attendance.attended = @YES;
     }
+    else if (section == 1) {
+        attendance.attended = @NO;
+    }
+    [attendance saveOrUpdateToParseWithCompletion:nil];
+    [self refresh];
+}
+
+-(void)refresh {
+    NSError *error;
+    [self.attendanceFetcher performFetch:&error];
+    [self.tableView reloadData];
 }
 
 @end
