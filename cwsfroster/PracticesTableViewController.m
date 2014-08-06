@@ -72,7 +72,9 @@
     // Configure the cell...
     Practice *practice = practices[indexPath.row];
     cell.textLabel.text = practice.title;
-    
+    cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
+    cell.textLabel.textColor = [UIColor blackColor];
+
     return cell;
 }
 

@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="AnU-gv-j61">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="htV-wN-I0X">
     <dependencies>
         <deployment defaultVersion="1536" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
+        <!--Intro View Controller-->
+        <scene sceneID="c5R-9v-aF3">
+            <objects>
+                <viewController id="htV-wN-I0X" customClass="IntroViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0h3-VO-4l7"/>
+                        <viewControllerLayoutGuide type="bottom" id="5Br-CB-dMG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ixt-aI-UVL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="cDT-O6-aKk">
+                                <rect key="frame" x="35" y="151" width="250" height="265"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="logo" destination="cDT-O6-aKk" id="lIm-mC-CFG"/>
+                        <segue destination="AnU-gv-j61" kind="modal" identifier="IntroToPractices" id="Y4W-XE-N8B"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HGz-Ma-9FA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-852" y="288"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="re5-gU-HVk">
             <objects>
@@ -24,7 +52,7 @@
             </objects>
             <point key="canvasLocation" x="-432" y="288"/>
         </scene>
-        <!--Members Table View Controller-->
+        <!--Members Table View Controller - Members-->
         <scene sceneID="ima-lD-0RY">
             <objects>
                 <tableViewController id="nKy-LQ-H91" customClass="MembersTableViewController" sceneMemberID="viewController">
@@ -50,7 +78,7 @@
                             <outlet property="delegate" destination="nKy-LQ-H91" id="u2p-Hn-zVc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="edp-kL-GlG"/>
+                    <navigationItem key="navigationItem" title="Members" id="edp-kL-GlG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6e-eE-kNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -97,7 +125,7 @@
             </objects>
             <point key="canvasLocation" x="1007" y="-85"/>
         </scene>
-        <!--Practices Table View Controller-->
+        <!--Practices Table View Controller - Practices-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -120,7 +148,7 @@
                             <outlet property="delegate" destination="qXS-mn-38d" id="fCG-zS-41o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="i0f-Z7-11a">
+                    <navigationItem key="navigationItem" title="Practices" id="i0f-Z7-11a">
                         <barButtonItem key="rightBarButtonItem" title="New" id="15r-SD-na8">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="fYA-bO-hXe"/>
@@ -176,7 +204,7 @@
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practices" id="HEm-wM-E2I"/>
+                    <tabBarItem key="tabBarItem" title="Practices" image="icon1.png" id="HEm-wM-E2I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyz-ks-QZt">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -192,7 +220,7 @@
         <scene sceneID="B2w-ju-klW">
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Members" id="7Lb-EF-RQd"/>
+                    <tabBarItem key="tabBarItem" title="Members" image="icon2.png" id="7Lb-EF-RQd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PVL-Bl-XK0">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -205,6 +233,11 @@
             <point key="canvasLocation" x="63" y="-85"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon1.png" width="35" height="38"/>
+        <image name="icon2.png" width="35" height="40"/>
+        <image name="logo.png" width="500" height="265"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -11,9 +11,6 @@
 @class Practice;
 @interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray *members;
-    NSArray *attendees;
-
     NSFetchedResultsController *memberFetcher;
     NSFetchedResultsController *attendanceFetcher;
 }
