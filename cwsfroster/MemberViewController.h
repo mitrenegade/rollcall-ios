@@ -1,5 +1,5 @@
 //
-//  AddMemberViewController.h
+//  MemberViewController.h
 //  cwsfroster
 //
 //  Created by Bobby Ren on 5/28/14.
@@ -9,23 +9,29 @@
 #import <UIKit/UIKit.h>
 #import "Member+Info.h"
 
-@protocol AddMemberDelegate <NSObject>
+@protocol MemberDelegate <NSObject>
 
 -(void)cancel;
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status;
+-(void)updateMember:(Member *)member;
 
 @end
-@interface AddMemberViewController : UIViewController
+@interface MemberViewController : UIViewController
 {
+    IBOutlet UITextField *inputName;
+
     IBOutlet UILabel *labelBeginner;
     IBOutlet UILabel *labelPaid;
     IBOutlet UILabel *labelPass;
+    IBOutlet UILabel *labelInactive;
 
     IBOutlet UISwitch *switchBeginner;
     IBOutlet UISwitch *switchPaid;
     IBOutlet UISwitch *switchPass;
+    IBOutlet UISwitch *switchInactive;
 }
-@property (weak, nonatomic) IBOutlet UITextField *inputName;
+
+@property (nonatomic, assign) Member *member;
 @property (nonatomic, weak) id delegate;
 
 - (IBAction)didClickBack:(id)sender;

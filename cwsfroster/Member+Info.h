@@ -11,9 +11,9 @@
 typedef  enum MemberStatus {
     MemberStatusUnpaid,
     MemberStatusPaid,
-    MemberStatusInactive,
+    MemberStatusDaily,
     MemberStatusBeginner,
-    MemberStatusDaily
+    MemberStatusInactive,
 } MemberStatus;
 
 @interface Member (Info)

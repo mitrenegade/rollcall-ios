@@ -7,7 +7,6 @@
 //
 
 #import "MembersTableViewController.h"
-#import "AddMemberViewController.h"
 #import "Member+Parse.h"
 #import "Member+Info.h"
 
@@ -61,9 +60,10 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
-    [request setPredicate:predicate];
+
+    //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
+    //    [request setPredicate:predicate];
 
     memberFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"status" cacheName:nil];
     NSError *error;
@@ -128,6 +128,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
+    [self performSegueWithIdentifier:@"MembersToAddMember" sender:member];
 }
 
 /*
@@ -162,15 +164,19 @@
 
 #pragma mark - Navigation
 -(IBAction)didClickNew:(id)sender {
-    [self performSegueWithIdentifier:@"addNewMemberSegue" sender:self];
+    [self performSegueWithIdentifier:@"MembersToAddMember" sender:self.navigationItem.rightBarButtonItem];
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"addNewMemberSegue"]) {
-        AddMemberViewController *controller = (AddMemberViewController *)segue.destinationViewController;
+    if ([segue.identifier isEqualToString:@"MembersToAddMember"]) {
+        MemberViewController *controller = (MemberViewController *)segue.destinationViewController;
         [controller setDelegate:self];
+
+        if ([sender isKindOfClass:[Member class]]) {
+            [controller setMember:sender];
+        }
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -192,6 +198,23 @@
         }
         else {
             NSLog(@"Could not save member!");
+        }
+    }];
+}
+
+-(void)updateMember:(Member *)member {
+    [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [self reloadMembers];
+                [self.tableView reloadData];
+            }
+        }
+        else {
+            NSLog(@"Could not update member!");
         }
     }];
 }
