@@ -14,7 +14,7 @@ static char const * const PFObjectTagKey = "PFObjectTagKey";
 @protocol PFObjectFactory
 
 +(id)fromPFObject:(PFObject *)object;
--(void)updateFromParse;
+-(void)updateFromParseWithCompletion:(void(^)(BOOL success))completion;
 -(void)saveOrUpdateToParseWithCompletion:(void(^)(BOOL success))completion;
 
 @property (nonatomic, retain) NSString * className;

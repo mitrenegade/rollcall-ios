@@ -22,18 +22,18 @@
         obj = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
     }
     obj.pfObject = object;
-    [obj updateFromParse];
+    [obj updateFromParseWithCompletion:nil];
     return obj;
 }
 
 -(void)updateFromParse {
-    [super updateFromParse];
+    [super updateFromParseWithCompletion:^(BOOL success) {
+        self.date = [self.pfObject objectForKey:@"date"];
+        self.title = [self.pfObject objectForKey:@"title"];
+//        self.attendances = [self.pfObject objectForKey:@"attendances"];
 
-    self.date = [self.pfObject objectForKey:@"date"];
-    self.title = [self.pfObject objectForKey:@"title"];
-    self.attendances = [self.pfObject objectForKey:@"attendances"];
-
-    self.parseID = self.pfObject.objectId;
+        self.parseID = self.pfObject.objectId;
+    }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
@@ -44,8 +44,8 @@
         self.pfObject[@"date"] = self.date;
     if (self.title)
         self.pfObject[@"title"] = self.title;
-    if (self.attendances)
-        self.pfObject[@"attendances"] = self.attendances;
+//    if (self.attendances)
+//        self.pfObject[@"attendances"] = self.attendances;
 
     [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)

@@ -8,6 +8,8 @@
 
 #import "Attendance+Parse.h"
 #import "ParseBase+Parse.h"
+#import "Member+Parse.h"
+#import "Practice+Parse.h"
 
 @implementation Attendance (Parse)
 
@@ -22,18 +24,19 @@
         obj = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     }
     obj.pfObject = object;
-    [obj updateFromParse];
+    [obj updateFromParseWithCompletion:nil];
     return obj;
 }
 
 -(void)updateFromParse {
-    [super updateFromParse];
+    [super updateFromParseWithCompletion:^(BOOL success) {
+        self.date = [self.pfObject objectForKey:@"date"];
+        self.member = [self.pfObject objectForKey:@"member"];
+        self.practice = [self.pfObject objectForKey:@"practice"];
+        self.attended = [self.pfObject objectForKey:@"attended"];
 
-    self.date = [self.pfObject objectForKey:@"date"];
-    self.member = [self.pfObject objectForKey:@"member"];
-    self.practice = [self.pfObject objectForKey:@"practice"];
-
-    self.parseID = self.pfObject.objectId;
+        self.parseID = self.pfObject.objectId;
+    }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
@@ -43,9 +46,11 @@
     if (self.date)
         self.pfObject[@"date"] = self.date;
     if (self.member)
-        self.pfObject[@"member"] = self.member;
+        self.pfObject[@"member"] = self.member.pfObject;
     if (self.practice)
-        self.pfObject[@"practice"] = self.practice;
+        self.pfObject[@"practice"] = self.practice.pfObject;
+    if (self.attended)
+        self.pfObject[@"attended"] = self.attended;
 
     [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)

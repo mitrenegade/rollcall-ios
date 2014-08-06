@@ -14,6 +14,27 @@
     return NSStringFromClass(self.class);
 }
 
+-(void)updateFromParseWithCompletion:(void(^)(BOOL success))completion {
+    if (!self.pfObject) {
+        if (self.parseID) {
+            PFQuery *query = [PFQuery queryWithClassName:self.className];
+            [query whereKey:@"objectId" equalTo:self.parseID];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if ([objects count]) {
+                    self.pfObject = objects[0];
+                    completion(YES);
+                }
+                else {
+                    completion(NO);
+                }
+            }];
+        }
+    }
+    else {
+        completion(YES);
+    }
+}
+
 -(void)updateFromParse {
     self.createdAt = self.pfObject[@"createdAt"];
     self.updatedAt = self.pfObject[@"updatedAt"];

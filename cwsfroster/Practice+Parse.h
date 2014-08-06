@@ -7,7 +7,8 @@
 //
 
 #import "Practice.h"
+#import "ParseBase+Parse.h"
 
-@interface Practice (Parse)
+@interface Practice (Parse) <PFObjectFactory>
 
 @end

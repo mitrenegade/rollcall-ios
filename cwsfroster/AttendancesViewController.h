@@ -13,6 +13,9 @@
 {
     NSMutableArray *members;
     NSArray *attendees;
+
+    NSFetchedResultsController *memberFetcher;
+    NSFetchedResultsController *attendanceFetcher;
 }
 @property (nonatomic, weak) Practice *practice;
 @end

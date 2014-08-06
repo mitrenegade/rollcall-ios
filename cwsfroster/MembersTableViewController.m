@@ -9,6 +9,7 @@
 #import "MembersTableViewController.h"
 #import "AddMemberViewController.h"
 #import "Member+Parse.h"
+#import "Member+Info.h"
 
 @interface MembersTableViewController ()
 
@@ -130,15 +131,21 @@
 #pragma mark Delegate
 -(void)saveNewMember:(NSString *)name {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    [member updateEntityWithParams:@{@"name":name}];
+    [member updateEntityWithParams:@{@"name":name, @"status":@(MemberStatusUnpaid)}];
+    [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
 
-    NSError *error;
-    if ([_appDelegate.managedObjectContext save:&error]) {
-        [self reloadMembers];
-        [self.tableView reloadData];
-    }
-
-    [self.navigationController popViewControllerAnimated:YES];
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [self reloadMembers];
+                [self.tableView reloadData];
+            }
+        }
+        else {
+            NSLog(@"Could not save member!");
+        }
+    }];
 }
 
 -(void)cancel {

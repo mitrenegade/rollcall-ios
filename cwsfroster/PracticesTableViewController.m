@@ -141,10 +141,19 @@
     practice.title = [Util simpleDateFormat:practiceDate];
     practice.date = practiceDate;
 
-    NSError *error;
-    if ([_appDelegate.managedObjectContext save:&error]) {
-        [self reloadPractices];
-        [self.tableView reloadData];
-    }
+    [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [self reloadPractices];
+                [self.tableView reloadData];
+            }
+        }
+        else {
+            NSLog(@"Could not save member!");
+        }
+    }];
 }
 @end

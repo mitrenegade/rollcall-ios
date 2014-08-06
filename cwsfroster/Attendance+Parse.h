@@ -7,7 +7,8 @@
 //
 
 #import "Attendance.h"
+#import "ParseBase+Parse.h"
 
-@interface Attendance (Parse)
+@interface Attendance (Parse) <PFObjectFactory>
 
 @end

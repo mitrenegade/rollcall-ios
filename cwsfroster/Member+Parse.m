@@ -22,18 +22,18 @@
         member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     }
     member.pfObject = object;
-    [member updateFromParse];
+    [member updateFromParseWithCompletion:nil];
     return member;
 }
 
--(void)updateFromParse {
-    [super updateFromParse];
-
-    self.name= [self.pfObject objectForKey:@"name"];
-    self.email = [self.pfObject objectForKey:@"email"];
-    self.status = [self.pfObject objectForKey:@"status"];
-    self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
-    self.parseID = self.pfObject.objectId;
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
+    [super updateFromParseWithCompletion:^(BOOL success) {
+        self.name= [self.pfObject objectForKey:@"name"];
+        self.email = [self.pfObject objectForKey:@"email"];
+        self.status = [self.pfObject objectForKey:@"status"];
+        self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
+        self.parseID = self.pfObject.objectId;
+    }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
