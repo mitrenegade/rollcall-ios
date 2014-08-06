@@ -7,6 +7,7 @@
 //
 
 #import "AddMemberViewController.h"
+#import "Member+Info.h"
 
 @interface AddMemberViewController ()
 
@@ -51,7 +52,28 @@
 }
 
 - (IBAction)didClickSave:(id)sender {
+    // calculate status
+    MemberStatus status = MemberStatusUnpaid;
+
+    if ([switchBeginner isOn])
+        status = MemberStatusBeginner;
+    else if ([switchPass isOn])
+        status = MemberStatusDaily;
+    else if ([switchPaid isOn])
+        status = MemberStatusPaid;
+
     if ([self.inputName.text length] > 0)
-        [self.delegate saveNewMember:self.inputName.text];
+        [self.delegate saveNewMember:self.inputName.text status:status];
+}
+
+-(IBAction)didClickSwitch:(id)sender {
+    BOOL selected = [(UISwitch *)sender isOn];
+    if (selected) {
+        [switchBeginner setOn:!selected];
+        [switchPaid setOn:!selected];
+        [switchPass setOn:!selected];
+
+        [(UISwitch *)sender setOn:selected];
+    }
 }
 @end

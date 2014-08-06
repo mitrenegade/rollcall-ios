@@ -81,7 +81,7 @@
                     <navigationItem key="navigationItem" title="Members" id="edp-kL-GlG">
                         <barButtonItem key="rightBarButtonItem" title="New" id="R4m-Fb-ejx">
                             <connections>
-                                <action selector="didClickNew:" destination="qXS-mn-38d" id="MQY-M0-mLH"/>
+                                <action selector="didClickNew:" destination="nKy-LQ-H91" id="qke-ha-1iT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -108,6 +108,48 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="p95-7o-uOV">
+                                <rect key="frame" x="257" y="168" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="XNl-Q5-lQr" eventType="valueChanged" id="PxS-yW-dFR"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beginner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Cz-t0-i0e">
+                                <rect key="frame" x="26" y="173" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Paid" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3cJ-Ge-Dad">
+                                <rect key="frame" x="26" y="212" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Day pass" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8R1-CJ-8eD">
+                                <rect key="frame" x="26" y="251" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NXB-97-kCO">
+                                <rect key="frame" x="257" y="207" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="XNl-Q5-lQr" eventType="valueChanged" id="1ks-xy-pJG"/>
+                                </connections>
+                            </switch>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7d5-Df-pTB">
+                                <rect key="frame" x="257" y="246" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="XNl-Q5-lQr" eventType="valueChanged" id="Lt9-Rg-nL2"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -125,6 +167,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="inputName" destination="R3z-DK-P5f" id="k8H-Ax-9Rn"/>
+                        <outlet property="labelBeginner" destination="1Cz-t0-i0e" id="vU2-Ay-agA"/>
+                        <outlet property="labelPaid" destination="3cJ-Ge-Dad" id="UVe-pl-DLD"/>
+                        <outlet property="labelPass" destination="8R1-CJ-8eD" id="cBM-a4-BV0"/>
+                        <outlet property="switchBeginner" destination="p95-7o-uOV" id="GJU-E2-axU"/>
+                        <outlet property="switchPaid" destination="NXB-97-kCO" id="Qxd-Wf-ziy"/>
+                        <outlet property="switchPass" destination="7d5-Df-pTB" id="uhE-hr-CwP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGu-Ew-1R1" userLabel="First Responder" sceneMemberID="firstResponder"/>

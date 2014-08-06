@@ -161,7 +161,7 @@
 
 
 #pragma mark - Navigation
--(void)didClickNew:(id)sender {
+-(IBAction)didClickNew:(id)sender {
     [self performSegueWithIdentifier:@"addNewMemberSegue" sender:self];
 }
 
@@ -177,9 +177,9 @@
 }
 
 #pragma mark Delegate
--(void)saveNewMember:(NSString *)name {
+-(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    [member updateEntityWithParams:@{@"name":name, @"status":@(MemberStatusUnpaid)}];
+    [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             [self.navigationController popViewControllerAnimated:YES];

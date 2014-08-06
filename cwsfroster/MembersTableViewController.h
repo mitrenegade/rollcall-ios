@@ -13,4 +13,5 @@
 {
     NSFetchedResultsController *memberFetcher;
 }
+
 @end
