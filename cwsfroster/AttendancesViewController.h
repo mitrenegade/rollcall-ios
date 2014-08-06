@@ -9,7 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @class Practice;
-@interface AttendancesViewController : UIViewController
-
+@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+{
+    NSMutableArray *members;
+    NSArray *attendees;
+}
 @property (nonatomic, weak) Practice *practice;
 @end

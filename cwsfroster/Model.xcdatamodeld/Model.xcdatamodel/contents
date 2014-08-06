@@ -2,8 +2,9 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseBase" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="attendances" inverseEntity="Member" syncable="YES"/>
-        <relationship name="practice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="attendences" inverseEntity="Practice" syncable="YES"/>
+        <relationship name="practice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="attendances" inverseEntity="Practice" syncable="YES"/>
     </entity>
     <entity name="Member" representedClassName="Member" parentEntity="ParseBase" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -27,10 +28,10 @@
     <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="attendences" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Attendance" positionX="-36" positionY="45" width="128" height="88"/>
+        <element name="Attendance" positionX="-36" positionY="45" width="128" height="103"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="133"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="88"/>
