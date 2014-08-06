@@ -204,7 +204,7 @@
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practices" id="HEm-wM-E2I"/>
+                    <tabBarItem key="tabBarItem" title="Practices" image="icon1.png" id="HEm-wM-E2I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyz-ks-QZt">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -220,7 +220,7 @@
         <scene sceneID="B2w-ju-klW">
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Members" id="7Lb-EF-RQd"/>
+                    <tabBarItem key="tabBarItem" title="Members" image="icon2.png" id="7Lb-EF-RQd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PVL-Bl-XK0">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -234,6 +234,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon1.png" width="35" height="38"/>
+        <image name="icon2.png" width="35" height="40"/>
         <image name="logo.png" width="500" height="265"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
