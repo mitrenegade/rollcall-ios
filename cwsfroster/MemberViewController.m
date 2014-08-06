@@ -68,15 +68,17 @@
 }
 
 - (IBAction)didClickSave:(id)sender {
+    MemberStatus status = MemberStatusUnpaid;
+
+    if ([switchBeginner isOn])
+        status = MemberStatusBeginner;
+    else if ([switchPass isOn])
+        status = MemberStatusDaily;
+    else if ([switchPaid isOn])
+        status = MemberStatusPaid;
+
     if (self.member) {
-        MemberStatus status = [self.member.status intValue];
-        if ([switchBeginner isOn])
-            status = MemberStatusBeginner;
-        else if ([switchPass isOn])
-            status = MemberStatusDaily;
-        else if ([switchPaid isOn])
-            status = MemberStatusPaid;
-        else if ([switchInactive isOn])
+        if ([switchInactive isOn])
             status = MemberStatusInactive;
 
         self.member.name = inputName.text;
@@ -84,16 +86,6 @@
         [self.delegate updateMember:self.member];
     }
     else {
-        // calculate status
-        MemberStatus status = MemberStatusUnpaid;
-
-        if ([switchBeginner isOn])
-            status = MemberStatusBeginner;
-        else if ([switchPass isOn])
-            status = MemberStatusDaily;
-        else if ([switchPaid isOn])
-            status = MemberStatusPaid;
-
         if ([inputName.text length] > 0)
             [self.delegate saveNewMember:inputName.text status:status];
     }
