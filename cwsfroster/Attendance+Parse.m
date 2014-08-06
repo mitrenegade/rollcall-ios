@@ -31,11 +31,14 @@
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         self.date = [self.pfObject objectForKey:@"date"];
-        self.member = [self.pfObject objectForKey:@"member"];
-        self.practice = [self.pfObject objectForKey:@"practice"];
         self.attended = [self.pfObject objectForKey:@"attended"];
-
         self.parseID = self.pfObject.objectId;
+
+        // relationships
+        PFObject *object = [self.pfObject objectForKey:@"member"];
+        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+        object = [self.pfObject objectForKey:@"practice"];
+        self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
     }];
 }
 
