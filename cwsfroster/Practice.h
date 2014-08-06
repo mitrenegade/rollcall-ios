@@ -2,7 +2,7 @@
 //  Practice.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 6/2/14.
+//  Created by Bobby Ren on 7/23/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -16,14 +16,14 @@
 
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSSet *attendences;
+@property (nonatomic, retain) NSSet *attendances;
 @end
 
 @interface Practice (CoreDataGeneratedAccessors)
 
-- (void)addAttendencesObject:(Attendance *)value;
-- (void)removeAttendencesObject:(Attendance *)value;
-- (void)addAttendences:(NSSet *)values;
-- (void)removeAttendences:(NSSet *)values;
+- (void)addAttendancesObject:(Attendance *)value;
+- (void)removeAttendancesObject:(Attendance *)value;
+- (void)addAttendances:(NSSet *)values;
+- (void)removeAttendances:(NSSet *)values;
 
 @end

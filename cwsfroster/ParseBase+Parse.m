@@ -10,8 +10,37 @@
 
 @implementation ParseBase (Parse)
 
++(id)fromPFObject:(PFObject *)object {
+    NSLog(@"%s must be implemented by child class", __func__);
+    return nil;
+}
+
 -(NSString *)className {
     return NSStringFromClass(self.class);
+}
+
+-(void)updateFromParseWithCompletion:(void(^)(BOOL success))completion {
+    if (!self.pfObject) {
+        if (self.parseID) {
+            PFQuery *query = [PFQuery queryWithClassName:self.className];
+            [query whereKey:@"objectId" equalTo:self.parseID];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if ([objects count]) {
+                    self.pfObject = objects[0];
+                    if (completion)
+                        completion(YES);
+                }
+                else {
+                    if (completion)
+                        completion(NO);
+                }
+            }];
+        }
+    }
+    else {
+        if (completion)
+            completion(YES);
+    }
 }
 
 -(void)updateFromParse {

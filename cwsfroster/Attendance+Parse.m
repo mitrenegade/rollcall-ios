@@ -8,12 +8,14 @@
 
 #import "Attendance+Parse.h"
 #import "ParseBase+Parse.h"
+#import "Member+Parse.h"
+#import "Practice+Parse.h"
 
 @implementation Attendance (Parse)
 
 +(Attendance *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Attendance where:@{@"id":parseID}] all];
+    NSArray *objectArray = [[Attendance where:@{@"parseID":parseID}] all];
     Attendance *obj;
     if ([objectArray count]) {
         obj = [objectArray firstObject];
@@ -22,18 +24,22 @@
         obj = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     }
     obj.pfObject = object;
-    [obj updateFromParse];
+    [obj updateFromParseWithCompletion:nil];
     return obj;
 }
 
--(void)updateFromParse {
-    [super updateFromParse];
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
+    [super updateFromParseWithCompletion:^(BOOL success) {
+        self.date = [self.pfObject objectForKey:@"date"];
+        self.attended = [self.pfObject objectForKey:@"attended"];
+        self.parseID = self.pfObject.objectId;
 
-    self.date = [self.pfObject objectForKey:@"date"];
-    self.member = [self.pfObject objectForKey:@"member"];
-    self.practice = [self.pfObject objectForKey:@"practice"];
-
-    self.parseID = self.pfObject.objectId;
+        // relationships
+        PFObject *object = [self.pfObject objectForKey:@"member"];
+        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+        object = [self.pfObject objectForKey:@"practice"];
+        self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
+    }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
@@ -43,9 +49,11 @@
     if (self.date)
         self.pfObject[@"date"] = self.date;
     if (self.member)
-        self.pfObject[@"member"] = self.member;
+        self.pfObject[@"member"] = self.member.pfObject;
     if (self.practice)
-        self.pfObject[@"practice"] = self.practice;
+        self.pfObject[@"practice"] = self.practice.pfObject;
+    if (self.attended)
+        self.pfObject[@"attended"] = self.attended;
 
     [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)

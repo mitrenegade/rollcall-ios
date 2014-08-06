@@ -2,7 +2,7 @@
 //  Practice.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 6/2/14.
+//  Created by Bobby Ren on 7/23/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -14,6 +14,6 @@
 
 @dynamic date;
 @dynamic title;
-@dynamic attendences;
+@dynamic attendances;
 
 @end

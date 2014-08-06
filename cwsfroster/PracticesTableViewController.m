@@ -10,6 +10,7 @@
 #import "Practice+Parse.h"
 #import "Attendance+Parse.h"
 #import "Util.h"
+#import "AttendancesViewController.h"
 
 @interface PracticesTableViewController ()
 
@@ -75,6 +76,10 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"PracticesTableToAttendances" sender:self];
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -113,7 +118,6 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -121,18 +125,35 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    AttendancesViewController *controller = [segue destinationViewController];
+    if (indexPath.row < [practices count])
+        [controller setPractice:practices[indexPath.row]];
 }
-*/
 
 -(void)didClickNew:(id)sender {
-    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
-    NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:NO];
-    practice.title = [Util timeStringForDate:practiceDate];
-
-    NSError *error;
-    if ([_appDelegate.managedObjectContext save:&error]) {
-        [self reloadPractices];
-        [self.tableView reloadData];
+    NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:YES];
+    if ([[[Practice where:@{@"date":practiceDate}] all] count]) {
+        NSLog(@"Could not create practice, date already exists!");
+        return;
     }
+    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+    practice.title = [Util simpleDateFormat:practiceDate];
+    practice.date = practiceDate;
+
+    [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [self reloadPractices];
+                [self.tableView reloadData];
+            }
+        }
+        else {
+            NSLog(@"Could not save member!");
+        }
+    }];
 }
 @end

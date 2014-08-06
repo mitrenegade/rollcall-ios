@@ -13,7 +13,7 @@
 
 +(Practice *)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Practice where:@{@"id":parseID}] all];
+    NSArray *objectArray = [[Practice where:@{@"parseID":parseID}] all];
     Practice *obj;
     if ([objectArray count]) {
         obj = [objectArray firstObject];
@@ -22,18 +22,18 @@
         obj = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
     }
     obj.pfObject = object;
-    [obj updateFromParse];
+    [obj updateFromParseWithCompletion:nil];
     return obj;
 }
 
--(void)updateFromParse {
-    [super updateFromParse];
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
+    [super updateFromParseWithCompletion:^(BOOL success) {
+        self.date = [self.pfObject objectForKey:@"date"];
+        self.title = [self.pfObject objectForKey:@"title"];
+//        self.attendances = [self.pfObject objectForKey:@"attendances"];
 
-    self.date = [self.pfObject objectForKey:@"date"];
-    self.title = [self.pfObject objectForKey:@"title"];
-    self.attendences = [self.pfObject objectForKey:@"attendances"];
-
-    self.parseID = self.pfObject.objectId;
+        self.parseID = self.pfObject.objectId;
+    }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
@@ -44,8 +44,8 @@
         self.pfObject[@"date"] = self.date;
     if (self.title)
         self.pfObject[@"title"] = self.title;
-    if (self.attendences)
-        self.pfObject[@"attendances"] = self.attendences;
+//    if (self.attendances)
+//        self.pfObject[@"attendances"] = self.attendances;
 
     [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded)
