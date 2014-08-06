@@ -47,20 +47,70 @@
 }
 
 -(void)reloadMembers {
-    members = [[Member where:@{}] all];
+    NSError *error;
+    [self.memberFetcher performFetch:&error];
+    [self.tableView reloadData];
 }
+
+#pragma mark FetchedResultsController
+-(NSFetchedResultsController *)memberFetcher {
+    if (memberFetcher) {
+        return memberFetcher;
+    }
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
+    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
+    [request setPredicate:predicate];
+
+    memberFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"status" cacheName:nil];
+    NSError *error;
+    [memberFetcher performFetch:&error];
+
+    return memberFetcher;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return [[self.memberFetcher sections] count];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSNumber *sectionTitle = self.memberFetcher.sectionIndexTitles[section];
+    NSString *title = @"";
+    switch ([sectionTitle intValue]) {
+        case MemberStatusInactive:
+            title = @"Inactive";
+            break;
+        case MemberStatusUnpaid:
+            title = @"Unpaid";
+            break;
+        case MemberStatusPaid:
+            title = @"Active";
+            break;
+        case MemberStatusBeginner:
+            title = @"Beginner";
+            break;
+        case MemberStatusDaily:
+            title = @"Daily Pass";
+            break;
+
+        default:
+            break;
+    }
+    return title;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return members.count + 1;
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.memberFetcher.sections objectAtIndex:section];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -69,24 +119,15 @@
 
     // Configure the cell...
 
-    if (indexPath.row < [members count]) {
-        Member *member = members[indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:16];
-        cell.textLabel.textColor = [UIColor blackColor];
-        cell.textLabel.text = member.name;
-    }
-    else {
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.textLabel.textColor = [UIColor grayColor];
-        cell.textLabel.text = @"Add new member";
-    }
+    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+    cell.textLabel.text = member.name;
 
-    return cell;}
+    return cell;
+}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == members.count) {
-        [self performSegueWithIdentifier:@"addNewMemberSegue" sender:self];
-    }
 }
 
 /*
@@ -120,6 +161,9 @@
 
 
 #pragma mark - Navigation
+-(void)didClickNew:(id)sender {
+    [self performSegueWithIdentifier:@"addNewMemberSegue" sender:self];
+}
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

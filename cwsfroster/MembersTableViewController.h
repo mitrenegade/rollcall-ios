@@ -11,6 +11,6 @@
 
 @interface MembersTableViewController : UITableViewController <AddMemberDelegate>
 {
-    NSArray *members;
+    NSFetchedResultsController *memberFetcher;
 }
 @end

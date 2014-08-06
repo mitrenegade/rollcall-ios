@@ -15,44 +15,61 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
-    ready = NO;
+    ready = [NSMutableDictionary dictionary];
+    ready[@"animation"] = @NO;
+    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
+    for (NSString *className in classes) {
+        ready[className] = @NO;
+    }
+
     logo.alpha = 0;
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [self synchronizeWithParse];
 
     [UIView animateWithDuration:1 animations:^{
         logo.alpha = 1;
     } completion:^(BOOL finished) {
-        if (ready) {
+        ready[@"animation"] = @YES;
+        if ([self isReady]) {
             [self goToPractices];
         }
-        ready = YES;
     }];
+
+    [self synchronizeWithParse];
 }
 
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
     NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
+
     for (NSString *className in classes) {
         Class class = NSClassFromString(className);
 
         PFQuery *query = [PFQuery queryWithClassName:className];
-        NSArray *objects = [query findObjects]; // do this in foreground
-        NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-        for (PFObject *object in objects) {
-            [class fromPFObject:object];
-        }
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            for (PFObject *object in objects) {
+                [class fromPFObject:object];
+            }
+            NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
+            ready[className] = @YES;
+            if ([self isReady])
+                [self goToPractices];
+        }];
     }
 
     // todo: make sure all objects not in parse data base are deleted from core data
+}
 
-    if (ready)
-        [self goToPractices];
-    ready = YES;
+-(BOOL)isReady {
+    for (id key in [ready.keyEnumerator allObjects]) {
+        NSNumber *r = ready[key];
+        if ([r boolValue] == NO)
+            return NO;
+    }
+    return YES;
 }
 
 -(void)goToPractices {

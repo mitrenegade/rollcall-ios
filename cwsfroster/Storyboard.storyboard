@@ -78,7 +78,13 @@
                             <outlet property="delegate" destination="nKy-LQ-H91" id="u2p-Hn-zVc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Members" id="edp-kL-GlG"/>
+                    <navigationItem key="navigationItem" title="Members" id="edp-kL-GlG">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="R4m-Fb-ejx">
+                            <connections>
+                                <action selector="didClickNew:" destination="qXS-mn-38d" id="MQY-M0-mLH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6e-eE-kNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -234,8 +240,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon1.png" width="35" height="38"/>
-        <image name="icon2.png" width="35" height="40"/>
+        <image name="icon1.png" width="28" height="29"/>
+        <image name="icon2.png" width="25" height="30"/>
         <image name="logo.png" width="500" height="265"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

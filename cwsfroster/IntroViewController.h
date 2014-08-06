@@ -11,6 +11,6 @@
 @interface IntroViewController : UIViewController
 {
     IBOutlet UIImageView *logo;
-    BOOL ready;
+    NSMutableDictionary *ready;
 }
 @end
