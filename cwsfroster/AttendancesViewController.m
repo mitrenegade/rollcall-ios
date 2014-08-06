@@ -173,7 +173,7 @@
     Member *member = ((Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath]).member;
     cell.textLabel.text = member.name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
-    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.textColor = [UIColor darkGrayColor];
 
     return cell;
 }

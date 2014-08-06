@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AddMemberViewController.h"
+#import "MemberViewController.h"
 
-@interface MembersTableViewController : UITableViewController <AddMemberDelegate>
+@interface MembersTableViewController : UITableViewController <MemberDelegate>
 {
-    NSArray *members;
+    NSFetchedResultsController *memberFetcher;
 }
+
 @end

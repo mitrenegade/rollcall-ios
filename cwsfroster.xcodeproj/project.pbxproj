@@ -60,7 +60,7 @@
 		9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3301936D4DE0056140F /* ParseBase.m */; };
 		9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Storyboard.storyboard */; };
 		9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3351936D74E0056140F /* MembersTableViewController.m */; };
-		9EC5F3391936D9080056140F /* AddMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3381936D9080056140F /* AddMemberViewController.m */; };
+		9EC5F3391936D9080056140F /* MemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3381936D9080056140F /* MemberViewController.m */; };
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
 		9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33C1936DD000056140F /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
@@ -151,8 +151,8 @@
 		9EC5F3321936D60D0056140F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		9EC5F3341936D74E0056140F /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
 		9EC5F3351936D74E0056140F /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
-		9EC5F3371936D9080056140F /* AddMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddMemberViewController.h; sourceTree = "<group>"; };
-		9EC5F3381936D9080056140F /* AddMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddMemberViewController.m; sourceTree = "<group>"; };
+		9EC5F3371936D9080056140F /* MemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberViewController.h; sourceTree = "<group>"; };
+		9EC5F3381936D9080056140F /* MemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberViewController.m; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -249,8 +249,8 @@
 				9E156175199266A700A31398 /* IntroViewController.m */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
-				9EC5F3371936D9080056140F /* AddMemberViewController.h */,
-				9EC5F3381936D9080056140F /* AddMemberViewController.m */,
+				9EC5F3371936D9080056140F /* MemberViewController.h */,
+				9EC5F3381936D9080056140F /* MemberViewController.m */,
 				9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */,
 				9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */,
 				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
@@ -430,7 +430,7 @@
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				9EC5F32E1936D4DE0056140F /* Payment.m in Sources */,
-				9EC5F3391936D9080056140F /* AddMemberViewController.m in Sources */,
+				9EC5F3391936D9080056140F /* MemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				9E15616819924AF800A31398 /* Member.m in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
