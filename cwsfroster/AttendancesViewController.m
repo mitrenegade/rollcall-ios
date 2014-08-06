@@ -12,6 +12,7 @@
 #import "Member+Parse.h"
 #import "Attendance+Parse.h"
 #import "Member+Info.h"
+#import "Attendance+Info.h"
 
 @interface AttendancesViewController ()
 
@@ -80,8 +81,8 @@
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Attendance"];
     [request setPredicate:[NSPredicate predicateWithFormat:@"practice.parseID = %@", self.practice.parseID]];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"attended" ascending:YES];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"attended" ascending:NO];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
     attendanceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"attended" cacheName:nil];
     NSError *error;
@@ -161,9 +162,9 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[section];
-    if ([sectionTitle intValue] == 0)
+    if ([sectionTitle intValue] == DidNotAttend)
         return @"All members";
-    else if ([sectionTitle intValue] == 1)
+    else if ([sectionTitle intValue] == DidAttend)
         return @"Attendees";
     return @"";
 }
@@ -187,14 +188,13 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
 
     // Configure the cell...
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
+    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[indexPath.section];
 
     Member *member;
-    if (section == 0) { // not at practice
+    if ([sectionTitle intValue] == DidNotAttend) { // not at practice
 //        member = members[row];
     }
-    else if (section == 1) { // current at practice
+    else if ([sectionTitle intValue] == DidAttend) { // current at practice
 //        Attendance *attendance = attendees[row];
 //        member = attendance.member;
     }
@@ -205,16 +205,16 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger section = indexPath.section;
-    NSInteger row = indexPath.row;
 
     Attendance *attendance = [self.attendanceFetcher objectAtIndexPath:indexPath];
-    if (section == 0) {
+
+    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[indexPath.section];
+    if ([sectionTitle intValue] == DidNotAttend) {
         // selecting a member
-        attendance.attended = @YES;
+        attendance.attended = @(DidAttend);
     }
-    else if (section == 1) {
-        attendance.attended = @NO;
+    else if ([sectionTitle intValue] == DidAttend) {
+        attendance.attended = @(DidNotAttend);
     }
     [attendance saveOrUpdateToParseWithCompletion:nil];
     [self refresh];

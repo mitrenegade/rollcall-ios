@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="-432" y="288"/>
         </scene>
-        <!--Members Table View Controller-->
+        <!--Members Table View Controller - Members-->
         <scene sceneID="ima-lD-0RY">
             <objects>
                 <tableViewController id="nKy-LQ-H91" customClass="MembersTableViewController" sceneMemberID="viewController">
@@ -50,7 +50,7 @@
                             <outlet property="delegate" destination="nKy-LQ-H91" id="u2p-Hn-zVc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="edp-kL-GlG"/>
+                    <navigationItem key="navigationItem" title="Members" id="edp-kL-GlG"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6e-eE-kNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -97,7 +97,7 @@
             </objects>
             <point key="canvasLocation" x="1007" y="-85"/>
         </scene>
-        <!--Practices Table View Controller-->
+        <!--Practices Table View Controller - Practices-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -120,7 +120,7 @@
                             <outlet property="delegate" destination="qXS-mn-38d" id="fCG-zS-41o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="i0f-Z7-11a">
+                    <navigationItem key="navigationItem" title="Practices" id="i0f-Z7-11a">
                         <barButtonItem key="rightBarButtonItem" title="New" id="15r-SD-na8">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="fYA-bO-hXe"/>
