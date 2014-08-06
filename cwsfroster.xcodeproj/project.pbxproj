@@ -11,6 +11,8 @@
 		9E15616819924AF800A31398 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616719924AF800A31398 /* Member.m */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
+		9E1561731992662100A31398 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E1561721992662100A31398 /* logo.png */; };
+		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
 		9E80085416196883003E9B16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085316196883003E9B16 /* Foundation.framework */; };
 		9E80085616196883003E9B16 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085516196883003E9B16 /* CoreGraphics.framework */; };
@@ -70,6 +72,9 @@
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
 		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
+		9E1561721992662100A31398 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
+		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E80084D16196883003E9B16 /* CWSF Roster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CWSF Roster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E80085116196883003E9B16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9E80085316196883003E9B16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -175,6 +180,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E15616F1992661200A31398 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9E1561721992662100A31398 /* logo.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		9E80084216196883003E9B16 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +239,8 @@
 				9EC5F2E51936CFC00056140F /* Parse Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
+				9E156174199266A700A31398 /* IntroViewController.h */,
+				9E156175199266A700A31398 /* IntroViewController.m */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				9EC5F3371936D9080056140F /* AddMemberViewController.h */,
@@ -241,6 +256,7 @@
 		9E80085816196883003E9B16 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9E15616F1992661200A31398 /* Images */,
 				9E80085916196883003E9B16 /* cwsfroster-Info.plist */,
 				9E80085A16196883003E9B16 /* InfoPlist.strings */,
 				9E80085D16196883003E9B16 /* main.m */,
@@ -372,6 +388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E1561731992662100A31398 /* logo.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
 				9E80086616196883003E9B16 /* Default@2x.png in Resources */,
@@ -408,6 +425,7 @@
 				9EC5F3391936D9080056140F /* AddMemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				9E15616819924AF800A31398 /* Member.m in Sources */,
+				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */,

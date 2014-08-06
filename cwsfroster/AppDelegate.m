@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
-#import "Member+Info.h"
-#import "Practice+Parse.h"
 
 @implementation AppDelegate
 
@@ -22,8 +20,6 @@
 {
     [Parse setApplicationId:@"1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
                   clientKey:@"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"];
-
-    [self synchronizeWithParse];
 
     return YES;
 }
@@ -102,21 +98,4 @@
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
--(void)synchronizeWithParse {
-    // make sure all parse objects are in core data
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
-    for (NSString *className in classes) {
-        Class class = NSClassFromString(className);
-
-        PFQuery *query = [PFQuery queryWithClassName:className];
-        NSArray *objects = [query findObjects]; // do this in foreground
-//        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-            for (PFObject *object in objects) {
-                [class fromPFObject:object];
-            }
-//        }];
-    }
-    // todo: make sure all objects not in parse data base are deleted from core data
-}
 @end
