@@ -13,6 +13,7 @@
 #import "Attendance+Parse.h"
 #import "Member+Info.h"
 #import "Attendance+Info.h"
+#import "PracticeEditViewController.h"
 
 @interface AttendancesViewController ()
 
@@ -48,7 +49,10 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
+-(IBAction)didClickEdit:(id)sender {
+    NSLog(@"Edit");
+}
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -56,8 +60,12 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"AttendanceToEditPractice"]) {
+        PracticeEditViewController *controller = (PracticeEditViewController *)[segue destinationViewController];
+        [controller setPractice:self.practice];
+        [controller setDelegate:self];
+    }
 }
-*/
 
 -(NSFetchedResultsController *)memberFetcher {
     if (memberFetcher) {
@@ -233,6 +241,19 @@
     NSError *error;
     [self.attendanceFetcher performFetch:&error];
     [self.tableView reloadData];
+}
+
+#pragma mark PracticeEditDelegate
+-(void)didEditPractice {
+    self.title = self.practice.title;
+
+    [self notify:@"practice:info:updated"];
+
+    // todo: update all attendances
+    for (Attendance *attendance in self.practice.attendances) {
+        attendance.date = self.practice.date;
+        [attendance saveOrUpdateToParseWithCompletion:nil];
+    }
 }
 
 @end

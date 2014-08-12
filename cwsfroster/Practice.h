@@ -2,7 +2,7 @@
 //  Practice.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 7/23/14.
+//  Created by Bobby Ren on 8/12/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * details;
 @property (nonatomic, retain) NSSet *attendances;
 @end
 
