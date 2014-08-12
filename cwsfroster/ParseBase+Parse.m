@@ -10,6 +10,8 @@
 
 @implementation ParseBase (Parse)
 
+static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that they can be associated through core data 
+
 +(id)fromPFObject:(PFObject *)object {
     NSLog(@"%s must be implemented by child class", __func__);
     return nil;
@@ -19,7 +21,8 @@
     return NSStringFromClass(self.class);
 }
 
--(void)updateFromParseWithCompletion:(void(^)(BOOL success))completion {
+-(void)updatePFObjectFromParseWithCompletion:(void(^)(BOOL success))completion {
+    // only updates pfObject from parse
     if (!self.pfObject) {
         if (self.parseID) {
             PFQuery *query = [PFQuery queryWithClassName:self.className];
@@ -36,11 +39,20 @@
                 }
             }];
         }
+        else {
+            if (completion)
+                completion(NO);
+        }
     }
     else {
         if (completion)
             completion(YES);
     }
+}
+
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
+    // update pfObject, and all attributes
+    [self updatePFObjectFromParseWithCompletion:completion];
 }
 
 -(void)updateFromParse {
@@ -51,15 +63,44 @@
     self.pfUserID = user.objectId;
 }
 
+-(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
+    // first, make sure parse object exists, or create it
+    [self updatePFObjectFromParseWithCompletion:^(BOOL success) {
+        if (!success)
+            self.pfObject = [PFObject objectWithClassName:self.className];
+
+        if (completion)
+            completion(YES);
+    }];
+}
+
 #pragma mark Instance variable for category
 // http://oleb.net/blog/2011/05/faking-ivars-in-objc-categories-with-associative-references/
 // use associative reference in order to add a new instance variable in a category
 
 -(PFObject *)pfObject {
-    return objc_getAssociatedObject(self, PFObjectTagKey);
+    PFObject *object = objc_getAssociatedObject(self, PFObjectTagKey);
+    if (!object) {
+        if (pfObjectCache[self.parseID]) {
+            object = pfObjectCache[self.parseID];
+            [self setPfObject:object];
+        }
+    }
+    return object;
 }
 
 -(void)setPfObject:(PFObject *)pfObject {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pfObjectCache = [NSMutableDictionary dictionary];
+    });
+    if (!self.parseID) {
+        NSLog(@"No id - must be a new allocation of pfObject");
+    }
+    else {
+        pfObjectCache[self.parseID] = pfObject; // forces this to stay in memory
+    }
+
     objc_setAssociatedObject(self, PFObjectTagKey, pfObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 @end

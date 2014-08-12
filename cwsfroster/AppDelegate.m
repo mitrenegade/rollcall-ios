@@ -10,6 +10,9 @@
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
 
+#import "Member+Info.h"
+#import "Attendance+Info.h"
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -20,6 +23,9 @@
 {
     [Parse setApplicationId:@"1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
                   clientKey:@"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"];
+
+    NSArray *allMembers = [[Member where:@{}] all];
+    NSArray *allAttendances = [[Attendance where:@{}] all];
 
     return YES;
 }

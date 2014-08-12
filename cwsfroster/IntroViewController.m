@@ -9,6 +9,8 @@
 #import "IntroViewController.h"
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
+#import "MBProgressHUD.h"
+#import "Member+Info.h"
 
 @implementation IntroViewController
 
@@ -27,7 +29,7 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    isFailed = NO;
 
     [UIView animateWithDuration:1 animations:^{
         logo.alpha = 1;
@@ -44,23 +46,51 @@
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
     NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
+    [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     for (NSString *className in classes) {
-        Class class = NSClassFromString(className);
-
         PFQuery *query = [PFQuery queryWithClassName:className];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            for (PFObject *object in objects) {
-                [class fromPFObject:object];
+            if (error) {
+                NSLog(@"Error: %@", error);
+                if (!isFailed) {
+                    if (!progress || ![progress taskInProgress]) {
+                        progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                    }
+                    progress.mode = MBProgressHUDModeText;
+                    progress.labelText = @"Synchronization error";
+                    if (error.code == 1000) {
+                        progress.detailsLabelText = @"Request timeout. Make sure you are connected to the Internet";
+                    }
+                    else {
+                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %lu", error.code];
+                    }
+                    isFailed = YES;
+                    [self performSelector:@selector(hideProgress) withObject:nil afterDelay:3];
+                }
             }
-            NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-            ready[className] = @YES;
-            if ([self isReady])
-                [self goToPractices];
+            else {
+                [self synchronizeClass:className fromObjects:objects];
+            }
         }];
     }
 
     // todo: make sure all objects not in parse data base are deleted from core data
+}
+
+-(void)showProgress {
+    if (!progress || !progress.taskInProgress) {
+        progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    progress.taskInProgress = YES;
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.labelText = @"Synchronizing data";
+}
+
+-(void)hideProgress {
+    progress.taskInProgress = NO;
+    [progress hide:YES];
+    progress = nil;
 }
 
 -(BOOL)isReady {
@@ -73,7 +103,47 @@
 }
 
 -(void)goToPractices {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     [logo setAlpha:1];
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
+}
+
+-(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects {
+    // todo: perform this in background thread and use managed object context threading
+    Class class = NSClassFromString(className);
+
+    NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
+    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
+    NSString *diego;
+    for (PFObject *object in objects) {
+        NSManagedObject *classObject = [class fromPFObject:object];
+        [all removeObject:classObject];
+
+        /*
+        if ([classObject isKindOfClass:[Member class]]) {
+            Member *m = (Member *)classObject;
+            Member *newObj = (Member *)[[[class where:@{@"parseID":m.parseID}] all] firstObject];
+            NSLog(@"member %@ name: %@", newObj.parseID, newObj.name);
+            NSLog(@"member pfObject: %@", newObj.pfObject);
+            if ([newObj.name isEqualToString:@"Diego Giraldez"])
+                diego = newObj.parseID;
+        }
+         */
+    }
+
+    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
+    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
+
+    for (id object in all) {
+        [_appDelegate.managedObjectContext deleteObject:object];
+    }
+    ready[className] = @YES;
+    if ([self isReady])
+        [self goToPractices];
+
+    NSError *error;
+    [_appDelegate.managedObjectContext save:&error];
+
 }
 @end

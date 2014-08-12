@@ -35,6 +35,10 @@
     // Do any additional setup after loading the view.
 
     self.title = self.practice.title;
+    if (!self.practice.pfObject) {
+        [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        }];
+    }
     [self reloadMembers];
 }
 
@@ -103,7 +107,7 @@
         BOOL attendanceFound = NO;
         for (Attendance *attendance in self.attendanceFetcher.fetchedObjects) {
             if (![member.attendances containsObject:attendance]) {
-                NSLog(@"Member %@ does not belong to attendance (%@ %@)", member.name, attendance.name, attendance.date);
+                //NSLog(@"Member %@ does not belong to attendance (%@ %@)", member.name, attendance.name, attendance.date);
             }
             else {
                 NSLog(@"Member %@ is has an attendance for %@; attended %@", member.name, attendance.practice.title, attendance.attended);
@@ -113,21 +117,36 @@
         }
         if (!attendanceFound) {
             // attendance does not exist
-            [self saveNewAttendanceForMember:member];
-            needsReload = YES;
-            attendanceFound = YES;
+            NSLog(@"Creating attendance for %@", member.name);
+            if (!member.pfObject) {
+                [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
+                    [self saveNewAttendanceForMember:member completion:^(BOOL success) {
+                        if (success) {
+                            NSError *error;
+                            [self.attendanceFetcher performFetch:&error];
+                            NSLog(@"Created attendance for member %@", member.name);
+                            [self.tableView reloadData];
+                        }
+                    }];
+                }];
+            }
+            else {
+                [self saveNewAttendanceForMember:member completion:^(BOOL success) {
+                    if (success) {
+                        NSError *error;
+                        [self.attendanceFetcher performFetch:&error];
+                        NSLog(@"Created attendance for member %@", member.name);
+                        [self.tableView reloadData];
+                    }
+                }];
+            }
         }
     }
 
-    if (needsReload) {
-        [self reloadMembers];
-    }
-    else {
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
 }
 
--(void)saveNewAttendanceForMember:(Member *)member {
+-(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success))completion{
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
@@ -137,9 +156,13 @@
         if (success) {
             NSError *error;
             [_appDelegate.managedObjectContext save:&error];
+            if (completion)
+                completion(YES);
         }
         else {
             NSLog(@"Could not save member!");
+            if (completion)
+                completion(NO);
         }
     }];
 }
@@ -162,6 +185,13 @@
 {
     // Return the number of rows in the section.
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.attendanceFetcher.sections objectAtIndex:section];
+    NSString *title = [sectionInfo indexTitle];
+    NSString *nane = [sectionInfo name];
+    NSArray *objects = [sectionInfo objects];
+    for (Attendance *a in objects) {
+        Member *m = a.member;
+        NSLog(@"Attendance %@: member %@ %@", a.parseID, m.parseID, m.name);
+    }
     return [sectionInfo numberOfObjects];
 }
 
@@ -170,10 +200,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
 
     // Configure the cell...
-    Member *member = ((Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath]).member;
+    Attendance *attendance = (Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath];
+    Member *member = attendance.member;
     cell.textLabel.text = member.name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor darkGrayColor];
+
+    if ([attendance.parseID isEqualToString:@"QQS6HTF1RL"]) {
+        NSLog(@"Here");
+    }
 
     return cell;
 }

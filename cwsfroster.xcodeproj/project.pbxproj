@@ -38,6 +38,7 @@
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
 		9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */; };
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
+		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
 		9EB48DC31703AABC001D360F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC21703AABC001D360F /* icon@2x.png */; };
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
@@ -109,6 +110,8 @@
 		9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Practice+Parse.m"; sourceTree = "<group>"; };
 		9E99F8DB193D71EC004EB5C1 /* Attendance+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Parse.h"; sourceTree = "<group>"; };
 		9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Parse.m"; sourceTree = "<group>"; };
+		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EB48DC01703AAB7001D360F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9EB48DC21703AABC001D360F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		9EC15480198009EA003F80CA /* AttendancesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendancesViewController.h; sourceTree = "<group>"; };
@@ -308,6 +311,8 @@
 		9EC5F2F61936D2410056140F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */,
+				9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */,
 				9EC5F2FB1936D2410056140F /* MKAdditions */,
 				9EC5F3031936D2410056140F /* NSManagedObject+Entity.h */,
 				9EC5F3041936D2410056140F /* NSManagedObject+Entity.m */,
@@ -436,6 +441,7 @@
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
+				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */,
@@ -522,7 +528,7 @@
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				PRODUCT_NAME = "CWSF Roster";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "818DB514-7E9B-420C-BA10-EA2F2DC76F3D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5F8D8DD9-44FA-4BED-9B9C-A4E450CF9F89";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -530,7 +536,7 @@
 		9E80086D16196884003E9B16 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -539,7 +545,7 @@
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				PRODUCT_NAME = "CWSF Roster";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "818DB514-7E9B-420C-BA10-EA2F2DC76F3D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C8467AB-0B9A-4A0B-A5E4-CD0F3302D065";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
