@@ -21,7 +21,8 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
     return NSStringFromClass(self.class);
 }
 
--(void)updateFromParseWithCompletion:(void(^)(BOOL success))completion {
+-(void)updatePFObjectFromParseWithCompletion:(void(^)(BOOL success))completion {
+    // only updates pfObject from parse
     if (!self.pfObject) {
         if (self.parseID) {
             PFQuery *query = [PFQuery queryWithClassName:self.className];
@@ -49,6 +50,11 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
     }
 }
 
+-(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
+    // update pfObject, and all attributes
+    [self updatePFObjectFromParseWithCompletion:completion];
+}
+
 -(void)updateFromParse {
     self.createdAt = self.pfObject[@"createdAt"];
     self.updatedAt = self.pfObject[@"updatedAt"];
@@ -59,7 +65,7 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
     // first, make sure parse object exists, or create it
-    [self updateFromParseWithCompletion:^(BOOL success) {
+    [self updatePFObjectFromParseWithCompletion:^(BOOL success) {
         if (!success)
             self.pfObject = [PFObject objectWithClassName:self.className];
 
