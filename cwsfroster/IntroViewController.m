@@ -10,6 +10,7 @@
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
+#import "Member+Info.h"
 
 @implementation IntroViewController
 
@@ -48,8 +49,6 @@
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     for (NSString *className in classes) {
-        Class class = NSClassFromString(className);
-
         PFQuery *query = [PFQuery queryWithClassName:className];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
@@ -71,13 +70,7 @@
                 }
             }
             else {
-                for (PFObject *object in objects) {
-                    [class fromPFObject:object];
-                }
-                NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-                ready[className] = @YES;
-                if ([self isReady])
-                    [self goToPractices];
+                [self synchronizeClass:className fromObjects:objects];
             }
         }];
     }
@@ -114,5 +107,30 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     [logo setAlpha:1];
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
+}
+
+-(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects {
+    // todo: perform this in background thread and use managed object context threading
+    Class class = NSClassFromString(className);
+
+    NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
+    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
+    for (PFObject *object in objects) {
+        NSManagedObject *classObject = [class fromPFObject:object];
+        [all removeObject:classObject];
+    }
+    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
+    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
+
+    for (id object in all) {
+        [_appDelegate.managedObjectContext deleteObject:object];
+    }
+    ready[className] = @YES;
+    if ([self isReady])
+        [self goToPractices];
+
+    NSError *error;
+    [_appDelegate.managedObjectContext save:&error];
+
 }
 @end

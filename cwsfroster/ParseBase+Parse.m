@@ -36,6 +36,10 @@
                 }
             }];
         }
+        else {
+            if (completion)
+                completion(NO);
+        }
     }
     else {
         if (completion)
@@ -49,6 +53,17 @@
     self.parseID = self.pfObject[@"objectId"];
     PFUser *user = self.pfObject[@"user"];
     self.pfUserID = user.objectId;
+}
+
+-(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
+    // first, make sure parse object exists, or create it
+    [self updateFromParseWithCompletion:^(BOOL success) {
+        if (!success)
+            self.pfObject = [PFObject objectWithClassName:self.className];
+
+        if (completion)
+            completion(YES);
+    }];
 }
 
 #pragma mark Instance variable for category

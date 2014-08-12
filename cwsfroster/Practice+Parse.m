@@ -28,30 +28,34 @@
 
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
-        self.date = [self.pfObject objectForKey:@"date"];
-        self.title = [self.pfObject objectForKey:@"title"];
-//        self.attendances = [self.pfObject objectForKey:@"attendances"];
+        if (success) {
+            self.date = [self.pfObject objectForKey:@"date"];
+            self.title = [self.pfObject objectForKey:@"title"];
+            //        self.attendances = [self.pfObject objectForKey:@"attendances"];
 
-        self.parseID = self.pfObject.objectId;
+            self.parseID = self.pfObject.objectId;
+        }
+        if (completion)
+            completion(success);
     }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
-    if (!self.pfObject)
-        self.pfObject = [PFObject objectWithClassName:self.className];
+    [super saveOrUpdateToParseWithCompletion:^(BOOL success) {
 
-    if (self.date)
-        self.pfObject[@"date"] = self.date;
-    if (self.title)
-        self.pfObject[@"title"] = self.title;
-//    if (self.attendances)
-//        self.pfObject[@"attendances"] = self.attendances;
+        if (self.date)
+            self.pfObject[@"date"] = self.date;
+        if (self.title)
+            self.pfObject[@"title"] = self.title;
+        //    if (self.attendances)
+        //        self.pfObject[@"attendances"] = self.attendances;
 
-    [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded)
-            self.parseID = self.pfObject.objectId;
-        if (completion)
-            completion(succeeded);
+        [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded)
+                self.parseID = self.pfObject.objectId;
+            if (completion)
+                completion(succeeded);
+        }];
     }];
 }
 @end

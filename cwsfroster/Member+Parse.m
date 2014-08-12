@@ -28,32 +28,35 @@
 
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
-        self.name= [self.pfObject objectForKey:@"name"];
-        self.email = [self.pfObject objectForKey:@"email"];
-        self.status = [self.pfObject objectForKey:@"status"];
-        self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
-        self.parseID = self.pfObject.objectId;
+        if (success) {
+            self.name= [self.pfObject objectForKey:@"name"];
+            self.email = [self.pfObject objectForKey:@"email"];
+            self.status = [self.pfObject objectForKey:@"status"];
+            self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
+            self.parseID = self.pfObject.objectId;
+        }
+        if (completion)
+            completion(success);
     }];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
-    if (!self.pfObject)
-        self.pfObject = [PFObject objectWithClassName:self.className];
+    [super saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (self.name)
+            self.pfObject[@"name"] = self.name;
+        if (self.email)
+            self.pfObject[@"email"] = self.email;
+        if (self.status)
+            self.pfObject[@"status"] = self.status;
+        if (self.monthPaid)
+            self.pfObject[@"monthPaid"] = self.monthPaid;
 
-    if (self.name)
-        self.pfObject[@"name"] = self.name;
-    if (self.email)
-        self.pfObject[@"email"] = self.email;
-    if (self.status)
-        self.pfObject[@"status"] = self.status;
-    if (self.monthPaid)
-        self.pfObject[@"monthPaid"] = self.monthPaid;
-
-    [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded)
-            self.parseID = self.pfObject.objectId;
-        if (completion)
-            completion(succeeded);
+        [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded)
+                self.parseID = self.pfObject.objectId;
+            if (completion)
+                completion(succeeded);
+        }];
     }];
 }
 
