@@ -60,16 +60,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(IBAction)didClickCancel:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 -(IBAction)didClickSave:(id)sender {
     NSLog(@"Saving");
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
     if (dateForDateString[inputDate.text]) {
         self.practice.date = dateForDateString[inputDate.text];
         self.practice.title = [Util simpleDateFormat:self.practice.date];
     }
     self.practice.details = inputDetails.text;
     [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
         if (success) {
             [self.delegate didEditPractice];
             [self.navigationController popViewControllerAnimated:YES];

@@ -248,8 +248,12 @@
     self.title = self.practice.title;
 
     [self notify:@"practice:info:updated"];
-    
+
     // todo: update all attendances
+    for (Attendance *attendance in self.practice.attendances) {
+        attendance.date = self.practice.date;
+        [attendance saveOrUpdateToParseWithCompletion:nil];
+    }
 }
 
 @end

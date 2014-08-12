@@ -328,6 +328,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Edit" id="Pnz-LP-lnO">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="aHm-2R-z5S">
+                            <connections>
+                                <action selector="didClickCancel:" destination="ycX-fJ-ygP" id="N50-vb-foe"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Save" id="s1O-Jv-psq">
                             <connections>
                                 <action selector="didClickSave:" destination="ycX-fJ-ygP" id="kO6-3e-GvL"/>

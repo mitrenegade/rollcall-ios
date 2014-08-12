@@ -14,19 +14,21 @@
 
 @end
 
+static NSMutableDictionary *dateForDateString;
+static NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
+
 @class Practice;
 @interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
 
-    NSMutableDictionary *dateForDateString;
-    NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
 }
 
 @property (nonatomic) Practice *practice;
 @property (nonatomic) id delegate;
 
+-(IBAction)didClickCancel:(id)sender;
 -(IBAction)didClickSave:(id)sender;
 
 @end
