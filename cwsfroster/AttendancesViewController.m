@@ -63,6 +63,7 @@
     if ([segue.identifier isEqualToString:@"AttendanceToEditPractice"]) {
         PracticeEditViewController *controller = (PracticeEditViewController *)[segue destinationViewController];
         [controller setPractice:self.practice];
+        [controller setDelegate:self];
     }
 }
 
@@ -240,6 +241,15 @@
     NSError *error;
     [self.attendanceFetcher performFetch:&error];
     [self.tableView reloadData];
+}
+
+#pragma mark PracticeEditDelegate
+-(void)didEditPractice {
+    self.title = self.practice.title;
+
+    [self notify:@"practice:info:updated"];
+    
+    // todo: update all attendances
 }
 
 @end

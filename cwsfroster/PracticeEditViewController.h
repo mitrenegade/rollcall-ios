@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PracticeEditDelegate <NSObject>
+
+-(void)didEditPractice;
+
+@end
+
 @class Practice;
 @interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 {
@@ -19,6 +25,7 @@
 }
 
 @property (nonatomic) Practice *practice;
+@property (nonatomic) id delegate;
 
 -(IBAction)didClickSave:(id)sender;
 

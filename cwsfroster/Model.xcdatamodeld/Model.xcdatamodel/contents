@@ -28,6 +28,7 @@
     </entity>
     <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
     </entity>
@@ -36,6 +37,6 @@
         <element name="Member" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="88"/>
-        <element name="Practice" positionX="-36" positionY="54" width="128" height="88"/>
+        <element name="Practice" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>
 </model>

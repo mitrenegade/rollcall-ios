@@ -48,6 +48,8 @@
 
     [inputDate setInputView:pickerView];
     [inputDate setText:self.practice.title];
+
+    [inputDetails setText:self.practice.details];
     //inputDate.inputAccessoryView = keyboardDoneButtonView;
 
 }
@@ -60,6 +62,23 @@
 
 -(IBAction)didClickSave:(id)sender {
     NSLog(@"Saving");
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    if (dateForDateString[inputDate.text]) {
+        self.practice.date = dateForDateString[inputDate.text];
+        self.practice.title = [Util simpleDateFormat:self.practice.date];
+    }
+    self.practice.details = inputDetails.text;
+    [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        if (success) {
+            [self.delegate didEditPractice];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else {
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
 }
 /*
 #pragma mark - Navigation

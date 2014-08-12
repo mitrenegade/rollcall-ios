@@ -40,6 +40,8 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
     [self reloadPractices];
+
+    [self.tableView listenFor:@"practice:info:updated" action:@selector(reloadData)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,6 +51,7 @@
 }
 
 -(void)reloadPractices {
+    // todo: use fetch controller, or just sort by date
     practices = [[Practice where:@{}] all];
 }
 
@@ -67,13 +70,17 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PracticeCell" forIndexPath:indexPath];
     
     // Configure the cell...
     Practice *practice = practices[indexPath.row];
     cell.textLabel.text = practice.title;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     cell.textLabel.textColor = [UIColor blackColor];
+
+    cell.detailTextLabel.text = practice.details;
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
 
     return cell;
 }

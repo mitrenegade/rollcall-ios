@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PracticeEditViewController.h"
 
 @class Practice;
-@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
+@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PracticeEditDelegate>
 {
     NSFetchedResultsController *memberFetcher;
     NSFetchedResultsController *attendanceFetcher;

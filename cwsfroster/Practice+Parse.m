@@ -31,7 +31,7 @@
         if (success) {
             self.date = [self.pfObject objectForKey:@"date"];
             self.title = [self.pfObject objectForKey:@"title"];
-            //        self.attendances = [self.pfObject objectForKey:@"attendances"];
+            self.details = [self.pfObject objectForKey:@"details"];
 
             self.parseID = self.pfObject.objectId;
         }
@@ -47,8 +47,8 @@
             self.pfObject[@"date"] = self.date;
         if (self.title)
             self.pfObject[@"title"] = self.title;
-        //    if (self.attendances)
-        //        self.pfObject[@"attendances"] = self.attendances;
+        if (self.details)
+            self.pfObject[@"details"] = self.details;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded)
