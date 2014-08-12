@@ -264,11 +264,69 @@
                             <outlet property="delegate" destination="Fy5-S1-vxc" id="qFW-dq-fDE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="WgA-5y-XGd"/>
+                    <navigationItem key="navigationItem" id="WgA-5y-XGd">
+                        <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8">
+                            <connections>
+                                <action selector="didClickEdit:" destination="Fy5-S1-vxc" id="O9Q-Lh-P5n"/>
+                                <segue destination="ycX-fJ-ygP" kind="push" identifier="AttendanceToEditPractice" id="BrM-em-W4r"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="997" y="643"/>
+        </scene>
+        <!--Practice Edit View Controller - Edit-->
+        <scene sceneID="at9-FT-Q4a">
+            <objects>
+                <viewController id="ycX-fJ-ygP" customClass="PracticeEditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K5Y-65-mfc"/>
+                        <viewControllerLayoutGuide type="bottom" id="sZP-l2-fbX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l2U-H5-3kh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Practice Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
+                                <rect key="frame" x="29" y="94" width="262" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ycX-fJ-ygP" id="hQp-b3-xeX"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xL1-Ta-Cga">
+                                <rect key="frame" x="29" y="150" width="262" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ycX-fJ-ygP" id="Zh6-TZ-XsW"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Edit" id="Pnz-LP-lnO">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="s1O-Jv-psq">
+                            <connections>
+                                <action selector="didClickSave:" destination="ycX-fJ-ygP" id="kO6-3e-GvL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="inputDate" destination="3Db-KI-mVC" id="VTI-cv-fg6"/>
+                        <outlet property="inputDetails" destination="xL1-Ta-Cga" id="ntm-jq-rqR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1435" y="643"/>
         </scene>
         <!--Navigation Controller - Practices-->
         <scene sceneID="2yw-ik-mgm">

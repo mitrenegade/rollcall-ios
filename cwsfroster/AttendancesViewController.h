@@ -15,4 +15,6 @@
     NSFetchedResultsController *attendanceFetcher;
 }
 @property (nonatomic, weak) Practice *practice;
+
+-(IBAction)didClickEdit:(id)sender;
 @end
