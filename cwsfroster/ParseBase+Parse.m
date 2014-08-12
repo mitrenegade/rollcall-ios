@@ -10,6 +10,8 @@
 
 @implementation ParseBase (Parse)
 
+static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that they can be associated through core data 
+
 +(id)fromPFObject:(PFObject *)object {
     NSLog(@"%s must be implemented by child class", __func__);
     return nil;
@@ -71,10 +73,28 @@
 // use associative reference in order to add a new instance variable in a category
 
 -(PFObject *)pfObject {
-    return objc_getAssociatedObject(self, PFObjectTagKey);
+    PFObject *object = objc_getAssociatedObject(self, PFObjectTagKey);
+    if (!object) {
+        if (pfObjectCache[self.parseID]) {
+            object = pfObjectCache[self.parseID];
+            [self setPfObject:object];
+        }
+    }
+    return object;
 }
 
 -(void)setPfObject:(PFObject *)pfObject {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        pfObjectCache = [NSMutableDictionary dictionary];
+    });
+    if (!self.parseID) {
+        NSLog(@"No id - must be a new allocation of pfObject");
+    }
+    else {
+        pfObjectCache[self.parseID] = pfObject; // forces this to stay in memory
+    }
+
     objc_setAssociatedObject(self, PFObjectTagKey, pfObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 @end

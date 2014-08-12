@@ -115,10 +115,23 @@
 
     NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
     NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
+    NSString *diego;
     for (PFObject *object in objects) {
         NSManagedObject *classObject = [class fromPFObject:object];
         [all removeObject:classObject];
+
+        /*
+        if ([classObject isKindOfClass:[Member class]]) {
+            Member *m = (Member *)classObject;
+            Member *newObj = (Member *)[[[class where:@{@"parseID":m.parseID}] all] firstObject];
+            NSLog(@"member %@ name: %@", newObj.parseID, newObj.name);
+            NSLog(@"member pfObject: %@", newObj.pfObject);
+            if ([newObj.name isEqualToString:@"Diego Giraldez"])
+                diego = newObj.parseID;
+        }
+         */
     }
+
     NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
     NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
 
