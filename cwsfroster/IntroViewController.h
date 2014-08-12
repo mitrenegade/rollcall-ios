@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class MBProgressHUD;
+
 @interface IntroViewController : UIViewController
 {
     IBOutlet UIImageView *logo;
     NSMutableDictionary *ready;
+
+    MBProgressHUD *progress;
+    BOOL isFailed;
 }
 @end
