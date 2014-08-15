@@ -43,7 +43,17 @@
 
         [labelInactive setHidden:NO];
         [switchInactive setHidden:NO];
+
+        self.title = @"Edit";
     }
+    else {
+        self.title = @"Add member";
+
+        [labelInactive setHidden:YES];
+        [switchInactive setHidden:YES];
+    }
+
+    [viewPayments setHidden:!([self.member.status intValue] == MemberStatusDaily)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,5 +124,24 @@
             [switchPass setEnabled:YES];
         }
     }
+
+    if (sender == switchPass) {
+        [viewPayments setHidden:!selected];
+    }
+}
+
+- (IBAction)didClickAddPayment:(id)sender {
+}
+
+- (IBAction)didClickVenmo:(id)sender {
+    [buttonVenmo setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
+    [buttonCash setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
+    paymentMode = PaymentModeVenmo;
+}
+
+- (IBAction)didClickCash:(id)sender {
+    [buttonVenmo setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
+    [buttonCash setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
+    paymentMode = PaymentModeCash;
 }
 @end

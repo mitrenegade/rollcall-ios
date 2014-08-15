@@ -16,6 +16,12 @@
 -(void)updateMember:(Member *)member;
 
 @end
+
+typedef enum PaymentMode {
+    PaymentModeNone,
+    PaymentModeVenmo,
+    PaymentModeCash
+} PaymentMode;
 @interface MemberViewController : UIViewController
 {
     IBOutlet UITextField *inputName;
@@ -29,6 +35,15 @@
     IBOutlet UISwitch *switchPaid;
     IBOutlet UISwitch *switchPass;
     IBOutlet UISwitch *switchInactive;
+
+    __weak IBOutlet UIView *viewPayments;
+    __weak IBOutlet UILabel *labelCredits;
+    __weak IBOutlet UITextField *inputPayment;
+    __weak IBOutlet UIButton *buttonAddPayment;
+    __weak IBOutlet UIButton *buttonVenmo;
+    __weak IBOutlet UIButton *buttonCash;
+
+    int paymentMode;
 }
 
 @property (nonatomic, assign) Member *member;
@@ -37,4 +52,7 @@
 - (IBAction)didClickBack:(id)sender;
 - (IBAction)didClickSave:(id)sender;
 - (IBAction)didClickSwitch:(id)sender;
+- (IBAction)didClickAddPayment:(id)sender;
+- (IBAction)didClickVenmo:(id)sender;
+- (IBAction)didClickCash:(id)sender;
 @end
