@@ -37,7 +37,8 @@
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"member"];
-            self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);

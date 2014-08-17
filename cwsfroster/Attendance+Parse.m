@@ -38,11 +38,14 @@
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"member"];
-            self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
             object = [self.pfObject objectForKey:@"practice"];
-            self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
             object = [self.pfObject objectForKey:@"payment"];
-            self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);

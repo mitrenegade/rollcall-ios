@@ -130,6 +130,9 @@
     if (sender == switchPass) {
         [viewPayments setHidden:!selected];
     }
+    else {
+        [viewPayments setHidden:YES];
+    }
 }
 
 - (IBAction)didClickAddPayment:(id)sender {

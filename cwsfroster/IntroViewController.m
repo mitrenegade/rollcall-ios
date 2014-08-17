@@ -45,7 +45,7 @@
 
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
+    NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     for (NSString *className in classes) {
@@ -63,7 +63,7 @@
                         progress.detailsLabelText = @"Request timeout. Make sure you are connected to the Internet";
                     }
                     else {
-                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %lu", error.code];
+                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %ld", (long)error.code];
                     }
                     isFailed = YES;
                     [self performSelector:@selector(hideProgress) withObject:nil afterDelay:3];
@@ -115,21 +115,12 @@
 
     NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
     NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
-    NSString *diego;
+    if ([className isEqualToString:@"Attendance"]) {
+        NSLog(@"Here");
+    }
     for (PFObject *object in objects) {
         NSManagedObject *classObject = [class fromPFObject:object];
         [all removeObject:classObject];
-
-        /*
-        if ([classObject isKindOfClass:[Member class]]) {
-            Member *m = (Member *)classObject;
-            Member *newObj = (Member *)[[[class where:@{@"parseID":m.parseID}] all] firstObject];
-            NSLog(@"member %@ name: %@", newObj.parseID, newObj.name);
-            NSLog(@"member pfObject: %@", newObj.pfObject);
-            if ([newObj.name isEqualToString:@"Diego Giraldez"])
-                diego = newObj.parseID;
-        }
-         */
     }
 
     NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
