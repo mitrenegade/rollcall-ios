@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9E1561651992459300A31398 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E1561641992459300A31398 /* Attendance.m */; };
 		9E15616819924AF800A31398 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616719924AF800A31398 /* Member.m */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
@@ -46,6 +45,9 @@
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
 		9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F0199E6E1C00777F79 /* employer_check@2x.png */; };
 		9EC302F3199E6E1C00777F79 /* employer_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */; };
+		9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC302F5199E760A00777F79 /* Payment+Parse.m */; };
+		9EC3031519A0E35300777F79 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031419A0E35300777F79 /* Attendance.m */; };
+		9EC3031819A0E64C00777F79 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031719A0E64C00777F79 /* Payment.m */; };
 		9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2E91936D0960056140F /* Model.xcdatamodeld */; };
 		9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2ED1936D1380056140F /* Member+Parse.m */; };
 		9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */; };
@@ -60,7 +62,6 @@
 		9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30E1936D2410056140F /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */; };
 		9EC5F31F1936D2410056140F /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3121936D2410056140F /* Util.m */; };
-		9EC5F32E1936D4DE0056140F /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F32D1936D4DE0056140F /* Payment.m */; };
 		9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3301936D4DE0056140F /* ParseBase.m */; };
 		9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Storyboard.storyboard */; };
 		9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3351936D74E0056140F /* MembersTableViewController.m */; };
@@ -70,8 +71,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9E1561631992459300A31398 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
-		9E1561641992459300A31398 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
 		9E15616619924AF800A31398 /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
 		9E15616719924AF800A31398 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
@@ -125,6 +124,12 @@
 		9EC15481198009EA003F80CA /* AttendancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendancesViewController.m; sourceTree = "<group>"; };
 		9EC302F0199E6E1C00777F79 /* employer_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "employer_check@2x.png"; sourceTree = "<group>"; };
 		9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "employer_unchecked@2x.png"; sourceTree = "<group>"; };
+		9EC302F4199E760A00777F79 /* Payment+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+Parse.h"; sourceTree = "<group>"; };
+		9EC302F5199E760A00777F79 /* Payment+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+Parse.m"; sourceTree = "<group>"; };
+		9EC3031319A0E35300777F79 /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
+		9EC3031419A0E35300777F79 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
+		9EC3031619A0E64C00777F79 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		9EC3031719A0E64C00777F79 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9EC5F2EA1936D0960056140F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9EC5F2EC1936D1380056140F /* Member+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Parse.h"; sourceTree = "<group>"; };
 		9EC5F2ED1936D1380056140F /* Member+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Parse.m"; sourceTree = "<group>"; };
@@ -154,8 +159,6 @@
 		9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		9EC5F3111936D2410056140F /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		9EC5F3121936D2410056140F /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
-		9EC5F32C1936D4DE0056140F /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
-		9EC5F32D1936D4DE0056140F /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9EC5F32F1936D4DE0056140F /* ParseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseBase.h; sourceTree = "<group>"; };
 		9EC5F3301936D4DE0056140F /* ParseBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseBase.m; sourceTree = "<group>"; };
 		9EC5F3321936D60D0056140F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
@@ -294,17 +297,19 @@
 				9EC5F2F31936D1B30056140F /* ParseBase+Parse.h */,
 				9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */,
 				9EC5F2EF1936D1720056140F /* PFObjectFactory.h */,
-				9E1561631992459300A31398 /* Attendance.h */,
-				9E1561641992459300A31398 /* Attendance.m */,
 				9EC5F2E91936D0960056140F /* Model.xcdatamodeld */,
+				9EC3031619A0E64C00777F79 /* Payment.h */,
+				9EC3031719A0E64C00777F79 /* Payment.m */,
+				9EC3031319A0E35300777F79 /* Attendance.h */,
+				9EC3031419A0E35300777F79 /* Attendance.m */,
 				9E6CC8D7199A948A00AB1CB8 /* Practice.h */,
 				9E6CC8D8199A948A00AB1CB8 /* Practice.m */,
 				9E15616619924AF800A31398 /* Member.h */,
 				9E15616719924AF800A31398 /* Member.m */,
 				9EC5F32F1936D4DE0056140F /* ParseBase.h */,
 				9EC5F3301936D4DE0056140F /* ParseBase.m */,
-				9EC5F32C1936D4DE0056140F /* Payment.h */,
-				9EC5F32D1936D4DE0056140F /* Payment.m */,
+				9EC302F4199E760A00777F79 /* Payment+Parse.h */,
+				9EC302F5199E760A00777F79 /* Payment+Parse.m */,
 				9EC5F2EC1936D1380056140F /* Member+Parse.h */,
 				9EC5F2ED1936D1380056140F /* Member+Parse.m */,
 				9E99F8CF193D717A004EB5C1 /* Practice+Parse.h */,
@@ -435,7 +440,9 @@
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
 				9E15616B19924B7800A31398 /* Member+Info.m in Sources */,
+				9EC3031819A0E64C00777F79 /* Payment.m in Sources */,
 				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
+				9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
@@ -447,7 +454,7 @@
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
-				9EC5F32E1936D4DE0056140F /* Payment.m in Sources */,
+				9EC3031519A0E35300777F79 /* Attendance.m in Sources */,
 				9E6CC8D9199A948A00AB1CB8 /* Practice.m in Sources */,
 				9EC5F3391936D9080056140F /* MemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
@@ -463,7 +470,6 @@
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */,
 				9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */,
-				9E1561651992459300A31398 /* Attendance.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

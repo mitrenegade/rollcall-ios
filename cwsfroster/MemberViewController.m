@@ -8,6 +8,8 @@
 
 #import "MemberViewController.h"
 #import "Member+Info.h"
+#import "Member+Parse.h"
+#import "Payment+Parse.h"
 
 @interface MemberViewController ()
 
@@ -131,6 +133,22 @@
 }
 
 - (IBAction)didClickAddPayment:(id)sender {
+    if ([inputPayment.text length] == 0) {
+        return;
+    }
+
+    PFRelation *relation = [self.member.pfObject relationForKey:@"payments"];
+    [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if ([objects count] == 0) {
+            NSLog(@"None!");
+            [self createPaymentOfType:PaymentTypeMonthly completion:^(Payment *payment) {
+                NSLog(@"Created a payment!");
+            }];
+        }
+        else {
+            NSLog(@"Objects: %lu", [objects count]);
+        }
+    }];
 }
 
 - (IBAction)didClickVenmo:(id)sender {
@@ -143,5 +161,25 @@
     [buttonVenmo setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
     [buttonCash setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
     paymentMode = PaymentModeCash;
+}
+
+-(void)createPaymentOfType:(PaymentType)type completion:(void(^)(Payment *payment))completion {
+    Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
+    newObj.member = self.member;
+    NSDate *startDate = [NSDate date];
+    [newObj updateEntityWithParams:@{@"startDate":startDate, @"endDate":[startDate dateByAddingTimeInterval:31*24*3600], @"days":@0, @"amount":@60, @"type":@(PaymentTypeMonthly)}];
+    [newObj saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            NSError *error;
+            [_appDelegate.managedObjectContext save:&error];
+            if (completion)
+                completion(newObj);
+        }
+        else {
+            NSLog(@"Could not save member!");
+            if (completion)
+                completion(nil);
+        }
+    }];
 }
 @end
