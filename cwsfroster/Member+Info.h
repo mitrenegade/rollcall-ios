@@ -18,4 +18,6 @@ typedef  enum MemberStatus {
 
 @interface Member (Info)
 
+-(int)creditsLeftForDailyMember;
+
 @end

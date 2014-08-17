@@ -10,4 +10,7 @@
 
 @implementation Member (Info)
 
+-(int)creditsLeftForDailyMember {
+    return 0;
+}
 @end

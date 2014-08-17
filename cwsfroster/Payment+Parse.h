@@ -15,6 +15,12 @@ typedef enum PaymentTypeEnum {
     PaymentTypeDaily
 } PaymentType;
 
+typedef enum PaymentSourceEnum {
+    PaymentSourceNone,
+    PaymentSourceVenmo,
+    PaymentSourceCash
+} PaymentSource;
+
 @interface Payment (Parse) <PFObjectFactory>
 
 @end

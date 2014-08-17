@@ -48,6 +48,7 @@
 		9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC302F5199E760A00777F79 /* Payment+Parse.m */; };
 		9EC3031519A0E35300777F79 /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031419A0E35300777F79 /* Attendance.m */; };
 		9EC3031819A0E64C00777F79 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031719A0E64C00777F79 /* Payment.m */; };
+		9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031A19A0EA9500777F79 /* PaymentViewController.m */; };
 		9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2E91936D0960056140F /* Model.xcdatamodeld */; };
 		9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2ED1936D1380056140F /* Member+Parse.m */; };
 		9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */; };
@@ -130,6 +131,8 @@
 		9EC3031419A0E35300777F79 /* Attendance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Attendance.m; sourceTree = "<group>"; };
 		9EC3031619A0E64C00777F79 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
 		9EC3031719A0E64C00777F79 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
+		9EC3031919A0EA9500777F79 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		9EC3031A19A0EA9500777F79 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		9EC5F2EA1936D0960056140F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9EC5F2EC1936D1380056140F /* Member+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Parse.h"; sourceTree = "<group>"; };
 		9EC5F2ED1936D1380056140F /* Member+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Parse.m"; sourceTree = "<group>"; };
@@ -272,6 +275,8 @@
 				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
 				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
+				9EC3031919A0EA9500777F79 /* PaymentViewController.h */,
+				9EC3031A19A0EA9500777F79 /* PaymentViewController.m */,
 			);
 			path = cwsfroster;
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
+				9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
