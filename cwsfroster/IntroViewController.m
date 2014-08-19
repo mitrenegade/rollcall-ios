@@ -81,8 +81,6 @@
             }
         }];
     }
-
-    // todo: make sure all objects not in parse data base are deleted from core data
 }
 
 -(void)showProgress {

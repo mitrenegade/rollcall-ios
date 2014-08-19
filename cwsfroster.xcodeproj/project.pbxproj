@@ -41,6 +41,10 @@
 		9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */; };
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
+		9EA94BDC19A38CD400A74F90 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDB19A38CD400A74F90 /* Payment.m */; };
+		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
+		9EA94BE119A3C10F00A74F90 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA94BE019A3C10F00A74F90 /* Social.framework */; };
+		9EA94BE419A3C1BD00A74F90 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA94BE219A3C1A300A74F90 /* libz.dylib */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
 		9EB48DC31703AABC001D360F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC21703AABC001D360F /* icon@2x.png */; };
 		9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50519A4CE7E003441AC /* Parse.framework */; };
@@ -126,6 +130,12 @@
 		9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Parse.m"; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		9EA94BDA19A38CD400A74F90 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		9EA94BDB19A38CD400A74F90 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
+		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
+		9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendGridHelper.m; sourceTree = "<group>"; };
+		9EA94BE019A3C10F00A74F90 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		9EA94BE219A3C1A300A74F90 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9EB48DC01703AAB7001D360F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9EB48DC21703AABC001D360F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		9EC0F50219A4CB7B003441AC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -182,6 +192,7 @@
 		9EC5F3381936D9080056140F /* MemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberViewController.m; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E252287ECE6049998AD38737 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +307,8 @@
 				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
 				9EC3031919A0EA9500777F79 /* PaymentViewController.h */,
 				9EC3031A19A0EA9500777F79 /* PaymentViewController.m */,
+				9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */,
+				9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */,
 			);
 			path = cwsfroster;
 			sourceTree = "<group>";
@@ -529,6 +542,7 @@
 				9EC5F3311936D4DE0056140F /* ParseBase.m in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */,
+				9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */,
 				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */,

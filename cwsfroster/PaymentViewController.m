@@ -255,7 +255,7 @@
         labelInfo.textColor = [UIColor greenColor];
     }
     else if ([payment isDaily]) {
-        info = [NSString stringWithFormat:@"%dd left", [payment daysLeft]]; // todo: calculate based on attendances instead
+        info = [NSString stringWithFormat:@"%dd left", [payment daysLeft]];
         labelInfo.textColor = [UIColor blueColor];
     }
 
