@@ -9,18 +9,6 @@
 #import "Payment.h"
 #import "ParseBase+Parse.h"
 
-typedef enum PaymentTypeEnum {
-    PaymentTypeUnpaid = 0,
-    PaymentTypeMonthly,
-    PaymentTypeDaily
-} PaymentType;
-
-typedef enum PaymentSourceEnum {
-    PaymentSourceNone,
-    PaymentSourceVenmo,
-    PaymentSourceCash
-} PaymentSource;
-
 @interface Payment (Parse) <PFObjectFactory>
 
 @end

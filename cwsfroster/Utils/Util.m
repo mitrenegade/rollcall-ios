@@ -104,6 +104,33 @@
     return [gregorian dateFromComponents:components];
 }
 
++(NSDate *)beginningOfMonthForDate:(NSDate *)date localTimeZone:(BOOL)local {
+    // warning: DST
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [gregorian components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:date]; // Get necessary date components
+    if (local) // local timezone...may display with time offsets
+        [gregorian setTimeZone:[NSTimeZone localTimeZone]];
+    else
+        [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [components setDay:0];
+    return [gregorian dateFromComponents:components];
+}
+
++(NSDate *)endOfMonthForDate:(NSDate *)date localTimeZone:(BOOL)local {
+    // warning: DST
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [gregorian components:NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit fromDate:date]; // Get necessary date components
+    if (local) // local timezone...may display with time offsets
+        [gregorian setTimeZone:[NSTimeZone localTimeZone]];
+    else
+        [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    [components setDay:0];
+    [components setMonth:components.month+1];
+    return [gregorian dateFromComponents:components];
+}
+
 +(BOOL)date:(NSDate *)date containedInWeekOfDate:(NSDate *)targetDate {
     // accounts for DST
     // takes week span for targetDate, and determines if date is contained inside it
@@ -136,4 +163,16 @@
     return [@[@"Sat", @"Sun", @"Mon", @"Tues", @"Wed", @"Thurs", @"Fri", @"Sat", @"Sun"] objectAtIndex:weekday]; // weekday ranges from 1 to 7
 }
 
++(NSString *)shortMonthForDate:(NSDate *)date {
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *components =
+    [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit |
+                           NSDayCalendarUnit) fromDate:date];
+    NSInteger monthNumber = [components month];
+    NSDateFormatter *monthFormatter = [[NSDateFormatter alloc] init];
+    NSString *monthName = [[monthFormatter monthSymbols] objectAtIndex:(monthNumber-1)];
+    NSString *shortString = [[monthName substringToIndex:3] uppercaseString];
+    return shortString;
+}
 @end

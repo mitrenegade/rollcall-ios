@@ -70,7 +70,14 @@
                 }
             }
             else {
-                [self synchronizeClass:className fromObjects:objects];
+                if ([className isEqualToString:@"Payment"]) {
+                    NSLog(@"Here");
+                }
+                [ParseBase synchronizeClass:className fromObjects:objects completion:^{
+                    ready[className] = @YES;
+                    if ([self isReady])
+                        [self goToPractices];
+                }];
             }
         }];
     }
@@ -109,32 +116,4 @@
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
 }
 
--(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects {
-    // todo: perform this in background thread and use managed object context threading
-    Class class = NSClassFromString(className);
-
-    NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
-    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
-    if ([className isEqualToString:@"Attendance"]) {
-        NSLog(@"Here");
-    }
-    for (PFObject *object in objects) {
-        NSManagedObject *classObject = [class fromPFObject:object];
-        [all removeObject:classObject];
-    }
-
-    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
-
-    for (id object in all) {
-        [_appDelegate.managedObjectContext deleteObject:object];
-    }
-    ready[className] = @YES;
-    if ([self isReady])
-        [self goToPractices];
-
-    NSError *error;
-    [_appDelegate.managedObjectContext save:&error];
-
-}
 @end

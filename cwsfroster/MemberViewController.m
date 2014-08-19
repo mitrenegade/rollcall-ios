@@ -122,6 +122,5 @@
 -(void)didAddPayment {
     // member.payment now exists
     NSLog(@"Update member status, credits, and toggle switches here");
-    [self.navigationController popViewControllerAnimated:YES];
 }
 @end

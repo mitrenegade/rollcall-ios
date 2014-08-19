@@ -10,6 +10,8 @@
 #import "Member+Info.h"
 #import "Member+Parse.h"
 #import "Payment+Parse.h"
+#import "Payment+Info.h"
+#import "ParseBase+Parse.h"
 
 @interface PaymentViewController ()
 
@@ -32,6 +34,42 @@
     // Do any additional setup after loading the view.
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(didClickAddPayment:)];
     self.navigationItem.rightBarButtonItem = right;
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+
+    UIPickerView * pickerView = [[UIPickerView alloc] init];
+    [pickerView setDelegate:self];
+    [pickerView setDataSource:self];
+    [pickerView setShowsSelectionIndicator:YES];
+
+     UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+     keyboardDoneButtonView.barStyle = UIBarStyleBlack;
+     keyboardDoneButtonView.translucent = YES;
+     keyboardDoneButtonView.tintColor = nil;
+     [keyboardDoneButtonView sizeToFit];
+     UIBarButtonItem* button1 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done") style:UIBarButtonItemStyleBordered target:self action:@selector(selectDate:)];
+     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+     UIBarButtonItem* button2 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelectDate:)];
+     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:button2, flex, button1, nil]];
+
+    [self generatePickerDates];
+
+    [self.inputDate setInputView:pickerView];
+    [self.inputDate setText:[self pickerView:pickerView titleForRow:0 forComponent:0]];
+    selectedDate = dateForDateString[self.inputDate.text];
+
+    self.inputDate.inputAccessoryView = keyboardDoneButtonView;
+
+    if ([[self.paymentsFetcher fetchedObjects] count] == 0) {
+        // make a update just in case
+        PFQuery *query = [PFQuery queryWithClassName:@"Payment"];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            [ParseBase synchronizeClass:@"Payment" fromObjects:objects completion:^{
+                [self.tableView reloadData];
+            }];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,20 +119,35 @@
     if ([self.inputAmount.text length] == 0) {
         return;
     }
+    if (paymentType == PaymentTypeUnpaid) {
+        [UIAlertView alertViewWithTitle:@"Please select a payment type" message:nil];
+        return;
+    }
+    if (paymentSource == PaymentSourceNone) {
+        [UIAlertView alertViewWithTitle:@"Please select a payment source" message:nil];
+        return;
+    }
 
     PFRelation *relation = [self.member.pfObject relationForKey:@"payments"];
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if ([objects count] == 0) {
             NSLog(@"None!");
-            [self createPaymentOfType:PaymentTypeMonthly completion:^(Payment *payment) {
+            [self createPaymentOfType:paymentType completion:^(Payment *payment) {
                 NSLog(@"Created a payment!");
                 [self.delegate didAddPayment];
+                NSError *error;
+                [self.paymentsFetcher performFetch:&error];
+                [self.tableView reloadData];
             }];
         }
         else {
             NSLog(@"Objects: %lu", (unsigned long)[objects count]);
-            // todo: find payments ahead of time and display on the table
+            // todo: prevent multiple payments for a month
         }
+
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.inputDate resignFirstResponder];
+        [self.inputAmount resignFirstResponder];
     }];
 }
 
@@ -102,7 +155,12 @@
     Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
     newObj.member = self.member;
     NSDate *startDate = [NSDate date];
-    [newObj updateEntityWithParams:@{@"startDate":startDate, @"endDate":[startDate dateByAddingTimeInterval:31*24*3600], @"days":@0, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeMonthly)}];
+    if (type == PaymentTypeMonthly) {
+        [newObj updateEntityWithParams:@{@"startDate":startDate, @"endDate":[Util endOfMonthForDate:startDate localTimeZone:YES], @"days":@0, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeMonthly)}];
+    }
+    else if (type == PaymentTypeDaily) {
+        [newObj updateEntityWithParams:@{@"startDate":startDate, @"days":@5, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeDaily)}];
+    }
     [newObj saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             NSError *error;
@@ -118,4 +176,139 @@
     }];
 }
 
+#pragma mark TableViewDatasource
+-(NSFetchedResultsController *)paymentsFetcher {
+    if (paymentsFetcher) {
+        return paymentsFetcher;
+    }
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Payment"];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"member.parseID = %@", self.member.parseID]];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
+    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
+    paymentsFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"type" cacheName:nil];
+    NSError *error;
+    [paymentsFetcher performFetch:&error];
+
+    return paymentsFetcher;
+
+}
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    // possibly return 2
+    return [[self.paymentsFetcher sections] count];
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    NSNumber *sectionTitle = self.paymentsFetcher.sectionIndexTitles[section];
+    if ([sectionTitle intValue] == PaymentTypeDaily)
+        return @"Day to day pass";
+    else if ([sectionTitle intValue] == PaymentTypeMonthly)
+        return @"Monthly payment";
+    return @"";
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.paymentsFetcher.sections objectAtIndex:section];
+    NSString *title = [sectionInfo indexTitle];
+    NSString *name = [sectionInfo name];
+    NSArray *objects = [sectionInfo objects];
+    NSLog(@"Section title %@ name %@ count %lu", title, name, (unsigned long)[objects count]);
+    return [sectionInfo numberOfObjects];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PaymentCell" forIndexPath:indexPath];
+
+    // Configure the cell...
+    Payment *payment = (Payment*)[self.paymentsFetcher objectAtIndexPath:indexPath];
+    UILabel *labelTitle = (UILabel *)[cell viewWithTag:1];
+    UILabel *labelAmount = (UILabel *)[cell viewWithTag:2];
+    UILabel *labelInfo = (UILabel *)[cell viewWithTag:3];
+    NSString *title, *info, *source = @"";
+    title = [NSString stringWithFormat:@"%@", [Util simpleDateFormat:payment.startDate]];
+    if ([payment isMonthly]) {
+        info = [Util shortMonthForDate:payment.startDate];
+        labelInfo.textColor = [UIColor greenColor];
+    }
+    else if ([payment isDaily]) {
+        info = [NSString stringWithFormat:@"%@d left", payment.days]; // todo: calculate based on attendances instead
+        labelInfo.textColor = [UIColor blueColor];
+    }
+
+    if ([payment.source intValue] == PaymentSourceCash) {
+        source = @"(cash)";
+    }
+    else if ([payment.source intValue] == PaymentSourceVenmo) {
+        source = @"(venmo)";
+    }
+    labelTitle.text = title;
+    labelAmount.text = [NSString stringWithFormat:@"$%3.2f %@", [payment.amount floatValue], source];
+    labelInfo.text = info;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    cell.textLabel.textColor = [UIColor darkGrayColor];
+
+    return cell;
+}
+
+#pragma mark textfield
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.inputAmount)
+        lastDateString = self.inputDate.text;
+
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
+#pragma mark Picker DataSource/Delegate
+-(void)generatePickerDates {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        datesForPicker = [NSMutableArray array];
+        dateForDateString = [NSMutableDictionary dictionary];
+    });
+
+    for (int row = 0; row < 31; row++) {
+        NSString * dayString;
+        NSString * dateString;
+
+        NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*row];
+
+        dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
+        dateString = [Util simpleDateFormat:date];
+        NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
+        [datesForPicker addObject:title];
+        dateForDateString[title] = date;
+    }
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if (!datesForPicker)
+        [self generatePickerDates];
+    return datesForPicker.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (!datesForPicker)
+        [self generatePickerDates];
+    return datesForPicker[row];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
+    [self.inputDate setText:title];
+}
+
+-(void)selectDate:(id)sender {
+    selectedDate = dateForDateString[self.inputDate.text];
+    [self.inputDate resignFirstResponder];
+}
+
+-(void)cancelSelectDate:(id)sender {
+    self.inputDate.text = lastDateString;
+    [self.inputDate resignFirstResponder];
+}
 @end

@@ -103,4 +103,32 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
 
     objc_setAssociatedObject(self, PFObjectTagKey, pfObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects completion:(void(^)())completion {
+    // todo: perform this in background thread and use managed object context threading
+    Class class = NSClassFromString(className);
+
+    NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
+    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
+    if ([className isEqualToString:@"Attendance"]) {
+        NSLog(@"Here");
+    }
+    for (PFObject *object in objects) {
+        NSManagedObject *classObject = [class fromPFObject:object];
+        [all removeObject:classObject];
+    }
+
+    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
+    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
+
+    for (id object in all) {
+        [_appDelegate.managedObjectContext deleteObject:object];
+    }
+
+    NSError *error;
+    [_appDelegate.managedObjectContext save:&error];
+
+    if (completion)
+        completion();
+}
 @end

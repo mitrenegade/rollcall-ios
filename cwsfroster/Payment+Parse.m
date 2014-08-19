@@ -33,6 +33,8 @@
             self.startDate = [self.pfObject objectForKey:@"startDate"];
             self.endDate = [self.pfObject objectForKey:@"endDate"];
             self.days = [self.pfObject objectForKey:@"days"];
+            self.source = [self.pfObject objectForKey:@"source"];
+            self.type = [self.pfObject objectForKey:@"type"];
             self.parseID = self.pfObject.objectId;
 
             // relationships
@@ -55,6 +57,10 @@
             self.pfObject[@"endDate"] = self.endDate;
         if (self.days)
             self.pfObject[@"days"] = self.days;
+        if (self.source)
+            self.pfObject[@"source"] = self.source;
+        if (self.type)
+            self.pfObject[@"type"] = self.type;
 
         // relationships
         if (self.member)

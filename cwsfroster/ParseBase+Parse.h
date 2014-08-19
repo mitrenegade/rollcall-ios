@@ -17,4 +17,6 @@
 
 +(id)fromPFObject:(PFObject *)object;
 
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects completion:(void(^)())completion;
+
 @end
