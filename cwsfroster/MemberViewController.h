@@ -23,18 +23,21 @@
     IBOutlet UITextField *inputName;
 
     IBOutlet UILabel *labelBeginner;
-    IBOutlet UILabel *labelPaid;
-    IBOutlet UILabel *labelPass;
+    IBOutlet UILabel *labelMonthly;
+    IBOutlet UILabel *labelDaily;
     IBOutlet UILabel *labelInactive;
 
     IBOutlet UISwitch *switchBeginner;
-    IBOutlet UISwitch *switchPaid;
-    IBOutlet UISwitch *switchPass;
+    IBOutlet UISwitch *switchMonthly;
+    IBOutlet UISwitch *switchDaily;
     IBOutlet UISwitch *switchInactive;
 
     __weak IBOutlet UILabel *labelCreditsTitle;
     __weak IBOutlet UILabel *labelCredits;
     __weak IBOutlet UIButton *buttonAddPayment;
+
+    NSArray *payments;
+    NSArray *attendances;
 }
 
 @property (nonatomic, assign) Member *member;

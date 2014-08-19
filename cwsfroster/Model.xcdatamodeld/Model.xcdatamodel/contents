@@ -29,7 +29,7 @@
         <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <relationship name="attendances" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Attendance" inverseName="payment" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="payment" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="member" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Member" inverseName="payments" inverseEntity="Member" syncable="YES"/>
     </entity>
     <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
@@ -42,7 +42,7 @@
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="133"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Payment" positionX="-18" positionY="72" width="128" height="165"/>
+        <element name="Payment" positionX="-18" positionY="72" width="128" height="163"/>
         <element name="Practice" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>
 </model>

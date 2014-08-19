@@ -64,9 +64,11 @@
     if ([[self.paymentsFetcher fetchedObjects] count] == 0) {
         // make a update just in case
         PFQuery *query = [PFQuery queryWithClassName:@"Payment"];
+        if (self.member.pfObject)
+            [query whereKey:@"member" equalTo:self.member.pfObject]; // sometimes member has not synced with the database? prevent crash
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [ParseBase synchronizeClass:@"Payment" fromObjects:objects completion:^{
-                [self.tableView reloadData];
+            [ParseBase synchronizeClass:@"Payment" fromObjects:objects replaceExisting:NO completion:^{
+                [self refresh];
             }];
         }];
     }
@@ -88,6 +90,12 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(void) refresh {
+    NSError *error;
+    [self.paymentsFetcher performFetch:&error];
+    [self.tableView reloadData];
+}
 
 - (IBAction)didClickButton:(id)sender {
     // payment source
@@ -135,9 +143,7 @@
             [self createPaymentOfType:paymentType completion:^(Payment *payment) {
                 NSLog(@"Created a payment!");
                 [self.delegate didAddPayment];
-                NSError *error;
-                [self.paymentsFetcher performFetch:&error];
-                [self.tableView reloadData];
+                [self refresh];
             }];
         }
         else {
@@ -154,7 +160,11 @@
 -(void)createPaymentOfType:(PaymentType)type completion:(void(^)(Payment *payment))completion {
     Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
     newObj.member = self.member;
-    NSDate *startDate = [NSDate date];
+    NSDate *startDate = dateForDateString[self.inputDate.text];
+    if (!startDate) {
+        [UIAlertView alertViewWithTitle:@"Invalid date!" message:[NSString stringWithFormat:@"Error: selected date %@ had no valid date", self.inputDate.text]];
+        return;
+    }
     if (type == PaymentTypeMonthly) {
         [newObj updateEntityWithParams:@{@"startDate":startDate, @"endDate":[Util endOfMonthForDate:startDate localTimeZone:YES], @"days":@0, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeMonthly)}];
     }
@@ -233,7 +243,7 @@
         labelInfo.textColor = [UIColor greenColor];
     }
     else if ([payment isDaily]) {
-        info = [NSString stringWithFormat:@"%@d left", payment.days]; // todo: calculate based on attendances instead
+        info = [NSString stringWithFormat:@"%dd left", [payment daysLeft]]; // todo: calculate based on attendances instead
         labelInfo.textColor = [UIColor blueColor];
     }
 

@@ -26,4 +26,7 @@
     return [self.source integerValue] == PaymentSourceVenmo;
 }
 
+-(int)daysLeft {
+    return [self.days intValue] - (int)[self.attendances count];
+}
 @end

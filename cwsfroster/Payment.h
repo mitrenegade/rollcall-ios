@@ -20,7 +20,15 @@
 @property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSNumber * source;
-@property (nonatomic, retain) Attendance *attendances;
+@property (nonatomic, retain) NSSet *attendances;
 @property (nonatomic, retain) Member *member;
+@end
+
+@interface Payment (CoreDataGeneratedAccessors)
+
+- (void)addAttendancesObject:(Attendance *)value;
+- (void)removeAttendancesObject:(Attendance *)value;
+- (void)addAttendances:(NSSet *)values;
+- (void)removeAttendances:(NSSet *)values;
 
 @end

@@ -26,4 +26,6 @@ typedef enum PaymentSourceEnum {
 -(BOOL)isDaily;
 -(BOOL)isCash;
 -(BOOL)isVenmo;
+
+-(int)daysLeft;
 @end

@@ -45,7 +45,7 @@
 
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
+    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     for (NSString *className in classes) {
@@ -73,7 +73,7 @@
                 if ([className isEqualToString:@"Payment"]) {
                     NSLog(@"Here");
                 }
-                [ParseBase synchronizeClass:className fromObjects:objects completion:^{
+                [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;
                     if ([self isReady])
                         [self goToPractices];
