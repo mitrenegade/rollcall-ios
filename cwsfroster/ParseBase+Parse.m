@@ -103,4 +103,35 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
 
     objc_setAssociatedObject(self, PFObjectTagKey, pfObject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects replaceExisting:(BOOL)replace completion:(void(^)())completion {
+    [self synchronizeClass:className fromObjects:objects replaceExisting:replace scope:@{} completion:completion];
+}
+
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects replaceExisting:(BOOL)replace scope:(NSDictionary *)scope completion:(void(^)())completion {
+    // todo: perform this in background thread and use managed object context threading
+    Class class = NSClassFromString(className);
+
+    NSMutableArray *all = [[[class where:scope] all] mutableCopy];
+    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
+    for (PFObject *object in objects) {
+        NSManagedObject *classObject = [class fromPFObject:object];
+        [all removeObject:classObject];
+    }
+
+    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
+    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
+
+    if (replace) {
+        for (id object in all) {
+            [_appDelegate.managedObjectContext deleteObject:object];
+        }
+    }
+
+    NSError *error;
+    [_appDelegate.managedObjectContext save:&error];
+
+    if (completion)
+        completion();
+}
 @end

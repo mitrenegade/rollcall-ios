@@ -7,7 +7,6 @@
 //
 
 #import "Member+Parse.h"
-#import "ParseBase+Parse.h"
 
 @implementation Member (Parse)
 

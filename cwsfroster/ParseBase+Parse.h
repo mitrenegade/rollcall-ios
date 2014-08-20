@@ -17,4 +17,6 @@
 
 +(id)fromPFObject:(PFObject *)object;
 
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects replaceExisting:(BOOL)replace completion:(void(^)())completion;
++(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects replaceExisting:(BOOL)replace scope:(NSDictionary *)scope completion:(void(^)())completion;
 @end

@@ -194,7 +194,7 @@
     // Return the number of rows in the section.
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.attendanceFetcher.sections objectAtIndex:section];
     NSString *title = [sectionInfo indexTitle];
-    NSString *nane = [sectionInfo name];
+    NSString *name = [sectionInfo name];
     NSArray *objects = [sectionInfo objects];
     for (Attendance *a in objects) {
         Member *m = a.member;

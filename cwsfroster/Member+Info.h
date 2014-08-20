@@ -16,6 +16,13 @@ typedef  enum MemberStatus {
     MemberStatusInactive,
 } MemberStatus;
 
+@class Payment;
 @interface Member (Info)
 
+-(Payment *)latestMonthlyPayment;
+-(Payment *)currentMonthlyPayment;
+-(Payment *)currentDailyPayment;
+
+-(int)daysLeftForDailyMember;
+-(NSString *)currentPaidMonth;
 @end

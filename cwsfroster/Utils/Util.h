@@ -11,6 +11,9 @@
 + (NSString *)simpleTimeAgo:(NSDate *)date;
 
 +(NSDate *)beginningOfDate:(NSDate *)date localTimeZone:(BOOL)local;
++(NSDate *)beginningOfMonthForDate:(NSDate *)date localTimeZone:(BOOL)local;
++(NSDate *)endOfMonthForDate:(NSDate *)date localTimeZone:(BOOL)local;
 +(BOOL)date:(NSDate *)date containedInWeekOfDate:(NSDate *)targetDate;
 +(NSString*)weekdayStringFromDate:(NSDate*)date localTimeZone:(BOOL)local;
++(NSString *)shortMonthForDate:(NSDate *)date;
 @end

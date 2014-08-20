@@ -63,14 +63,21 @@
                         progress.detailsLabelText = @"Request timeout. Make sure you are connected to the Internet";
                     }
                     else {
-                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %lu", error.code];
+                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %ld", (long)error.code];
                     }
                     isFailed = YES;
                     [self performSelector:@selector(hideProgress) withObject:nil afterDelay:3];
                 }
             }
             else {
-                [self synchronizeClass:className fromObjects:objects];
+                if ([className isEqualToString:@"Payment"]) {
+                    NSLog(@"Here");
+                }
+                [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
+                    ready[className] = @YES;
+                    if ([self isReady])
+                        [self goToPractices];
+                }];
             }
         }];
     }
@@ -109,41 +116,4 @@
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
 }
 
--(void)synchronizeClass:(NSString *)className fromObjects:(NSArray *)objects {
-    // todo: perform this in background thread and use managed object context threading
-    Class class = NSClassFromString(className);
-
-    NSMutableArray *all = [[[class where:@{}] all] mutableCopy];
-    NSLog(@"All existing %@ before sync: %lu", className, (unsigned long)all.count);
-    NSString *diego;
-    for (PFObject *object in objects) {
-        NSManagedObject *classObject = [class fromPFObject:object];
-        [all removeObject:classObject];
-
-        /*
-        if ([classObject isKindOfClass:[Member class]]) {
-            Member *m = (Member *)classObject;
-            Member *newObj = (Member *)[[[class where:@{@"parseID":m.parseID}] all] firstObject];
-            NSLog(@"member %@ name: %@", newObj.parseID, newObj.name);
-            NSLog(@"member pfObject: %@", newObj.pfObject);
-            if ([newObj.name isEqualToString:@"Diego Giraldez"])
-                diego = newObj.parseID;
-        }
-         */
-    }
-
-    NSLog(@"Query for %@ returned %lu objects", className, (unsigned long)[objects count]);
-    NSLog(@"No longer in core data %@ after sync: %lu", className, (unsigned long)all.count);
-
-    for (id object in all) {
-        [_appDelegate.managedObjectContext deleteObject:object];
-    }
-    ready[className] = @YES;
-    if ([self isReady])
-        [self goToPractices];
-
-    NSError *error;
-    [_appDelegate.managedObjectContext save:&error];
-
-}
 @end

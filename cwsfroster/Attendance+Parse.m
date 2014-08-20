@@ -7,9 +7,9 @@
 //
 
 #import "Attendance+Parse.h"
-#import "ParseBase+Parse.h"
 #import "Member+Parse.h"
 #import "Practice+Parse.h"
+#import "Payment+Parse.h"
 
 @implementation Attendance (Parse)
 
@@ -38,9 +38,14 @@
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"member"];
-            self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
             object = [self.pfObject objectForKey:@"practice"];
-            self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
+            if (object.objectId)
+                self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
+            object = [self.pfObject objectForKey:@"payment"];
+            if (object.objectId)
+                self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -53,12 +58,16 @@
         // if not updated, this is a new object
         if (self.date)
             self.pfObject[@"date"] = self.date;
+        if (self.attended)
+            self.pfObject[@"attended"] = self.attended;
+
+        // relationships
         if (self.member)
             self.pfObject[@"member"] = self.member.pfObject;
         if (self.practice)
             self.pfObject[@"practice"] = self.practice.pfObject;
-        if (self.attended)
-            self.pfObject[@"attended"] = self.attended;
+        if (self.payment)
+            self.pfObject[@"payment"] = self.payment.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded)

@@ -24,9 +24,6 @@
     [Parse setApplicationId:@"1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
                   clientKey:@"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"];
 
-    NSArray *allMembers = [[Member where:@{}] all];
-    NSArray *allAttendances = [[Attendance where:@{}] all];
-
     return YES;
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import "Practice+Parse.h"
-#import "ParseBase+Parse.h"
 
 @implementation Practice (Parse)
 
