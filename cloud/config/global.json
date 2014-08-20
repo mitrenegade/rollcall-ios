@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "CWSF Roster": {
+            "applicationId": "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY", 
+            "masterKey": "Usdn8fFT5HK9V8RDHWqrcd9Nb6y1hvLeWuLwQlJg"
+        }, 
+        "_default": {
+            "link": "CWSF Roster"
+        }
+    }
+}
