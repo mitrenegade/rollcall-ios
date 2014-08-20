@@ -7,7 +7,6 @@
 //
 
 #import "ParseBase.h"
-#import <Parse/Parse.h>
 #import <objc/runtime.h>
 #import "PFObjectFactory.h"
 #import "NSManagedObject+Entity.h"

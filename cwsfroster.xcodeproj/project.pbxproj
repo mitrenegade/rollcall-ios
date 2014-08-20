@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83ECB7C44E1F43D089ABEE5A /* libPods.a */; };
 		9E15616819924AF800A31398 /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616719924AF800A31398 /* Member.m */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
@@ -25,7 +26,6 @@
 		9E80086416196883003E9B16 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086316196883003E9B16 /* Default.png */; };
 		9E80086616196883003E9B16 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086516196883003E9B16 /* Default@2x.png */; };
 		9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086716196884003E9B16 /* Default-568h@2x.png */; };
-		9E828A4016196B22009A6C44 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A3F16196B22009A6C44 /* Parse.framework */; };
 		9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */; };
 		9E828A5B16196B8D009A6C44 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5616196B75009A6C44 /* StoreKit.framework */; };
 		9E828A5D16196B8D009A6C44 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5216196B6F009A6C44 /* Security.framework */; };
@@ -43,6 +43,9 @@
 		9EA94BDC19A38CD400A74F90 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDB19A38CD400A74F90 /* Payment.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
 		9EB48DC31703AABC001D360F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC21703AABC001D360F /* icon@2x.png */; };
+		9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50519A4CE7E003441AC /* Parse.framework */; };
+		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
+		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
 		9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F0199E6E1C00777F79 /* employer_check@2x.png */; };
 		9EC302F3199E6E1C00777F79 /* employer_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */; };
@@ -73,6 +76,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		83ECB7C44E1F43D089ABEE5A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E15616619924AF800A31398 /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
 		9E15616719924AF800A31398 /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
@@ -101,7 +106,6 @@
 		9E80086316196883003E9B16 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		9E80086516196883003E9B16 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		9E80086716196884003E9B16 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		9E828A3F16196B22009A6C44 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9E828A4216196B47009A6C44 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9E828A4416196B4A009A6C44 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		9E828A4816196B52009A6C44 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -124,6 +128,10 @@
 		9EA94BDB19A38CD400A74F90 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9EB48DC01703AAB7001D360F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9EB48DC21703AABC001D360F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		9EC0F50219A4CB7B003441AC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		9EC0F50519A4CE7E003441AC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		9EC0F50719A4CEFF003441AC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		9EC0F50919A4D05F003441AC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9EC15480198009EA003F80CA /* AttendancesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendancesViewController.h; sourceTree = "<group>"; };
 		9EC15481198009EA003F80CA /* AttendancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendancesViewController.m; sourceTree = "<group>"; };
 		9EC302F0199E6E1C00777F79 /* employer_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "employer_check@2x.png"; sourceTree = "<group>"; };
@@ -181,13 +189,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */,
+				9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */,
 				9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */,
 				9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */,
 				9E80085216196883003E9B16 /* UIKit.framework in Frameworks */,
 				9E80085416196883003E9B16 /* Foundation.framework in Frameworks */,
 				9E80085616196883003E9B16 /* CoreGraphics.framework in Frameworks */,
-				9E828A4016196B22009A6C44 /* Parse.framework in Frameworks */,
 				9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */,
+				9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */,
 				9E828A5B16196B8D009A6C44 /* StoreKit.framework in Frameworks */,
 				9E828A5D16196B8D009A6C44 /* Security.framework in Frameworks */,
 				9E828A5E16196B8D009A6C44 /* QuartzCore.framework in Frameworks */,
@@ -197,6 +207,7 @@
 				9E828A6216196B8D009A6C44 /* CFNetwork.framework in Frameworks */,
 				9E828A6416196B8D009A6C44 /* Accounts.framework in Frameworks */,
 				9E828A6516196B8D009A6C44 /* AudioToolbox.framework in Frameworks */,
+				7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +234,7 @@
 				9E80085716196883003E9B16 /* cwsfroster */,
 				9E80085016196883003E9B16 /* Frameworks */,
 				9E80084E16196883003E9B16 /* Products */,
+				1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -237,6 +249,9 @@
 		9E80085016196883003E9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EC0F50919A4D05F003441AC /* FacebookSDK.framework */,
+				9EC0F50719A4CEFF003441AC /* Social.framework */,
+				9EC0F50519A4CE7E003441AC /* Parse.framework */,
 				9EC5F33C1936DD000056140F /* CoreLocation.framework */,
 				9EC5F33A1936DCA50056140F /* CoreData.framework */,
 				9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */,
@@ -249,10 +264,10 @@
 				9E828A4816196B52009A6C44 /* CFNetwork.framework */,
 				9E828A4416196B4A009A6C44 /* Accounts.framework */,
 				9E828A4216196B47009A6C44 /* AudioToolbox.framework */,
-				9E828A3F16196B22009A6C44 /* Parse.framework */,
 				9E80085116196883003E9B16 /* UIKit.framework */,
 				9E80085316196883003E9B16 /* Foundation.framework */,
 				9E80085516196883003E9B16 /* CoreGraphics.framework */,
+				83ECB7C44E1F43D089ABEE5A /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,6 +278,7 @@
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
 				9E80086116196883003E9B16 /* AppDelegate.m */,
+				9EC0F50219A4CB7B003441AC /* Constants.h */,
 				9EC5F2E51936CFC00056140F /* Parse Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
@@ -381,9 +397,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E80086B16196884003E9B16 /* Build configuration list for PBXNativeTarget "cwsfroster" */;
 			buildPhases = (
+				44A1240314BB46F4ADCB4E68 /* Check Pods Manifest.lock */,
 				9E80084916196883003E9B16 /* Sources */,
 				9E80084A16196883003E9B16 /* Frameworks */,
 				9E80084B16196883003E9B16 /* Resources */,
+				9340F81367CE4BE7BCD63448 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -400,7 +418,7 @@
 		9E80084416196883003E9B16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Bobby Ren";
 			};
 			buildConfigurationList = 9E80084716196883003E9B16 /* Build configuration list for PBXProject "cwsfroster" */;
@@ -441,6 +459,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		44A1240314BB46F4ADCB4E68 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9340F81367CE4BE7BCD63448 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9E80084916196883003E9B16 /* Sources */ = {
@@ -522,6 +573,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -550,11 +602,13 @@
 		};
 		9E80086C16196884003E9B16 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
@@ -567,11 +621,13 @@
 		};
 		9E80086D16196884003E9B16 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
