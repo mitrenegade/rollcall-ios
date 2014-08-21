@@ -26,6 +26,7 @@
         <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
         <attribute name="days" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="endDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="receiptDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="startDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -42,7 +43,7 @@
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="133"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="135"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="Payment" positionX="-18" positionY="72" width="128" height="163"/>
+        <element name="Payment" positionX="-18" positionY="72" width="128" height="180"/>
         <element name="Practice" positionX="-36" positionY="54" width="128" height="105"/>
     </elements>
 </model>

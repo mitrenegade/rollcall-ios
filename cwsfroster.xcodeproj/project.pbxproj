@@ -15,6 +15,7 @@
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon2@2x.png */; };
 		9E15617A199269C300A31398 /* icon1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon1@2x.png */; };
+		9E508D2C19A515A9002B5C4C /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E508D2B19A515A9002B5C4C /* Payment.m */; };
 		9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */; };
 		9E6CC8D9199A948A00AB1CB8 /* Practice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D8199A948A00AB1CB8 /* Practice.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
@@ -40,7 +41,6 @@
 		9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */; };
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
-		9EA94BDC19A38CD400A74F90 /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDB19A38CD400A74F90 /* Payment.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
 		9EB48DC31703AABC001D360F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC21703AABC001D360F /* icon@2x.png */; };
 		9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50519A4CE7E003441AC /* Parse.framework */; };
@@ -89,6 +89,8 @@
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2@2x.png"; sourceTree = "<group>"; };
 		9E156179199269C300A31398 /* icon1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1@2x.png"; sourceTree = "<group>"; };
+		9E508D2A19A515A9002B5C4C /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
+		9E508D2B19A515A9002B5C4C /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeEditViewController.h; sourceTree = "<group>"; };
 		9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeEditViewController.m; sourceTree = "<group>"; };
 		9E6CC8D7199A948A00AB1CB8 /* Practice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Practice.h; sourceTree = "<group>"; };
@@ -124,8 +126,6 @@
 		9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Parse.m"; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		9EA94BDA19A38CD400A74F90 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
-		9EA94BDB19A38CD400A74F90 /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9EB48DC01703AAB7001D360F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		9EB48DC21703AABC001D360F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		9EC0F50219A4CB7B003441AC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -321,9 +321,9 @@
 				9EC5F2F31936D1B30056140F /* ParseBase+Parse.h */,
 				9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */,
 				9EC5F2EF1936D1720056140F /* PFObjectFactory.h */,
+				9E508D2A19A515A9002B5C4C /* Payment.h */,
+				9E508D2B19A515A9002B5C4C /* Payment.m */,
 				9EC5F2E91936D0960056140F /* Model.xcdatamodeld */,
-				9EA94BDA19A38CD400A74F90 /* Payment.h */,
-				9EA94BDB19A38CD400A74F90 /* Payment.m */,
 				9EC3031319A0E35300777F79 /* Attendance.h */,
 				9EC3031419A0E35300777F79 /* Attendance.m */,
 				9E6CC8D7199A948A00AB1CB8 /* Practice.h */,
@@ -515,7 +515,7 @@
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				9EC3031519A0E35300777F79 /* Attendance.m in Sources */,
-				9EA94BDC19A38CD400A74F90 /* Payment.m in Sources */,
+				9E508D2C19A515A9002B5C4C /* Payment.m in Sources */,
 				9E6CC8D9199A948A00AB1CB8 /* Practice.m in Sources */,
 				9EC5F3391936D9080056140F /* MemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,

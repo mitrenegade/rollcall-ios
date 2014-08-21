@@ -12,7 +12,6 @@
 #import "Payment+Parse.h"
 #import "PaymentViewController.h"
 #import "Attendance+Parse.h"
-#import "ParseRequest.h"
 
 @interface MemberViewController ()
 
