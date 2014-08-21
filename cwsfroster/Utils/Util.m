@@ -113,7 +113,7 @@
         [gregorian setTimeZone:[NSTimeZone localTimeZone]];
     else
         [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    [components setDay:0];
+    [components setDay:1];
     return [gregorian dateFromComponents:components];
 }
 
@@ -126,8 +126,9 @@
         [gregorian setTimeZone:[NSTimeZone localTimeZone]];
     else
         [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
-    [components setDay:0];
-    [components setMonth:components.month+1];
+
+    components.day = 0;
+    [components setMonth:([components month]+1)];
     return [gregorian dateFromComponents:components];
 }
 

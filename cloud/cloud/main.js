@@ -42,7 +42,39 @@ Parse.Cloud.define("associatePayments", function(request, response) {
 	})
 });
 
-function setPaymentForAttendances(payment, attendances) {
+function setPaymentForAttendances(newPayment, response) {
+	var member = newPayment.get("member");
+	var startDate = newPayment.get("startDate");
+	var type = newPayment.get("type")
+	var endDate = newPayment.get("endDate")
+
+	var query = new Parse.Query("Attendance");
+	query.greaterThanOrEqualTo("date", startDate);
+	query.lessThanOrEqualTo("date", endDate);
+	query.equalTo("member", member);
+
+	console.log("searching for monthly attendances between " + startDate + " and " + endDate);
+	query.find({
+		success: function(results) {
+			console.log(results.length + " attendances found");
+			for (i = 0; i<results.length; i++) {
+				var attendance = results[i];
+				var payment = attendance.get("payment"); // only returns objectId, not the actual payment
+				console.log("**** attendance " + attendance.id + ": old payment " + payment.id);
+				attendance.set("payment", newPayment);
+				attendance.save()
+				var payment2 = attendance.get("payment");
+				console.log("****** attendance " + attendance.id + ": new payment " + payment2.id);
+			}
+			response.success(results);
+		},
+		error: function(error) {
+			console.log(error);
+			response.error(error);
+		}
+	});
+
+/*
 	console.log("payment being used for attendances: " + JSON.stringify(payment));
 	for (i = 0; i<attendances.length; i++) {
 		var attendance = attendances[i];
@@ -51,6 +83,16 @@ function setPaymentForAttendances(payment, attendances) {
 		attendance.save();
 	}
 	return attendances
+	*/
+}
+
+function createPaymentForMember(paymentParams, member) {
+	// create payment and associate with member
+	var newPayment = new Parse.Object("Payment");
+	paymentParams.member = member;
+	newPayment.save(paymentParams); 
+	console.log("created payment: " + JSON.stringify(newPayment));
+	return newPayment;
 }
 
 Parse.Cloud.define("addPayment", function(request, response) {
@@ -70,9 +112,10 @@ Parse.Cloud.define("addPayment", function(request, response) {
 			newPaymentParams.member = member;
 			newPayment.save(newPaymentParams, {
 				success: function(obj) {
-					console.log("save success: " + newPayment.id);
-					console.log("adding a new payment with id " + newPayment.id + ": " + JSON.stringify(newPayment));
-					response.success(obj);
+					console.log("save success: " + obj.id);
+					console.log("adding a new payment with id " + obj.id + ": " + JSON.stringify(obj));
+
+					setPaymentForAttendances(obj, response);
 				},
 				error: function(error) {
 					console.log("save error: " + JSON.stringify(error));
@@ -84,7 +127,6 @@ Parse.Cloud.define("addPayment", function(request, response) {
 			console.log("could not find member. error: " + JSON.stringify(error));
 		}
 	});
-
 /*
 	var startDate = newPayment.get("startDate");
 	var type = newPayment.get("type")
