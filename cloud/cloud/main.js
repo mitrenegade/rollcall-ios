@@ -49,22 +49,31 @@ function setPaymentForAttendances(newPayment, response) {
 	var endDate = newPayment.get("endDate")
 
 	var query = new Parse.Query("Attendance");
-	query.greaterThanOrEqualTo("date", startDate);
-	query.lessThanOrEqualTo("date", endDate);
 	query.equalTo("member", member);
+	query.ascending("date");
+	query.greaterThanOrEqualTo("date", startDate);
+	if (type == 1) {
+		// monthly payment
+		console.log("searching for monthly attendances between " + startDate + " and " + endDate);
+		query.lessThanOrEqualTo("date", endDate);
+	}
+	else if (type == 2) {
+		// daily payment
+		console.log("searching for unpaid attendances after " + startDate);
+		query.limit(newPayment.get("days"));
+		query.doesNotExist("payment");
+	}
 
-	console.log("searching for monthly attendances between " + startDate + " and " + endDate);
 	query.find({
 		success: function(results) {
 			console.log(results.length + " attendances found");
 			for (i = 0; i<results.length; i++) {
 				var attendance = results[i];
-				var payment = attendance.get("payment"); // only returns objectId, not the actual payment
-				console.log("**** attendance " + attendance.id + ": old payment " + payment.id);
+				var oldPayment = attendance.get("payment"); // only returns objectId, not the actual payment
 				attendance.set("payment", newPayment);
 				attendance.save()
 				var payment2 = attendance.get("payment");
-				console.log("****** attendance " + attendance.id + ": new payment " + payment2.id);
+				console.log("**** attendance " + attendance.id + ": old payment " + oldPayment.id + " => new payment " + payment2.id);
 			}
 			response.success(results);
 		},
@@ -73,17 +82,6 @@ function setPaymentForAttendances(newPayment, response) {
 			response.error(error);
 		}
 	});
-
-/*
-	console.log("payment being used for attendances: " + JSON.stringify(payment));
-	for (i = 0; i<attendances.length; i++) {
-		var attendance = attendances[i];
-		console.log("attendance " + i + ": " + JSON.stringify(attendance))
-		attendance.set("payment", payment);
-		attendance.save();
-	}
-	return attendances
-	*/
 }
 
 function createPaymentForMember(paymentParams, member) {
