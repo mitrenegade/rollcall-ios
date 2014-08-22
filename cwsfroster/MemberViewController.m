@@ -34,6 +34,10 @@
     // Do any additional setup after loading the view.
 
     // load stuff needed to calculate payment status
+
+    // todo: make a call for member that returns both attendances and payments
+    
+
     PFQuery *query = [PFQuery queryWithClassName:@"Attendance"];
     NSDictionary *scope = @{};
     if (self.member.pfObject) {
