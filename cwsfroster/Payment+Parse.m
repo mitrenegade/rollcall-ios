@@ -48,7 +48,7 @@
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
-#if 1
+#if 0
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     if (self.amount)
         params[@"amount"] = self.amount;
@@ -80,6 +80,8 @@
     [super saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (self.amount)
             self.pfObject[@"amount"] = self.amount;
+        if (self.receiptDate)
+            self.pfObject[@"receiptDate"] = self.receiptDate;
         if (self.startDate)
             self.pfObject[@"startDate"] = self.startDate;
         if (self.endDate)

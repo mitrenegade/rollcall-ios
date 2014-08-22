@@ -58,19 +58,6 @@
         }];
     }];
 
-    NSDictionary *params = @{@"memberId":self.member.parseID};
-//    [ParseRequest requestWithMethod:@"POST" endpoint:@"/associatePayments" params:params completion:^(NSDictionary *results, NSError *error) {
-//        NSLog(@"Results: %@ error: %@", results, error);
-//    }];
-    /*
-    [PFCloud callFunctionInBackground:@"associatePayments"
-                       withParameters:params
-                                block:^(NSDictionary *results, NSError *error) {
-                                    if (!error) {
-                                        NSLog(@"Results: %@", results);
-                                    }
-                                }];
-     */
     [self refresh];
 }
 

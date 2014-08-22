@@ -128,6 +128,9 @@
         [gregorian setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 
     components.day = 0;
+    components.hour = 23;
+    components.minute = 59;
+    components.second = 59;
     [components setMonth:([components month]+1)];
     return [gregorian dateFromComponents:components];
 }
