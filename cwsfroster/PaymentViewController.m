@@ -34,7 +34,7 @@
     // Do any additional setup after loading the view.
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(didClickAddPayment:)];
     self.navigationItem.rightBarButtonItem = right;
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self enableNavigation:NO];
 
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
@@ -60,6 +60,7 @@
     selectedDate = dateForDateString[self.inputDate.text];
 
     self.inputDate.inputAccessoryView = keyboardDoneButtonView;
+    self.inputAmount.text = @"60";
 
     if ([[self.paymentsFetcher fetchedObjects] count] == 0) {
         // make a update just in case
@@ -80,6 +81,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)enableNavigation:(BOOL)enabled {
+    [self.navigationItem.rightBarButtonItem setEnabled:enabled];
+}
 /*
 #pragma mark - Navigation
 
@@ -121,6 +125,9 @@
         [self.buttonDaily setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
         paymentType = PaymentTypeDaily;
     }
+
+    if ([self.inputAmount.text length] > 0)
+        [self enableNavigation:YES];
 }
 
 - (IBAction)didClickAddPayment:(id)sender {
@@ -151,7 +158,7 @@
             // todo: prevent multiple payments for a month
         }
 
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self enableNavigation:NO];
         [self.inputDate resignFirstResponder];
         [self.inputAmount resignFirstResponder];
     }];
@@ -160,19 +167,24 @@
 -(void)createPaymentOfType:(PaymentType)type completion:(void(^)(Payment *payment))completion {
     Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
     newObj.member = self.member;
-    NSDate *startDate = dateForDateString[self.inputDate.text];
-    if (!startDate) {
+    NSDate *receiptDate = dateForDateString[self.inputDate.text];
+    if (!receiptDate) {
         [UIAlertView alertViewWithTitle:@"Invalid date!" message:[NSString stringWithFormat:@"Error: selected date %@ had no valid date", self.inputDate.text]];
         return;
     }
+    NSDate *startDate = [Util beginningOfMonthForDate:receiptDate localTimeZone:YES];
+    NSNumber *source = @(paymentSource);
     if (type == PaymentTypeMonthly) {
-        [newObj updateEntityWithParams:@{@"startDate":startDate, @"endDate":[Util endOfMonthForDate:startDate localTimeZone:YES], @"days":@0, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeMonthly)}];
+        NSDate *endDate = [Util endOfMonthForDate:startDate localTimeZone:YES];
+        [newObj updateEntityWithParams:@{@"receiptDate":receiptDate, @"startDate":startDate, @"endDate":endDate, @"days":@0, @"amount":@([self.inputAmount.text intValue]), @"type":@(paymentType), @"source":source}];
     }
     else if (type == PaymentTypeDaily) {
-        [newObj updateEntityWithParams:@{@"startDate":startDate, @"days":@5, @"amount":@([self.inputAmount.text intValue]), @"type":@(PaymentTypeDaily)}];
+        NSDate *endDate = [startDate dateByAddingTimeInterval:365*24*3600]; // end date is a year from today
+        [newObj updateEntityWithParams:@{@"receiptDate":receiptDate, @"startDate":startDate, @"days":@5, @"amount":@([self.inputAmount.text intValue]), @"type":@(paymentType), @"source":source}];
     }
     [newObj saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
+            [self enableNavigation:YES];
             NSError *error;
             [_appDelegate.managedObjectContext save:&error];
             if (completion)
@@ -267,7 +279,7 @@
     if (textField == self.inputAmount)
         lastDateString = self.inputDate.text;
 
-    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    [self enableNavigation:YES];
 }
 #pragma mark Picker DataSource/Delegate
 -(void)generatePickerDates {

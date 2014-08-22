@@ -2,7 +2,7 @@
 //  Payment.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/19/14.
+//  Created by Bobby Ren on 8/20/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -17,9 +17,10 @@
 @property (nonatomic, retain) NSDecimalNumber * amount;
 @property (nonatomic, retain) NSNumber * days;
 @property (nonatomic, retain) NSDate * endDate;
+@property (nonatomic, retain) NSNumber * source;
 @property (nonatomic, retain) NSDate * startDate;
 @property (nonatomic, retain) NSNumber * type;
-@property (nonatomic, retain) NSNumber * source;
+@property (nonatomic, retain) NSDate * receiptDate;
 @property (nonatomic, retain) NSSet *attendances;
 @property (nonatomic, retain) Member *member;
 @end

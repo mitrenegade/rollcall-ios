@@ -45,7 +45,7 @@
 
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
+    NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     for (NSString *className in classes) {
