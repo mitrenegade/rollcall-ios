@@ -23,6 +23,8 @@ static NSMutableArray *datesForPicker; // at most 14, but not before the user's 
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
 
+    IBOutlet UITextField *inputEmail;
+    IBOutlet UIButton *buttonEmail;
 }
 
 @property (nonatomic) Practice *practice;
@@ -30,5 +32,5 @@ static NSMutableArray *datesForPicker; // at most 14, but not before the user's 
 
 -(IBAction)didClickCancel:(id)sender;
 -(IBAction)didClickSave:(id)sender;
-
+-(IBAction)didClickEmail:(id)sender;
 @end
