@@ -15,16 +15,17 @@ static SendGrid *sendgrid;
 +(void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sendgrid = [SendGrid apiUser:@"username" apiKey:@"password"];
+        sendgrid = [SendGrid apiUser:@"bobbyren" apiKey:@"pCqDvguLe2A6xo"];
     });
 }
 
-+(void)email {
++(void)emailTo:(NSString *)to subject:(NSString *)subject message:(NSString *)message {
     SendGridEmail *email = [[SendGridEmail alloc] init];
-    email.to = @"cwsf_instructors@googlegroups.com";
     email.from = @"cwsf_instructors@googlegroups.com";
-    email.subject = @"Attendance";
-    email.text = @"Test email through SendGrid";
+
+    email.to = to?to:@"cwsf_instructors@googlegroups.com";
+    email.subject = subject?subject:@"Attendance";
+    email.text = message?message:@"Test email through SendGrid";
 
     [sendgrid sendWithWeb:email];
 }

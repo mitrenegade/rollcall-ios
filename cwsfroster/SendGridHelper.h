@@ -12,4 +12,7 @@
 
 @interface SendGridHelper : NSObject
 
++(void)initialize;
++(void)emailTo:(NSString *)to subject:(NSString *)subject message:(NSString *)message;
+
 @end

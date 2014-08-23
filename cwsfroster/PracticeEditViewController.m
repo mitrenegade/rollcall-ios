@@ -8,6 +8,7 @@
 
 #import "PracticeEditViewController.h"
 #import "Practice+Parse.h"
+#import "SendGridHelper.h"
 
 @interface PracticeEditViewController ()
 
@@ -136,6 +137,44 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
     [inputDate setText:title];
+}
+
+#pragma mark TextFieldDelegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == inputEmail) {
+        if (inputEmail.text.length > 0) {
+            [buttonEmail setEnabled:NO];
+        }
+        else {
+            [buttonEmail setEnabled:YES];
+        }
+    }
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == inputEmail) {
+        if (inputEmail.text.length > 0) {
+            [buttonEmail setEnabled:NO];
+        }
+        else {
+            [buttonEmail setEnabled:YES];
+        }
+    }
+    [textField resignFirstResponder];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark emailing
+-(IBAction)didClickEmail:(id)sender {
+    if (inputEmail.text.length == 0) {
+        return;
+    }
+
+    [SendGridHelper emailTo:@"bobbyren@gmail.com" subject:@"sendgrid test" message:@"test"];
 }
 
 @end
