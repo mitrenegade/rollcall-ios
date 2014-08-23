@@ -67,6 +67,9 @@
                     }
                     isFailed = YES;
                     [self performSelector:@selector(hideProgress) withObject:nil afterDelay:3];
+
+                    // still proceed and allow offline usave
+                    [self performSelector:@selector(goToPractices) withObject:nil afterDelay:3];
                 }
             }
             else {

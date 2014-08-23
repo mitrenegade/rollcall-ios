@@ -9,6 +9,13 @@
 #import "PracticeEditViewController.h"
 #import "Practice+Parse.h"
 #import "SendGridHelper.h"
+#import "Attendance+Info.h"
+
+#import "Member+Info.h"
+#import "Payment+Info.h"
+#import "MBProgressHUD.h"
+
+#define DEFAULT_TO @"cwsf_instructors@googlegroups.com"
 
 @interface PracticeEditViewController ()
 
@@ -53,6 +60,13 @@
     [inputDetails setText:self.practice.details];
     //inputDate.inputAccessoryView = keyboardDoneButtonView;
 
+    NSString *previousEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
+    if (!previousEmail) {
+        inputEmail.text = DEFAULT_TO;
+    }
+    else {
+        inputEmail.text = previousEmail;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,10 +185,44 @@
 #pragma mark emailing
 -(IBAction)didClickEmail:(id)sender {
     if (inputEmail.text.length == 0) {
+        MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        progress.labelText = @"Please enter a To: email";
+        [progress hide:YES afterDelay:1.5];
         return;
     }
 
-    [SendGridHelper emailTo:@"bobbyren@gmail.com" subject:@"sendgrid test" message:@"test"];
+    [[NSUserDefaults standardUserDefaults] setObject:inputEmail.text forKey:@"email:to"];
+
+    NSString *to = inputEmail.text;
+    NSString *title = [NSString stringWithFormat:@"Practice %@ attendance", [Util simpleDateFormat:self.practice.date]];
+    NSString *message = [NSString stringWithFormat:@"%@ %@\n%@\n\n", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
+    for (Attendance *attendance in self.practice.attendances) {
+        if ([attendance.attended boolValue]) {
+            message = [message stringByAppendingString:attendance.name];
+
+            NSString *paymentStatus = @"\n";
+            Payment *payment = attendance.payment;
+            Member *member = attendance.member;
+            if (!payment) {
+                if ([member.status intValue] == MemberStatusBeginner) {
+                    paymentStatus = @" (beginner))\n";
+                }
+                else if ([member.status intValue] == MemberStatusInactive) {
+                    paymentStatus = @" (inactive status)\n";
+                }
+                else {
+                    paymentStatus = @" (unpaid)\n";
+                }
+            }
+            else if (payment.isMonthly)
+                paymentStatus = @" (monthly)\n";
+            else if (payment.isDaily)
+                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)\n", payment.daysLeft];
+
+            message = [message stringByAppendingString:paymentStatus];
+        }
+    }
+    [SendGridHelper emailTo:to subject:title message:message];
 }
 
 @end
