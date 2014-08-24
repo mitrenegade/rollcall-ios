@@ -95,7 +95,8 @@
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    [newAttendance updateEntityWithParams:@{@"name":member.name, @"date":self.practice.date, @"attended":@NO}];
+    [newAttendance updateEntityWithParams:@{@"name":member.name, @"date":self.practice.date, @"attended":@YES}];
+    [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             NSError *error;
@@ -196,7 +197,7 @@
         }
 
         // if member has an attendance that is not attended
-        NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID}] all];
+        NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
         if (at.count) {
             Attendance *attendance = at[0];
             attendance.attended = @(DidAttend);
@@ -207,12 +208,7 @@
         }
         else {
             // create attendance
-            [self saveNewAttendanceForMember:member completion:^(BOOL success, Attendance *attendance) {
-                if (success) {
-                    attendance.attended = @(DidAttend);
-                    [attendance saveOrUpdateToParseWithCompletion:nil];
-                }
-            }];
+            [self saveNewAttendanceForMember:member completion:nil];
         }
     }
     [self reloadData];
