@@ -200,9 +200,9 @@
 }
 
 -(void)updateMember:(Member *)member {
+    [self.navigationController popViewControllerAnimated:YES];
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
 
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {

@@ -39,6 +39,9 @@
 
     NSArray *payments;
     NSArray *attendances;
+
+    MemberStatus originalStatus;
+    BOOL changed;
 }
 
 @property (nonatomic, assign) Member *member;
@@ -47,5 +50,4 @@
 - (IBAction)didClickBack:(id)sender;
 - (IBAction)didClickSave:(id)sender;
 - (IBAction)didClickSwitch:(id)sender;
-- (IBAction)didClickAddPayment:(id)sender;
 @end

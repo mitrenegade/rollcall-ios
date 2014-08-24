@@ -37,7 +37,8 @@
     // load stuff needed to calculate payment status
 
     // todo: make a call for member that returns both attendances and payments
-    
+
+    originalStatus = self.member.status;
 
     PFQuery *query = [PFQuery queryWithClassName:@"Attendance"];
     NSDictionary *scope = @{};
@@ -105,10 +106,10 @@
 
             // determine status using payments
             if ([self.member currentMonthlyPayment]) {
-                status = @(AttendanceStatusMonthly);
+                status = AttendanceStatusMonthly;
             }
             else if ([self.member daysLeftForDailyMember] > 0) {
-                status = @(AttendanceStatusDaily);
+                status = AttendanceStatusDaily;
             }
 
             if (status == AttendanceStatusMonthly) {
@@ -151,10 +152,12 @@
     }
     else {
         self.title = @"Add member";
-
-        [labelInactive setHidden:YES];
-        [switchInactive setHidden:YES];
     }
+
+    if (changed)
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    else
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
 #pragma mark - Navigation
@@ -170,7 +173,15 @@
 }
 
 - (IBAction)didClickBack:(id)sender {
-    [self.delegate cancel];
+    if (changed) {
+        [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the user. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
+            self.member.status = @(originalStatus);
+            [self.delegate cancel];
+        } onCancel:nil];
+    }
+    else {
+        [self.delegate cancel];
+    }
 }
 
 - (IBAction)didClickSave:(id)sender {
@@ -194,6 +205,8 @@
 }
 
 -(IBAction)didClickSwitch:(id)sender {
+    changed = YES;
+
     BOOL selected = [(UISwitch *)sender isOn];
     if (selected) {
         [switchBeginner setOn:!selected];
@@ -220,6 +233,7 @@
 -(void)didAddPayment {
     // member.payment now exists
     NSLog(@"Update member status, credits, and toggle switches here");
+    [self.navigationController popViewControllerAnimated:YES];
     [self refresh];
 }
 @end
