@@ -9,6 +9,8 @@
 #import "MembersTableViewController.h"
 #import "Member+Parse.h"
 #import "Member+Info.h"
+#import "Attendance+Parse.h"
+#import "Payment+Parse.h"
 
 @interface MembersTableViewController ()
 
@@ -126,18 +128,18 @@
     [self performSegueWithIdentifier:@"MembersToAddMember" sender:member];
 }
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
 }
-*/
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
+        [self deleteMember:member];
+    }
+}
 
 /*
 // Override to support rearranging the table view.
@@ -180,6 +182,7 @@
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
+    [self notify:@"member:updated"];
 
     [self.navigationController popViewControllerAnimated:YES];
     [self reloadMembers];
@@ -207,7 +210,7 @@
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadMembers];
-                [self.tableView reloadData];
+                [self notify:@"member:updated"];
             }
         }
         else {
@@ -220,4 +223,20 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)deleteMember:(Member *)member {
+    NSSet *attendances = member.attendances;
+    NSSet *payments = member.payments;
+    for (Attendance *at in attendances) {
+        // manually cascade deletion on parse
+        [at.pfObject deleteInBackgroundWithBlock:nil];
+    }
+    for (Payment *p in payments) {
+        [p.pfObject deleteInBackgroundWithBlock:nil];
+    }
+    [member.pfObject deleteInBackgroundWithBlock:nil];
+    [_appDelegate.managedObjectContext deleteObject:member];
+
+    [self reloadMembers];
+    [self notify:@"member:deleted"];
+}
 @end
