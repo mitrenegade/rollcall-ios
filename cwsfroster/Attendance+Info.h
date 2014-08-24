@@ -8,9 +8,10 @@
 
 #import "Attendance.h"
 
-typedef enum AttendedStatus {
+typedef enum AttendedStatusEnum {
     DidNotAttend = 0,
     DidAttend = 1
+//    DidAttendFreebie
 } AttendedStatus;
 
 @interface Attendance (Info)

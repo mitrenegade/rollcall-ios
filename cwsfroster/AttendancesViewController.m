@@ -40,7 +40,12 @@
         [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
         }];
     }
-    [self reloadMembers];
+
+    membersActive = [NSMutableArray array];
+    membersInactive = [NSMutableArray array];
+    attendances = [NSMutableArray array];
+
+    [self reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,141 +71,82 @@
         [controller setDelegate:self];
     }
 }
-
--(NSFetchedResultsController *)memberFetcher {
-    if (memberFetcher) {
-        return memberFetcher;
-    }
-
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:NO];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
-    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
-    [request setPredicate:predicate];
-
-    memberFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    NSError *error;
-    [memberFetcher performFetch:&error];
-
-    return memberFetcher;
-}
-
--(NSFetchedResultsController *)attendanceFetcher {
-    if (attendanceFetcher) {
-        return attendanceFetcher;
-    }
-
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Attendance"];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"practice.parseID = %@", self.practice.parseID]];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"attended" ascending:NO];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
-    attendanceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"attended" cacheName:nil];
-    NSError *error;
-    [attendanceFetcher performFetch:&error];
-
-    return attendanceFetcher;
-}
-
 #pragma mark - Table view data source
--(void)reloadMembers {
-    NSError *error;
-    [self.memberFetcher performFetch:&error];
-    [self.attendanceFetcher performFetch:&error];
-
-    // make sure each member has a practice
-    BOOL needsReload = NO;
-    for (Member *member in self.memberFetcher.fetchedObjects) {
-        BOOL attendanceFound = NO;
-        for (Attendance *attendance in self.attendanceFetcher.fetchedObjects) {
-            if (![member.attendances containsObject:attendance]) {
-                //NSLog(@"Member %@ does not belong to attendance (%@ %@)", member.name, attendance.name, attendance.date);
-            }
-            else {
-                NSLog(@"Member %@ is has an attendance for %@; attended %@", member.name, attendance.practice.title, attendance.attended);
-                attendanceFound = YES;
-                break;
-            }
-        }
-        if (!attendanceFound) {
-            // attendance does not exist
-            NSLog(@"Creating attendance for %@", member.name);
-            if (!member.pfObject) {
-                [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
-                    [self saveNewAttendanceForMember:member completion:^(BOOL success) {
-                        if (success) {
-                            NSError *error;
-                            [self.attendanceFetcher performFetch:&error];
-                            NSLog(@"Created attendance for member %@", member.name);
-                            [self.tableView reloadData];
-                        }
-                    }];
-                }];
-            }
-            else {
-                [self saveNewAttendanceForMember:member completion:^(BOOL success) {
-                    if (success) {
-                        NSError *error;
-                        [self.attendanceFetcher performFetch:&error];
-                        NSLog(@"Created attendance for member %@", member.name);
-                        [self.tableView reloadData];
-                    }
-                }];
-            }
-        }
+-(void)reloadData {
+    membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
+    membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
+    attendances = [[[Attendance where:@{@"practice.parseID": self.practice.parseID, @"attended":@YES}] all] mutableCopy];
+    for (Attendance *attendance in attendances) {
+        Member *member = attendance.member;
+        [membersActive removeObject:member];
+        [membersInactive removeObject:member];
     }
+
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    membersActive = [membersActive sortedArrayUsingDescriptors:@[sortDescriptor]];
+    membersInactive = [membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]];
+    attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor]];
 
     [self.tableView reloadData];
 }
 
--(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success))completion{
+-(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success, Attendance *attendance))completion{
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    [newAttendance updateEntityWithParams:@{@"name":member.name, @"date":self.practice.date, @"attended":@NO}];
+    [newAttendance updateEntityWithParams:@{@"name":member.name, @"date":self.practice.date, @"attended":@YES}];
+    [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             NSError *error;
             [_appDelegate.managedObjectContext save:&error];
             if (completion)
-                completion(YES);
+                completion(YES, newAttendance);
         }
         else {
             NSLog(@"Could not save member!");
             if (completion)
-                completion(NO);
+                completion(NO, nil);
         }
     }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [[self.attendanceFetcher sections] count];
+    // first section is all attendees (attendance status = attended)
+    // second section is all active members (member status = active or beginner, no attendance or attendance status = not attended)
+    // third section is all inactive members (member status = inactive, no atendance or attendance status = not attended)
+
+    return 3;
 }
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[section];
-    if ([sectionTitle intValue] == DidNotAttend)
-        return @"All members";
-    else if ([sectionTitle intValue] == DidAttend)
+    if (section == 0) {
         return @"Attendees";
-    return @"";
+    }
+    else if (section == 1) {
+        return @"Active members";
+    }
+    else if (section == 2) {
+        return @"Inactive members";
+    }
+    return @"Other";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.attendanceFetcher.sections objectAtIndex:section];
-    NSString *title = [sectionInfo indexTitle];
-    NSString *name = [sectionInfo name];
-    NSArray *objects = [sectionInfo objects];
-    for (Attendance *a in objects) {
-        Member *m = a.member;
-        NSLog(@"Attendance %@: member %@ %@", a.parseID, m.parseID, m.name);
+    if (section == 0) {
+        return attendances.count;
     }
-    return [sectionInfo numberOfObjects];
+    else if (section == 1) {
+        return membersActive.count;
+    }
+    else if (section == 2) {
+        return membersInactive.count;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -208,39 +154,64 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
 
     // Configure the cell...
-    Attendance *attendance = (Attendance*)[self.attendanceFetcher objectAtIndexPath:indexPath];
-    Member *member = attendance.member;
-    cell.textLabel.text = member.name;
+    int section = indexPath.section;
+    int row = indexPath.row;
+
+    NSString *name;
+    if (section == 0) {
+        Attendance *attendance = attendances[row];
+        name = attendance.name;
+    }
+    else if (section == 1) {
+        Member *member = membersActive[row];
+        name = member.name;
+    }
+    else if (section == 2) {
+        Member *member = membersInactive[row];
+        name = member.name;
+    }
+    cell.textLabel.text = name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor darkGrayColor];
-
-    if ([attendance.parseID isEqualToString:@"QQS6HTF1RL"]) {
-        NSLog(@"Here");
-    }
 
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    int section = indexPath.section;
+    int row = indexPath.row;
 
-    Attendance *attendance = [self.attendanceFetcher objectAtIndexPath:indexPath];
-
-    NSNumber *sectionTitle = self.attendanceFetcher.sectionIndexTitles[indexPath.section];
-    if ([sectionTitle intValue] == DidNotAttend) {
-        // selecting a member
-        attendance.attended = @(DidAttend);
-    }
-    else if ([sectionTitle intValue] == DidAttend) {
+    if (section == 0) {
+        // clicked on an attendance
+        Attendance *attendance = attendances[row];
         attendance.attended = @(DidNotAttend);
+        [attendance saveOrUpdateToParseWithCompletion:nil];
     }
-    [attendance saveOrUpdateToParseWithCompletion:nil];
-    [self refresh];
-}
+    else {
+        Member *member;
+        if (section == 1) {
+            member = membersActive[row];
+        }
+        else {
+            member = membersInactive[row];
+        }
 
--(void)refresh {
-    NSError *error;
-    [self.attendanceFetcher performFetch:&error];
-    [self.tableView reloadData];
+        // if member has an attendance that is not attended
+        NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
+        if (at.count) {
+            Attendance *attendance = at[0];
+            attendance.attended = @(DidAttend);
+            if ([member.status intValue] == MemberStatusBeginner) {
+                // todo: attendance status should be freebie
+            }
+            [attendance saveOrUpdateToParseWithCompletion:nil];
+        }
+        else {
+            // create attendance
+            [self saveNewAttendanceForMember:member completion:nil];
+        }
+    }
+    [self reloadData];
 }
 
 #pragma mark PracticeEditDelegate
@@ -249,7 +220,7 @@
 
     [self notify:@"practice:info:updated"];
 
-    // todo: update all attendances
+    // update all attendances
     for (Attendance *attendance in self.practice.attendances) {
         attendance.date = self.practice.date;
         [attendance saveOrUpdateToParseWithCompletion:nil];

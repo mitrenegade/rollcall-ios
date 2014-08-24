@@ -23,14 +23,15 @@
     IBOutlet UITextField *inputName;
 
     IBOutlet UILabel *labelBeginner;
-    IBOutlet UILabel *labelMonthly;
-    IBOutlet UILabel *labelDaily;
     IBOutlet UILabel *labelInactive;
 
     IBOutlet UISwitch *switchBeginner;
-    IBOutlet UISwitch *switchMonthly;
-    IBOutlet UISwitch *switchDaily;
     IBOutlet UISwitch *switchInactive;
+
+    IBOutlet UIImageView *iconMonthly;
+    IBOutlet UIImageView *iconDaily;
+
+    IBOutlet UILabel *labelPaymentWarning;
 
     __weak IBOutlet UILabel *labelCreditsTitle;
     __weak IBOutlet UILabel *labelCredits;
@@ -38,6 +39,9 @@
 
     NSArray *payments;
     NSArray *attendances;
+
+    MemberStatus originalStatus;
+    BOOL changed;
 }
 
 @property (nonatomic, assign) Member *member;
@@ -46,5 +50,4 @@
 - (IBAction)didClickBack:(id)sender;
 - (IBAction)didClickSave:(id)sender;
 - (IBAction)didClickSwitch:(id)sender;
-- (IBAction)didClickAddPayment:(id)sender;
 @end

@@ -58,7 +58,7 @@
     }
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
 
@@ -87,17 +87,11 @@
         case MemberStatusInactive:
             title = @"Inactive";
             break;
-        case MemberStatusUnpaid:
-            title = @"Unpaid";
-            break;
-        case MemberStatusPaid:
-            title = @"Active";
-            break;
         case MemberStatusBeginner:
             title = @"Beginner";
             break;
-        case MemberStatusDaily:
-            title = @"Daily Pass";
+        case MemberStatusActive:
+            title = @"Active";
             break;
 
         default:
@@ -186,26 +180,29 @@
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
+
+    [self.navigationController popViewControllerAnimated:YES];
+    [self reloadMembers];
+
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
 
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadMembers];
-                [self.tableView reloadData];
             }
         }
         else {
             NSLog(@"Could not save member!");
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"Your last member edit was not saved"];
         }
     }];
 }
 
 -(void)updateMember:(Member *)member {
+    [self.navigationController popViewControllerAnimated:YES];
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
 
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {

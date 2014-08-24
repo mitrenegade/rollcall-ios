@@ -12,10 +12,9 @@
 @class Practice;
 @interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PracticeEditDelegate>
 {
-    NSFetchedResultsController *memberFetcher;
-    NSFetchedResultsController *attendanceFetcher;
+    NSMutableArray *attendances;
+    NSMutableArray *membersActive;
+    NSMutableArray *membersInactive;
 }
 @property (nonatomic, weak) Practice *practice;
-
--(IBAction)didClickEdit:(id)sender;
 @end
