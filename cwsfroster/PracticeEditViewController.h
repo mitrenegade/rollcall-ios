@@ -23,6 +23,8 @@ static NSMutableArray *datesForPicker; // at most 14, but not before the user's 
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
 
+    NSString *lastInputDate;
+
     IBOutlet UITextField *inputEmail;
     IBOutlet UIButton *buttonEmail;
 }
