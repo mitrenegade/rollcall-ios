@@ -107,6 +107,7 @@
         Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
         practice.date = dateForDateString[inputDate.text];
         practice.title = [Util simpleDateFormat:practice.date];
+        practice.details = inputDetails.text;
         [self.delegate didEditPractice];
         [self.navigationController popViewControllerAnimated:YES];
 

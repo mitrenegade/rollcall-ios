@@ -471,7 +471,7 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
-                                <segue destination="ycX-fJ-ygP" kind="modal" identifier="PracticesTableToNewPractice" id="7ik-T5-tDP"/>
+                                <segue destination="ycX-fJ-ygP" kind="push" identifier="PracticesTableToNewPractice" id="7ik-T5-tDP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
