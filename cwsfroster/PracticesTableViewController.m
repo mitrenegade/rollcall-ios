@@ -106,6 +106,19 @@
     return _practiceFetcher;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
+        [self deletePractice:practice];
+    }
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -168,4 +181,16 @@
     [self reloadPractices];
 }
 
+-(void)deletePractice:(Practice *)practice {
+    NSSet *attendances = practice.attendances;
+    for (Attendance *at in attendances) {
+        // manually cascade deletion on parse
+        [at.pfObject deleteInBackgroundWithBlock:nil];
+    }
+    [practice.pfObject deleteInBackgroundWithBlock:nil];
+    [_appDelegate.managedObjectContext deleteObject:practice];
+
+    [self reloadPractices];
+    [self notify:@"practice:deleted"]; // no one listens for this now
+}
 @end

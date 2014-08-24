@@ -36,7 +36,7 @@
         <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
     </entity>
     <elements>
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="120"/>
