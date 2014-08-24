@@ -468,9 +468,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Practices" id="i0f-Z7-11a">
-                        <barButtonItem key="rightBarButtonItem" title="New" id="15r-SD-na8">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
-                                <action selector="didClickNew:" destination="qXS-mn-38d" id="fYA-bO-hXe"/>
+                                <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
+                                <segue destination="ycX-fJ-ygP" kind="modal" identifier="PracticesTableToNewPractice" id="7ik-T5-tDP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -523,7 +524,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="997" y="643"/>
+            <point key="canvasLocation" x="1025" y="1007"/>
         </scene>
         <!--Practice Edit View Controller - Edit-->
         <scene sceneID="at9-FT-Q4a">
@@ -537,7 +538,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Practice Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Practice Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
                                 <rect key="frame" x="29" y="94" width="262" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -602,7 +603,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1435" y="643"/>
+            <point key="canvasLocation" x="1503" y="540"/>
         </scene>
         <!--Navigation Controller - Practices-->
         <scene sceneID="2yw-ik-mgm">
@@ -648,4 +649,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="7ik-T5-tDP"/>
+    </inferredMetricsTieBreakers>
 </document>

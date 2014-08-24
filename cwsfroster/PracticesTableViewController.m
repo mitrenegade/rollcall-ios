@@ -151,34 +151,21 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    AttendancesViewController *controller = [segue destinationViewController];
-    if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
-        [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
-}
-
--(void)didClickNew:(id)sender {
-    NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:YES];
-    if ([[[Practice where:@{@"date":practiceDate}] all] count]) {
-        NSLog(@"Could not create practice, date already exists!");
-        return;
+    if ([segue.identifier isEqualToString:@"PracticesTableToNewPractice"]) {
+        // create new practice
+        PracticeEditViewController *controller = [segue destinationViewController];
+        [controller setDelegate:self];
     }
-    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
-    practice.title = [Util simpleDateFormat:practiceDate];
-    practice.date = practiceDate;
-
-    [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
-
-            NSError *error;
-            if ([_appDelegate.managedObjectContext save:&error]) {
-                [self reloadPractices];
-            }
-        }
-        else {
-            NSLog(@"Could not save member!");
-        }
-    }];
+    else if ([segue.identifier isEqualToString:@"PracticesTableToAttendances"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        AttendancesViewController *controller = [segue destinationViewController];
+        if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
+            [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
+    }
 }
+
+-(void)didEditPractice {
+    [self reloadPractices];
+}
+
 @end

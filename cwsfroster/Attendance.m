@@ -2,7 +2,7 @@
 //  Attendance.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/17/14.
+//  Created by Bobby Ren on 8/24/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -16,9 +16,8 @@
 
 @dynamic attended;
 @dynamic date;
-@dynamic name;
 @dynamic member;
-@dynamic practice;
 @dynamic payment;
+@dynamic practice;
 
 @end

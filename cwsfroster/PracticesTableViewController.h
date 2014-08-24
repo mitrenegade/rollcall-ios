@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PracticeEditViewController.h"
 
-@interface PracticesTableViewController : UITableViewController
+@interface PracticesTableViewController : UITableViewController <PracticeEditDelegate>
 {
     NSFetchedResultsController *_practiceFetcher;
 }

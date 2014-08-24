@@ -55,8 +55,14 @@
      */
 
     [inputDate setInputView:pickerView];
-    [inputDate setText:self.practice.title];
-
+    if (self.practice) {
+        [inputDate setText:self.practice.title];
+    }
+    else {
+        self.title = @"New practice";
+        [inputEmail setHidden:YES];
+        [buttonEmail setHidden:YES];
+    }
     [inputDetails setText:self.practice.details];
     //inputDate.inputAccessoryView = keyboardDoneButtonView;
 
@@ -81,23 +87,35 @@
 
 -(IBAction)didClickSave:(id)sender {
     NSLog(@"Saving");
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-    if (dateForDateString[inputDate.text]) {
-        self.practice.date = dateForDateString[inputDate.text];
-        self.practice.title = [Util simpleDateFormat:self.practice.date];
+    if (self.practice) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];
+        if (dateForDateString[inputDate.text]) {
+            self.practice.date = dateForDateString[inputDate.text];
+            self.practice.title = [Util simpleDateFormat:self.practice.date];
+        }
+        self.practice.details = inputDetails.text;
+        [self.delegate didEditPractice];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            if (!success) {
+                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+            }
+        }];
     }
-    self.practice.details = inputDetails.text;
-    [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-            [self.delegate didEditPractice];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-        else {
-            [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
+    else {
+        Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+        practice.date = dateForDateString[inputDate.text];
+        practice.title = [Util simpleDateFormat:practice.date];
+        [self.delegate didEditPractice];
+        [self.navigationController popViewControllerAnimated:YES];
+
+        [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            if (!success) {
+                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+            }
+        }];
+    }
 }
 /*
 #pragma mark - Navigation
@@ -198,7 +216,7 @@
     NSString *message = [NSString stringWithFormat:@"%@ %@\n%@\n\n", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
         if ([attendance.attended boolValue]) {
-            message = [message stringByAppendingString:attendance.name];
+            message = [message stringByAppendingString:attendance.member.name];
 
             NSString *paymentStatus = @"\n";
             Payment *payment = attendance.payment;

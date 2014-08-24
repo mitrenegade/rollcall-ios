@@ -93,7 +93,8 @@
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     membersActive = [membersActive sortedArrayUsingDescriptors:@[sortDescriptor]];
     membersInactive = [membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]];
-    attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor]];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES];
+    attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor2]];
 
     [self.tableView reloadData];
 }
@@ -103,7 +104,7 @@
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    [newAttendance updateEntityWithParams:@{@"name":member.name, @"date":self.practice.date, @"attended":@YES}];
+    [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":@YES}];
     [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -168,7 +169,7 @@
     NSString *name;
     if (section == 0) {
         Attendance *attendance = attendances[row];
-        name = attendance.name;
+        name = attendance.member.name;
     }
     else if (section == 1) {
         Member *member = membersActive[row];
