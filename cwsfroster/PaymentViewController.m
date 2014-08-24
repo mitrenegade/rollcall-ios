@@ -182,6 +182,7 @@
         NSDate *endDate = [startDate dateByAddingTimeInterval:365*24*3600]; // end date is a year from today
         [newObj updateEntityWithParams:@{@"receiptDate":receiptDate, @"startDate":startDate, @"days":@5, @"amount":@([self.inputAmount.text intValue]), @"type":@(paymentType), @"source":source}];
     }
+    [self notify:@"payment:updated"];
     [newObj saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             [self enableNavigation:YES];

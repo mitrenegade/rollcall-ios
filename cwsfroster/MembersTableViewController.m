@@ -38,6 +38,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 
+    [self listenFor:@"payment:updated" action:@selector(reloadMembers)];
     [self reloadMembers];
 }
 
@@ -119,6 +120,13 @@
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor darkGrayColor];
     cell.textLabel.text = member.name;
+
+    UIView *view = cell.accessoryView;
+    if (!view) {
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    }
+    view.backgroundColor = [member colorForStatus];
+    cell.accessoryView = view;
 
     return cell;
 }

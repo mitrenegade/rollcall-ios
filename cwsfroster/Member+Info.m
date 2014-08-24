@@ -48,4 +48,25 @@
     }
     return nil;
 }
+
+-(BOOL)isBeginner {
+    return [self.status intValue] == MemberStatusBeginner;
+}
+
+-(BOOL)isInactive {
+    return [self.status intValue] == MemberStatusInactive;
+}
+
+-(UIColor *)colorForStatus {
+    if (self.currentMonthlyPayment)
+        return [UIColor greenColor];
+    else if ([self.currentDailyPayment daysLeft])
+        return [UIColor greenColor];
+    else if ([self isBeginner])
+        return [UIColor yellowColor];
+    else if ([self isInactive])
+        return [UIColor lightGrayColor];
+    else
+        return [UIColor redColor];
+}
 @end
