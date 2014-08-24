@@ -58,7 +58,7 @@
     }
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
 
@@ -88,7 +88,7 @@
             title = @"Inactive";
             break;
         case MemberStatusBeginner:
-            title = @"Unpaid";
+            title = @"Beginner";
             break;
         case MemberStatusActive:
             title = @"Active";
@@ -180,18 +180,21 @@
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
+
+    [self.navigationController popViewControllerAnimated:YES];
+    [self reloadMembers];
+
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
 
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadMembers];
-                [self.tableView reloadData];
             }
         }
         else {
             NSLog(@"Could not save member!");
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"Your last member edit was not saved"];
         }
     }];
 }
