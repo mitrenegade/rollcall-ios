@@ -46,12 +46,20 @@
     attendances = [NSMutableArray array];
 
     [self reloadData];
+
+    [self listenFor:@"member:deleted" action:@selector(reloadData)];
+    [self listenFor:@"member:updated" action:@selector(reloadData)];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)dealloc {
+    [self stopListeningFor:@"member:deleted"];
+    [self stopListeningFor:@"member:updated"];
 }
 
 -(IBAction)didClickEdit:(id)sender {

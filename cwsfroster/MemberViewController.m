@@ -243,4 +243,25 @@
     [self.navigationController popViewControllerAnimated:YES];
     [self refresh];
 }
+
+#pragma mark TextFieldDelegate
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == inputName) {
+        if (textField.text.length > 0) {
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        }
+        else {
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        }
+    }
+    [textField resignFirstResponder];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 @end
