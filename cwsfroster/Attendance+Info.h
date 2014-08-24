@@ -11,14 +11,8 @@
 typedef enum AttendedStatusEnum {
     DidNotAttend = 0,
     DidAttend = 1
+//    DidAttendFreebie
 } AttendedStatus;
-
-typedef enum AttendanceMemberStatusEnum {
-    AttendanceStatusUnpaid = 0,
-    AttendanceStatusMonthly,
-    AttendanceStatusDaily,
-    AttendanceStatusFreebie
-} AttendanceMemberStatus;
 
 @interface Attendance (Info)
 

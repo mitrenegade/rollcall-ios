@@ -513,7 +513,6 @@
                     <navigationItem key="navigationItem" id="WgA-5y-XGd">
                         <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8">
                             <connections>
-                                <action selector="didClickEdit:" destination="Fy5-S1-vxc" id="O9Q-Lh-P5n"/>
                                 <segue destination="ycX-fJ-ygP" kind="push" identifier="AttendanceToEditPractice" id="BrM-em-W4r"/>
                             </connections>
                         </barButtonItem>

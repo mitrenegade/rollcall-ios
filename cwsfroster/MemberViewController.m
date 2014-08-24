@@ -76,7 +76,8 @@
 -(void)refresh {
     // calculate state from payments and attendances
     if (self.member) {
-        int status = AttendanceStatusUnpaid;
+        BOOL unpaid = NO;
+        BOOL monthly = NO;
 
         // beginner or inactive are set by user
         [iconMonthly setAlpha:.5];
@@ -106,17 +107,23 @@
 
             // determine status using payments
             if ([self.member currentMonthlyPayment]) {
-                status = AttendanceStatusMonthly;
+                monthly = YES;
+                unpaid = NO;
             }
             else if ([self.member daysLeftForDailyMember] > 0) {
-                status = AttendanceStatusDaily;
+                monthly = NO;
+                unpaid = NO;
+            }
+            else {
+                monthly = NO;
+                unpaid = YES;
             }
 
-            if (status == AttendanceStatusMonthly) {
+            if (monthly) {
                 [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
                 [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
             }
-            else if (status == AttendanceStatusDaily) {
+            else if (!unpaid) {
                 [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
                 [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
             }
@@ -132,15 +139,15 @@
 
         self.title = @"Edit";
 
-        if (status == AttendanceStatusMonthly || status == AttendanceStatusDaily) {
+        if (!unpaid) {
             [labelCreditsTitle setAlpha:1];
             [labelCredits setAlpha:1];
 
-            if (status == AttendanceStatusMonthly) {
+            if (monthly) {
                 labelCreditsTitle.text = @"Active month";
                 labelCredits.text = [self.member currentPaidMonth];
             }
-            else if (status == AttendanceStatusDaily) {
+            else {
                 labelCreditsTitle.text = @"Day credits";
                 labelCredits.text = [NSString stringWithFormat:@"%d", [self.member daysLeftForDailyMember]];
             }
