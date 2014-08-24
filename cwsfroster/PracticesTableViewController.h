@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PracticeEditViewController.h"
 
-@interface PracticesTableViewController : UITableViewController
+@interface PracticesTableViewController : UITableViewController <PracticeEditDelegate>
 {
-    NSArray *practices;
+    NSFetchedResultsController *_practiceFetcher;
 }
 
+-(NSFetchedResultsController *)practiceFetcher;
 -(IBAction)didClickNew:(id)sender;
 @end

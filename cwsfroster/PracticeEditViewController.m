@@ -42,7 +42,6 @@
     [pickerView setDataSource:self];
     [pickerView setShowsSelectionIndicator:YES];
 
-    /*
     UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
     keyboardDoneButtonView.barStyle = UIBarStyleBlack;
     keyboardDoneButtonView.translucent = YES;
@@ -52,13 +51,18 @@
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem* button2 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelectDate:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:button2, flex, button1, nil]];
-     */
 
     [inputDate setInputView:pickerView];
-    [inputDate setText:self.practice.title];
-
+    if (self.practice) {
+        [inputDate setText:[self titleForDate:self.practice.date]];
+    }
+    else {
+        self.title = @"New practice";
+        [inputEmail setHidden:YES];
+        [buttonEmail setHidden:YES];
+    }
     [inputDetails setText:self.practice.details];
-    //inputDate.inputAccessoryView = keyboardDoneButtonView;
+    inputDate.inputAccessoryView = keyboardDoneButtonView;
 
     NSString *previousEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
     if (!previousEmail) {
@@ -67,6 +71,8 @@
     else {
         inputEmail.text = previousEmail;
     }
+
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,23 +87,40 @@
 
 -(IBAction)didClickSave:(id)sender {
     NSLog(@"Saving");
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-    if (dateForDateString[inputDate.text]) {
-        self.practice.date = dateForDateString[inputDate.text];
-        self.practice.title = [Util simpleDateFormat:self.practice.date];
+    if (self.practice) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        [self.navigationItem.leftBarButtonItem setEnabled:NO];
+        if (dateForDateString[inputDate.text]) {
+            self.practice.date = dateForDateString[inputDate.text];
+            self.practice.title = [Util simpleDateFormat:self.practice.date];
+        }
+        self.practice.details = inputDetails.text;
+        [self.delegate didEditPractice];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            if (!success) {
+                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+            }
+        }];
     }
-    self.practice.details = inputDetails.text;
-    [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-            [self.delegate didEditPractice];
-            [self.navigationController popViewControllerAnimated:YES];
+    else {
+        if (!dateForDateString[inputDate.text]) {
+            // invalid date, or date not selected. shouldn't go here if we disable save
+            return;
         }
-        else {
-            [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
+        Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+        practice.date = dateForDateString[inputDate.text];
+        practice.title = [Util simpleDateFormat:practice.date];
+        practice.details = inputDetails.text;
+        [self.delegate didEditPractice];
+        [self.navigationController popViewControllerAnimated:YES];
+
+        [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            if (!success) {
+                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+            }
+        }];
+    }
 }
 /*
 #pragma mark - Navigation
@@ -112,24 +135,35 @@
 
 #pragma mark Picker DataSource/Delegate
 -(void)generatePickerDates {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    if (!datesForPicker) {
         datesForPicker = [NSMutableArray array];
         dateForDateString = [NSMutableDictionary dictionary];
-    });
-
-    for (int row = 0; row < 31; row++) {
-        NSString * dayString;
-        NSString * dateString;
-
-        NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*row];
-
-        dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
-        dateString = [Util simpleDateFormat:date];
-        NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
-        [datesForPicker addObject:title];
-        dateForDateString[title] = date;
+        
+        for (int row = 0; row < 31; row++) {
+            NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*row];
+            NSString *title = [self titleForDate:date];
+            if (title) {
+                [datesForPicker addObject:title];
+                dateForDateString[title] = date;
+            }
+        }
     }
+}
+
+-(NSString *)titleForDate:(NSDate *)date {
+    NSString *dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
+    NSString *dateString = [Util simpleDateFormat:date];
+    NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
+    if ([dateString isEqualToString:self.practice.title]) {
+        // current practice is allowed to be shown
+        return title;
+    }
+    else {
+        NSArray *practices = [[Practice where:@{@"title":dateString}] all];
+        if ([practices count])
+            return nil;
+    }
+    return title;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -153,15 +187,20 @@
     [inputDate setText:title];
 }
 
+-(void)selectDate:(id)sender {
+    [inputDate resignFirstResponder];
+}
+
+-(void)cancelSelectDate:(id)sender {
+    // revert to old date
+    inputDate.text = lastInputDate;
+    [inputDate resignFirstResponder];
+}
+
 #pragma mark TextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (textField == inputEmail) {
-        if (inputEmail.text.length > 0) {
-            [buttonEmail setEnabled:NO];
-        }
-        else {
-            [buttonEmail setEnabled:YES];
-        }
+    if (textField == inputDate) {
+        lastInputDate = textField.text;
     }
 }
 
@@ -172,6 +211,14 @@
         }
         else {
             [buttonEmail setEnabled:YES];
+        }
+    }
+    else if (textField == inputDate) {
+        if (textField.text.length == 0) {
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        }
+        else {
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
     }
     [textField resignFirstResponder];
@@ -198,7 +245,7 @@
     NSString *message = [NSString stringWithFormat:@"%@ %@\n%@\n\n", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
         if ([attendance.attended boolValue]) {
-            message = [message stringByAppendingString:attendance.name];
+            message = [message stringByAppendingString:attendance.member.name];
 
             NSString *paymentStatus = @"\n";
             Payment *payment = attendance.payment;

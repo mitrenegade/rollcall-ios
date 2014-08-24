@@ -41,7 +41,7 @@
 
     [self reloadPractices];
 
-    [self.tableView listenFor:@"practice:info:updated" action:@selector(reloadData)];
+    [self listenFor:@"practice:info:updated" action:@selector(reloadPractices)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,8 +51,8 @@
 }
 
 -(void)reloadPractices {
-    // todo: use fetch controller, or just sort by date
-    practices = [[Practice where:@{}] all];
+    [self.practiceFetcher performFetch:nil];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -65,7 +65,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [practices count];
+    return [[self.practiceFetcher fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +73,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PracticeCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    Practice *practice = practices[indexPath.row];
+    Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
     cell.textLabel.text = practice.title;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     cell.textLabel.textColor = [UIColor blackColor];
@@ -87,6 +87,36 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"PracticesTableToAttendances" sender:self];
+}
+
+-(NSFetchedResultsController *)practiceFetcher {
+    if (_practiceFetcher) {
+        return _practiceFetcher;
+    }
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Practice"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+
+    // todo: use months as section?
+    _practiceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSError *error;
+    [_practiceFetcher performFetch:&error];
+
+    return _practiceFetcher;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //add code here for when you hit delete
+        Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
+        [self deletePractice:practice];
+    }
 }
 
 /*
@@ -134,35 +164,33 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    AttendancesViewController *controller = [segue destinationViewController];
-    if (indexPath.row < [practices count])
-        [controller setPractice:practices[indexPath.row]];
+    if ([segue.identifier isEqualToString:@"PracticesTableToNewPractice"]) {
+        // create new practice
+        PracticeEditViewController *controller = [segue destinationViewController];
+        [controller setDelegate:self];
+    }
+    else if ([segue.identifier isEqualToString:@"PracticesTableToAttendances"]) {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        AttendancesViewController *controller = [segue destinationViewController];
+        if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
+            [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
+    }
 }
 
--(void)didClickNew:(id)sender {
-    NSDate *practiceDate = [Util beginningOfDate:[NSDate date] localTimeZone:YES];
-    if ([[[Practice where:@{@"date":practiceDate}] all] count]) {
-        NSLog(@"Could not create practice, date already exists!");
-        return;
+-(void)didEditPractice {
+    [self reloadPractices];
+}
+
+-(void)deletePractice:(Practice *)practice {
+    NSSet *attendances = practice.attendances;
+    for (Attendance *at in attendances) {
+        // manually cascade deletion on parse
+        [at.pfObject deleteInBackgroundWithBlock:nil];
     }
-    Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
-    practice.title = [Util simpleDateFormat:practiceDate];
-    practice.date = practiceDate;
+    [practice.pfObject deleteInBackgroundWithBlock:nil];
+    [_appDelegate.managedObjectContext deleteObject:practice];
 
-    [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
-
-            NSError *error;
-            if ([_appDelegate.managedObjectContext save:&error]) {
-                [self reloadPractices];
-                [self.tableView reloadData];
-            }
-        }
-        else {
-            NSLog(@"Could not save member!");
-        }
-    }];
+    [self reloadPractices];
+    [self notify:@"practice:deleted"]; // no one listens for this now
 }
 @end
