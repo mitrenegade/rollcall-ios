@@ -10,8 +10,9 @@
 
 @interface PracticesTableViewController : UITableViewController
 {
-    NSArray *practices;
+    NSFetchedResultsController *_practiceFetcher;
 }
 
+-(NSFetchedResultsController *)practiceFetcher;
 -(IBAction)didClickNew:(id)sender;
 @end

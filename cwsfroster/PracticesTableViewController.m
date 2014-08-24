@@ -41,7 +41,7 @@
 
     [self reloadPractices];
 
-    [self.tableView listenFor:@"practice:info:updated" action:@selector(reloadData)];
+    [self listenFor:@"practice:info:updated" action:@selector(reloadPractices)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,8 +51,8 @@
 }
 
 -(void)reloadPractices {
-    // todo: use fetch controller, or just sort by date
-    practices = [[Practice where:@{}] all];
+    [self.practiceFetcher performFetch:nil];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -65,7 +65,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [practices count];
+    return [[self.practiceFetcher fetchedObjects] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -73,7 +73,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PracticeCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    Practice *practice = practices[indexPath.row];
+    Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
     cell.textLabel.text = practice.title;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     cell.textLabel.textColor = [UIColor blackColor];
@@ -87,6 +87,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"PracticesTableToAttendances" sender:self];
+}
+
+-(NSFetchedResultsController *)practiceFetcher {
+    if (_practiceFetcher) {
+        return _practiceFetcher;
+    }
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Practice"];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    [request setSortDescriptors:@[sortDescriptor]];
+
+    // todo: use months as section?
+    _practiceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSError *error;
+    [_practiceFetcher performFetch:&error];
+
+    return _practiceFetcher;
 }
 
 /*
@@ -136,8 +153,8 @@
     // Pass the selected object to the new view controller.
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     AttendancesViewController *controller = [segue destinationViewController];
-    if (indexPath.row < [practices count])
-        [controller setPractice:practices[indexPath.row]];
+    if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
+        [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
 }
 
 -(void)didClickNew:(id)sender {
@@ -157,7 +174,6 @@
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadPractices];
-                [self.tableView reloadData];
             }
         }
         else {
