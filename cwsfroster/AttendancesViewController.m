@@ -90,10 +90,10 @@
         [membersInactive removeObject:member];
     }
 
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     membersActive = [membersActive sortedArrayUsingDescriptors:@[sortDescriptor]];
     membersInactive = [membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor2]];
 
     [self.tableView reloadData];
