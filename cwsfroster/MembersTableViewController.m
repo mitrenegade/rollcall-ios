@@ -87,17 +87,11 @@
         case MemberStatusInactive:
             title = @"Inactive";
             break;
-        case MemberStatusUnpaid:
+        case MemberStatusBeginner:
             title = @"Unpaid";
             break;
-        case MemberStatusPaid:
+        case MemberStatusActive:
             title = @"Active";
-            break;
-        case MemberStatusBeginner:
-            title = @"Beginner";
-            break;
-        case MemberStatusDaily:
-            title = @"Daily Pass";
             break;
 
         default:

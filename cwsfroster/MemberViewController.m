@@ -12,6 +12,7 @@
 #import "Payment+Parse.h"
 #import "PaymentViewController.h"
 #import "Attendance+Parse.h"
+#import "Attendance+Info.h"
 
 @interface MemberViewController ()
 
@@ -74,41 +75,55 @@
 -(void)refresh {
     // calculate state from payments and attendances
     if (self.member) {
+        int status = AttendanceStatusUnpaid;
 
         // beginner or inactive are set by user
+        [iconMonthly setAlpha:.5];
+        [iconDaily setAlpha:.5];
+        [labelPaymentWarning setHidden:YES];
+
         if ([self.member.status intValue] == MemberStatusBeginner) {
             [switchBeginner setOn:YES];
-            [switchMonthly setOn:NO];
-            [switchDaily setOn:NO];
             [switchInactive setOn:NO];
+
+            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
         }
         else if ([self.member.status intValue] == MemberStatusInactive) {
             NSLog(@"Inactive");
             [switchBeginner setOn:NO];
-            [switchMonthly setOn:NO];
-            [switchDaily setOn:NO];
             [switchInactive setOn:YES];
+
+            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
         }
         else {
             [switchBeginner setOn:NO];
             [switchInactive setOn:NO];
+            [iconMonthly setAlpha:1];
+            [iconDaily setAlpha:1];
 
             // determine status using payments
             if ([self.member currentMonthlyPayment]) {
-                self.member.status = @(MemberStatusPaid);
+                status = @(AttendanceStatusMonthly);
             }
             else if ([self.member daysLeftForDailyMember] > 0) {
-                self.member.status = @(MemberStatusDaily);
-            }
-            else {
-                self.member.status = @(MemberStatusUnpaid);
+                status = @(AttendanceStatusDaily);
             }
 
-            if ([self.member.status intValue] == MemberStatusPaid) {
-                [switchMonthly setOn:YES];
+            if (status == AttendanceStatusMonthly) {
+                [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
+                [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
             }
-            else if ([self.member.status intValue] == MemberStatusDaily) {
-                [switchDaily setOn:YES];
+            else if (status == AttendanceStatusDaily) {
+                [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+                [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
+            }
+            else {
+                // not beginner or inactive, but no payment
+                [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+                [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+                [labelPaymentWarning setHidden:NO];
             }
         }
 
@@ -116,15 +131,15 @@
 
         self.title = @"Edit";
 
-        if ([switchMonthly isOn] || [switchDaily isOn]) {
+        if (status == AttendanceStatusMonthly || status == AttendanceStatusDaily) {
             [labelCreditsTitle setAlpha:1];
             [labelCredits setAlpha:1];
 
-            if ([switchMonthly isOn]) {
+            if (status == AttendanceStatusMonthly) {
                 labelCreditsTitle.text = @"Active month";
                 labelCredits.text = [self.member currentPaidMonth];
             }
-            else if ([switchDaily isOn]) {
+            else if (status == AttendanceStatusDaily) {
                 labelCreditsTitle.text = @"Day credits";
                 labelCredits.text = [NSString stringWithFormat:@"%d", [self.member daysLeftForDailyMember]];
             }
@@ -159,7 +174,7 @@
 }
 
 - (IBAction)didClickSave:(id)sender {
-    MemberStatus status = MemberStatusUnpaid;
+    MemberStatus status = MemberStatusActive;
 
     if ([switchBeginner isOn])
         status = MemberStatusBeginner;
@@ -195,7 +210,7 @@
     }
     else {
         // member is no longer a beginner or inactive...let refresh select status
-        self.member.status = @(MemberStatusUnpaid);
+        self.member.status = @(MemberStatusActive);
     }
 
     [self refresh];
