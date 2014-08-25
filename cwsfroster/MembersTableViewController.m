@@ -112,7 +112,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
 
     // Configure the cell...
 
@@ -121,12 +121,10 @@
     cell.textLabel.textColor = [UIColor darkGrayColor];
     cell.textLabel.text = member.name;
 
-    UIView *view = cell.accessoryView;
-    if (!view) {
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    }
-    view.backgroundColor = [member colorForStatus];
-    cell.accessoryView = view;
+    UILabel *statusView = (UILabel *)[cell viewWithTag:1];
+    statusView.backgroundColor = [member colorForStatus];
+    statusView.text = [member textForStatus];
+    cell.accessoryView = statusView;
 
     return cell;
 }
