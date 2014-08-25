@@ -38,7 +38,7 @@
 
     // todo: make a call for member that returns both attendances and payments
 
-    originalStatus = self.member.status;
+    originalStatus = [self.member.status intValue];;
 
     PFQuery *query = [PFQuery queryWithClassName:@"Attendance"];
     NSDictionary *scope = @{};
