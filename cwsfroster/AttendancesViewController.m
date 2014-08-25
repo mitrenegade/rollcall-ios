@@ -234,10 +234,11 @@
         NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
         if (at.count) {
             Attendance *attendance = at[0];
-            attendance.attended = @(DidAttend);
-            if ([member.status intValue] == MemberStatusBeginner) {
-                // todo: attendance status should be freebie
+            NSNumber *status = @(DidAttend); // attended by default
+            if ([attendance.member isBeginner]) {
+                status = @(DidAttendFreebie);
             }
+            attendance.attended = status;
             [attendance saveOrUpdateToParseWithCompletion:nil];
         }
         else {
