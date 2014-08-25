@@ -23,4 +23,9 @@ typedef  enum MemberStatus {
 
 -(int)daysLeftForDailyMember;
 -(NSString *)currentPaidMonth;
+
+-(BOOL)isBeginner;
+-(BOOL)isInactive;
+
+-(UIColor *)colorForStatus;
 @end

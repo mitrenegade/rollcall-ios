@@ -86,7 +86,7 @@
 -(void)reloadData {
     membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
-    attendances = [[[Attendance where:@{@"practice.parseID": self.practice.parseID, @"attended":@YES}] all] mutableCopy];
+    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(DidNotAttend)}] all] mutableCopy];
     for (Attendance *attendance in attendances) {
         Member *member = attendance.member;
         [membersActive removeObject:member];
@@ -107,12 +107,15 @@
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":@YES}];
+    NSNumber *status = @(DidAttend); // attended by default
+    if ([member isBeginner]) {
+        status = @(DidAttendFreebie);
+    }
+    [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            NSError *error;
-            [_appDelegate.managedObjectContext save:&error];
+            [_appDelegate.managedObjectContext save:nil];
             if (completion)
                 completion(YES, newAttendance);
         }
@@ -169,18 +172,37 @@
     int section = indexPath.section;
     int row = indexPath.row;
 
+    UIView *view = cell.accessoryView;
+    if (!view) {
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    }
+
     NSString *name;
     if (section == 0) {
         Attendance *attendance = attendances[row];
         name = attendance.member.name;
+
+        if (attendance.payment)
+            view.backgroundColor = [UIColor greenColor];
+        else if ([attendance isFreebie])
+            view.backgroundColor = [UIColor yellowColor];
+        else
+            view.backgroundColor = [UIColor redColor];
+        cell.accessoryView = view;
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
+
+        view.backgroundColor = [member colorForStatus];
+        cell.accessoryView = view;
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
+
+        view.backgroundColor = [member colorForStatus];
+        cell.accessoryView = view;
     }
     cell.textLabel.text = name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
@@ -212,15 +234,18 @@
         NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
         if (at.count) {
             Attendance *attendance = at[0];
-            attendance.attended = @(DidAttend);
-            if ([member.status intValue] == MemberStatusBeginner) {
-                // todo: attendance status should be freebie
+            NSNumber *status = @(DidAttend); // attended by default
+            if ([attendance.member isBeginner]) {
+                status = @(DidAttendFreebie);
             }
+            attendance.attended = status;
             [attendance saveOrUpdateToParseWithCompletion:nil];
         }
         else {
             // create attendance
-            [self saveNewAttendanceForMember:member completion:nil];
+            [self saveNewAttendanceForMember:member completion:^(BOOL success, Attendance *attendance) {
+                [self reloadData];
+            }];
         }
     }
     [self reloadData];

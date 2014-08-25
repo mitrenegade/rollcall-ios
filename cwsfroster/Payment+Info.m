@@ -29,4 +29,8 @@
 -(int)daysLeft {
     return [self.days intValue] - (int)[self.attendances count];
 }
+
+-(BOOL)isFreebie {
+    return [self.type intValue] == PaymentTypeFreebie;
+}
 @end

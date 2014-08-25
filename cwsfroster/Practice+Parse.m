@@ -50,10 +50,19 @@
             self.pfObject[@"details"] = self.details;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded)
+            if (succeeded) {
+                // always update from parse in case web made changes on beforeSave or afterSave
+                // doesn't make an extra web request
                 self.parseID = self.pfObject.objectId;
-            if (completion)
-                completion(succeeded);
+                [self updateFromParseWithCompletion:^(BOOL success) {
+                    if (completion)
+                        completion(succeeded);
+                }];
+            }
+            else {
+                if (completion)
+                    completion(succeeded);
+            }
         }];
     }];
 }

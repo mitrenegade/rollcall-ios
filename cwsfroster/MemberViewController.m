@@ -76,8 +76,8 @@
 -(void)refresh {
     // calculate state from payments and attendances
     if (self.member) {
-        BOOL unpaid = NO;
-        BOOL monthly = NO;
+        inputName.text = self.member.name;
+        self.title = @"Edit";
 
         // beginner or inactive are set by user
         [iconMonthly setAlpha:.5];
@@ -104,40 +104,38 @@
             [switchInactive setOn:NO];
             [iconMonthly setAlpha:1];
             [iconDaily setAlpha:1];
-
-            // determine status using payments
-            if ([self.member currentMonthlyPayment]) {
-                monthly = YES;
-                unpaid = NO;
-            }
-            else if ([self.member daysLeftForDailyMember] > 0) {
-                monthly = NO;
-                unpaid = NO;
-            }
-            else {
-                monthly = NO;
-                unpaid = YES;
-            }
-
-            if (monthly) {
-                [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
-                [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            }
-            else if (!unpaid) {
-                [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-                [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
-            }
-            else {
-                // not beginner or inactive, but no payment
-                [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-                [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
-                [labelPaymentWarning setHidden:NO];
-            }
         }
 
-        inputName.text = self.member.name;
+        BOOL unpaid = NO;
+        BOOL monthly = NO;
+        // determine status using payments
+        if ([self.member currentMonthlyPayment]) {
+            monthly = YES;
+            unpaid = NO;
+        }
+        else if ([self.member daysLeftForDailyMember] > 0) {
+            monthly = NO;
+            unpaid = NO;
+        }
+        else {
+            monthly = NO;
+            unpaid = YES;
+        }
 
-        self.title = @"Edit";
+        if (monthly) {
+            [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
+            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+        }
+        else if (!unpaid) {
+            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
+        }
+        else {
+            // not beginner or inactive, but no payment
+            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [labelPaymentWarning setHidden:NO];
+        }
 
         if (!unpaid) {
             [labelCreditsTitle setAlpha:1];
