@@ -28,4 +28,5 @@ typedef  enum MemberStatus {
 -(BOOL)isInactive;
 
 -(UIColor *)colorForStatus;
+-(NSString *)textForStatus;
 @end

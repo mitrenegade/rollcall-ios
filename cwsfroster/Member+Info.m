@@ -69,4 +69,17 @@
     else
         return [UIColor redColor];
 }
+
+-(NSString *)textForStatus {
+    if (self.currentMonthlyPayment)
+        return self.currentPaidMonth;
+    else if ([self.currentDailyPayment daysLeft])
+        return [NSString stringWithFormat:@"%dd", [self.currentDailyPayment daysLeft]];
+    else if ([self isBeginner])
+        return @"B";
+    else if ([self isInactive])
+        return @"Zzz";
+    else
+        return @"!";
+}
 @end

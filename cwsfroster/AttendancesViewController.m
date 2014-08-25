@@ -172,38 +172,41 @@
     int section = indexPath.section;
     int row = indexPath.row;
 
-    UIView *view = cell.accessoryView;
-    if (!view) {
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-    }
+    UILabel *statusView = [cell viewWithTag:1];
 
     NSString *name;
     if (section == 0) {
         Attendance *attendance = attendances[row];
         name = attendance.member.name;
 
-        if (attendance.payment)
-            view.backgroundColor = [UIColor greenColor];
-        else if ([attendance isFreebie])
-            view.backgroundColor = [UIColor yellowColor];
-        else
-            view.backgroundColor = [UIColor redColor];
-        cell.accessoryView = view;
+        if (attendance.payment) {
+            statusView.backgroundColor = [UIColor greenColor];
+            statusView.text = @"Paid";
+        }
+        else if ([attendance isFreebie]) {
+            statusView.backgroundColor = [UIColor yellowColor];
+            statusView.text = @"Trial";
+        }
+        else {
+            statusView.backgroundColor = [UIColor redColor];
+            statusView.text = @"!";
+        }
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
 
-        view.backgroundColor = [member colorForStatus];
-        cell.accessoryView = view;
+        statusView.backgroundColor = [member colorForStatus];
+        statusView.text = [member textForStatus];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        view.backgroundColor = [member colorForStatus];
-        cell.accessoryView = view;
+        statusView.backgroundColor = [member colorForStatus];
+        statusView.text = [member textForStatus];
     }
+    cell.accessoryView = statusView;
     cell.textLabel.text = name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor darkGrayColor];
