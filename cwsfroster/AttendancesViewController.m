@@ -111,8 +111,7 @@
     [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
-            NSError *error;
-            [_appDelegate.managedObjectContext save:&error];
+            [_appDelegate.managedObjectContext save:nil];
             if (completion)
                 completion(YES, newAttendance);
         }
@@ -169,18 +168,35 @@
     int section = indexPath.section;
     int row = indexPath.row;
 
+    UIView *view = cell.accessoryView;
+    if (!view) {
+        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    }
+
     NSString *name;
     if (section == 0) {
         Attendance *attendance = attendances[row];
         name = attendance.member.name;
+
+        if (attendance.payment)
+            view.backgroundColor = [UIColor greenColor];
+        else
+            view.backgroundColor = [UIColor redColor];
+        cell.accessoryView = view;
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
+
+        view.backgroundColor = [member colorForStatus];
+        cell.accessoryView = view;
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
+
+        view.backgroundColor = [member colorForStatus];
+        cell.accessoryView = view;
     }
     cell.textLabel.text = name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
@@ -220,7 +236,9 @@
         }
         else {
             // create attendance
-            [self saveNewAttendanceForMember:member completion:nil];
+            [self saveNewAttendanceForMember:member completion:^(BOOL success, Attendance *attendance) {
+                [self reloadData];
+            }];
         }
     }
     [self reloadData];

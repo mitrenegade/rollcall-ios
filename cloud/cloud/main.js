@@ -65,7 +65,7 @@ function associateNewAttendanceWithMonthlyPayment(newAttendance, response) {
 				var payment = results[0];
 				console.log("setting monthly payment " + payment.id + " to attendance " + newAttendance.id)
 				newAttendance.set("payment", payment);
-				newAttendance.save();
+//				newAttendance.save();
 				response.success(1);
 				return;
 			}
@@ -105,7 +105,7 @@ function associateNewAttendanceWithDailyPayment(newAttendance, response) {
 							if (count < payment.get("days")) {
 								console.log("daily payment " + payment.id + " has " + count + " of " + payment.get("days"))
 								newAttendance.set("payment", payment);
-								newAttendance.save();
+//								newAttendance.save();
 								response.success(1);
 								found = 1;
 								return;
@@ -184,7 +184,7 @@ Parse.Cloud.afterSave("Payment", function(request) {
 });
 
 // afterSave for an attendance
-Parse.Cloud.afterSave("Attendance", function(request) {
+Parse.Cloud.beforeSave("Attendance", function(request, response) {
 	attendance = request.object;
 	var attended = attendance.get("attended");
 	if (attended == 0) {
@@ -196,14 +196,14 @@ Parse.Cloud.afterSave("Attendance", function(request) {
 				// daily payment
 				var payment = attendance.get("payment");
 				attendance.unset("payment");
-				attendance.save();
 				console.log("removing daily payment " + payment.id + " from unattendance " + attendance.id);
 			}
 		}
+		response.success();
 	}
 	else {
 		// saving a new attendance
-		if (attendance.get(payment)) {
+		if (attendance.get("payment")) {
 			console.log("payment exists " + attendance.get("payment").id + " for attendance " + attendance.id);
 		}
 		else {
@@ -218,7 +218,7 @@ Parse.Cloud.afterSave("Attendance", function(request) {
 									console.log("attendance could not be associated with a payment");
 								}
 								else {
-									console.log("attendance now has daily payment " + attendance.get("payment").id)
+									console.log("attendance " + attendance.id + " now has daily payment " + attendance.get("payment").id)
 								}
 							}
 						});
@@ -226,6 +226,7 @@ Parse.Cloud.afterSave("Attendance", function(request) {
 					else {
 						console.log("attendance now has monthly payment " + attendance.get("payment").id)
 					}
+					response.success();
 				}
 			});
 		}
