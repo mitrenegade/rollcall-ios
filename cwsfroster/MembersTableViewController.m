@@ -129,11 +129,6 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"MembersToEditMember" sender:member];
-}
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     // Return YES if you want the specified item to be editable.
     return YES;
@@ -171,8 +166,9 @@
     UINavigationController *nav = segue.destinationViewController;
     MemberViewController *controller = (MemberViewController *)(nav.topViewController);
     if ([segue.identifier isEqualToString:@"MembersToEditMember"]) {
+        Member *member = [self.memberFetcher objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         [controller setDelegate:self];
-        [controller setMember:sender];
+        [controller setMember:member];
     }
     else if ([segue.identifier isEqualToString:@"MembersToAddMember"]) {
         [controller setDelegate:self];
