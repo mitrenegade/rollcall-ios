@@ -44,8 +44,9 @@
             if (object.objectId)
                 self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
             object = [self.pfObject objectForKey:@"payment"];
-            if (object.objectId)
+            if (object.objectId) {
                 self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
+            }
         }
         if (completion)
             completion(success);

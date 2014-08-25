@@ -86,7 +86,7 @@
 -(void)reloadData {
     membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
-    attendances = [[[Attendance where:@{@"practice.parseID": self.practice.parseID, @"attended":@YES}] all] mutableCopy];
+    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(DidNotAttend)}] all] mutableCopy];
     for (Attendance *attendance in attendances) {
         Member *member = attendance.member;
         [membersActive removeObject:member];
@@ -107,7 +107,11 @@
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":@YES}];
+    NSNumber *status = @(DidAttend); // attended by default
+    if ([member isBeginner]) {
+        status = @(DidAttendFreebie);
+    }
+    [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [self reloadData];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -180,6 +184,8 @@
 
         if (attendance.payment)
             view.backgroundColor = [UIColor greenColor];
+        else if ([attendance isFreebie])
+            view.backgroundColor = [UIColor yellowColor];
         else
             view.backgroundColor = [UIColor redColor];
         cell.accessoryView = view;

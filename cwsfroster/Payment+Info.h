@@ -11,7 +11,8 @@
 typedef enum PaymentTypeEnum {
     PaymentTypeUnpaid = 0,
     PaymentTypeMonthly,
-    PaymentTypeDaily
+    PaymentTypeDaily,
+    PaymentTypeFreebie
 } PaymentType;
 
 typedef enum PaymentSourceEnum {
@@ -26,6 +27,6 @@ typedef enum PaymentSourceEnum {
 -(BOOL)isDaily;
 -(BOOL)isCash;
 -(BOOL)isVenmo;
-
+-(BOOL)isFreebie;
 -(int)daysLeft;
 @end

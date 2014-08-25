@@ -10,4 +10,7 @@
 
 @implementation Attendance (Info)
 
+-(BOOL)isFreebie {
+    return [self.attended intValue] == DidAttendFreebie;
+}
 @end
