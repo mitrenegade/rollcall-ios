@@ -164,14 +164,16 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    UINavigationController *nav = [segue destinationViewController];
+
     if ([segue.identifier isEqualToString:@"PracticesTableToNewPractice"]) {
         // create new practice
-        PracticeEditViewController *controller = [segue destinationViewController];
+        PracticeEditViewController *controller = nav.topViewController;
         [controller setDelegate:self];
     }
     else if ([segue.identifier isEqualToString:@"PracticesTableToAttendances"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        AttendancesViewController *controller = [segue destinationViewController];
+        AttendancesViewController *controller = nav.topViewController;
         if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
             [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
     }

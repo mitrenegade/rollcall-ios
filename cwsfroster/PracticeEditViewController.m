@@ -82,7 +82,10 @@
 }
 
 -(IBAction)didClickCancel:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.navigationController.viewControllers[0] == self)
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    else
+        [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(IBAction)didClickSave:(id)sender {

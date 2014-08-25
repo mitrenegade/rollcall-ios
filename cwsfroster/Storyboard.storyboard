@@ -69,7 +69,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="XNl-Q5-lQr" kind="push" identifier="MembersToAddMember" id="dAk-fM-gcR"/>
+                                    <segue destination="Ylx-5L-NNK" kind="modal" identifier="MembersToEditMember" id="UXd-Ef-d5t"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -82,13 +82,30 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="R4m-Fb-ejx">
                             <connections>
                                 <action selector="didClickNew:" destination="nKy-LQ-H91" id="qke-ha-1iT"/>
+                                <segue destination="Ylx-5L-NNK" kind="modal" identifier="MembersToAddMember" id="CjQ-cF-HHI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6e-eE-kNU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="545" y="-85"/>
+            <point key="canvasLocation" x="459" y="-85"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="0WU-99-dov">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="Ylx-5L-NNK" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="PEq-qr-O3X"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6LQ-io-6b8">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="XNl-Q5-lQr" kind="relationship" relationship="rootViewController" id="8I8-jm-JAW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kDD-aL-su1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="921" y="-79"/>
         </scene>
         <!--Member View Controller - Add member-->
         <scene sceneID="5s6-nR-sgp">
@@ -225,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGu-Ew-1R1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="924" y="-85"/>
+            <point key="canvasLocation" x="1384" y="-85"/>
         </scene>
         <!--Payment View Controller - Payments-->
         <scene sceneID="jA6-pq-roR">
@@ -426,7 +443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvM-Ka-o8b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1308" y="-85"/>
+            <point key="canvasLocation" x="1768" y="-85"/>
         </scene>
         <!--Practices Table View Controller - Practices-->
         <scene sceneID="6wc-aj-vv7">
@@ -471,17 +488,47 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
-                                <segue destination="ycX-fJ-ygP" kind="push" identifier="PracticesTableToNewPractice" id="7ik-T5-tDP"/>
+                                <segue destination="gCo-Ij-mWG" kind="modal" identifier="PracticesTableToNewPractice" id="VC3-ap-S3B"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="Fy5-S1-vxc" kind="push" identifier="PracticesTableToAttendances" id="cFS-aG-YBa"/>
+                        <segue destination="tyl-mR-lat" kind="modal" identifier="PracticesTableToAttendances" id="TzX-cM-zap"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFN-h8-IyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="643"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IHa-bs-CjO">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="gCo-Ij-mWG" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fc1-8y-CA8">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="ycX-fJ-ygP" kind="relationship" relationship="rootViewController" id="DkY-9F-l4o"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VoD-xB-AjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1193" y="592"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="hvp-kC-cm2">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="tyl-mR-lat" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gda-EN-5Qm">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Fy5-S1-vxc" kind="relationship" relationship="rootViewController" id="jqE-I7-eEW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZnK-09-iT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1193" y="1280"/>
         </scene>
         <!--Attendances View Controller-->
         <scene sceneID="6zJ-96-c3v">
@@ -515,6 +562,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="WgA-5y-XGd">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="kbp-oQ-rIN">
+                            <connections>
+                                <action selector="didClickClose:" destination="Fy5-S1-vxc" id="jdG-w2-5M8"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8">
                             <connections>
                                 <segue destination="ycX-fJ-ygP" kind="push" identifier="AttendanceToEditPractice" id="BrM-em-W4r"/>
@@ -524,7 +576,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1025" y="1007"/>
+            <point key="canvasLocation" x="1665" y="1280"/>
         </scene>
         <!--Practice Edit View Controller - Edit-->
         <scene sceneID="at9-FT-Q4a">
@@ -603,7 +655,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1503" y="540"/>
+            <point key="canvasLocation" x="2147" y="592"/>
         </scene>
         <!--Navigation Controller - Practices-->
         <scene sceneID="2yw-ik-mgm">
@@ -650,6 +702,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="7ik-T5-tDP"/>
+        <segue reference="CjQ-cF-HHI"/>
+        <segue reference="BrM-em-W4r"/>
     </inferredMetricsTieBreakers>
 </document>

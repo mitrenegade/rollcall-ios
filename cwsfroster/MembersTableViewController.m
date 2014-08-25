@@ -61,7 +61,7 @@
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
 
     //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
@@ -125,7 +125,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
-    [self performSegueWithIdentifier:@"MembersToAddMember" sender:member];
+    [self performSegueWithIdentifier:@"MembersToEditMember" sender:member];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,20 +159,17 @@
 
 
 #pragma mark - Navigation
--(IBAction)didClickNew:(id)sender {
-    [self performSegueWithIdentifier:@"MembersToAddMember" sender:self.navigationItem.rightBarButtonItem];
-}
-
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"MembersToAddMember"]) {
-        MemberViewController *controller = (MemberViewController *)segue.destinationViewController;
+    UINavigationController *nav = segue.destinationViewController;
+    MemberViewController *controller = (MemberViewController *)(nav.topViewController);
+    if ([segue.identifier isEqualToString:@"MembersToEditMember"]) {
         [controller setDelegate:self];
-
-        if ([sender isKindOfClass:[Member class]]) {
-            [controller setMember:sender];
-        }
+        [controller setMember:sender];
+    }
+    else if ([segue.identifier isEqualToString:@"MembersToAddMember"]) {
+        [controller setDelegate:self];
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -184,7 +181,7 @@
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
     [self notify:@"member:updated"];
 
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self reloadMembers];
 
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
@@ -203,7 +200,7 @@
 }
 
 -(void)updateMember:(Member *)member {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
 
@@ -220,7 +217,7 @@
 }
 
 -(void)cancel {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)deleteMember:(Member *)member {
