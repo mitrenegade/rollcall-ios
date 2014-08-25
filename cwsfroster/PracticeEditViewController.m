@@ -62,6 +62,8 @@
         [buttonEmail setHidden:YES];
     }
     [inputDetails setText:self.practice.details];
+    originalDescription = inputDetails.text;
+
     inputDate.inputAccessoryView = keyboardDoneButtonView;
 
     NSString *previousEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
@@ -209,11 +211,13 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == inputEmail) {
-        if (inputEmail.text.length > 0) {
+        if (inputEmail.text.length == 0) {
             [buttonEmail setEnabled:NO];
+            [buttonEmail setAlpha:.5];
         }
         else {
             [buttonEmail setEnabled:YES];
+            [buttonEmail setAlpha:1];
         }
     }
     else if (textField == inputDate) {
@@ -223,6 +227,12 @@
         else {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
+    }
+    else if (textField == inputDetails) {
+        if ([textField.text isEqualToString:originalDescription])
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        else
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     [textField resignFirstResponder];
 }
@@ -245,29 +255,29 @@
 
     NSString *to = inputEmail.text;
     NSString *title = [NSString stringWithFormat:@"Practice %@ attendance", [Util simpleDateFormat:self.practice.date]];
-    NSString *message = [NSString stringWithFormat:@"%@ %@\n%@\n\n", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
+    NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
         if ([attendance.attended boolValue]) {
             message = [message stringByAppendingString:attendance.member.name];
 
-            NSString *paymentStatus = @"\n";
+            NSString *paymentStatus = @"<br>";
             Payment *payment = attendance.payment;
             Member *member = attendance.member;
             if (!payment) {
                 if ([member.status intValue] == MemberStatusBeginner) {
-                    paymentStatus = @" (beginner))\n";
+                    paymentStatus = @" (beginner))<br>";
                 }
                 else if ([member.status intValue] == MemberStatusInactive) {
-                    paymentStatus = @" (inactive status)\n";
+                    paymentStatus = @" (inactive status)<br>";
                 }
                 else {
-                    paymentStatus = @" (unpaid)\n";
+                    paymentStatus = @" (unpaid)<br>";
                 }
             }
             else if (payment.isMonthly)
-                paymentStatus = @" (monthly)\n";
+                paymentStatus = @" (monthly)<br>";
             else if (payment.isDaily)
-                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)\n", payment.daysLeft];
+                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
 
             message = [message stringByAppendingString:paymentStatus];
         }

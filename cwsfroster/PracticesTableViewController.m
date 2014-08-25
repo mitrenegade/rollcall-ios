@@ -85,10 +85,6 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"PracticesTableToAttendances" sender:self];
-}
-
 -(NSFetchedResultsController *)practiceFetcher {
     if (_practiceFetcher) {
         return _practiceFetcher;

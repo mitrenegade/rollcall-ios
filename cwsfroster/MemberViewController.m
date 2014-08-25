@@ -38,7 +38,7 @@
 
     // todo: make a call for member that returns both attendances and payments
 
-    originalStatus = self.member.status;
+    originalStatus = [self.member.status intValue];;
 
     PFQuery *query = [PFQuery queryWithClassName:@"Attendance"];
     NSDictionary *scope = @{};
@@ -126,15 +126,18 @@
             [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
             [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
         }
-        else if (!unpaid) {
+        else if (!unpaid) { // daily
             [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
             [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
         }
         else {
-            // not beginner or inactive, but no payment
+            // unpaid
             [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
             [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            [labelPaymentWarning setHidden:NO];
+
+            if ([self.member.status intValue] != MemberStatusBeginner && [self.member.status intValue] != MemberStatusInactive) {
+                [labelPaymentWarning setHidden:NO];
+            }
         }
 
         if (!unpaid) {

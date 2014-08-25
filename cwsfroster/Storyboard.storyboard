@@ -493,6 +493,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="tyl-mR-lat" kind="modal" identifier="PracticesTableToAttendances" id="CgY-we-JoQ"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -508,9 +511,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <segue destination="tyl-mR-lat" kind="modal" identifier="PracticesTableToAttendances" id="TzX-cM-zap"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFN-h8-IyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -726,7 +726,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="CjQ-cF-HHI"/>
+        <segue reference="UXd-Ef-d5t"/>
         <segue reference="BrM-em-W4r"/>
     </inferredMetricsTieBreakers>
 </document>
