@@ -255,29 +255,29 @@
 
     NSString *to = inputEmail.text;
     NSString *title = [NSString stringWithFormat:@"Practice %@ attendance", [Util simpleDateFormat:self.practice.date]];
-    NSString *message = [NSString stringWithFormat:@"%@ %@\n%@\n\n", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
+    NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
         if ([attendance.attended boolValue]) {
             message = [message stringByAppendingString:attendance.member.name];
 
-            NSString *paymentStatus = @"\n";
+            NSString *paymentStatus = @"<br>";
             Payment *payment = attendance.payment;
             Member *member = attendance.member;
             if (!payment) {
                 if ([member.status intValue] == MemberStatusBeginner) {
-                    paymentStatus = @" (beginner))\n";
+                    paymentStatus = @" (beginner))<br>";
                 }
                 else if ([member.status intValue] == MemberStatusInactive) {
-                    paymentStatus = @" (inactive status)\n";
+                    paymentStatus = @" (inactive status)<br>";
                 }
                 else {
-                    paymentStatus = @" (unpaid)\n";
+                    paymentStatus = @" (unpaid)<br>";
                 }
             }
             else if (payment.isMonthly)
-                paymentStatus = @" (monthly)\n";
+                paymentStatus = @" (monthly)<br>";
             else if (payment.isDaily)
-                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)\n", payment.daysLeft];
+                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
 
             message = [message stringByAppendingString:paymentStatus];
         }
