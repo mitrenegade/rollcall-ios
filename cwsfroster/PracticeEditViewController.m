@@ -62,6 +62,8 @@
         [buttonEmail setHidden:YES];
     }
     [inputDetails setText:self.practice.details];
+    originalDescription = inputDetails.text;
+
     inputDate.inputAccessoryView = keyboardDoneButtonView;
 
     NSString *previousEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
@@ -209,11 +211,13 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
     if (textField == inputEmail) {
-        if (inputEmail.text.length > 0) {
+        if (inputEmail.text.length == 0) {
             [buttonEmail setEnabled:NO];
+            [buttonEmail setAlpha:.5];
         }
         else {
             [buttonEmail setEnabled:YES];
+            [buttonEmail setAlpha:1];
         }
     }
     else if (textField == inputDate) {
@@ -223,6 +227,12 @@
         else {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
+    }
+    else if (textField == inputDetails) {
+        if ([textField.text isEqualToString:originalDescription])
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        else
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
     }
     [textField resignFirstResponder];
 }

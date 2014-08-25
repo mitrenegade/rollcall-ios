@@ -23,6 +23,7 @@
     NSMutableDictionary *dateForDateString;
     NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
     NSString *lastInputDate;
+    NSString *originalDescription;
 
     IBOutlet UITextField *inputEmail;
     IBOutlet UIButton *buttonEmail;
