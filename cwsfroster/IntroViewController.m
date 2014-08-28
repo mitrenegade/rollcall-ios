@@ -17,6 +17,25 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
+    if ([PFUser currentUser]) {
+        [self loggedIn];
+    }
+    else {
+        inputLogin.superview.layer.borderWidth = 1;
+        inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        inputPassword.superview.layer.borderWidth = 1;
+        inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        inputConfirmation.superview.layer.borderWidth = 1;
+        inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        [inputLogin.superview setHidden:NO];
+        [inputPassword.superview setHidden:NO];
+        [inputConfirmation.superview setHidden:YES];
+        [buttonLogin setHidden:NO];
+        [buttonSignup setHidden:NO];
+    }
+}
+
+-(void)loggedIn {
     ready = [NSMutableDictionary dictionary];
     ready[@"animation"] = @NO;
     NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
@@ -25,10 +44,7 @@
     }
 
     logo.alpha = 0;
-}
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     isFailed = NO;
 
     [UIView animateWithDuration:1 animations:^{
@@ -41,6 +57,72 @@
     }];
 
     [self synchronizeWithParse];
+}
+
+#pragma login
+-(IBAction)didClickLogin:(id)sender {
+    if (inputLogin.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
+        return;
+    }
+    if (inputPassword.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
+        return;
+    }
+
+    [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
+        if (user) {
+            [self loggedIn];
+        }
+        else {
+            NSString *message = nil;
+            if (error.code == 101) {
+                message = @"Invalid username or password";
+            }
+            [UIAlertView alertViewWithTitle:@"Login failed" message:message];
+        }
+    }];
+}
+
+-(IBAction)didClickSignup:(id)sender {
+    if ([inputConfirmation.superview isHidden]) {
+        [inputConfirmation.superview setHidden:NO];
+        return;
+    }
+
+    if (inputLogin.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
+        return;
+    }
+    if (inputPassword.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
+        return;
+    }
+    if (inputConfirmation.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password confirmation" message:nil];
+        return;
+    }
+    if (![inputConfirmation.text isEqualToString:inputConfirmation.text]) {
+        [UIAlertView alertViewWithTitle:@"Invalid password" message:@"Password and confirmation do not match"];
+        return;
+    }
+
+    PFUser *user = [PFUser user];
+    user.username = inputLogin.text;
+    user.password = inputPassword.text;
+
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self loggedIn];
+        }
+        else {
+            NSString *message = nil;
+            if (error.code == 202) {
+                message = @"Username already taken";
+            }
+            [UIAlertView alertViewWithTitle:@"Signup failed" message:message];
+        }
+    }];
 }
 
 -(void)synchronizeWithParse {
@@ -115,6 +197,17 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     [logo setAlpha:1];
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
+}
+
+#pragma mark TextFieldDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)dismissKeyboard {
+    [inputLogin resignFirstResponder];
+    [inputPassword resignFirstResponder];
 }
 
 @end

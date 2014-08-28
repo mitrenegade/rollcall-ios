@@ -10,12 +10,23 @@
 
 @class MBProgressHUD;
 
-@interface IntroViewController : UIViewController
+@interface IntroViewController : UIViewController <UITextFieldDelegate>
 {
     IBOutlet UIImageView *logo;
+
+    IBOutlet UITextField *inputLogin;
+    IBOutlet UITextField *inputPassword;
+    IBOutlet UITextField *inputConfirmation;
+
+    IBOutlet UIButton *buttonLogin;
+    IBOutlet UIButton *buttonSignup;
+
     NSMutableDictionary *ready;
 
     MBProgressHUD *progress;
     BOOL isFailed;
 }
+
+-(IBAction)didClickLogin:(id)sender;
+-(IBAction)didClickSignup:(id)sender;
 @end
