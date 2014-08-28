@@ -40,6 +40,7 @@
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
 		9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */; };
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
+		9E9F19BF19AF821200DE3F27 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
@@ -125,6 +126,7 @@
 		9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Practice+Parse.m"; sourceTree = "<group>"; };
 		9E99F8DB193D71EC004EB5C1 /* Attendance+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Parse.h"; sourceTree = "<group>"; };
 		9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Parse.m"; sourceTree = "<group>"; };
+		9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */,
 				9E80085216196883003E9B16 /* UIKit.framework in Frameworks */,
 				9E80085416196883003E9B16 /* Foundation.framework in Frameworks */,
+				9E9F19BF19AF821200DE3F27 /* Crashlytics.framework in Frameworks */,
 				9E80085616196883003E9B16 /* CoreGraphics.framework in Frameworks */,
 				9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */,
 				9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */,
@@ -252,6 +255,7 @@
 		9E80085016196883003E9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */,
 				9EC0F50919A4D05F003441AC /* FacebookSDK.framework */,
 				9EC0F50719A4CEFF003441AC /* Social.framework */,
 				9EC0F50519A4CE7E003441AC /* Parse.framework */,
@@ -407,6 +411,7 @@
 				9E80084A16196883003E9B16 /* Frameworks */,
 				9E80084B16196883003E9B16 /* Resources */,
 				9340F81367CE4BE7BCD63448 /* Copy Pods Resources */,
+				9E9F19BD19AF81A400DE3F27 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -495,6 +500,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9E9F19BD19AF81A400DE3F27 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 70160b7dec925a91c6fe09e38bf1f8659c1eda41 0fa711cea5cca0c6a4b57c1a8955f0518514bfdd7a9e6f28b3eca2c60d905a9c";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -639,7 +657,7 @@
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				PRODUCT_NAME = "CWSF Roster";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C8467AB-0B9A-4A0B-A5E4-CD0F3302D065";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "17787e79-a6ff-482a-b6df-7e0c8302ff0f";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
