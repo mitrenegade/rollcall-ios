@@ -7,6 +7,7 @@
 //
 
 #import "Member+Parse.h"
+#import "Organization+Parse.h"
 
 @implementation Member (Parse)
 
@@ -33,6 +34,11 @@
             self.status = [self.pfObject objectForKey:@"status"];
             self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
             self.parseID = self.pfObject.objectId;
+
+            // relationships
+            PFObject *object = [self.pfObject objectForKey:@"organization"];
+            if (object.objectId)
+                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -49,6 +55,9 @@
             self.pfObject[@"status"] = self.status;
         if (self.monthPaid)
             self.pfObject[@"monthPaid"] = self.monthPaid;
+
+        if (self.organization.pfObject)
+            self.pfObject[@"organization"] = self.organization.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {

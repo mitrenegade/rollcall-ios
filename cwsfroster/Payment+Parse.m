@@ -8,6 +8,7 @@
 
 #import "Payment+Parse.h"
 #import "Member+Parse.h"
+#import "Organization+Parse.h"
 
 @implementation Payment (Parse)
 
@@ -41,6 +42,9 @@
             PFObject *object = [self.pfObject objectForKey:@"member"];
             if (object.objectId)
                 self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+            PFObject *organization = [self.pfObject objectForKey:@"organization"];
+            if (organization.objectId)
+                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -48,35 +52,6 @@
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
-#if 0
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    if (self.amount)
-        params[@"amount"] = self.amount;
-    if (self.receiptDate)
-        params[@"receiptDate"] = self.receiptDate;
-    if (self.startDate)
-        params[@"startDate"] = self.startDate;
-    if (self.endDate)
-        params[@"endDate"] = self.endDate;
-    if (self.days)
-        params[@"days"] = self.days;
-    if (self.source)
-        params[@"source"] = self.source;
-    if (self.type)
-        params[@"type"] = self.type;
-
-    [PFCloud callFunctionInBackground:@"addPayment"
-                       withParameters:@{@"payment":params, @"memberId": self.member.pfObject.objectId}
-                                block:^(NSDictionary *results, NSError *error) {
-                                    if (!error) {
-                                        NSLog(@"Results: %@", results);
-
-                                        if (completion)
-                                            completion(YES);
-                                    }
-                                }];
-#else
-
     [super saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (self.amount)
             self.pfObject[@"amount"] = self.amount;
@@ -114,7 +89,6 @@
             }
         }];
     }];
-#endif
 }
 
 

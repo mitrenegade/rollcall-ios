@@ -2,13 +2,14 @@
 //  Payment.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/20/14.
+//  Created by Bobby Ren on 8/29/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
 #import "Payment.h"
 #import "Attendance.h"
 #import "Member.h"
+#import "Organization.h"
 
 
 @implementation Payment
@@ -16,11 +17,12 @@
 @dynamic amount;
 @dynamic days;
 @dynamic endDate;
+@dynamic receiptDate;
 @dynamic source;
 @dynamic startDate;
 @dynamic type;
-@dynamic receiptDate;
 @dynamic attendances;
 @dynamic member;
+@dynamic organization;
 
 @end

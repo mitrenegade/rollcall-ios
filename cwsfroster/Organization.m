@@ -1,0 +1,20 @@
+//
+//  Organization.m
+//  cwsfroster
+//
+//  Created by Bobby Ren on 8/29/14.
+//  Copyright (c) 2014 Bobby Ren. All rights reserved.
+//
+
+#import "Organization.h"
+#import "Member.h"
+#import "Practice.h"
+
+
+@implementation Organization
+
+@dynamic name;
+@dynamic members;
+@dynamic practices;
+
+@end

@@ -166,6 +166,7 @@
 
 -(void)createPaymentOfType:(PaymentType)type completion:(void(^)(Payment *payment))completion {
     Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
+    newObj.organization = [Organization currentOrganization];
     newObj.member = self.member;
     NSDate *receiptDate = dateForDateString[self.inputDate.text];
     if (!receiptDate) {

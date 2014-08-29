@@ -1,27 +1,26 @@
 //
-//  Practice+Parse.m
+//  Organization+Parse.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 6/2/14.
+//  Created by Bobby Ren on 8/28/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
-#import "Practice+Parse.h"
 #import "Organization+Parse.h"
 
-@implementation Practice (Parse)
+@implementation Organization (Parse)
 
-+(Practice *)fromPFObject:(PFObject *)object {
++(id)fromPFObject:(PFObject *)object {
     id parseID = object.objectId;
-    NSArray *objectArray = [[Practice where:@{@"parseID":parseID}] all];
-    Practice *obj;
+    NSArray *objectArray = [[[self class] where:@{@"parseID":parseID}] all];
+    id obj;
     if ([objectArray count]) {
         obj = [objectArray firstObject];
     }
     else {
-        obj = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+        obj = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
     }
-    obj.pfObject = object;
+    ((Organization *)obj).pfObject = object;
     [obj updateFromParseWithCompletion:nil];
     return obj;
 }
@@ -29,16 +28,9 @@
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
-            self.date = [self.pfObject objectForKey:@"date"];
-            self.title = [self.pfObject objectForKey:@"title"];
-            self.details = [self.pfObject objectForKey:@"details"];
+            self.name = [self.pfObject objectForKey:@"name"];
 
             self.parseID = self.pfObject.objectId;
-
-            // relationships
-            PFObject *object = [self.pfObject objectForKey:@"organization"];
-            if (object.objectId)
-                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -48,15 +40,8 @@
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
     [super saveOrUpdateToParseWithCompletion:^(BOOL success) {
 
-        if (self.date)
-            self.pfObject[@"date"] = self.date;
-        if (self.title)
-            self.pfObject[@"title"] = self.title;
-        if (self.details)
-            self.pfObject[@"details"] = self.details;
-
-        if (self.organization.pfObject)
-            self.pfObject[@"organization"] = self.organization.pfObject;
+        if (self.name)
+            self.pfObject[@"name"] = self.name;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
@@ -75,4 +60,6 @@
         }];
     }];
 }
+
 @end
+

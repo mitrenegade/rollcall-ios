@@ -2,7 +2,7 @@
 //  Attendance.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/24/14.
+//  Created by Bobby Ren on 8/29/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "ParseBase.h"
 
-@class Member, Payment, Practice;
+@class Member, Organization, Payment, Practice;
 
 @interface Attendance : ParseBase
 
@@ -19,5 +19,6 @@
 @property (nonatomic, retain) Member *member;
 @property (nonatomic, retain) Payment *payment;
 @property (nonatomic, retain) Practice *practice;
+@property (nonatomic, retain) Organization *organization;
 
 @end

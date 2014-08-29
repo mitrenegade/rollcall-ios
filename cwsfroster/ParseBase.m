@@ -2,7 +2,7 @@
 //  ParseBase.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 5/28/14.
+//  Created by Bobby Ren on 8/29/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 @implementation ParseBase
 
 @dynamic createdAt;
-@dynamic updatedAt;
 @dynamic parseID;
 @dynamic pfUserID;
+@dynamic updatedAt;
 
 @end

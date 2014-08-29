@@ -10,6 +10,7 @@
 #import "Member+Parse.h"
 #import "Practice+Parse.h"
 #import "Payment+Parse.h"
+#import "Organization+Parse.h"
 
 @implementation Attendance (Parse)
 
@@ -47,6 +48,9 @@
             if (object.objectId) {
                 self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
             }
+            object = [self.pfObject objectForKey:@"organization"];
+            if (object.objectId)
+                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -63,11 +67,11 @@
             self.pfObject[@"attended"] = self.attended;
 
         // relationships
-        if (self.member)
+        if (self.member.pfObject)
             self.pfObject[@"member"] = self.member.pfObject;
-        if (self.practice)
+        if (self.practice.pfObject)
             self.pfObject[@"practice"] = self.practice.pfObject;
-        if (self.payment)
+        if (self.payment.pfObject)
             self.pfObject[@"payment"] = self.payment.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {

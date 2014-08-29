@@ -11,26 +11,43 @@
 #import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
 #import "Member+Info.h"
+#import "Organization+Parse.h"
+#import "AsyncImageView.h"
 
 @implementation IntroViewController
 
 -(void)viewDidLoad {
     [super viewDidLoad];
 
+    if ([PFUser currentUser]) {
+        [logo setHidden:NO];
+        [self loggedIn];
+    }
+    else {
+        inputLogin.superview.layer.borderWidth = 1;
+        inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        inputPassword.superview.layer.borderWidth = 1;
+        inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        inputConfirmation.superview.layer.borderWidth = 1;
+        inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+        [inputLogin.superview setHidden:NO];
+        [inputPassword.superview setHidden:NO];
+        [inputConfirmation.superview setHidden:YES];
+        [buttonLogin setHidden:NO];
+        [buttonSignup setHidden:NO];
+    }
+}
+
+-(void)loggedIn {
     ready = [NSMutableDictionary dictionary];
-    ready[@"animation"] = @NO;
     NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
     for (NSString *className in classes) {
         ready[className] = @NO;
     }
-
-    logo.alpha = 0;
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     isFailed = NO;
 
+    logo.alpha = 0;
+    ready[@"animation"] = @NO;
     [UIView animateWithDuration:1 animations:^{
         logo.alpha = 1;
     } completion:^(BOOL finished) {
@@ -43,13 +60,101 @@
     [self synchronizeWithParse];
 }
 
+-(void)enableButtons:(BOOL)enabled {
+    [buttonLogin setAlpha:enabled?1:.5];
+    [buttonSignup setAlpha:enabled?1:.5];
+    [buttonLogin setEnabled:enabled];
+    [buttonSignup setEnabled:enabled];
+}
+
+#pragma login
+-(IBAction)didClickLogin:(id)sender {
+    if (inputLogin.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
+        return;
+    }
+    if (inputPassword.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
+        return;
+    }
+
+    [self enableButtons:NO];
+    [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
+        if (user) {
+            [self loggedIn];
+        }
+        else {
+            NSString *message = nil;
+            if (error.code == 101) {
+                message = @"Invalid username or password";
+            }
+            [UIAlertView alertViewWithTitle:@"Login failed" message:message];
+            [self enableButtons:YES];
+        }
+    }];
+}
+
+-(IBAction)didClickSignup:(id)sender {
+    if ([inputConfirmation.superview isHidden]) {
+        [inputConfirmation.superview setHidden:NO];
+        return;
+    }
+
+    if (inputLogin.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
+        return;
+    }
+    if (inputPassword.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
+        return;
+    }
+    if (inputConfirmation.text.length == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter your password confirmation" message:nil];
+        return;
+    }
+    if (![inputConfirmation.text isEqualToString:inputConfirmation.text]) {
+        [UIAlertView alertViewWithTitle:@"Invalid password" message:@"Password and confirmation do not match"];
+        return;
+    }
+
+    [self enableButtons:NO];
+
+    PFUser *user = [PFUser user];
+    user.username = inputLogin.text;
+    user.password = inputPassword.text;
+
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self createOrganizationWithCompletion:^(Organization *organization) {
+                [self loggedIn];
+            }];
+        }
+        else {
+            NSString *message = nil;
+            if (error.code == 202) {
+                message = @"Username already taken";
+            }
+            [UIAlertView alertViewWithTitle:@"Signup failed" message:message];
+            [self enableButtons:YES];
+        }
+    }];
+}
+
 -(void)synchronizeWithParse {
     // make sure all parse objects are in core data
     NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
+    // load only that organization
+    PFObject *object = _currentUser[@"organization"];
+    [object fetchIfNeeded];
+    [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+
     for (NSString *className in classes) {
         PFQuery *query = [PFQuery queryWithClassName:className];
+        PFUser *user = _currentUser;
+        [user fetchIfNeeded];
+        [query whereKey:@"organization" equalTo:_currentUser[@"organization"]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
                 NSLog(@"Error: %@", error);
@@ -116,5 +221,44 @@
     [logo setAlpha:1];
     [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
 }
+
+#pragma mark TextFieldDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+-(void)dismissKeyboard {
+    [inputLogin resignFirstResponder];
+    [inputPassword resignFirstResponder];
+}
+
+#pragma mark core data
+-(void)createOrganizationWithCompletion:(void(^)(Organization *organization))completion {
+    Organization *object = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
+    [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
+    [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                _currentUser[@"organization"] = object.pfObject;
+                [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        if (completion)
+                            completion(object);
+                        else
+                            completion(nil);
+                    }
+                }];
+            }
+        }
+        else {
+            NSLog(@"Could not save organization!");
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization."];
+            completion(nil);
+        }
+    }];
+}
+
 
 @end

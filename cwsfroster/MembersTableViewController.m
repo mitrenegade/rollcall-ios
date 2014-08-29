@@ -11,6 +11,7 @@
 #import "Member+Info.h"
 #import "Attendance+Parse.h"
 #import "Payment+Parse.h"
+#import "Organization+Parse.h"
 
 @interface MembersTableViewController ()
 
@@ -180,6 +181,7 @@
 #pragma mark Delegate
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
+    member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
     [self notify:@"member:updated"];
 
