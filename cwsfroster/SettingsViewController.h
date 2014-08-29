@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
-
+@class MBProgressHUD;
+@interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+{
+    UIImagePickerController *_picker;
+    MBProgressHUD *progress;
+}
 -(IBAction)didClickClose:(id)sender;
 
 @end

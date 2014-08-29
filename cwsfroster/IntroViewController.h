@@ -29,7 +29,7 @@
 
 -(IBAction)didClickLogin:(id)sender;
 -(IBAction)didClickSignup:(id)sender;
--(void)reset;
-
+-(void)reset:(BOOL)showLogin;
+-(void)enableButtons:(BOOL)enabled;
 @end
 

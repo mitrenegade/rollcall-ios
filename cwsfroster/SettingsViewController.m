@@ -8,6 +8,8 @@
 
 #import "SettingsViewController.h"
 #import "ParseBase+Parse.h"
+#import "MBProgressHUD.h"
+#import "UIImage+Resize.h"
 
 #define SECTION_TITLES @[@"About", @"My organization", @"Feedback", @"Logout"]
 @interface SettingsViewController ()
@@ -70,6 +72,8 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     int row = indexPath.row;
     if (row == 0) {
         // about
@@ -146,10 +150,6 @@
     }
 }
 
--(void)goToUpdateLogo {
-    NSLog(@"Update logo");
-}
-
 #pragma mark MessageController delegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller
           didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
@@ -178,6 +178,71 @@
     // dismiss the composer
     [self dismissViewControllerAnimated:YES completion:^{
     }];
+}
+
+#pragma mark Camera
+-(void)goToUpdateLogo {
+    _picker = [[UIImagePickerController alloc] init];
+    _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+
+    _picker.toolbarHidden = YES; // hide toolbar of app, if there is one.
+    _picker.allowsEditing = YES;
+    _picker.wantsFullScreenLayout = YES;
+    _picker.delegate = self;
+
+    [self presentViewController:_picker animated:YES completion:nil];
+}
+
+#pragma mark ImagePickerController delegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (image.size.width > 320 || image.size.height > 320) {
+        image = [image resizedImage:CGSizeMake(320, 320/image.size.width*image.size.height) interpolationQuality:kCGInterpolationDefault];
+    }
+    NSData *data = UIImageJPEGRepresentation(image, .8);
+    PFFile *imageFile = [PFFile fileWithData:data];
+
+    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.mode = MBProgressHUDModeDeterminateHorizontalBar;
+    progress.labelText = @"Saving new logo";
+    // Save PFFile
+    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (!error) {
+            // Hide old HUD, show completed HUD (see example for code)
+            [progress hide:YES];
+
+            // Create a PFObject around a PFFile and associate it with the current user
+            PFObject *organization = [Organization currentOrganization].pfObject;
+            [organization setObject:imageFile forKey:@"logoData"];
+            [organization saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (!error) {
+                    
+                }
+                else{
+                    // Log details of the failure
+                    NSLog(@"Error: %@ %@", error, [error userInfo]);
+                }
+            }];
+        }
+        else{
+            progress.labelText = @"Upload failed";
+            progress.mode = MBProgressHUDModeText;
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    } progressBlock:^(int percentDone) {
+        // Update your progress spinner here. percentDone will be between 0 and 100.
+        progress.progress = percentDone/100.0;
+    }];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//Tells the delegate that the user cancelled the pick operation.
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*

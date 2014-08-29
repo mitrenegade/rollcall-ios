@@ -15,6 +15,7 @@
 @interface Organization : ParseBase
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSData * logoData;
 @property (nonatomic, retain) NSSet *members;
 @property (nonatomic, retain) Practice *practices;
 @end
