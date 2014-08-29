@@ -11,6 +11,7 @@
 #import "Attendance+Parse.h"
 #import "Util.h"
 #import "AttendancesViewController.h"
+#import "SettingsViewController.h"
 
 @interface PracticesTableViewController ()
 
@@ -36,8 +37,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_white"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettings:)];
+    self.navigationItem.leftBarButtonItem = left;
 
     [self reloadPractices];
 
@@ -53,6 +54,11 @@
 -(void)reloadPractices {
     [self.practiceFetcher performFetch:nil];
     [self.tableView reloadData];
+}
+
+-(void)goToSettings:(id)sender {
+    UINavigationController *nav = [_storyboard instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

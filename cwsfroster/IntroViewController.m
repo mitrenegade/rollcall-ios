@@ -24,18 +24,23 @@
         [self loggedIn];
     }
     else {
-        inputLogin.superview.layer.borderWidth = 1;
-        inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        inputPassword.superview.layer.borderWidth = 1;
-        inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        inputConfirmation.superview.layer.borderWidth = 1;
-        inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        [inputLogin.superview setHidden:NO];
-        [inputPassword.superview setHidden:NO];
-        [inputConfirmation.superview setHidden:YES];
-        [buttonLogin setHidden:NO];
-        [buttonSignup setHidden:NO];
+        [self reset];
     }
+}
+
+-(void)reset {
+    [logo setHidden:YES];
+    inputLogin.superview.layer.borderWidth = 1;
+    inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    inputPassword.superview.layer.borderWidth = 1;
+    inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    inputConfirmation.superview.layer.borderWidth = 1;
+    inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    [inputLogin.superview setHidden:NO];
+    [inputPassword.superview setHidden:NO];
+    [inputConfirmation.superview setHidden:YES];
+    [buttonLogin setHidden:NO];
+    [buttonSignup setHidden:NO];
 }
 
 -(void)loggedIn {

@@ -12,6 +12,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "Member+Info.h"
 #import "Attendance+Info.h"
+#import "IntroViewController.h"
 
 @implementation AppDelegate
 
@@ -105,4 +106,10 @@
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
+-(void)goToIntro {
+    IntroViewController *controller = (IntroViewController *)self.window.rootViewController;
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [controller reset];
+    }];
+}
 @end

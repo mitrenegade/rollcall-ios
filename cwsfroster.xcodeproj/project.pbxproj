@@ -47,6 +47,8 @@
 		9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994519B0BF63007BC1FD /* Attendance.m */; };
 		9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994819B0EB7F007BC1FD /* Organization+Info.m */; };
 		9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994B19B0F160007BC1FD /* AsyncImageView.m */; };
+		9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */; };
+		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
@@ -143,6 +145,9 @@
 		9EA0994819B0EB7F007BC1FD /* Organization+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Info.m"; sourceTree = "<group>"; };
 		9EA0994A19B0F160007BC1FD /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		9EA0994B19B0F160007BC1FD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_white@2x.png"; sourceTree = "<group>"; };
+		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		9EA0995019B0F448007BC1FD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
@@ -235,6 +240,7 @@
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */,
 				9EC302F0199E6E1C00777F79 /* employer_check@2x.png */,
 				9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */,
 				9E156177199269B500A31398 /* icon2@2x.png */,
@@ -303,6 +309,8 @@
 				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
+				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
+				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				9EC5F3371936D9080056140F /* MemberViewController.h */,
@@ -485,6 +493,7 @@
 				9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */,
 				9EB48DC31703AABC001D360F /* icon@2x.png in Resources */,
 				9E156178199269B500A31398 /* icon2@2x.png in Resources */,
+				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -559,6 +568,7 @@
 				9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */,
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
+				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,

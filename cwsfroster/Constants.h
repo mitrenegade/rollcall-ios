@@ -15,4 +15,7 @@
 #define PARSE_CLIENT_KEY @"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"
 
 #define _currentUser [PFUser currentUser]
+#define _appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+#define _storyboard _appDelegate.window.rootViewController.storyboard
+
 #endif
