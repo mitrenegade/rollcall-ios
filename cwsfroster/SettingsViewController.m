@@ -78,6 +78,17 @@
     }
     else if (row == 1) {
         // my company
+        NSString *title = [Organization currentOrganization].name;
+        NSString *message = @"Please select from the following options";
+        [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Change name", @"Change logo"] onDismiss:^(int buttonIndex) {
+            if (buttonIndex == 0) {
+                [self goToUpdateName];
+            }
+            else if (buttonIndex == 1) {
+                NSLog(@"Change logo");
+                [self goToUpdateLogo];
+            }
+        } onCancel:nil];
     }
     else if (row == 2) {
         // feedback
@@ -105,6 +116,38 @@
     else {
         [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
     }
+}
+
+-(void)goToUpdateName {
+    NSLog(@"Change name");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter your organization name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        NSLog(@"index 0 - cancel");
+    }
+    else {
+        NSLog(@"else");
+        UITextField * text = [alertView textFieldAtIndex:0];
+        Organization *organization = [Organization currentOrganization];
+        organization.name = text.text;
+        [organization saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            if (success) {
+                NSLog(@"Saved");
+                [UIAlertView alertViewWithTitle:@"Name saved" message:[NSString stringWithFormat:@"Your organization is now called %@", organization.name]];
+            }
+            else {
+                [UIAlertView alertViewWithTitle:@"Error updating name" message:nil];
+            }
+        }];
+    }
+}
+
+-(void)goToUpdateLogo {
+    NSLog(@"Update logo");
 }
 
 #pragma mark MessageController delegate

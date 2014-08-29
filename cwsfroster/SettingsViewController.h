@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate>
+@interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 
 -(IBAction)didClickClose:(id)sender;
 
