@@ -49,6 +49,7 @@
 		9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994B19B0F160007BC1FD /* AsyncImageView.m */; };
 		9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */; };
 		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
+		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
@@ -148,6 +149,7 @@
 		9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_white@2x.png"; sourceTree = "<group>"; };
 		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		9EA0995019B0F448007BC1FD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		9EA0995219B0FCBA007BC1FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */,
 				9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */,
 				9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */,
 				9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */,
@@ -273,6 +276,7 @@
 		9E80085016196883003E9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EA0995219B0FCBA007BC1FD /* MessageUI.framework */,
 				9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */,
 				9EC0F50919A4D05F003441AC /* FacebookSDK.framework */,
 				9EC0F50719A4CEFF003441AC /* Social.framework */,
