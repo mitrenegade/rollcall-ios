@@ -11,6 +11,7 @@
 #import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
 #import "Member+Info.h"
+#import "Organization+Parse.h"
 
 @implementation IntroViewController
 
@@ -37,16 +38,15 @@
 
 -(void)loggedIn {
     ready = [NSMutableDictionary dictionary];
-    ready[@"animation"] = @NO;
     NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
     for (NSString *className in classes) {
         ready[className] = @NO;
     }
-
-    logo.alpha = 0;
-
     isFailed = NO;
 
+    /*
+    logo.alpha = 0;
+    ready[@"animation"] = @NO;
     [UIView animateWithDuration:1 animations:^{
         logo.alpha = 1;
     } completion:^(BOOL finished) {
@@ -55,8 +55,14 @@
             [self goToPractices];
         }
     }];
+     */
 
     [self synchronizeWithParse];
+}
+
+-(void)enableButtons:(BOOL)enabled {
+    [buttonLogin setEnabled:enabled];
+    [buttonSignup setEnabled:enabled];
 }
 
 #pragma login
@@ -70,6 +76,7 @@
         return;
     }
 
+    [self enableButtons:NO];
     [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
         if (user) {
             [self loggedIn];
@@ -80,6 +87,7 @@
                 message = @"Invalid username or password";
             }
             [UIAlertView alertViewWithTitle:@"Login failed" message:message];
+            [self enableButtons:YES];
         }
     }];
 }
@@ -107,12 +115,15 @@
         return;
     }
 
+    [self enableButtons:NO];
+
     PFUser *user = [PFUser user];
     user.username = inputLogin.text;
     user.password = inputPassword.text;
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
+            [self createOrganization];
             [self loggedIn];
         }
         else {
@@ -121,6 +132,7 @@
                 message = @"Username already taken";
             }
             [UIAlertView alertViewWithTitle:@"Signup failed" message:message];
+            [self enableButtons:YES];
         }
     }];
 }
@@ -209,5 +221,25 @@
     [inputLogin resignFirstResponder];
     [inputPassword resignFirstResponder];
 }
+
+#pragma mark core data
+-(void)createOrganization {
+    Organization *object = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
+    [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
+    [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [PFUser currentUser][@"organization"] = object;
+                [[PFUser currentUser] saveInBackground];
+            }
+        }
+        else {
+            NSLog(@"Could not save organization!");
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization."];
+        }
+    }];
+}
+
 
 @end
