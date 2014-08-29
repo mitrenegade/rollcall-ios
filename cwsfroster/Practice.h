@@ -2,7 +2,7 @@
 //  Practice.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/12/14.
+//  Created by Bobby Ren on 8/29/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -10,14 +10,15 @@
 #import <CoreData/CoreData.h>
 #import "ParseBase.h"
 
-@class Attendance;
+@class Attendance, Organization;
 
 @interface Practice : ParseBase
 
 @property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * details;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *attendances;
+@property (nonatomic, retain) Organization *organization;
 @end
 
 @interface Practice (CoreDataGeneratedAccessors)

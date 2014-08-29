@@ -105,6 +105,7 @@
 -(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success, Attendance *attendance))completion{
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
+    newAttendance.organization = [Organization currentOrganization];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
     NSNumber *status = @(DidAttend); // attended by default

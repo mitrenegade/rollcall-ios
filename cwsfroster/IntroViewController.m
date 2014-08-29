@@ -61,6 +61,8 @@
 }
 
 -(void)enableButtons:(BOOL)enabled {
+    [buttonLogin setAlpha:enabled?1:.5];
+    [buttonSignup setAlpha:enabled?1:.5];
     [buttonLogin setEnabled:enabled];
     [buttonSignup setEnabled:enabled];
 }
@@ -123,8 +125,9 @@
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [self createOrganization];
-            [self loggedIn];
+            [self createOrganizationWithCompletion:^(Organization *organization) {
+                [self loggedIn];
+            }];
         }
         else {
             NSString *message = nil;
@@ -142,8 +145,16 @@
     NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
+    // load only that organization
+    PFObject *object = _currentUser[@"organization"];
+    [object fetchIfNeeded];
+    [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+
     for (NSString *className in classes) {
         PFQuery *query = [PFQuery queryWithClassName:className];
+        PFUser *user = _currentUser;
+        [user fetchIfNeeded];
+        [query whereKey:@"organization" equalTo:_currentUser[@"organization"]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
                 NSLog(@"Error: %@", error);
@@ -223,20 +234,28 @@
 }
 
 #pragma mark core data
--(void)createOrganization {
+-(void)createOrganizationWithCompletion:(void(^)(Organization *organization))completion {
     Organization *object = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
     [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
     [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
-                [PFUser currentUser][@"organization"] = object;
-                [[PFUser currentUser] saveInBackground];
+                _currentUser[@"organization"] = object.pfObject;
+                [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        if (completion)
+                            completion(object);
+                        else
+                            completion(nil);
+                    }
+                }];
             }
         }
         else {
             NSLog(@"Could not save organization!");
             [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization."];
+            completion(nil);
         }
     }];
 }

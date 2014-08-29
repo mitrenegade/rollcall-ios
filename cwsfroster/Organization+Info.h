@@ -1,5 +1,5 @@
 //
-//  Organization.m
+//  Organization+Info.h
 //  cwsfroster
 //
 //  Created by Bobby Ren on 8/29/14.
@@ -7,14 +7,9 @@
 //
 
 #import "Organization.h"
-#import "Member.h"
-#import "Practice.h"
 
+@interface Organization (Info)
 
-@implementation Organization
-
-@dynamic name;
-@dynamic members;
-@dynamic practices;
++(Organization *)currentOrganization;
 
 @end

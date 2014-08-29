@@ -7,6 +7,7 @@
 //
 
 #import "Practice+Parse.h"
+#import "Organization+Parse.h"
 
 @implementation Practice (Parse)
 
@@ -33,6 +34,11 @@
             self.details = [self.pfObject objectForKey:@"details"];
 
             self.parseID = self.pfObject.objectId;
+
+            // relationships
+            PFObject *object = [self.pfObject objectForKey:@"organization"];
+            if (object.objectId)
+                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
         }
         if (completion)
             completion(success);
@@ -48,6 +54,9 @@
             self.pfObject[@"title"] = self.title;
         if (self.details)
             self.pfObject[@"details"] = self.details;
+
+        if (self.organization.pfObject)
+            self.pfObject[@"organization"] = self.organization.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {

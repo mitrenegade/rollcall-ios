@@ -2,7 +2,7 @@
 //  Member.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/6/14.
+//  Created by Bobby Ren on 8/29/14.
 //  Copyright (c) 2014 Bobby Ren. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "ParseBase.h"
 
-@class Attendance, Payment;
+@class Attendance, Organization, Payment;
 
 @interface Member : ParseBase
 
@@ -20,6 +20,7 @@
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSSet *attendances;
 @property (nonatomic, retain) NSSet *payments;
+@property (nonatomic, retain) Organization *organization;
 @end
 
 @interface Member (CoreDataGeneratedAccessors)

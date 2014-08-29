@@ -114,6 +114,7 @@
             return;
         }
         Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
+        practice.organization = [Organization currentOrganization];
         practice.date = dateForDateString[inputDate.text];
         practice.title = [Util simpleDateFormat:practice.date];
         practice.details = inputDetails.text;
