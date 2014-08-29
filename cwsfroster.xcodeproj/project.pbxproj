@@ -10,7 +10,6 @@
 		7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83ECB7C44E1F43D089ABEE5A /* libPods.a */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
-		9E1561731992662100A31398 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E1561721992662100A31398 /* logo.png */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon2@2x.png */; };
 		9E15617A199269C300A31398 /* icon1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon1@2x.png */; };
@@ -91,7 +90,6 @@
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
 		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
-		9E1561721992662100A31398 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2@2x.png"; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 				9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */,
 				9E156177199269B500A31398 /* icon2@2x.png */,
 				9E156179199269C300A31398 /* icon1@2x.png */,
-				9E1561721992662100A31398 /* logo.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -485,7 +482,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1561731992662100A31398 /* logo.png in Resources */,
 				9E15617A199269C300A31398 /* icon1@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
