@@ -73,6 +73,8 @@
     int row = indexPath.row;
     if (row == 0) {
         // about
+        NSString *message = [NSString stringWithFormat:@"Version %@\nCopyright Bobby Ren 2014\n", VERSION];
+        [UIAlertView alertViewWithTitle:@"About RollCall" message:message];
     }
     else if (row == 1) {
         // my company
