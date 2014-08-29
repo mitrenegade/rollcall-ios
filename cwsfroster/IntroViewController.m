@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 #import "Member+Info.h"
 #import "Organization+Parse.h"
+#import "AsyncImageView.h"
 
 @implementation IntroViewController
 
@@ -19,6 +20,7 @@
     [super viewDidLoad];
 
     if ([PFUser currentUser]) {
+        [logo setHidden:NO];
         [self loggedIn];
     }
     else {
@@ -44,7 +46,6 @@
     }
     isFailed = NO;
 
-    /*
     logo.alpha = 0;
     ready[@"animation"] = @NO;
     [UIView animateWithDuration:1 animations:^{
@@ -55,7 +56,6 @@
             [self goToPractices];
         }
     }];
-     */
 
     [self synchronizeWithParse];
 }

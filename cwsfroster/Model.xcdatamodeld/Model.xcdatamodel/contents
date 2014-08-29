@@ -50,7 +50,7 @@
     <elements>
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="135"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="148"/>
-        <element name="Organization" positionX="-36" positionY="99" width="128" height="88"/>
+        <element name="Organization" positionX="-36" positionY="99" width="128" height="90"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="195"/>
         <element name="Practice" positionX="-36" positionY="54" width="128" height="118"/>
