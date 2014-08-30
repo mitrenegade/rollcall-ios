@@ -112,6 +112,7 @@
             if (error.code == 101) {
                 message = @"Invalid username or password";
             }
+            progress.mode = MBProgressHUDModeText;
             progress.labelText = @"Login failed";
             progress.detailsLabelText = message;
             [progress hide:YES afterDelay:1.5];
@@ -169,9 +170,9 @@
             if (error.code == 202) {
                 message = @"Username already taken";
             }
-            [UIAlertView alertViewWithTitle:@"Signup failed" message:message];
             [self enableButtons:YES];
-            progress.labelText = @"Login failed";
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Signup failed";
             progress.detailsLabelText = message;
             [progress hide:YES afterDelay:1.5];
         }

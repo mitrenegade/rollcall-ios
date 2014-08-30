@@ -107,8 +107,8 @@
         [self.delegate didEditPractice];
         [self.navigationController popViewControllerAnimated:YES];
         [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-            [self.navigationItem.leftBarButtonItem setEnabled:NO];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];
             if (!success) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
@@ -132,8 +132,8 @@
         [self.navigationController popViewControllerAnimated:YES];
 
         [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-            [self.navigationItem.leftBarButtonItem setEnabled:NO];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];
             if (!success) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
@@ -229,6 +229,8 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == inputDate) {
         lastInputDate = textField.text;
+
+        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:0 inComponent:0];
     }
 }
 
@@ -273,6 +275,9 @@
         [progress hide:YES afterDelay:1.5];
         return;
     }
+
+    // save any changes. at least sets new details to practice before sending email
+    [self didClickSave:nil];
 
     [[NSUserDefaults standardUserDefaults] setObject:inputEmail.text forKey:@"email:to"];
 
