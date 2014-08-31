@@ -122,7 +122,9 @@
     cell.textLabel.text = member.name;
 
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
-    statusView.backgroundColor = [member colorForStatus];
+    statusView.layer.borderWidth = 2;
+    statusView.layer.borderColor = [[member colorForStatus] CGColor];
+    statusView.layer.cornerRadius = 5;
     statusView.text = [member textForStatus];
     cell.accessoryView = statusView;
 
