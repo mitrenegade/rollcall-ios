@@ -61,7 +61,7 @@
         [inputDate setText:[self titleForDate:self.practice.date]];
     }
     else {
-        self.title = @"New practice";
+        self.title = @"New event date";
         [inputEmail setHidden:YES];
         [buttonEmail setHidden:YES];
     }
@@ -102,7 +102,7 @@
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
 
     if (self.practice) {
-        progress.labelText = @"Saving new practice";
+        progress.labelText = @"Saving new event date";
         if (dateForDateString[inputDate.text]) {
             self.practice.date = dateForDateString[inputDate.text];
             self.practice.title = [Util simpleDateFormat:self.practice.date];
@@ -116,13 +116,13 @@
             if (!success) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
-                progress.detailsLabelText = @"Could not save practice!";
+                progress.detailsLabelText = @"Could not save event!";
                 [progress hide:YES afterDelay:1.5];
             }
         }];
     }
     else {
-        progress.labelText = @"Creating new practice";
+        progress.labelText = @"Creating new event";
         if (!dateForDateString[inputDate.text]) {
             // invalid date, or date not selected. shouldn't go here if we disable save
             return;
@@ -141,7 +141,7 @@
             if (!success) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
-                progress.detailsLabelText = @"Could not save practice!";
+                progress.detailsLabelText = @"Could not save event!";
                 [progress hide:YES afterDelay:1.5];
 
                 [_appDelegate.managedObjectContext deleteObject:practice];
@@ -286,7 +286,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:inputEmail.text forKey:@"email:to"];
 
     NSString *to = inputEmail.text;
-    NSString *title = [NSString stringWithFormat:@"Practice %@ attendance", [Util simpleDateFormat:self.practice.date]];
+    NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
     NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
         if ([attendance.attended boolValue]) {

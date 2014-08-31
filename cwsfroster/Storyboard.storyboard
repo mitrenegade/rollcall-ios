@@ -443,14 +443,14 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Venmo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXn-5e-ePS">
-                                        <rect key="frame" x="67" y="84" width="82" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Other" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXn-5e-ePS">
+                                        <rect key="frame" x="67" y="114" width="82" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4UN-PC-TDN">
-                                        <rect key="frame" x="20" y="84" width="39" height="22"/>
+                                        <rect key="frame" x="20" y="114" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="employer_unchecked.png">
@@ -462,7 +462,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfP-i8-8BT">
-                                        <rect key="frame" x="20" y="114" width="39" height="22"/>
+                                        <rect key="frame" x="20" y="84" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <state key="normal" image="employer_unchecked.png">
@@ -474,7 +474,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cash" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jq0-aX-edD">
-                                        <rect key="frame" x="67" y="114" width="82" height="21"/>
+                                        <rect key="frame" x="67" y="84" width="82" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -588,7 +588,7 @@
             </objects>
             <point key="canvasLocation" x="1768" y="-85"/>
         </scene>
-        <!--Practices Table View Controller - Practices-->
+        <!--Practices Table View Controller - Events-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -630,7 +630,7 @@
                             <outlet property="delegate" destination="qXS-mn-38d" id="fCG-zS-41o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Practices" id="i0f-Z7-11a">
+                    <navigationItem key="navigationItem" title="Events" id="i0f-Z7-11a">
                         <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
@@ -741,7 +741,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Practice Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Event Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
                                 <rect key="frame" x="29" y="94" width="262" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -808,11 +808,11 @@
             </objects>
             <point key="canvasLocation" x="2147" y="592"/>
         </scene>
-        <!--Navigation Controller - Practices-->
+        <!--Navigation Controller - Events-->
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practices" image="icon1.png" id="HEm-wM-E2I"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="icon1.png" id="HEm-wM-E2I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyz-ks-QZt">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
