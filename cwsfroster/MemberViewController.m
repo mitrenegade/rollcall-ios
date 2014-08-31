@@ -13,6 +13,7 @@
 #import "PaymentViewController.h"
 #import "Attendance+Parse.h"
 #import "Attendance+Info.h"
+#import "Organization+Info.h"
 
 @interface MemberViewController ()
 
@@ -44,6 +45,7 @@
     NSDictionary *scope = @{};
     if (self.member.pfObject) {
         [query whereKey:@"member" equalTo:self.member.pfObject];
+        [query whereKey:@"organization" equalTo:[Organization currentOrganization].pfObject];
         scope = @{@"member.parseID":self.member.parseID};
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -56,6 +58,7 @@
     NSDictionary *scope2 = @{};
     if (self.member.pfObject) {
         [query2 whereKey:@"member" equalTo:self.member.pfObject];
+        [query2 whereKey:@"organization" equalTo:[Organization currentOrganization].pfObject];
         scope2 = @{@"member.parseID":self.member.parseID};
     }
     [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

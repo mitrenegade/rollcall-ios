@@ -64,18 +64,6 @@
 
     self.inputDate.inputAccessoryView = keyboardDoneButtonView;
     self.inputAmount.text = @"60";
-
-    if ([[self.paymentsFetcher fetchedObjects] count] == 0) {
-        // make a update just in case
-        PFQuery *query = [PFQuery queryWithClassName:@"Payment"];
-        if (self.member.pfObject)
-            [query whereKey:@"member" equalTo:self.member.pfObject]; // sometimes member has not synced with the database? prevent crash
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [ParseBase synchronizeClass:@"Payment" fromObjects:objects replaceExisting:NO completion:^{
-                [self refresh];
-            }];
-        }];
-    }
 }
 
 - (void)didReceiveMemoryWarning

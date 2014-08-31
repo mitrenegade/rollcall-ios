@@ -71,7 +71,8 @@
         // relationships
         if (self.member)
             self.pfObject[@"member"] = self.member.pfObject;
-
+        if (self.organization.pfObject)
+            self.pfObject[@"organization"] = self.organization.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
