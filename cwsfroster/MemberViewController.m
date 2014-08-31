@@ -123,17 +123,17 @@
         }
 
         if (monthly) {
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"checked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"unchecked"]];
         }
         else if (!unpaid) { // daily
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"checked"]];
         }
         else {
             // unpaid
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"unchecked"]];
 
             if ([self.member.status intValue] != MemberStatusBeginner && [self.member.status intValue] != MemberStatusInactive) {
                 [labelPaymentWarning setHidden:NO];
