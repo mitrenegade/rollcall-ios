@@ -52,6 +52,10 @@
     UIBarButtonItem* button2 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelectDate:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:button2, flex, button1, nil]];
 
+    if (IS_ABOVE_IOS6) {
+        [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
+    }
+
     [inputDate setInputView:pickerView];
     if (self.practice) {
         [inputDate setText:[self titleForDate:self.practice.date]];

@@ -36,7 +36,6 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_white"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettings:)];
     self.navigationItem.leftBarButtonItem = left;
 
@@ -116,8 +115,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
-        Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
-        [self deletePractice:practice];
+        [self deletePracticeAtIndexPath:indexPath];
     }
 }
 
@@ -185,16 +183,20 @@
     [self reloadPractices];
 }
 
--(void)deletePractice:(Practice *)practice {
+-(void)deletePracticeAtIndexPath:(NSIndexPath *)indexPath {
+    Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = practice.attendances;
     for (Attendance *at in attendances) {
         // manually cascade deletion on parse
         [at.pfObject deleteInBackgroundWithBlock:nil];
     }
     [practice.pfObject deleteInBackgroundWithBlock:nil];
+
     [_appDelegate.managedObjectContext deleteObject:practice];
 
-    [self reloadPractices];
+    [self.practiceFetcher performFetch:nil];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
     [self notify:@"practice:deleted"]; // no one listens for this now
 }
 @end

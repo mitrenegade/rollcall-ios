@@ -26,4 +26,7 @@
 #define _appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
 #define _storyboard _appDelegate.window.rootViewController.storyboard
 
+#define IS_ABOVE_IOS6 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+#define IS_ABOVE_IOS7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+
 #define VERSION [NSString stringWithFormat: @"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]
