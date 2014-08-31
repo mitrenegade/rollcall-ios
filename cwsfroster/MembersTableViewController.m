@@ -91,7 +91,7 @@
             title = @"Inactive";
             break;
         case MemberStatusBeginner:
-            title = @"Beginner";
+            title = @"Guest";
             break;
         case MemberStatusActive:
             title = @"Active";

@@ -297,7 +297,7 @@
             Member *member = attendance.member;
             if (!payment) {
                 if ([member.status intValue] == MemberStatusBeginner) {
-                    paymentStatus = @" (beginner))<br>";
+                    paymentStatus = @" (guest))<br>";
                 }
                 else if ([member.status intValue] == MemberStatusInactive) {
                     paymentStatus = @" (inactive status)<br>";

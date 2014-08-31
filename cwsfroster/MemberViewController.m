@@ -182,7 +182,7 @@
 
 - (IBAction)didClickBack:(id)sender {
     if (changed) {
-        [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the user. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
+        [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the member. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
             self.member.status = @(originalStatus);
             [self.delegate cancel];
         } onCancel:nil];
