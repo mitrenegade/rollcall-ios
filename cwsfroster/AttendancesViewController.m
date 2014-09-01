@@ -173,23 +173,25 @@
     int section = indexPath.section;
     int row = indexPath.row;
 
-    UILabel *statusView = [cell viewWithTag:1];
-
+    UILabel *statusView = (UILabel *)[cell viewWithTag:1];
+    statusView.layer.borderWidth = 2;
+    statusView.layer.cornerRadius = 5;
+    
     NSString *name;
     if (section == 0) {
         Attendance *attendance = attendances[row];
         name = attendance.member.name;
 
         if (attendance.payment) {
-            statusView.backgroundColor = [UIColor greenColor];
+            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
             statusView.text = @"Paid";
         }
         else if ([attendance isFreebie]) {
-            statusView.backgroundColor = [UIColor yellowColor];
+            statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
             statusView.text = @"Trial";
         }
         else {
-            statusView.backgroundColor = [UIColor redColor];
+            statusView.layer.borderColor = [[UIColor redColor] CGColor];
             statusView.text = @"!";
         }
     }
@@ -197,14 +199,14 @@
         Member *member = membersActive[row];
         name = member.name;
 
-        statusView.backgroundColor = [member colorForStatus];
+        statusView.layer.borderColor = [[member colorForStatus] CGColor];
         statusView.text = [member textForStatus];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        statusView.backgroundColor = [member colorForStatus];
+        statusView.layer.borderColor = [[member colorForStatus] CGColor];
         statusView.text = [member textForStatus];
     }
     cell.accessoryView = statusView;

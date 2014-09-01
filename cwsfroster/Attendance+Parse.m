@@ -73,6 +73,8 @@
             self.pfObject[@"practice"] = self.practice.pfObject;
         if (self.payment.pfObject)
             self.pfObject[@"payment"] = self.payment.pfObject;
+        if (self.organization.pfObject)
+            self.pfObject[@"organization"] = self.organization.pfObject;
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {

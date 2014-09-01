@@ -64,18 +64,6 @@
 
     self.inputDate.inputAccessoryView = keyboardDoneButtonView;
     self.inputAmount.text = @"60";
-
-    if ([[self.paymentsFetcher fetchedObjects] count] == 0) {
-        // make a update just in case
-        PFQuery *query = [PFQuery queryWithClassName:@"Payment"];
-        if (self.member.pfObject)
-            [query whereKey:@"member" equalTo:self.member.pfObject]; // sometimes member has not synced with the database? prevent crash
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            [ParseBase synchronizeClass:@"Payment" fromObjects:objects replaceExisting:NO completion:^{
-                [self refresh];
-            }];
-        }];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -107,25 +95,25 @@
 - (IBAction)didClickButton:(id)sender {
     // payment source
     if (sender == self.buttonVenmo) {
-        [self.buttonVenmo setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
-        [self.buttonCash setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
+        [self.buttonVenmo setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
+        [self.buttonCash setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
         paymentSource = PaymentSourceVenmo;
     }
     else if (sender == self.buttonCash) {
-        [self.buttonVenmo setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
-        [self.buttonCash setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
+        [self.buttonVenmo setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
+        [self.buttonCash setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
         paymentSource = PaymentSourceCash;
     }
 
     // payment type
     if (sender == self.buttonMonthly) {
-        [self.buttonDaily setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
-        [self.buttonMonthly setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
+        [self.buttonDaily setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
+        [self.buttonMonthly setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
         paymentType = PaymentTypeMonthly;
     }
     else if (sender == self.buttonDaily) {
-        [self.buttonMonthly setImage:[UIImage imageNamed:@"employer_unchecked"] forState:UIControlStateNormal];
-        [self.buttonDaily setImage:[UIImage imageNamed:@"employer_check"] forState:UIControlStateNormal];
+        [self.buttonMonthly setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
+        [self.buttonDaily setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
         paymentType = PaymentTypeDaily;
     }
 

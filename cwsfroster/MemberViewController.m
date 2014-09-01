@@ -13,6 +13,7 @@
 #import "PaymentViewController.h"
 #import "Attendance+Parse.h"
 #import "Attendance+Info.h"
+#import "Organization+Info.h"
 
 @interface MemberViewController ()
 
@@ -44,6 +45,7 @@
     NSDictionary *scope = @{};
     if (self.member.pfObject) {
         [query whereKey:@"member" equalTo:self.member.pfObject];
+        [query whereKey:@"organization" equalTo:[Organization currentOrganization].pfObject];
         scope = @{@"member.parseID":self.member.parseID};
     }
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -56,6 +58,7 @@
     NSDictionary *scope2 = @{};
     if (self.member.pfObject) {
         [query2 whereKey:@"member" equalTo:self.member.pfObject];
+        [query2 whereKey:@"organization" equalTo:[Organization currentOrganization].pfObject];
         scope2 = @{@"member.parseID":self.member.parseID};
     }
     [query2 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -123,17 +126,17 @@
         }
 
         if (monthly) {
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_check"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"checked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"unchecked"]];
         }
         else if (!unpaid) { // daily
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_check"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"checked"]];
         }
         else {
             // unpaid
-            [iconMonthly setImage:[UIImage imageNamed:@"employer_unchecked"]];
-            [iconDaily setImage:[UIImage imageNamed:@"employer_unchecked"]];
+            [iconMonthly setImage:[UIImage imageNamed:@"unchecked"]];
+            [iconDaily setImage:[UIImage imageNamed:@"unchecked"]];
 
             if ([self.member.status intValue] != MemberStatusBeginner && [self.member.status intValue] != MemberStatusInactive) {
                 [labelPaymentWarning setHidden:NO];
@@ -182,7 +185,7 @@
 
 - (IBAction)didClickBack:(id)sender {
     if (changed) {
-        [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the user. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
+        [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the member. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
             self.member.status = @(originalStatus);
             [self.delegate cancel];
         } onCancel:nil];

@@ -110,10 +110,10 @@
             </objects>
             <point key="canvasLocation" x="-964" y="288"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Shell View Controller-->
         <scene sceneID="re5-gU-HVk">
             <objects>
-                <tabBarController definesPresentationContext="YES" id="AnU-gv-j61" sceneMemberID="viewController">
+                <tabBarController definesPresentationContext="YES" id="AnU-gv-j61" customClass="ShellViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="qFP-il-VG6">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
@@ -278,7 +278,7 @@
                                     <action selector="didClickSwitch:" destination="XNl-Q5-lQr" eventType="valueChanged" id="PxS-yW-dFR"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Beginner" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Cz-t0-i0e">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Guest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Cz-t0-i0e">
                                 <rect key="frame" x="26" y="173" width="206" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -339,15 +339,15 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="employer_unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="oKm-UP-VB4">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="oKm-UP-VB4">
                                 <rect key="frame" x="270" y="286" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="employer_unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="iBr-WI-InX">
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="iBr-WI-InX">
                                 <rect key="frame" x="270" y="325" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This user needs to add a payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5o-iM-t9N">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This member needs to add a payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X5o-iM-t9N">
                                 <rect key="frame" x="17" y="395" width="287" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -420,7 +420,7 @@
                                         <rect key="frame" x="159" y="84" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="employer_unchecked.png">
+                                        <state key="normal" image="unchecked.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -443,17 +443,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Venmo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXn-5e-ePS">
-                                        <rect key="frame" x="67" y="84" width="82" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Other" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXn-5e-ePS">
+                                        <rect key="frame" x="67" y="114" width="82" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4UN-PC-TDN">
-                                        <rect key="frame" x="20" y="84" width="39" height="22"/>
+                                        <rect key="frame" x="20" y="114" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="employer_unchecked.png">
+                                        <state key="normal" image="unchecked.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -462,10 +462,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfP-i8-8BT">
-                                        <rect key="frame" x="20" y="114" width="39" height="22"/>
+                                        <rect key="frame" x="20" y="84" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="employer_unchecked.png">
+                                        <state key="normal" image="unchecked.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -474,7 +474,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cash" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jq0-aX-edD">
-                                        <rect key="frame" x="67" y="114" width="82" height="21"/>
+                                        <rect key="frame" x="67" y="84" width="82" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
@@ -483,7 +483,7 @@
                                         <rect key="frame" x="159" y="114" width="39" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <state key="normal" image="employer_unchecked.png">
+                                        <state key="normal" image="unchecked.png">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </state>
@@ -588,7 +588,7 @@
             </objects>
             <point key="canvasLocation" x="1768" y="-85"/>
         </scene>
-        <!--Practices Table View Controller - Practices-->
+        <!--Practices Table View Controller - Events-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -630,7 +630,7 @@
                             <outlet property="delegate" destination="qXS-mn-38d" id="fCG-zS-41o"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Practices" id="i0f-Z7-11a">
+                    <navigationItem key="navigationItem" title="Events" id="i0f-Z7-11a">
                         <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
@@ -741,7 +741,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Practice Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Event Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
                                 <rect key="frame" x="29" y="94" width="262" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -808,11 +808,11 @@
             </objects>
             <point key="canvasLocation" x="2147" y="592"/>
         </scene>
-        <!--Navigation Controller - Practices-->
+        <!--Navigation Controller - Events-->
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Practices" image="icon1.png" id="HEm-wM-E2I"/>
+                    <tabBarItem key="tabBarItem" title="Events" image="icon-calendar.png" id="HEm-wM-E2I"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyz-ks-QZt">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -828,7 +828,7 @@
         <scene sceneID="B2w-ju-klW">
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Members" image="icon2.png" id="7Lb-EF-RQd"/>
+                    <tabBarItem key="tabBarItem" title="Members" image="icon-users.png" id="7Lb-EF-RQd"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="PVL-Bl-XK0">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -842,9 +842,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="employer_unchecked.png" width="22" height="22"/>
-        <image name="icon1.png" width="28" height="29"/>
-        <image name="icon2.png" width="25" height="30"/>
+        <image name="icon-calendar.png" width="30" height="30"/>
+        <image name="icon-users.png" width="30" height="30"/>
+        <image name="unchecked.png" width="22" height="22"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -142,6 +142,7 @@
             if (success) {
                 NSLog(@"Saved");
                 [UIAlertView alertViewWithTitle:@"Name saved" message:[NSString stringWithFormat:@"Your organization is now called %@", organization.name]];
+                [self notify:@"organization:name:changed"];
             }
             else {
                 [UIAlertView alertViewWithTitle:@"Error updating name" message:nil];

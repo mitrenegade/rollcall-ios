@@ -56,8 +56,7 @@
 }
 
 -(void)goToSettings:(id)sender {
-    UINavigationController *nav = [_storyboard instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
-    [self presentViewController:nav animated:YES completion:nil];
+    [self notify:@"goToSettings"];
 }
 
 #pragma mark - Table view data source

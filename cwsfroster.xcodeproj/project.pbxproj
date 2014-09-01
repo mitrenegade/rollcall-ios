@@ -11,8 +11,8 @@
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
-		9E156178199269B500A31398 /* icon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon2@2x.png */; };
-		9E15617A199269C300A31398 /* icon1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon1@2x.png */; };
+		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
+		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
 		9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
 		9E80085416196883003E9B16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085316196883003E9B16 /* Foundation.framework */; };
@@ -33,6 +33,11 @@
 		9E828A6216196B8D009A6C44 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A4816196B52009A6C44 /* CFNetwork.framework */; };
 		9E828A6416196B8D009A6C44 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A4416196B4A009A6C44 /* Accounts.framework */; };
 		9E828A6516196B8D009A6C44 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A4216196B47009A6C44 /* AudioToolbox.framework */; };
+		9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */; };
+		9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4719B2E421006D81FC /* icon-users@2x.png */; };
+		9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E98DB4B19B2E63D006D81FC /* ShellViewController.m */; };
+		9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4D19B2EA5B006D81FC /* checked@2x.png */; };
+		9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */; };
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
 		9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */; };
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
@@ -57,8 +62,6 @@
 		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
 		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
-		9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F0199E6E1C00777F79 /* employer_check@2x.png */; };
-		9EC302F3199E6E1C00777F79 /* employer_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */; };
 		9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC302F5199E760A00777F79 /* Payment+Parse.m */; };
 		9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031A19A0EA9500777F79 /* PaymentViewController.m */; };
 		9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031D19A1398700777F79 /* Payment+Info.m */; };
@@ -92,8 +95,8 @@
 		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
-		9E156177199269B500A31398 /* icon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2@2x.png"; sourceTree = "<group>"; };
-		9E156179199269C300A31398 /* icon1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon1@2x.png"; sourceTree = "<group>"; };
+		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
+		9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-paddle@2x.png"; sourceTree = "<group>"; };
 		9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeEditViewController.h; sourceTree = "<group>"; };
 		9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeEditViewController.m; sourceTree = "<group>"; };
 		9E80084D16196883003E9B16 /* CWSF Roster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CWSF Roster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +122,12 @@
 		9E828A5216196B6F009A6C44 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9E828A5616196B75009A6C44 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar@2x.png"; sourceTree = "<group>"; };
+		9E98DB4719B2E421006D81FC /* icon-users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-users@2x.png"; sourceTree = "<group>"; };
+		9E98DB4A19B2E63D006D81FC /* ShellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellViewController.h; sourceTree = "<group>"; };
+		9E98DB4B19B2E63D006D81FC /* ShellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellViewController.m; sourceTree = "<group>"; };
+		9E98DB4D19B2EA5B006D81FC /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
+		9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticesTableViewController.h; sourceTree = "<group>"; };
 		9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticesTableViewController.m; sourceTree = "<group>"; };
 		9E99F8CF193D717A004EB5C1 /* Practice+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Practice+Parse.h"; sourceTree = "<group>"; };
@@ -160,8 +169,6 @@
 		9EC0F50919A4D05F003441AC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9EC15480198009EA003F80CA /* AttendancesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendancesViewController.h; sourceTree = "<group>"; };
 		9EC15481198009EA003F80CA /* AttendancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendancesViewController.m; sourceTree = "<group>"; };
-		9EC302F0199E6E1C00777F79 /* employer_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "employer_check@2x.png"; sourceTree = "<group>"; };
-		9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "employer_unchecked@2x.png"; sourceTree = "<group>"; };
 		9EC302F4199E760A00777F79 /* Payment+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+Parse.h"; sourceTree = "<group>"; };
 		9EC302F5199E760A00777F79 /* Payment+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+Parse.m"; sourceTree = "<group>"; };
 		9EC3031919A0EA9500777F79 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
@@ -241,11 +248,13 @@
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9E98DB4D19B2EA5B006D81FC /* checked@2x.png */,
+				9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */,
 				9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */,
-				9EC302F0199E6E1C00777F79 /* employer_check@2x.png */,
-				9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */,
-				9E156177199269B500A31398 /* icon2@2x.png */,
-				9E156179199269C300A31398 /* icon1@2x.png */,
+				9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */,
+				9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */,
+				9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */,
+				9E98DB4719B2E421006D81FC /* icon-users@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -310,6 +319,8 @@
 				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
+				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
+				9E98DB4B19B2E63D006D81FC /* ShellViewController.m */,
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
@@ -482,17 +493,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E15617A199269C300A31398 /* icon1@2x.png in Resources */,
+				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
-				9EC302F3199E6E1C00777F79 /* employer_unchecked@2x.png in Resources */,
+				9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */,
+				9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */,
 				9E80086616196883003E9B16 /* Default@2x.png in Resources */,
+				9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */,
 				9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */,
 				9EB48DC11703AAB7001D360F /* icon.png in Resources */,
+				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,
 				9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */,
-				9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */,
 				9EB48DC31703AABC001D360F /* icon@2x.png in Resources */,
-				9E156178199269B500A31398 /* icon2@2x.png in Resources */,
+				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
 				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -573,6 +586,7 @@
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */,
+				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
 				9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */,
 				9EC5F3391936D9080056140F /* MemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,

@@ -32,12 +32,8 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_white"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettings:)];
+    self.navigationItem.leftBarButtonItem = left;
 
     [self listenFor:@"payment:updated" action:@selector(reloadMembers)];
     [self reloadMembers];
@@ -52,6 +48,10 @@
 -(void)reloadMembers {
     [self.memberFetcher performFetch:nil];
     [self.tableView reloadData];
+}
+
+-(void)goToSettings:(id)sender {
+    [self notify:@"goToSettings"];
 }
 
 #pragma mark FetchedResultsController
@@ -91,7 +91,7 @@
             title = @"Inactive";
             break;
         case MemberStatusBeginner:
-            title = @"Beginner";
+            title = @"Guest";
             break;
         case MemberStatusActive:
             title = @"Active";
@@ -122,7 +122,9 @@
     cell.textLabel.text = member.name;
 
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
-    statusView.backgroundColor = [member colorForStatus];
+    statusView.layer.borderWidth = 2;
+    statusView.layer.borderColor = [[member colorForStatus] CGColor];
+    statusView.layer.cornerRadius = 5;
     statusView.text = [member textForStatus];
     cell.accessoryView = statusView;
 
