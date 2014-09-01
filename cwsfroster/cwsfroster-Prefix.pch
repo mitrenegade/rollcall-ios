@@ -20,6 +20,10 @@
 #import "UIAlertView+MKBlockAdditions.h"
 #import "NSObject+Notify.h"
 #import "Constants.h"
-//#import "ConstantsLocal.h"
+#import "Organization+Info.h"
 
-#define _appDelegate ((AppDelegate*)[UIApplication sharedApplication].delegate)
+#define _currentUser [PFUser currentUser]
+#define _appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)
+#define _storyboard _appDelegate.window.rootViewController.storyboard
+
+#define VERSION [NSString stringWithFormat: @"%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]]

@@ -14,6 +14,7 @@
 @implementation Organization
 
 @dynamic name;
+@dynamic logoData;
 @dynamic members;
 @dynamic practices;
 

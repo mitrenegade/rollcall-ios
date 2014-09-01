@@ -10,7 +10,6 @@
 		7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83ECB7C44E1F43D089ABEE5A /* libPods.a */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
-		9E1561731992662100A31398 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E1561721992662100A31398 /* logo.png */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon2@2x.png */; };
 		9E15617A199269C300A31398 /* icon1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon1@2x.png */; };
@@ -40,13 +39,16 @@
 		9E9F19BF19AF821200DE3F27 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */; };
 		9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F19D319AF963A00DE3F27 /* Organization+Parse.m */; };
 		9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993619B0BBCF007BC1FD /* ParseBase.m */; };
-		9EA0993A19B0BD97007BC1FD /* Organization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993919B0BD97007BC1FD /* Organization.m */; };
 		9EA0993D19B0BD98007BC1FD /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993C19B0BD98007BC1FD /* Member.m */; };
 		9EA0994019B0BD98007BC1FD /* Practice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993F19B0BD98007BC1FD /* Practice.m */; };
 		9EA0994319B0BF62007BC1FD /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994219B0BF62007BC1FD /* Payment.m */; };
 		9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994519B0BF63007BC1FD /* Attendance.m */; };
 		9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994819B0EB7F007BC1FD /* Organization+Info.m */; };
 		9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994B19B0F160007BC1FD /* AsyncImageView.m */; };
+		9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */; };
+		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
+		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
+		9EA0995619B10343007BC1FD /* Organization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995519B10343007BC1FD /* Organization.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
 		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
@@ -88,7 +90,6 @@
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
 		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
-		9E1561721992662100A31398 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon2@2x.png"; sourceTree = "<group>"; };
@@ -129,8 +130,6 @@
 		9E9F19D319AF963A00DE3F27 /* Organization+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Parse.m"; sourceTree = "<group>"; };
 		9EA0993519B0BBCF007BC1FD /* ParseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseBase.h; sourceTree = "<group>"; };
 		9EA0993619B0BBCF007BC1FD /* ParseBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseBase.m; sourceTree = "<group>"; };
-		9EA0993819B0BD97007BC1FD /* Organization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Organization.h; sourceTree = "<group>"; };
-		9EA0993919B0BD97007BC1FD /* Organization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Organization.m; sourceTree = "<group>"; };
 		9EA0993B19B0BD98007BC1FD /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
 		9EA0993C19B0BD98007BC1FD /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		9EA0993E19B0BD98007BC1FD /* Practice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Practice.h; sourceTree = "<group>"; };
@@ -143,6 +142,12 @@
 		9EA0994819B0EB7F007BC1FD /* Organization+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Info.m"; sourceTree = "<group>"; };
 		9EA0994A19B0F160007BC1FD /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		9EA0994B19B0F160007BC1FD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
+		9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_white@2x.png"; sourceTree = "<group>"; };
+		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		9EA0995019B0F448007BC1FD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		9EA0995219B0FCBA007BC1FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		9EA0995419B10343007BC1FD /* Organization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Organization.h; sourceTree = "<group>"; };
+		9EA0995519B10343007BC1FD /* Organization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Organization.m; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
@@ -206,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */,
 				9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */,
 				9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */,
 				9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */,
@@ -235,11 +241,11 @@
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */,
 				9EC302F0199E6E1C00777F79 /* employer_check@2x.png */,
 				9EC302F1199E6E1C00777F79 /* employer_unchecked@2x.png */,
 				9E156177199269B500A31398 /* icon2@2x.png */,
 				9E156179199269C300A31398 /* icon1@2x.png */,
-				9E1561721992662100A31398 /* logo.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -267,6 +273,7 @@
 		9E80085016196883003E9B16 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9EA0995219B0FCBA007BC1FD /* MessageUI.framework */,
 				9E9F19BE19AF821200DE3F27 /* Crashlytics.framework */,
 				9EC0F50919A4D05F003441AC /* FacebookSDK.framework */,
 				9EC0F50719A4CEFF003441AC /* Social.framework */,
@@ -303,6 +310,8 @@
 				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
+				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
+				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				9EC5F3371936D9080056140F /* MemberViewController.h */,
@@ -348,9 +357,9 @@
 				9EC5F2EF1936D1720056140F /* PFObjectFactory.h */,
 				9EA0993519B0BBCF007BC1FD /* ParseBase.h */,
 				9EA0993619B0BBCF007BC1FD /* ParseBase.m */,
+				9EA0995419B10343007BC1FD /* Organization.h */,
+				9EA0995519B10343007BC1FD /* Organization.m */,
 				9EC5F2E91936D0960056140F /* Model.xcdatamodeld */,
-				9EA0993819B0BD97007BC1FD /* Organization.h */,
-				9EA0993919B0BD97007BC1FD /* Organization.m */,
 				9EA0993E19B0BD98007BC1FD /* Practice.h */,
 				9EA0993F19B0BD98007BC1FD /* Practice.m */,
 				9EA0993B19B0BD98007BC1FD /* Member.h */,
@@ -473,7 +482,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E1561731992662100A31398 /* logo.png in Resources */,
 				9E15617A199269C300A31398 /* icon1@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
@@ -485,6 +493,7 @@
 				9EC302F2199E6E1C00777F79 /* employer_check@2x.png in Resources */,
 				9EB48DC31703AABC001D360F /* icon@2x.png in Resources */,
 				9E156178199269B500A31398 /* icon2@2x.png in Resources */,
+				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,7 +553,6 @@
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
 				9EA0994319B0BF62007BC1FD /* Payment.m in Sources */,
-				9EA0993A19B0BD97007BC1FD /* Organization.m in Sources */,
 				9E15616B19924B7800A31398 /* Member+Info.m in Sources */,
 				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
 				9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */,
@@ -559,7 +567,9 @@
 				9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */,
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
+				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
+				9EA0995619B10343007BC1FD /* Organization.m in Sources */,
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */,

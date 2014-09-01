@@ -29,6 +29,8 @@
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
             self.name = [self.pfObject objectForKey:@"name"];
+            PFFile *logoFile = [self.pfObject objectForKey:@"logoData"];
+            self.logoData = [logoFile getData];
 
             self.parseID = self.pfObject.objectId;
         }
@@ -42,6 +44,8 @@
 
         if (self.name)
             self.pfObject[@"name"] = self.name;
+        if (self.logoData)
+            self.pfObject[@"logoData"] = [PFFile fileWithData:self.logoData];
 
         [self.pfObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if (succeeded) {

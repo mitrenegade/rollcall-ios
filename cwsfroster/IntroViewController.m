@@ -20,22 +20,34 @@
     [super viewDidLoad];
 
     if ([PFUser currentUser]) {
-        [logo setHidden:NO];
         [self loggedIn];
     }
     else {
-        inputLogin.superview.layer.borderWidth = 1;
-        inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        inputPassword.superview.layer.borderWidth = 1;
-        inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        inputConfirmation.superview.layer.borderWidth = 1;
-        inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-        [inputLogin.superview setHidden:NO];
-        [inputPassword.superview setHidden:NO];
-        [inputConfirmation.superview setHidden:YES];
-        [buttonLogin setHidden:NO];
-        [buttonSignup setHidden:NO];
+        [self enableButtons:YES];
+        [self reset:YES];
     }
+}
+
+-(void)reset:(BOOL)showLogin {
+    [inputConfirmation.superview setHidden:YES];
+    inputPassword.text = nil;
+    inputConfirmation.text = nil;
+    inputLogin.superview.layer.borderWidth = 1;
+    inputLogin.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    inputPassword.superview.layer.borderWidth = 1;
+    inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    inputConfirmation.superview.layer.borderWidth = 1;
+    inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+
+    [UIView animateWithDuration:.25 animations:^{
+        if (showLogin)
+            [logo setAlpha:showLogin?0:1];
+        [inputLogin.superview setAlpha:showLogin?1:0];
+        [inputPassword.superview setAlpha:showLogin?1:0];
+        [buttonLogin setAlpha:showLogin?1:0];
+        [buttonSignup setAlpha:showLogin?1:0];
+    } completion:^(BOOL finished) {
+    }];
 }
 
 -(void)loggedIn {
@@ -46,14 +58,20 @@
     }
     isFailed = NO;
 
-    logo.alpha = 0;
-    ready[@"animation"] = @NO;
-    [UIView animateWithDuration:1 animations:^{
-        logo.alpha = 1;
-    } completion:^(BOOL finished) {
-        ready[@"animation"] = @YES;
-        if ([self isReady]) {
-            [self goToPractices];
+    [self reset:NO];
+    PFObject *organizationObject = _currentUser[@"organization"];
+    [organizationObject fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if ([organizationObject objectForKey:@"logoData"]) {
+            PFFile *imageFile = organizationObject[@"logoData"];
+            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                logo.alpha = 0;
+                UIImage *image = [UIImage imageWithData:data];
+                [logo setImage:image];
+                [UIView animateWithDuration:1 animations:^{
+                    logo.alpha = 1;
+                } completion:^(BOOL finished) {
+                }];
+            }];
         }
     }];
 
@@ -181,6 +199,7 @@
                 if ([className isEqualToString:@"Payment"]) {
                     NSLog(@"Here");
                 }
+                [progress hide:YES];
                 [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;
                     if ([self isReady])

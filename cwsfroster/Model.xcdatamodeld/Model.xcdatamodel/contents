@@ -18,6 +18,7 @@
         <relationship name="payments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Payment" inverseName="member" inverseEntity="Payment" syncable="YES"/>
     </entity>
     <entity name="Organization" representedClassName="Organization" parentEntity="ParseBase" syncable="YES">
+        <attribute name="logoData" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Member" inverseName="organization" inverseEntity="Member" syncable="YES"/>
         <relationship name="practices" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="organization" inverseEntity="Practice" syncable="YES"/>
@@ -50,7 +51,7 @@
     <elements>
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="135"/>
         <element name="Member" positionX="-54" positionY="18" width="128" height="148"/>
-        <element name="Organization" positionX="-36" positionY="99" width="128" height="90"/>
+        <element name="Organization" positionX="-36" positionY="99" width="128" height="105"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="195"/>
         <element name="Practice" positionX="-36" positionY="54" width="128" height="118"/>
