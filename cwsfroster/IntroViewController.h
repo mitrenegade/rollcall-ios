@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @class MBProgressHUD;
-@class AsyncImageView;
 @interface IntroViewController : UIViewController <UITextFieldDelegate>
 {
-    IBOutlet AsyncImageView *logo;
+    IBOutlet UIImageView *logo;
 
     IBOutlet UITextField *inputLogin;
     IBOutlet UITextField *inputPassword;

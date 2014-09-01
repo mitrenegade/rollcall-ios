@@ -28,7 +28,7 @@
     [Crashlytics startWithAPIKey:@"70160b7dec925a91c6fe09e38bf1f8659c1eda41"];
 
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
+
     return YES;
 }
 
