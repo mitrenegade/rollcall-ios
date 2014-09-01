@@ -50,8 +50,7 @@
 }
 
 -(void)reloadMembers {
-    NSError *error;
-    [self.memberFetcher performFetch:&error];
+    [self.memberFetcher performFetch:nil];
     [self.tableView reloadData];
 }
 
@@ -138,8 +137,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
-        Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
-        [self deleteMember:member];
+        [self deleteMemberAtIndexPath:indexPath];
     }
 }
 
@@ -224,7 +222,8 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)deleteMember:(Member *)member {
+-(void)deleteMemberAtIndexPath:(NSIndexPath *)indexPath {
+    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = member.attendances;
     NSSet *payments = member.payments;
     for (Attendance *at in attendances) {
@@ -237,7 +236,8 @@
     [member.pfObject deleteInBackgroundWithBlock:nil];
     [_appDelegate.managedObjectContext deleteObject:member];
 
-    [self reloadMembers];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.memberFetcher performFetch:nil];
     [self notify:@"member:deleted"];
 }
 @end

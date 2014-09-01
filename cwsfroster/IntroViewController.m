@@ -97,16 +97,25 @@
     }
 
     [self enableButtons:NO];
+    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.taskInProgress = YES;
     [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
         if (user) {
             [self loggedIn];
         }
         else {
             NSString *message = nil;
+            if (error.code == 100) {
+                message = @"Please make sure you are connected to the internet.";
+            }
             if (error.code == 101) {
                 message = @"Invalid username or password";
             }
-            [UIAlertView alertViewWithTitle:@"Login failed" message:message];
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Login failed";
+            progress.detailsLabelText = message;
+            [progress hide:YES afterDelay:1.5];
             [self enableButtons:YES];
         }
     }];
@@ -114,7 +123,9 @@
 
 -(IBAction)didClickSignup:(id)sender {
     if ([inputConfirmation.superview isHidden]) {
+        inputConfirmation.superview.alpha = 1;
         [inputConfirmation.superview setHidden:NO];
+        inputConfirmation.alpha = 1;
         return;
     }
 
@@ -141,6 +152,10 @@
     user.username = inputLogin.text;
     user.password = inputPassword.text;
 
+    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    progress.taskInProgress = YES;
+
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             [self createOrganizationWithCompletion:^(Organization *organization) {
@@ -149,11 +164,17 @@
         }
         else {
             NSString *message = nil;
+            if (error.code == 100) {
+                message = @"Please make sure you are connected to the internet.";
+            }
             if (error.code == 202) {
                 message = @"Username already taken";
             }
-            [UIAlertView alertViewWithTitle:@"Signup failed" message:message];
             [self enableButtons:YES];
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Signup failed";
+            progress.detailsLabelText = message;
+            [progress hide:YES afterDelay:1.5];
         }
     }];
 }

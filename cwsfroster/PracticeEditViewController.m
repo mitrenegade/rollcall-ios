@@ -52,6 +52,10 @@
     UIBarButtonItem* button2 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelectDate:)];
     [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:button2, flex, button1, nil]];
 
+    if (IS_ABOVE_IOS6) {
+        [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
+    }
+
     [inputDate setInputView:pickerView];
     if (self.practice) {
         [inputDate setText:[self titleForDate:self.practice.date]];
@@ -92,9 +96,13 @@
 
 -(IBAction)didClickSave:(id)sender {
     NSLog(@"Saving");
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.mode = MBProgressHUDModeIndeterminate;
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    [self.navigationItem.leftBarButtonItem setEnabled:NO];
+
     if (self.practice) {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        [self.navigationItem.leftBarButtonItem setEnabled:NO];
+        progress.labelText = @"Saving new practice";
         if (dateForDateString[inputDate.text]) {
             self.practice.date = dateForDateString[inputDate.text];
             self.practice.title = [Util simpleDateFormat:self.practice.date];
@@ -103,12 +111,18 @@
         [self.delegate didEditPractice];
         [self.navigationController popViewControllerAnimated:YES];
         [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];
             if (!success) {
-                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+                progress.mode = MBProgressHUDModeText;
+                progress.labelText = @"Save error";
+                progress.detailsLabelText = @"Could not save practice!";
+                [progress hide:YES afterDelay:1.5];
             }
         }];
     }
     else {
+        progress.labelText = @"Creating new practice";
         if (!dateForDateString[inputDate.text]) {
             // invalid date, or date not selected. shouldn't go here if we disable save
             return;
@@ -122,8 +136,20 @@
         [self.navigationController popViewControllerAnimated:YES];
 
         [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            [self.navigationItem.leftBarButtonItem setEnabled:YES];
             if (!success) {
-                [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save practice!"];
+                progress.mode = MBProgressHUDModeText;
+                progress.labelText = @"Save error";
+                progress.detailsLabelText = @"Could not save practice!";
+                [progress hide:YES afterDelay:1.5];
+
+                [_appDelegate.managedObjectContext deleteObject:practice];
+            }
+            else {
+                [_appDelegate.managedObjectContext save:nil];
+                [progress hide:YES];
+                [self didClickCancel:nil];
             }
         }];
     }
@@ -207,6 +233,8 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == inputDate) {
         lastInputDate = textField.text;
+
+        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:0 inComponent:0];
     }
 }
 
@@ -251,6 +279,9 @@
         [progress hide:YES afterDelay:1.5];
         return;
     }
+
+    // save any changes. at least sets new details to practice before sending email
+    [self didClickSave:nil];
 
     [[NSUserDefaults standardUserDefaults] setObject:inputEmail.text forKey:@"email:to"];
 
