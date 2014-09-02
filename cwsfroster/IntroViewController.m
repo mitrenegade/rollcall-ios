@@ -13,6 +13,7 @@
 #import "Member+Info.h"
 #import "Organization+Parse.h"
 #import "AsyncImageView.h"
+#import "Payment+Parse.h"
 
 @implementation IntroViewController
 
@@ -185,9 +186,10 @@
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     // load only that organization
-    PFObject *object = _currentUser[@"organization"];
-    [object fetchIfNeeded];
-    [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+    PFObject *orgObject = _currentUser[@"organization"];
+    [orgObject fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+    }];
 
     for (NSString *className in classes) {
         PFQuery *query = [PFQuery queryWithClassName:className];
@@ -217,9 +219,6 @@
                 }
             }
             else {
-                if ([className isEqualToString:@"Payment"]) {
-                    NSLog(@"Here");
-                }
                 [progress hide:YES];
                 [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;

@@ -12,9 +12,20 @@
 
 static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that they can be associated through core data 
 
-+(id)fromPFObject:(PFObject *)object {
-    NSLog(@"%s must be implemented by child class", __func__);
-    return nil;
++(ParseBase *)fromPFObject:(PFObject *)object {
+    id parseID = object.objectId;
+    NSArray *objectArray = [[[self class] where:@{@"parseID":parseID}] all];
+    id newObject;
+    if ([objectArray count]) {
+        newObject = [objectArray firstObject];
+    }
+    else {
+        newObject = [[self class] createEntityInContext:_appDelegate.managedObjectContext];
+    }
+    ((ParseBase *)newObject).parseID = object.objectId;
+    ((ParseBase *)newObject).pfObject = object;
+    [newObject updateFromParseWithCompletion:nil];
+    return newObject;
 }
 
 -(NSString *)className {

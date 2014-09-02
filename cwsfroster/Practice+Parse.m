@@ -11,21 +11,6 @@
 
 @implementation Practice (Parse)
 
-+(Practice *)fromPFObject:(PFObject *)object {
-    id parseID = object.objectId;
-    NSArray *objectArray = [[Practice where:@{@"parseID":parseID}] all];
-    Practice *obj;
-    if ([objectArray count]) {
-        obj = [objectArray firstObject];
-    }
-    else {
-        obj = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
-    }
-    obj.pfObject = object;
-    [obj updateFromParseWithCompletion:nil];
-    return obj;
-}
-
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -33,9 +18,8 @@
             self.title = [self.pfObject objectForKey:@"title"];
             self.details = [self.pfObject objectForKey:@"details"];
 
-            self.parseID = self.pfObject.objectId;
-
             // relationships
+            self.parseID = self.pfObject.objectId;
             PFObject *object = [self.pfObject objectForKey:@"organization"];
             if (object.objectId)
                 self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
