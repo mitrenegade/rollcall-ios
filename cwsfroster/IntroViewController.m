@@ -14,7 +14,7 @@
 #import "Organization+Parse.h"
 #import "AsyncImageView.h"
 #import "Payment+Parse.h"
-
+#import "TutorialScrollView.h"
 @implementation IntroViewController
 
 -(void)viewDidLoad {
@@ -47,8 +47,20 @@
         [inputPassword.superview setAlpha:showLogin?1:0];
         [buttonLogin setAlpha:showLogin?1:0];
         [buttonSignup setAlpha:showLogin?1:0];
+        [tutorialView setAlpha:showLogin?1:0];
     } completion:^(BOOL finished) {
     }];
+}
+
+-(void)loadTutorial {
+    [tutorialView setTutorialPages:@[@"IntroTutorial0", @"IntroTutorial1"]];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![PFUser currentUser]) {
+        [self loadTutorial];
+    }
 }
 
 -(void)loggedIn {

@@ -19,6 +19,9 @@
 		9E649FE319B6040A00334B34 /* icon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDD19B6040A00334B34 /* icon80.png */; };
 		9E649FE419B6040A00334B34 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDE19B6040A00334B34 /* icon114.png */; };
 		9E649FE519B6040A00334B34 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDF19B6040A00334B34 /* icon120.png */; };
+		9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E649FE719B606A800334B34 /* TutorialScrollView.m */; };
+		9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */; };
+		9E649FED19B609C400334B34 /* IntroTutorial1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FEC19B609C400334B34 /* IntroTutorial1.xib */; };
 		9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
 		9E80085416196883003E9B16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085316196883003E9B16 /* Foundation.framework */; };
@@ -107,6 +110,10 @@
 		9E649FDD19B6040A00334B34 /* icon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon80.png; sourceTree = "<group>"; };
 		9E649FDE19B6040A00334B34 /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
 		9E649FDF19B6040A00334B34 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
+		9E649FE619B606A800334B34 /* TutorialScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TutorialScrollView.h; sourceTree = "<group>"; };
+		9E649FE719B606A800334B34 /* TutorialScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialScrollView.m; sourceTree = "<group>"; };
+		9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial0.xib; sourceTree = "<group>"; };
+		9E649FEC19B609C400334B34 /* IntroTutorial1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial1.xib; sourceTree = "<group>"; };
 		9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeEditViewController.h; sourceTree = "<group>"; };
 		9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeEditViewController.m; sourceTree = "<group>"; };
 		9E80084D16196883003E9B16 /* Roll Call.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Roll Call.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +280,17 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		9E649FE919B608C300334B34 /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				9E649FE619B606A800334B34 /* TutorialScrollView.h */,
+				9E649FE719B606A800334B34 /* TutorialScrollView.m */,
+				9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */,
+				9E649FEC19B609C400334B34 /* IntroTutorial1.xib */,
+			);
+			name = Tutorials;
+			sourceTree = "<group>";
+		};
 		9E80084216196883003E9B16 = {
 			isa = PBXGroup;
 			children = (
@@ -349,6 +367,7 @@
 				9EC3031A19A0EA9500777F79 /* PaymentViewController.m */,
 				9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */,
 				9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */,
+				9E649FE919B608C300334B34 /* Tutorials */,
 			);
 			path = cwsfroster;
 			sourceTree = "<group>";
@@ -505,7 +524,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E649FED19B609C400334B34 /* IntroTutorial1.xib in Resources */,
 				9E649FE419B6040A00334B34 /* icon114.png in Resources */,
+				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
@@ -593,6 +614,7 @@
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				9EC5F31B1936D2410056140F /* Query.m in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
+				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
 				9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */,
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class MBProgressHUD;
+@class TutorialScrollView;
+
 @interface IntroViewController : UIViewController <UITextFieldDelegate>
 {
     IBOutlet UIImageView *logo;
@@ -24,6 +26,8 @@
 
     MBProgressHUD *progress;
     BOOL isFailed;
+
+    IBOutlet TutorialScrollView *tutorialView;
 }
 
 -(IBAction)didClickLogin:(id)sender;

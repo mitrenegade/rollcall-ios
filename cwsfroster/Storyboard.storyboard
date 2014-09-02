@@ -17,12 +17,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DIV-9J-YOD" userLabel="Tutorial view" customClass="TutorialScrollView">
+                                <rect key="frame" x="0.0" y="146" width="320" height="320"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="nkI-Ub-qfJ"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vm1-wf-m0P">
                                 <rect key="frame" x="0.0" y="124" width="320" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5vD-Fh-RMC">
-                                <rect key="frame" x="-1" y="75" width="322" height="40"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vD-Fh-RMC">
+                                <rect key="frame" x="-2" y="49" width="322" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login, email, or organization" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vUu-m2-Gbc">
@@ -36,9 +44,13 @@
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="322" id="2me-ku-roc"/>
+                                    <constraint firstAttribute="height" constant="40" id="Sag-eK-kYC"/>
+                                </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jx2-9E-qkh">
-                                <rect key="frame" x="-1" y="114" width="322" height="40"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jx2-9E-qkh">
+                                <rect key="frame" x="-2" y="88" width="322" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iZQ-aF-0Dd">
@@ -52,9 +64,13 @@
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="05M-GB-oww"/>
+                                    <constraint firstAttribute="width" constant="322" id="uo3-cY-VVj"/>
+                                </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QcM-mU-1rf">
-                                <rect key="frame" x="-1" y="153" width="322" height="40"/>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcM-mU-1rf">
+                                <rect key="frame" x="-2" y="127" width="322" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password confirmation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWW-qd-v8i">
@@ -68,11 +84,19 @@
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="CoV-gd-ehD"/>
+                                    <constraint firstAttribute="width" constant="322" id="fo9-iF-8bh"/>
+                                </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSm-U1-fiP">
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WSm-U1-fiP">
                                 <rect key="frame" x="0.0" y="474" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.92549019610000005" green="0.4823529412" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="TlP-uM-UzV"/>
+                                    <constraint firstAttribute="width" constant="320" id="heE-Of-sW6"/>
+                                </constraints>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -81,10 +105,14 @@
                                     <action selector="didClickLogin:" destination="htV-wN-I0X" eventType="touchUpInside" id="kMQ-iF-vAt"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U80-sb-HIq">
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U80-sb-HIq">
                                 <rect key="frame" x="0.0" y="507" width="320" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="RL7-kR-Qap"/>
+                                    <constraint firstAttribute="height" constant="30" id="hbD-D7-fkf"/>
+                                </constraints>
                                 <state key="normal" title="Signup">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,6 +123,21 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="U80-sb-HIq" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" id="6Yt-Ck-WKs"/>
+                            <constraint firstItem="5vD-Fh-RMC" firstAttribute="top" secondItem="0h3-VO-4l7" secondAttribute="bottom" constant="29" id="KPj-nB-Mrl"/>
+                            <constraint firstItem="WSm-U1-fiP" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" id="NTU-r5-itg"/>
+                            <constraint firstItem="jx2-9E-qkh" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" constant="-2" id="OE5-xX-UzU"/>
+                            <constraint firstItem="jx2-9E-qkh" firstAttribute="top" secondItem="0h3-VO-4l7" secondAttribute="bottom" constant="68" id="Qqt-ac-ZfN"/>
+                            <constraint firstItem="5vD-Fh-RMC" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" constant="-2" id="QwK-Eu-NZm"/>
+                            <constraint firstItem="QcM-mU-1rf" firstAttribute="top" secondItem="5vD-Fh-RMC" secondAttribute="bottom" constant="38" id="cmt-gJ-YHY"/>
+                            <constraint firstItem="DIV-9J-YOD" firstAttribute="top" secondItem="QcM-mU-1rf" secondAttribute="bottom" constant="-21" id="fv8-rO-guH"/>
+                            <constraint firstItem="DIV-9J-YOD" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" id="jwg-7Q-dbu"/>
+                            <constraint firstItem="U80-sb-HIq" firstAttribute="top" secondItem="WSm-U1-fiP" secondAttribute="bottom" constant="3" id="lhd-mM-va2"/>
+                            <constraint firstItem="QcM-mU-1rf" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" constant="-2" id="rDT-b4-wGG"/>
+                            <constraint firstItem="WSm-U1-fiP" firstAttribute="top" secondItem="DIV-9J-YOD" secondAttribute="bottom" constant="8" id="sWH-EV-9Vo"/>
+                            <constraint firstItem="5Br-CB-dMG" firstAttribute="top" secondItem="U80-sb-HIq" secondAttribute="bottom" constant="31" id="zEe-E4-sGq"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="buttonLogin" destination="WSm-U1-fiP" id="M9N-oL-yXh"/>
@@ -103,6 +146,7 @@
                         <outlet property="inputLogin" destination="vUu-m2-Gbc" id="qq0-dR-UwA"/>
                         <outlet property="inputPassword" destination="iZQ-aF-0Dd" id="Gb3-JF-VOZ"/>
                         <outlet property="logo" destination="Vm1-wf-m0P" id="7WM-90-VHM"/>
+                        <outlet property="tutorialView" destination="DIV-9J-YOD" id="7Ci-QK-aC2"/>
                         <segue destination="AnU-gv-j61" kind="modal" identifier="IntroToPractices" id="Y4W-XE-N8B"/>
                     </connections>
                 </viewController>
@@ -853,6 +897,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="UXd-Ef-d5t"/>
-        <segue reference="BrM-em-W4r"/>
+        <segue reference="DkY-9F-l4o"/>
     </inferredMetricsTieBreakers>
 </document>
