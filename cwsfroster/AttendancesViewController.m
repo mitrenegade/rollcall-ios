@@ -14,6 +14,7 @@
 #import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
+#import "Payment+Info.h"
 
 @interface AttendancesViewController ()
 
@@ -94,10 +95,10 @@
     }
 
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    membersActive = [membersActive sortedArrayUsingDescriptors:@[sortDescriptor]];
-    membersInactive = [membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]];
+    membersActive = [[membersActive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
+    membersInactive = [[membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor2]];
+    attendances = [[attendances sortedArrayUsingDescriptors:@[sortDescriptor2]] mutableCopy];
 
     [self.tableView reloadData];
 }
@@ -199,17 +200,17 @@
         Member *member = membersActive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatus] CGColor];
-        statusView.text = [member textForStatus];
+        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = [member textForStatusForMonth:self.practice.date];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatus] CGColor];
-        statusView.text = [member textForStatus];
+        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = [member textForStatusForMonth:self.practice.date];
     }
-    cell.accessoryView = statusView;
+    cell.accessoryView = statusView.superview;
     cell.textLabel.text = name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor darkGrayColor];
@@ -255,6 +256,57 @@
         }
     }
     [self reloadData];
+}
+
+- (IBAction)didTapAccessory:(id)sender event:(id)event{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
+    if (indexPath != nil){
+        NSString *message;
+        if (indexPath.section == 0) {
+            // clicked on an attendance
+            Attendance *attendance = attendances[indexPath.row];
+            Payment *payment = attendance.payment;
+            if (payment) {
+                if ([payment isMonthly])
+                    message = @"is paid for the month";
+                else
+                    message = @"paid for a day pass";
+            }
+            else if ([attendance isFreebie]) {
+                message = @"has a free pass for the day";
+            }
+            else {
+                message = @"needs to pay for this attendance";
+            }
+            message = [NSString stringWithFormat:@"%@ %@", attendance.member.name, message];
+        }
+        else {
+            Member *member;
+            if (indexPath.section == 1) {
+                member = membersActive[indexPath.row];
+                Payment *payment = [member paymentForMonth:self.practice.date];
+                if (payment)
+                    message = @"is paid for the month";
+                else if ([member.currentDailyPayment daysLeft])
+                    message = [NSString stringWithFormat:@"has %d days left on a day pass", [member.currentDailyPayment daysLeft]];
+                else if ([member isBeginner])
+                    message = @"gets freebie attendances";
+                else
+                    message = @"has not paid for the month";
+            }
+            else {
+                member = membersInactive[indexPath.row];
+                message = @"is inactive for the month";
+            }
+            message = [NSString stringWithFormat:@"%@ %@", member.name, message];
+        }
+        if (message) {
+            [UIAlertView alertViewWithTitle:nil message:message];
+        }
+    }
 }
 
 #pragma mark PracticeEditDelegate

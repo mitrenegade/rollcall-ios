@@ -9,6 +9,7 @@
 #import "Member+Info.h"
 #import "Payment+Info.h"
 #import "Attendance+Info.h"
+#import "Util.h"
 
 @implementation Member (Info)
 
@@ -37,6 +38,17 @@
     return nil;
 }
 
+-(Payment *)paymentForMonth:(NSDate *)date {
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:NO];
+    NSDate *monthStart = [Util beginningOfMonthForDate:date localTimeZone:YES];
+    NSDate *monthEnd = [Util endOfMonthForDate:date localTimeZone:YES];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type = %@ and startDate >= %@ and endDate <= %@", @(PaymentTypeMonthly), monthStart, monthEnd];
+    NSArray *monthlyPayments = [[[self.payments allObjects] filteredArrayUsingPredicate:predicate] sortedArrayUsingDescriptors:@[descriptor]];
+    if ([monthlyPayments count])
+        return monthlyPayments[0];
+    return nil;
+}
+
 -(Payment *)currentDailyPayment {
     NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"type = %@", @(PaymentTypeDaily)];
@@ -57,8 +69,9 @@
     return [self.status intValue] == MemberStatusInactive;
 }
 
--(UIColor *)colorForStatus {
-    if (self.currentMonthlyPayment)
+-(UIColor *)colorForStatusForMonth:(NSDate *)date {
+    Payment *payment = [self paymentForMonth:date];
+    if (payment)
         return [UIColor greenColor];
     else if ([self.currentDailyPayment daysLeft])
         return [UIColor greenColor];
@@ -70,13 +83,14 @@
         return [UIColor redColor];
 }
 
--(NSString *)textForStatus {
-    if (self.currentMonthlyPayment)
-        return self.currentPaidMonth;
+-(NSString *)textForStatusForMonth:(NSDate *)date {
+    Payment *payment = [self paymentForMonth:date];
+    if (payment)
+        return [Util shortMonthForDate:[payment startDate]];
     else if ([self.currentDailyPayment daysLeft])
         return [NSString stringWithFormat:@"%dd", [self.currentDailyPayment daysLeft]];
     else if ([self isBeginner])
-        return @"B";
+        return @"F"; // freebie
     else if ([self isInactive])
         return @"Zzz";
     else

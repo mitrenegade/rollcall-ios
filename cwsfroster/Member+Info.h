@@ -20,6 +20,7 @@ typedef  enum MemberStatus {
 -(Payment *)latestMonthlyPayment;
 -(Payment *)currentMonthlyPayment;
 -(Payment *)currentDailyPayment;
+-(Payment *)paymentForMonth:(NSDate *)date;
 
 -(int)daysLeftForDailyMember;
 -(NSString *)currentPaidMonth;
@@ -27,6 +28,7 @@ typedef  enum MemberStatus {
 -(BOOL)isBeginner;
 -(BOOL)isInactive;
 
--(UIColor *)colorForStatus;
--(NSString *)textForStatus;
+-(UIColor *)colorForStatusForMonth:(NSDate *)date;
+-(NSString *)textForStatusForMonth:(NSDate *)date;
+
 @end

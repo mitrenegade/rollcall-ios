@@ -14,4 +14,6 @@
     NSFetchedResultsController *memberFetcher;
 }
 
+- (IBAction)didTapAccessory:(id)sender event:(id)event;
+
 @end
