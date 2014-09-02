@@ -60,7 +60,6 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 			query.ascending("receivedDate");
 			query.lessThanOrEqualTo("startDate", date);
 			query.greaterThanOrEqualTo("endDate", date);
-			console.log("member organization: " + org)
 			query.equalTo("organization", org);
 
 			query.find({
@@ -80,13 +79,15 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 				},
 				error: function(error) {
 					console.log("query error " + error);
+					response.error(error);
 				}
 			});		
 	}
 	else if (paymentType == 2) { // DAILY
+		console.log("query daily payment *******************");
 		var member = newAttendance.get("member");
 		var date = newAttendance.get("date");
-		var org = newAttendance.get("organization")
+		var org = newAttendance.get("organization");
 
 		// associate with any monthly first
 		var query = new Parse.Query("Payment");
@@ -94,27 +95,23 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 		query.equalTo("type", 2);
 		query.lessThanOrEqualTo("startDate", date);
 		query.ascending("receivedDate");
-		console.log("member organization: " + org)
 		query.equalTo("organization", org);
 
 		query.find({
 			success: function(results) {
 				console.log(results.length + " daily payments found");
 				if (results.length > 0) {
-					var found = 0;
 					for (i=0; i<results.length; i++) {
 						var payment = results[i];
 						var attendancesQuery = new Parse.Query("Attendance");
 						attendancesQuery.equalTo("payment", payment);
 						attendancesQuery.count({
 							success:function(count) {
+								console.log("payment " + i + " " + payment.id + " has days " + payment.get("days"));
 								if (count < payment.get("days")) {
 									console.log("daily payment " + payment.id + " has " + count + " of " + payment.get("days"))
 									newAttendance.set("payment", payment);
-	//								newAttendance.save();
 									response.success(1);
-									found = 1;
-									return;
 								}
 								else {
 									// go to the next
@@ -123,25 +120,20 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 							},
 							error: function(error) {
 								// could not count. go to the next
+								console.log("query for daily payment failed: " + error);
 							}
 						})
 					}
-					if (found) {
-						console.log("found but still here");
-					}
-					else {
-						console.log("found = 0; no daily payment out of " + results.length + " with attendances left were found");
-					}
-					response.success(0);
-					return;
 				}
 				else {
+					console.log("no daily payments found");
 					response.success(0);
 					return;
 				}
 			},
 			error: function(error) {
 				console.log("query error " + error);
+				response.error(error);
 			}
 		});
 	}
@@ -226,17 +218,22 @@ Parse.Cloud.beforeSave("Attendance", function(request, response) {
 							success: function(count) {
 								if (count == 0) {
 									console.log("attendance could not be associated with a payment");
+									response.success();
 								}
 								else {
 									console.log("attendance " + attendance.id + " now has daily payment " + attendance.get("payment").id)
+									response.success();
 								}
+							},
+							error: function(error) {
+								response.error(error);
 							}
 						});
 					}
 					else {
 						console.log("attendance now has monthly payment " + attendance.get("payment").id)
+						response.success();
 					}
-					response.success();
 				}
 			});
 		}
