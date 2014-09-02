@@ -205,6 +205,7 @@ Parse.Cloud.beforeSave("Attendance", function(request, response) {
 		// saving a new attendance
 		if (attendance.get("payment")) {
 			console.log("payment exists " + attendance.get("payment").id + " for attendance " + attendance.id);
+			response.success();
 		}
 		else {
 			console.log("associating new attendance with a payment");
