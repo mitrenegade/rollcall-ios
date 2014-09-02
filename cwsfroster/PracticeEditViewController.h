@@ -25,8 +25,12 @@
     NSString *lastInputDate;
     NSString *originalDescription;
 
+    IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputEmail;
     IBOutlet UIButton *buttonEmail;
+
+    IBOutlet UIView *viewDrawing;
+    IBOutlet UIButton *buttonDrawing;
 }
 
 @property (nonatomic) Practice *practice;
@@ -35,4 +39,5 @@
 -(IBAction)didClickCancel:(id)sender;
 -(IBAction)didClickSave:(id)sender;
 -(IBAction)didClickEmail:(id)sender;
+-(IBAction)didClickDrawing:(id)sender;
 @end

@@ -62,8 +62,8 @@
     }
     else {
         self.title = @"New event date";
-        [inputEmail setHidden:YES];
-        [buttonEmail setHidden:YES];
+        [viewEmail setHidden:YES];
+        [viewDrawing setHidden:YES];
     }
     [inputDetails setText:self.practice.details];
     originalDescription = inputDetails.text;
@@ -317,4 +317,9 @@
     [SendGridHelper emailTo:to subject:title message:message];
 }
 
+#pragma mark Drawing
+
+-(void)didClickDrawing:(id)sender {
+    [UIAlertView alertViewWithTitle:@"Drawing" message:nil];
+}
 @end
