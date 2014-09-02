@@ -62,8 +62,8 @@
     }
     else {
         self.title = @"New event date";
-        [inputEmail setHidden:YES];
-        [buttonEmail setHidden:YES];
+        [viewEmail setHidden:YES];
+        [viewDrawing setHidden:YES];
     }
     [inputDetails setText:self.practice.details];
     originalDescription = inputDetails.text;
@@ -317,4 +317,37 @@
     [SendGridHelper emailTo:to subject:title message:message];
 }
 
+#pragma mark Drawing
+
+-(void)didClickDrawing:(id)sender {
+    NSString *title = @"Random drawing";
+    NSString *message = @"Click to select one attendee at random";
+    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = true", @"attended"]] mutableCopy];
+    [self doDrawingFromAttendees:attendees title:title message:message];
+}
+
+-(void)doDrawingFromAttendees:(NSMutableArray *)attendees title:(NSString *)title message:(NSString *)message {
+    NSArray *buttons = nil;
+    if ([attendees count] > 0) {
+        buttons = @[@"Pick a name and replace it", @"Pick a name without replacing it"];
+    }
+    [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Close" otherButtonTitles:buttons onDismiss:^(int buttonIndex) {
+        NSLog(@"Index %d", buttonIndex);
+        int index = arc4random() % [attendees count];
+        Attendance *attendance = (Attendance *)(attendees[index]);
+        NSString *title = attendance.member.name;
+        NSString *newMessage = message;
+        if (buttonIndex == 0) {
+            [self doDrawingFromAttendees:attendees title:title message:newMessage];
+        }
+        else if (buttonIndex == 1) {
+            [attendees removeObject:attendance];
+            if ([attendees count] == 0) {
+                newMessage = @"No more attendees left to select from.";
+            }
+            [self doDrawingFromAttendees:attendees title:title message:newMessage];
+        }
+
+    } onCancel:nil];
+}
 @end
