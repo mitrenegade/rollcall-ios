@@ -14,28 +14,12 @@
 
 @implementation Attendance (Parse)
 
-+(Attendance *)fromPFObject:(PFObject *)object {
-    id parseID = object.objectId;
-    NSArray *objectArray = [[Attendance where:@{@"parseID":parseID}] all];
-    Attendance *obj;
-    if ([objectArray count]) {
-        obj = [objectArray firstObject];
-    }
-    else {
-        obj = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
-    }
-    obj.pfObject = object;
-    [obj updateFromParseWithCompletion:nil];
-    return obj;
-}
-
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     // refreshes object from parse
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
             self.date = [self.pfObject objectForKey:@"date"];
             self.attended = [self.pfObject objectForKey:@"attended"];
-            self.parseID = self.pfObject.objectId;
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"member"];

@@ -13,7 +13,8 @@
 #import "Member+Info.h"
 #import "Organization+Parse.h"
 #import "AsyncImageView.h"
-
+#import "Payment+Parse.h"
+#import "TutorialScrollView.h"
 @implementation IntroViewController
 
 -(void)viewDidLoad {
@@ -46,8 +47,20 @@
         [inputPassword.superview setAlpha:showLogin?1:0];
         [buttonLogin setAlpha:showLogin?1:0];
         [buttonSignup setAlpha:showLogin?1:0];
+        [tutorialView setAlpha:showLogin?1:0];
     } completion:^(BOOL finished) {
     }];
+}
+
+-(void)loadTutorial {
+    [tutorialView setTutorialPages:@[@"IntroTutorial0", @"IntroTutorial1", @"IntroTutorial2", @"IntroTutorial3"]];
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![PFUser currentUser]) {
+        [self loadTutorial];
+    }
 }
 
 -(void)loggedIn {
@@ -185,9 +198,10 @@
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
     // load only that organization
-    PFObject *object = _currentUser[@"organization"];
-    [object fetchIfNeeded];
-    [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+    PFObject *orgObject = _currentUser[@"organization"];
+    [orgObject fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+    }];
 
     for (NSString *className in classes) {
         PFQuery *query = [PFQuery queryWithClassName:className];
@@ -217,9 +231,6 @@
                 }
             }
             else {
-                if ([className isEqualToString:@"Payment"]) {
-                    NSLog(@"Here");
-                }
                 [progress hide:YES];
                 [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;

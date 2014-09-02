@@ -12,21 +12,6 @@
 
 @implementation Payment (Parse)
 
-+(Payment *)fromPFObject:(PFObject *)object {
-    id parseID = object.objectId;
-    NSArray *objectArray = [[Payment where:@{@"parseID":parseID}] all];
-    Payment *payment;
-    if ([objectArray count]) {
-        payment = [objectArray firstObject];
-    }
-    else {
-        payment = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
-    }
-    payment.pfObject = object;
-    [payment updateFromParseWithCompletion:nil];
-    return payment;
-}
-
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -36,7 +21,6 @@
             self.days = [self.pfObject objectForKey:@"days"];
             self.source = [self.pfObject objectForKey:@"source"];
             self.type = [self.pfObject objectForKey:@"type"];
-            self.parseID = self.pfObject.objectId;
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"member"];

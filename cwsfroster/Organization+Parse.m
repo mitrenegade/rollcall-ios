@@ -10,21 +10,6 @@
 
 @implementation Organization (Parse)
 
-+(id)fromPFObject:(PFObject *)object {
-    id parseID = object.objectId;
-    NSArray *objectArray = [[[self class] where:@{@"parseID":parseID}] all];
-    id obj;
-    if ([objectArray count]) {
-        obj = [objectArray firstObject];
-    }
-    else {
-        obj = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
-    }
-    ((Organization *)obj).pfObject = object;
-    [obj updateFromParseWithCompletion:nil];
-    return obj;
-}
-
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -32,7 +17,6 @@
             PFFile *logoFile = [self.pfObject objectForKey:@"logoData"];
             self.logoData = [logoFile getData];
 
-            self.parseID = self.pfObject.objectId;
         }
         if (completion)
             completion(success);

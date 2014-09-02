@@ -11,21 +11,6 @@
 
 @implementation Member (Parse)
 
-+(Member *)fromPFObject:(PFObject *)object {
-    id parseID = object.objectId;
-    NSArray *objectArray = [[Member where:@{@"parseID":parseID}] all];
-    Member *member;
-    if ([objectArray count]) {
-        member = [objectArray firstObject];
-    }
-    else {
-        member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    }
-    member.pfObject = object;
-    [member updateFromParseWithCompletion:nil];
-    return member;
-}
-
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -33,7 +18,6 @@
             self.email = [self.pfObject objectForKey:@"email"];
             self.status = [self.pfObject objectForKey:@"status"];
             self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
-            self.parseID = self.pfObject.objectId;
 
             // relationships
             PFObject *object = [self.pfObject objectForKey:@"organization"];
