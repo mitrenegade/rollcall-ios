@@ -90,7 +90,7 @@
     else if ([self.currentDailyPayment daysLeft])
         return [NSString stringWithFormat:@"%dd", [self.currentDailyPayment daysLeft]];
     else if ([self isBeginner])
-        return @"B";
+        return @"F"; // freebie
     else if ([self isInactive])
         return @"Zzz";
     else

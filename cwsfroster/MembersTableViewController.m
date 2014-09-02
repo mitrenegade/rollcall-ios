@@ -126,7 +126,7 @@
     statusView.layer.borderColor = [[member colorForStatusForMonth:[NSDate date]] CGColor];
     statusView.layer.cornerRadius = 5;
     statusView.text = [member textForStatusForMonth:[NSDate date]];
-    cell.accessoryView = statusView;
+    cell.accessoryView = statusView.superview;
 
     return cell;
 }
@@ -140,6 +140,32 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
         [self deleteMemberAtIndexPath:indexPath];
+    }
+}
+
+- (IBAction)didTapAccessory:(id)sender event:(id)event{
+    NSSet *touches = [event allTouches];
+    UITouch *touch = [touches anyObject];
+    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
+    if (indexPath != nil){
+        NSString *message;
+        Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
+        Payment *payment = [member paymentForMonth:[NSDate date]];
+        if (payment)
+            message = @"is paid for the month";
+        else if ([member.currentDailyPayment daysLeft])
+            message = [NSString stringWithFormat:@"has %d days left on a day pass", [member.currentDailyPayment daysLeft]];
+        else if ([member isBeginner])
+            message = @"gets freebie attendances";
+        else if ([member isInactive])
+            message = @"is inactive";
+        else
+            message = @"has not paid for the month";
+        if (message) {
+            message = [NSString stringWithFormat:@"%@ %@", member.name, message];
+            [UIAlertView alertViewWithTitle:nil message:message];
+        }
     }
 }
 
