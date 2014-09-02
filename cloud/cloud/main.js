@@ -11,6 +11,7 @@ function associateAttendancesWithNewPayment(newPayment, response) {
 	query.equalTo("attended", 1);
 	query.ascending("date");
 	query.greaterThanOrEqualTo("date", startDate);
+	query.equalTo("organization", member("organization"));
 	if (type == 1) {
 		// monthly payment
 		console.log("searching for monthly attendances between " + startDate + " and " + endDate);
@@ -50,6 +51,7 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 			console.log("associateNewAttendanceWithMonthlyPayment");
 			var member = newAttendance.get("member");
 			var date = newAttendance.get("date");
+			var org = newAttendance.get("organization")
 
 			// associate with any monthly first
 			var query = new Parse.Query("Payment");
@@ -58,6 +60,8 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 			query.ascending("receivedDate");
 			query.lessThanOrEqualTo("startDate", date);
 			query.greaterThanOrEqualTo("endDate", date);
+			console.log("member organization: " + org)
+			query.equalTo("organization", org);
 
 			query.find({
 				success: function(results) {
@@ -82,6 +86,7 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 	else if (paymentType == 2) { // DAILY
 		var member = newAttendance.get("member");
 		var date = newAttendance.get("date");
+		var org = newAttendance.get("organization")
 
 		// associate with any monthly first
 		var query = new Parse.Query("Payment");
@@ -89,6 +94,8 @@ function associateNewAttendanceWithPayment(newAttendance, paymentType, response)
 		query.equalTo("type", 2);
 		query.lessThanOrEqualTo("startDate", date);
 		query.ascending("receivedDate");
+		console.log("member organization: " + org)
+		query.equalTo("organization", org);
 
 		query.find({
 			success: function(results) {
