@@ -13,6 +13,12 @@
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
+		9E649FE019B6040A00334B34 /* icon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDA19B6040A00334B34 /* icon29.png */; };
+		9E649FE119B6040A00334B34 /* icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDB19B6040A00334B34 /* icon57.png */; };
+		9E649FE219B6040A00334B34 /* icon58.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDC19B6040A00334B34 /* icon58.png */; };
+		9E649FE319B6040A00334B34 /* icon80.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDD19B6040A00334B34 /* icon80.png */; };
+		9E649FE419B6040A00334B34 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDE19B6040A00334B34 /* icon114.png */; };
+		9E649FE519B6040A00334B34 /* icon120.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDF19B6040A00334B34 /* icon120.png */; };
 		9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
 		9E80085416196883003E9B16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085316196883003E9B16 /* Foundation.framework */; };
@@ -56,8 +62,6 @@
 		9EA0995619B10343007BC1FD /* Organization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995519B10343007BC1FD /* Organization.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
-		9EB48DC11703AAB7001D360F /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC01703AAB7001D360F /* icon.png */; };
-		9EB48DC31703AABC001D360F /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EB48DC21703AABC001D360F /* icon@2x.png */; };
 		9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50519A4CE7E003441AC /* Parse.framework */; };
 		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
 		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
@@ -97,9 +101,15 @@
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
 		9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-paddle@2x.png"; sourceTree = "<group>"; };
+		9E649FDA19B6040A00334B34 /* icon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29.png; sourceTree = "<group>"; };
+		9E649FDB19B6040A00334B34 /* icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57.png; sourceTree = "<group>"; };
+		9E649FDC19B6040A00334B34 /* icon58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon58.png; sourceTree = "<group>"; };
+		9E649FDD19B6040A00334B34 /* icon80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon80.png; sourceTree = "<group>"; };
+		9E649FDE19B6040A00334B34 /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
+		9E649FDF19B6040A00334B34 /* icon120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon120.png; sourceTree = "<group>"; };
 		9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeEditViewController.h; sourceTree = "<group>"; };
 		9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeEditViewController.m; sourceTree = "<group>"; };
-		9E80084D16196883003E9B16 /* CWSF Roster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CWSF Roster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E80084D16196883003E9B16 /* Roll Call.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Roll Call.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E80085116196883003E9B16 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		9E80085316196883003E9B16 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9E80085516196883003E9B16 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -161,8 +171,6 @@
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
 		9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendGridHelper.m; sourceTree = "<group>"; };
-		9EB48DC01703AAB7001D360F /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		9EB48DC21703AABC001D360F /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		9EC0F50219A4CB7B003441AC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9EC0F50519A4CE7E003441AC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9EC0F50719A4CEFF003441AC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -248,6 +256,12 @@
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9E649FDA19B6040A00334B34 /* icon29.png */,
+				9E649FDB19B6040A00334B34 /* icon57.png */,
+				9E649FDC19B6040A00334B34 /* icon58.png */,
+				9E649FDD19B6040A00334B34 /* icon80.png */,
+				9E649FDE19B6040A00334B34 /* icon114.png */,
+				9E649FDF19B6040A00334B34 /* icon120.png */,
 				9E98DB4D19B2EA5B006D81FC /* checked@2x.png */,
 				9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */,
 				9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */,
@@ -262,8 +276,6 @@
 		9E80084216196883003E9B16 = {
 			isa = PBXGroup;
 			children = (
-				9EB48DC21703AABC001D360F /* icon@2x.png */,
-				9EB48DC01703AAB7001D360F /* icon.png */,
 				9E80085716196883003E9B16 /* cwsfroster */,
 				9E80085016196883003E9B16 /* Frameworks */,
 				9E80084E16196883003E9B16 /* Products */,
@@ -274,7 +286,7 @@
 		9E80084E16196883003E9B16 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9E80084D16196883003E9B16 /* CWSF Roster.app */,
+				9E80084D16196883003E9B16 /* Roll Call.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -459,7 +471,7 @@
 			);
 			name = cwsfroster;
 			productName = cwsfroster;
-			productReference = 9E80084D16196883003E9B16 /* CWSF Roster.app */;
+			productReference = 9E80084D16196883003E9B16 /* Roll Call.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -493,6 +505,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E649FE419B6040A00334B34 /* icon114.png in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
@@ -500,12 +513,15 @@
 				9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */,
 				9E80086616196883003E9B16 /* Default@2x.png in Resources */,
 				9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */,
+				9E649FE519B6040A00334B34 /* icon120.png in Resources */,
+				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
+				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
+				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
 				9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */,
-				9EB48DC11703AAB7001D360F /* icon.png in Resources */,
 				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,
 				9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */,
-				9EB48DC31703AABC001D360F /* icon@2x.png in Resources */,
 				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
+				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
 				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,7 +701,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
-				PRODUCT_NAME = "CWSF Roster";
+				PRODUCT_NAME = "Roll Call";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5F8D8DD9-44FA-4BED-9B9C-A4E450CF9F89";
 				WRAPPER_EXTENSION = app;
 			};
@@ -704,7 +720,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
-				PRODUCT_NAME = "CWSF Roster";
+				PRODUCT_NAME = "Roll Call";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "17787e79-a6ff-482a-b6df-7e0c8302ff0f";
 				WRAPPER_EXTENSION = app;
 			};
