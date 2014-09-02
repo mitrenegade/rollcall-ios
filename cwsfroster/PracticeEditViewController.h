@@ -31,6 +31,8 @@
 
     IBOutlet UIView *viewDrawing;
     IBOutlet UIButton *buttonDrawing;
+
+    NSMutableArray *drawn;
 }
 
 @property (nonatomic) Practice *practice;
