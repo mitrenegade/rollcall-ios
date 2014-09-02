@@ -94,10 +94,10 @@
     }
 
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    membersActive = [membersActive sortedArrayUsingDescriptors:@[sortDescriptor]];
-    membersInactive = [membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]];
+    membersActive = [[membersActive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
+    membersInactive = [[membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    attendances = [attendances sortedArrayUsingDescriptors:@[sortDescriptor2]];
+    attendances = [[attendances sortedArrayUsingDescriptors:@[sortDescriptor2]] mutableCopy];
 
     [self.tableView reloadData];
 }
@@ -199,15 +199,15 @@
         Member *member = membersActive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatus] CGColor];
-        statusView.text = [member textForStatus];
+        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = [member textForStatusForMonth:self.practice.date];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatus] CGColor];
-        statusView.text = [member textForStatus];
+        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = [member textForStatusForMonth:self.practice.date];
     }
     cell.accessoryView = statusView;
     cell.textLabel.text = name;

@@ -123,9 +123,9 @@
 
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
     statusView.layer.borderWidth = 2;
-    statusView.layer.borderColor = [[member colorForStatus] CGColor];
+    statusView.layer.borderColor = [[member colorForStatusForMonth:[NSDate date]] CGColor];
     statusView.layer.cornerRadius = 5;
-    statusView.text = [member textForStatus];
+    statusView.text = [member textForStatusForMonth:[NSDate date]];
     cell.accessoryView = statusView;
 
     return cell;

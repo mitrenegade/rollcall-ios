@@ -27,6 +27,7 @@ typedef  enum MemberStatus {
 -(BOOL)isBeginner;
 -(BOOL)isInactive;
 
--(UIColor *)colorForStatus;
--(NSString *)textForStatus;
+-(UIColor *)colorForStatusForMonth:(NSDate *)date;
+-(NSString *)textForStatusForMonth:(NSDate *)date;
+
 @end
