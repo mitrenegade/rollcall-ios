@@ -22,6 +22,8 @@
 		9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E649FE719B606A800334B34 /* TutorialScrollView.m */; };
 		9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */; };
 		9E649FED19B609C400334B34 /* IntroTutorial1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FEC19B609C400334B34 /* IntroTutorial1.xib */; };
+		9E649FEF19B60EEC00334B34 /* IntroTutorial2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FEE19B60EEC00334B34 /* IntroTutorial2.xib */; };
+		9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FF019B60F1D00334B34 /* IntroTutorial3.xib */; };
 		9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */; };
 		9E80085216196883003E9B16 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085116196883003E9B16 /* UIKit.framework */; };
 		9E80085416196883003E9B16 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E80085316196883003E9B16 /* Foundation.framework */; };
@@ -114,6 +116,8 @@
 		9E649FE719B606A800334B34 /* TutorialScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TutorialScrollView.m; sourceTree = "<group>"; };
 		9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial0.xib; sourceTree = "<group>"; };
 		9E649FEC19B609C400334B34 /* IntroTutorial1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial1.xib; sourceTree = "<group>"; };
+		9E649FEE19B60EEC00334B34 /* IntroTutorial2.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial2.xib; sourceTree = "<group>"; };
+		9E649FF019B60F1D00334B34 /* IntroTutorial3.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IntroTutorial3.xib; sourceTree = "<group>"; };
 		9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeEditViewController.h; sourceTree = "<group>"; };
 		9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeEditViewController.m; sourceTree = "<group>"; };
 		9E80084D16196883003E9B16 /* Roll Call.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Roll Call.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,6 +291,8 @@
 				9E649FE719B606A800334B34 /* TutorialScrollView.m */,
 				9E649FEA19B608EC00334B34 /* IntroTutorial0.xib */,
 				9E649FEC19B609C400334B34 /* IntroTutorial1.xib */,
+				9E649FEE19B60EEC00334B34 /* IntroTutorial2.xib */,
+				9E649FF019B60F1D00334B34 /* IntroTutorial3.xib */,
 			);
 			name = Tutorials;
 			sourceTree = "<group>";
@@ -529,6 +535,7 @@
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
+				9E649FEF19B60EEC00334B34 /* IntroTutorial2.xib in Resources */,
 				9E80086416196883003E9B16 /* Default.png in Resources */,
 				9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */,
 				9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */,
@@ -537,6 +544,7 @@
 				9E649FE519B6040A00334B34 /* icon120.png in Resources */,
 				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
 				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
+				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
 				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
 				9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */,
 				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,

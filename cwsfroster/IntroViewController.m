@@ -53,7 +53,7 @@
 }
 
 -(void)loadTutorial {
-    [tutorialView setTutorialPages:@[@"IntroTutorial0", @"IntroTutorial1"]];
+    [tutorialView setTutorialPages:@[@"IntroTutorial0", @"IntroTutorial1", @"IntroTutorial2", @"IntroTutorial3"]];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
