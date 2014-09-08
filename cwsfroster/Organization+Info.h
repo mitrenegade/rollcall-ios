@@ -11,5 +11,6 @@
 @interface Organization (Info)
 
 +(Organization *)currentOrganization;
++(void)reset;
 
 @end

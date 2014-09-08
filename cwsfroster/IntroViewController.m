@@ -79,6 +79,7 @@
         if (error) {
             // organization doesn't exist
             [PFUser logOut];
+            [Organization reset];
             progress.mode = MBProgressHUDModeText;
             progress.labelText = @"Invalid organization";
             progress.detailsLabelText = @"Please sign up with a valid organization";

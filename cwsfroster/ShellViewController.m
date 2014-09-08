@@ -35,7 +35,9 @@
 }
 
 -(void)updateTabBarIcons {
-    if ([[[Organization currentOrganization].name lowercaseString] rangeOfString:@"taekwondo"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tkd"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tae kwon do"].location != NSNotFound) {
+    NSString *name = [[Organization currentOrganization].name lowercaseString];
+    if (name &&
+        ([[[Organization currentOrganization].name lowercaseString] rangeOfString:@"taekwondo"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tkd"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tae kwon do"].location != NSNotFound)) {
         [self setIcon:@"icon-tkd-paddle" forTabBar:0];
         [self setIcon:@"icon-tkd-helmet" forTabBar:1];
     }
