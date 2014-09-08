@@ -102,6 +102,9 @@
                     }];
                 }];
             }
+            else {
+                [logo setImage:nil];
+            }
 
             [self synchronizeWithParse];
         }
