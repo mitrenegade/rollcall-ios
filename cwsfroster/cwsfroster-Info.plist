@@ -20,8 +20,6 @@
 				<string>icon120</string>
 				<string>icon114</string>
 				<string>icon29</string>
-				<string>icon.png</string>
-				<string>icon@2x.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
