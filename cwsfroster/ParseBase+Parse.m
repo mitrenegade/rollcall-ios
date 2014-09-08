@@ -57,6 +57,7 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
     }
     else {
         [self.pfObject refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            [self updateEntityWithParams:nil];
             if (completion)
                 completion(YES);
         }];

@@ -250,7 +250,10 @@
                 status = @(DidAttendFreebie);
             }
             attendance.attended = status;
-            [attendance saveOrUpdateToParseWithCompletion:nil];
+            [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
+                NSLog(@"new payment: %@", attendance.payment);
+                [self reloadData];
+            }];
         }
         else {
             // create attendance
