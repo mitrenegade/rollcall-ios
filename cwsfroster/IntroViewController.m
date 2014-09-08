@@ -300,9 +300,10 @@
     [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
     [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
+            _currentUser[@"organization"] = object.pfObject;
+
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
-                _currentUser[@"organization"] = object.pfObject;
                 [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
                         if (completion)
