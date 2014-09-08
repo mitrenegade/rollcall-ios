@@ -15,6 +15,8 @@
 #import "AsyncImageView.h"
 #import "Payment+Parse.h"
 #import "TutorialScrollView.h"
+#import "UIAlertView+MKBlockAdditions.h"
+
 @implementation IntroViewController
 
 -(void)viewDidLoad {
@@ -73,22 +75,40 @@
 
     [self reset:NO];
     PFObject *organizationObject = _currentUser[@"organization"];
-    [organizationObject fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if ([organizationObject objectForKey:@"logoData"]) {
-            PFFile *imageFile = organizationObject[@"logoData"];
-            [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                logo.alpha = 0;
-                UIImage *image = [UIImage imageWithData:data];
-                [logo setImage:image];
-                [UIView animateWithDuration:1 animations:^{
-                    logo.alpha = 1;
-                } completion:^(BOOL finished) {
+    [organizationObject fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        if (error) {
+            // organization doesn't exist
+            [PFUser logOut];
+            [Organization reset];
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Invalid organization";
+            progress.detailsLabelText = @"Please sign up with a valid organization";
+            [progress hide:YES afterDelay:1.5];
+            [self enableButtons:YES];
+            [self reset:YES];
+        }
+        else {
+            [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
+
+            if ([organizationObject objectForKey:@"logoData"]) {
+                PFFile *imageFile = organizationObject[@"logoData"];
+                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                    logo.alpha = 0;
+                    UIImage *image = [UIImage imageWithData:data];
+                    [logo setImage:image];
+                    [UIView animateWithDuration:1 animations:^{
+                        logo.alpha = 1;
+                    } completion:^(BOOL finished) {
+                    }];
                 }];
-            }];
+            }
+            else {
+                [logo setImage:nil];
+            }
+
+            [self synchronizeWithParse];
         }
     }];
-
-    [self synchronizeWithParse];
 }
 
 -(void)enableButtons:(BOOL)enabled {
@@ -197,12 +217,6 @@
     NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
     [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
 
-    // load only that organization
-    PFObject *orgObject = _currentUser[@"organization"];
-    [orgObject fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
-    }];
-
     for (NSString *className in classes) {
         PFQuery *query = [PFQuery queryWithClassName:className];
         PFUser *user = _currentUser;
@@ -290,9 +304,10 @@
     [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
     [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
+            _currentUser[@"organization"] = object.pfObject;
+
             NSError *error;
             if ([_appDelegate.managedObjectContext save:&error]) {
-                _currentUser[@"organization"] = object.pfObject;
                 [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
                         if (completion)

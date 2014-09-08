@@ -101,6 +101,7 @@
     else if (row == 3) {
         // logout
         [PFUser logOut];
+        [Organization reset];
         [_appDelegate goToIntro];
     }
 }

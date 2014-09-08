@@ -23,4 +23,8 @@ static Organization *currentOrganization;
     currentOrganization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
     return currentOrganization;
 }
+
++(void)reset {
+    currentOrganization = nil;
+}
 @end

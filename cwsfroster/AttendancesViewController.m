@@ -226,7 +226,11 @@
         // clicked on an attendance
         Attendance *attendance = attendances[row];
         attendance.attended = @(DidNotAttend);
-        [attendance saveOrUpdateToParseWithCompletion:nil];
+        NSLog(@"old payment: %@", attendance.payment);
+        [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
+            NSLog(@"new payment: %@", attendance.payment);
+            [self reloadData];
+        }];
     }
     else {
         Member *member;
@@ -246,7 +250,10 @@
                 status = @(DidAttendFreebie);
             }
             attendance.attended = status;
-            [attendance saveOrUpdateToParseWithCompletion:nil];
+            [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
+                NSLog(@"new payment: %@", attendance.payment);
+                [self reloadData];
+            }];
         }
         else {
             // create attendance

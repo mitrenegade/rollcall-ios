@@ -32,6 +32,10 @@
             if (object.objectId) {
                 self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
             }
+            else {
+                // payments can be removed. nothing else should ever be nil after it's been set
+                self.payment = nil;
+            }
             object = [self.pfObject objectForKey:@"organization"];
             if (object.objectId)
                 self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];

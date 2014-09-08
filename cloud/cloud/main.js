@@ -188,16 +188,9 @@ Parse.Cloud.beforeSave("Attendance", function(request, response) {
 	var attended = attendance.get("attended");
 	if (attended == 0 || attended == 2) { // not attended or freebie - no payment needed
 		console.log("attendance saved: not attended")
-		// remove payment
-		payment = attendance.get("payment");
-		if (payment) {
-			if (payment.get("type") == 2) {
-				// daily payment
-				var payment = attendance.get("payment");
-				attendance.unset("payment");
-				console.log("removing daily payment " + payment.id + " from unattendance " + attendance.id);
-			}
-		}
+		// daily payment
+		var payment = attendance.get("payment");
+		attendance.unset("payment");
 		response.success();
 	}
 	else {
