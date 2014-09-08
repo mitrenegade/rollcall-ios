@@ -14,6 +14,8 @@
 #import "Member+Info.h"
 #import "Payment+Info.h"
 #import "MBProgressHUD.h"
+#import "Util.h"
+#import "UIAlertView+MKBlockAdditions.h"
 
 #define DEFAULT_TO @"cwsf_instructors@googlegroups.com"
 
@@ -258,7 +260,7 @@
         }
     }
     else if (textField == inputDetails) {
-        if ([textField.text isEqualToString:originalDescription])
+        if ([textField.text isEqualToString:originalDescription] || inputDate.text.length == 0)
             [self.navigationItem.rightBarButtonItem setEnabled:NO];
         else
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
