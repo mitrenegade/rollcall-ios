@@ -333,6 +333,9 @@
     if ([attendees count] > 0) {
         buttons = @[@"Pick a name and replace it", @"Pick a name without replacing it"];
     }
+    else {
+        message = @"No more attendees left to select from.";
+    }
     [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Close" otherButtonTitles:buttons onDismiss:^(int buttonIndex) {
         NSLog(@"Index %d", buttonIndex);
         int index = arc4random() % [attendees count];
