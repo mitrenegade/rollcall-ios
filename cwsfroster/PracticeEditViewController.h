@@ -26,7 +26,8 @@
     NSString *originalDescription;
 
     IBOutlet UIView *viewEmail;
-    IBOutlet UITextField *inputEmail;
+    IBOutlet UITextField *inputTo;
+    IBOutlet UITextField *inputFrom;
     IBOutlet UIButton *buttonEmail;
 
     IBOutlet UIView *viewDrawing;

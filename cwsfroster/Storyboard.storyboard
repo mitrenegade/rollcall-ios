@@ -842,7 +842,7 @@
                                 </connections>
                             </textField>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7DB-lq-D2b">
-                                <rect key="frame" x="10" y="170" width="302" height="128"/>
+                                <rect key="frame" x="10" y="170" width="302" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kfi-8T-jXo">
@@ -854,8 +854,17 @@
                                             <outlet property="delegate" destination="ycX-fJ-ygP" id="0dQ-Fg-uWS"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtT-kZ-Rf3">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-wc-UgQ">
                                         <rect key="frame" x="20" y="78" width="262" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="r0U-Ic-DaH"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtT-kZ-Rf3">
+                                        <rect key="frame" x="20" y="116" width="262" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Send attendance summary">
@@ -877,7 +886,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-Rm-8o8">
-                                <rect key="frame" x="9" y="306" width="302" height="99"/>
+                                <rect key="frame" x="10" y="317" width="302" height="99"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05W-pu-KQM">
@@ -924,7 +933,8 @@
                         <outlet property="buttonEmail" destination="jtT-kZ-Rf3" id="Oqi-DH-FUb"/>
                         <outlet property="inputDate" destination="3Db-KI-mVC" id="VTI-cv-fg6"/>
                         <outlet property="inputDetails" destination="xL1-Ta-Cga" id="ntm-jq-rqR"/>
-                        <outlet property="inputEmail" destination="Kfi-8T-jXo" id="MtE-Qq-K9e"/>
+                        <outlet property="inputFrom" destination="Waf-wc-UgQ" id="g49-4u-DqJ"/>
+                        <outlet property="inputTo" destination="Kfi-8T-jXo" id="sou-7y-A9X"/>
                         <outlet property="viewDrawing" destination="eo7-Rm-8o8" id="xUI-Mk-hbb"/>
                         <outlet property="viewEmail" destination="7DB-lq-D2b" id="oCp-n1-xVG"/>
                     </connections>

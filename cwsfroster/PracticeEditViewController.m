@@ -17,8 +17,6 @@
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
 
-#define DEFAULT_TO @"cwsf_instructors@googlegroups.com"
-
 @interface PracticeEditViewController ()
 
 @end
@@ -72,12 +70,13 @@
 
     inputDate.inputAccessoryView = keyboardDoneButtonView;
 
-    NSString *previousEmail = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
-    if (!previousEmail) {
-        inputEmail.text = DEFAULT_TO;
+    NSString *previousEmailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
+    if (previousEmailTo) {
+        inputTo.text = previousEmailTo;
     }
-    else {
-        inputEmail.text = previousEmail;
+    NSString *previousEmailFrom = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:from"];
+    if (previousEmailFrom) {
+        inputFrom.text = previousEmailFrom;
     }
 
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
@@ -241,8 +240,8 @@
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == inputEmail) {
-        if (inputEmail.text.length == 0) {
+    if (textField == inputTo || textField == inputFrom) {
+        if (inputTo.text.length == 0 || inputFrom.text.length == 0) {
             [buttonEmail setEnabled:NO];
             [buttonEmail setAlpha:.5];
         }
@@ -275,9 +274,15 @@
 
 #pragma mark emailing
 -(IBAction)didClickEmail:(id)sender {
-    if (inputEmail.text.length == 0) {
+    if (inputTo.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        progress.labelText = @"Please enter a To: email";
+        progress.labelText = @"Please enter an email recipient";
+        [progress hide:YES afterDelay:1.5];
+        return;
+    }
+    if (inputFrom.text.length == 0) {
+        MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        progress.labelText = @"Please enter your email";
         [progress hide:YES afterDelay:1.5];
         return;
     }
@@ -285,9 +290,9 @@
     // save any changes. at least sets new details to practice before sending email
     [self didClickSave:nil];
 
-    [[NSUserDefaults standardUserDefaults] setObject:inputEmail.text forKey:@"email:to"];
+    [[NSUserDefaults standardUserDefaults] setObject:inputTo.text forKey:@"email:to"];
+    [[NSUserDefaults standardUserDefaults] setObject:inputFrom.text forKey:@"email:from"];
 
-    NSString *to = inputEmail.text;
     NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
     NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
     for (Attendance *attendance in self.practice.attendances) {
@@ -316,7 +321,7 @@
             message = [message stringByAppendingString:paymentStatus];
         }
     }
-    [SendGridHelper emailTo:to subject:title message:message];
+    [SendGridHelper emailTo:inputTo.text from:inputFrom.text subject:title message:message];
 }
 
 #pragma mark Drawing
