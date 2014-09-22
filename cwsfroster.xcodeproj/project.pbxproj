@@ -751,7 +751,7 @@
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				PRODUCT_NAME = "Roll Call";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "17787e79-a6ff-482a-b6df-7e0c8302ff0f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b1a40ce6-cebd-4de7-aa96-9d9a83966e5e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
