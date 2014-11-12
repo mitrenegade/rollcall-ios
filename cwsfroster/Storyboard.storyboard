@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="htV-wN-I0X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="htV-wN-I0X">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <deployment defaultVersion="1536" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Intro View Controller-->
@@ -33,7 +33,25 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-imageView-Vm1-wf-m0P"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vD-Fh-RMC">
+                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXC-DM-uPm">
+                                <rect key="frame" x="19" y="133" width="281" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="4wA-Qp-iwr"/>
+                                    <constraint firstAttribute="width" constant="281" id="a7U-HN-aau"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <state key="normal" title="I forgot my password">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-SXC-DM-uPm"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didClickPasswordReset:" destination="htV-wN-I0X" eventType="touchUpInside" id="4i7-Lu-Dj0"/>
+                                </connections>
+                            </button>
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5vD-Fh-RMC" userLabel="View - name">
                                 <rect key="frame" x="-2" y="49" width="322" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login, email, or organization" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vUu-m2-Gbc">
@@ -57,7 +75,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-5vD-Fh-RMC"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jx2-9E-qkh">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jx2-9E-qkh" userLabel="View - password">
                                 <rect key="frame" x="-2" y="88" width="322" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iZQ-aF-0Dd">
@@ -81,7 +99,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-jx2-9E-qkh"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcM-mU-1rf">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QcM-mU-1rf" userLabel="View - confirmation">
                                 <rect key="frame" x="-2" y="127" width="322" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password confirmation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EWW-qd-v8i">
@@ -145,6 +163,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="U80-sb-HIq" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" id="6Yt-Ck-WKs"/>
+                            <constraint firstItem="SXC-DM-uPm" firstAttribute="top" secondItem="jx2-9E-qkh" secondAttribute="bottom" constant="5" id="DXW-hJ-3i2"/>
+                            <constraint firstAttribute="centerX" secondItem="SXC-DM-uPm" secondAttribute="centerX" id="GxW-1e-b30"/>
                             <constraint firstItem="5vD-Fh-RMC" firstAttribute="top" secondItem="0h3-VO-4l7" secondAttribute="bottom" constant="29" id="KPj-nB-Mrl"/>
                             <constraint firstItem="WSm-U1-fiP" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" id="NTU-r5-itg"/>
                             <constraint firstItem="jx2-9E-qkh" firstAttribute="leading" secondItem="ixt-aI-UVL" secondAttribute="leading" constant="-2" id="OE5-xX-UzU"/>
@@ -164,6 +184,7 @@
                     </view>
                     <connections>
                         <outlet property="buttonLogin" destination="WSm-U1-fiP" id="M9N-oL-yXh"/>
+                        <outlet property="buttonReset" destination="SXC-DM-uPm" id="AfK-xx-OJG"/>
                         <outlet property="buttonSignup" destination="U80-sb-HIq" id="Eqe-mI-Bst"/>
                         <outlet property="inputConfirmation" destination="EWW-qd-v8i" id="jYg-bY-xBk"/>
                         <outlet property="inputLogin" destination="vUu-m2-Gbc" id="qq0-dR-UwA"/>
@@ -199,7 +220,7 @@
             </objects>
             <point key="canvasLocation" x="-432" y="288"/>
         </scene>
-        <!--Members-->
+        <!--Members Table View Controller - Members-->
         <scene sceneID="ima-lD-0RY">
             <objects>
                 <tableViewController id="nKy-LQ-H91" customClass="MembersTableViewController" sceneMemberID="viewController">
@@ -290,7 +311,7 @@
             </objects>
             <point key="canvasLocation" x="459" y="-85"/>
         </scene>
-        <!--Settings-->
+        <!--Settings View Controller - Settings-->
         <scene sceneID="SXM-r0-oRM">
             <objects>
                 <tableViewController id="z8n-ZM-Ikr" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -371,7 +392,7 @@
             </objects>
             <point key="canvasLocation" x="921" y="-79"/>
         </scene>
-        <!--Add member-->
+        <!--Member View Controller - Add member-->
         <scene sceneID="5s6-nR-sgp">
             <objects>
                 <viewController id="XNl-Q5-lQr" customClass="MemberViewController" sceneMemberID="viewController">
@@ -537,7 +558,7 @@
             </objects>
             <point key="canvasLocation" x="1384" y="-85"/>
         </scene>
-        <!--Payments-->
+        <!--Payment View Controller - Payments-->
         <scene sceneID="jA6-pq-roR">
             <objects>
                 <viewController id="un6-AR-ONY" customClass="PaymentViewController" sceneMemberID="viewController">
@@ -783,7 +804,7 @@
             </objects>
             <point key="canvasLocation" x="1768" y="-85"/>
         </scene>
-        <!--Events-->
+        <!--Practices Table View Controller - Events-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -977,7 +998,7 @@
             </objects>
             <point key="canvasLocation" x="1665" y="1280"/>
         </scene>
-        <!--Info-->
+        <!--Practice Edit View Controller - Info-->
         <scene sceneID="at9-FT-Q4a">
             <objects>
                 <viewController id="ycX-fJ-ygP" customClass="PracticeEditViewController" sceneMemberID="viewController">
@@ -1132,7 +1153,7 @@
             </objects>
             <point key="canvasLocation" x="2147" y="592"/>
         </scene>
-        <!--Events-->
+        <!--Navigation Controller - Events-->
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
@@ -1151,7 +1172,7 @@
             </objects>
             <point key="canvasLocation" x="63" y="643"/>
         </scene>
-        <!--Members-->
+        <!--Navigation Controller - Members-->
         <scene sceneID="B2w-ju-klW">
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" sceneMemberID="viewController">
