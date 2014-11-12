@@ -379,6 +379,9 @@
                 else if (error.code == 205) {
                     [UIAlertView alertViewWithTitle:@"Invalid user" message:@"No user was found with that email. Please contact us directly for help."];
                 }
+                else {
+                    [UIAlertView alertViewWithTitle:@"Error resetting password" message:error.userInfo[@"error"]];
+                }
             }
         }];
     }
