@@ -13,14 +13,18 @@
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
-            self.name = [self.pfObject objectForKey:@"name"];
-            PFFile *logoFile = [self.pfObject objectForKey:@"logoData"];
-            self.logoData = [logoFile getData];
+            [self updateAttributesFromPFObject];
 
         }
         if (completion)
             completion(success);
     }];
+}
+
+-(void)updateAttributesFromPFObject {
+    self.name = [self.pfObject objectForKey:@"name"];
+    PFFile *logoFile = [self.pfObject objectForKey:@"logoData"];
+    self.logoData = [logoFile getData];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {

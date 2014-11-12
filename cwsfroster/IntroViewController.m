@@ -50,6 +50,7 @@
         [buttonLogin setAlpha:showLogin?1:0];
         [buttonSignup setAlpha:showLogin?1:0];
         [tutorialView setAlpha:showLogin?1:0];
+        [buttonReset setAlpha:showLogin?1:0];
     } completion:^(BOOL finished) {
     }];
 }
@@ -75,6 +76,11 @@
 
     [self reset:NO];
     PFObject *organizationObject = _currentUser[@"organization"];
+    NSLog(@"Fetching organization %@ for user %@", organizationObject, _currentUser);
+    if (!organizationObject) {
+        // todo
+        NSLog(@"Handle this!");
+    }
     [organizationObject fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
         if (error) {
             // organization doesn't exist
@@ -120,6 +126,8 @@
 
 #pragma login
 -(IBAction)didClickLogin:(id)sender {
+    inputConfirmation.superview.alpha = 0;
+
     if (inputLogin.text.length == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
         return;
@@ -184,6 +192,9 @@
     PFUser *user = [PFUser user];
     user.username = inputLogin.text;
     user.password = inputPassword.text;
+    if ([self isValidEmail:inputLogin.text]) {
+        user.email = inputLogin.text;
+    }
 
     progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
@@ -222,6 +233,7 @@
         PFUser *user = _currentUser;
         [user fetchIfNeeded];
         [query whereKey:@"organization" equalTo:_currentUser[@"organization"]];
+        NSLog(@"Querying for %@ for organization %@", className, _currentUser[@"organization"]);
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (error) {
                 NSLog(@"Error: %@", error);
@@ -246,6 +258,10 @@
             }
             else {
                 [progress hide:YES];
+                if ([className isEqualToString:@"Practice"]) {
+                    NSLog(@"Here");
+                }
+                NSLog(@"Synchronizing class %@", className);
                 [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;
                     if ([self isReady])
@@ -326,5 +342,49 @@
     }];
 }
 
+#pragma mark Password reset stuff
+-(BOOL)isValidEmail:(NSString *)email
+{
+    BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
+    NSString *stricterFilterString = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSString *laxString = @".+@.+\\.[A-Za-z]{2}[A-Za-z]*";
+    NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:email];
+}
+
+-(IBAction)didClickPasswordReset:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Request password reset" message:@"Please enter an email associated with your account." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Reset", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField * text = [alert textFieldAtIndex:0];
+    [text setKeyboardType:UIKeyboardTypeEmailAddress];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        UITextField * text = [alertView textFieldAtIndex:0];
+        NSLog(@"Reset with email %@", text.text);
+
+        [PFUser requestPasswordResetForEmailInBackground:text.text block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Success");
+                [UIAlertView alertViewWithTitle:@"Password reset sent" message:@"Please check your email for password reset instructions."];
+            }
+            else {
+                NSLog(@"Error: %@", error);
+                if (error.code == 125) {
+                    [UIAlertView alertViewWithTitle:@"Invalid email" message:@"Please enter a valid email to send a reset link"];
+                }
+                else if (error.code == 205) {
+                    [UIAlertView alertViewWithTitle:@"Invalid user" message:@"No user was found with that email. Please contact us directly for help."];
+                }
+                else {
+                    [UIAlertView alertViewWithTitle:@"Error resetting password" message:error.userInfo[@"error"]];
+                }
+            }
+        }];
+    }
+}
 
 @end

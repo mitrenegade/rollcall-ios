@@ -11,7 +11,7 @@
 #import "MBProgressHUD.h"
 #import "UIImage+Resize.h"
 
-#define SECTION_TITLES @[@"About", @"My organization", @"Feedback", @"Logout"]
+#define SECTION_TITLES @[@"About", @"My organization", @"My account", @"Feedback", @"Logout"]
 @interface SettingsViewController ()
 
 @end
@@ -95,10 +95,23 @@
         } onCancel:nil];
     }
     else if (row == 2) {
+        // my account
+        NSString *title = nil;
+        NSString *message = @"Please select from the following options";
+        [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Change login", @"Change email"] onDismiss:^(int buttonIndex) {
+            if (buttonIndex == 0) {
+                [self goToUpdateUsername];
+            }
+            else if (buttonIndex == 1) {
+                NSLog(@"Change logo");
+                [self goToUpdateUserEmail];
+            }
+        } onCancel:nil];    }
+    else if (row == 3) {
         // feedback
         [self goToFeedback];
     }
-    else if (row == 3) {
+    else if (row == 4) {
         // logout
         [PFUser logOut];
         [Organization reset];
@@ -127,6 +140,27 @@
     NSLog(@"Change name");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter your organization name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 1;
+    [alert show];
+}
+
+-(void)goToUpdateUsername {
+    NSLog(@"Change name");
+    NSString *message = _currentUser.username?[NSString stringWithFormat:@"Your current login is %@", _currentUser.username]:nil;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please update your login name" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 2;
+    [alert show];
+}
+
+-(void)goToUpdateUserEmail {
+    NSLog(@"Change email");
+    NSString *message = _currentUser.email?[NSString stringWithFormat:@"Your current email is %@", _currentUser.email]:nil;
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter your email" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    UITextField *text = [alert textFieldAtIndex:0];
+    text.keyboardType = UIKeyboardTypeEmailAddress;
+    alert.tag = 3;
     [alert show];
 }
 
@@ -137,18 +171,46 @@
     else {
         NSLog(@"else");
         UITextField * text = [alertView textFieldAtIndex:0];
-        Organization *organization = [Organization currentOrganization];
-        organization.name = text.text;
-        [organization saveOrUpdateToParseWithCompletion:^(BOOL success) {
-            if (success) {
-                NSLog(@"Saved");
-                [UIAlertView alertViewWithTitle:@"Name saved" message:[NSString stringWithFormat:@"Your organization is now called %@", organization.name]];
-                [self notify:@"organization:name:changed"];
-            }
-            else {
-                [UIAlertView alertViewWithTitle:@"Error updating name" message:nil];
-            }
-        }];
+        if (alertView.tag == 1) {
+            Organization *organization = [Organization currentOrganization];
+            organization.name = text.text;
+            [organization saveOrUpdateToParseWithCompletion:^(BOOL success) {
+                if (success) {
+                    NSLog(@"Saved");
+                    [UIAlertView alertViewWithTitle:@"Name saved" message:[NSString stringWithFormat:@"Your organization is now called %@", organization.name]];
+                    [self notify:@"organization:name:changed"];
+                }
+                else {
+                    [UIAlertView alertViewWithTitle:@"Error updating name" message:nil];
+                }
+            }];
+        }
+        else if (alertView.tag == 2) {
+            // username
+            _currentUser.username = text.text;
+            [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"Saved");
+                    [UIAlertView alertViewWithTitle:@"Username saved" message:[NSString stringWithFormat:@"Your login is now %@", _currentUser.username]];
+                }
+                else {
+                    [UIAlertView alertViewWithTitle:@"Error updating name" message:nil];
+                }
+            }];
+        }
+        else if (alertView.tag == 3) {
+            // username
+            _currentUser.email = text.text;
+            [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"Saved");
+                    [UIAlertView alertViewWithTitle:@"Email saved" message:[NSString stringWithFormat:@"Your email is now %@", _currentUser.email]];
+                }
+                else {
+                    [UIAlertView alertViewWithTitle:@"Error updating email" message:error.userInfo[@"error"]];
+                }
+            }];
+        }
     }
 }
 

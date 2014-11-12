@@ -11,7 +11,7 @@
 @class MBProgressHUD;
 @class TutorialScrollView;
 
-@interface IntroViewController : UIViewController <UITextFieldDelegate>
+@interface IntroViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 {
     IBOutlet UIImageView *logo;
 
@@ -21,6 +21,7 @@
 
     IBOutlet UIButton *buttonLogin;
     IBOutlet UIButton *buttonSignup;
+    IBOutlet UIButton *buttonReset;
 
     NSMutableDictionary *ready;
 
@@ -32,6 +33,7 @@
 
 -(IBAction)didClickLogin:(id)sender;
 -(IBAction)didClickSignup:(id)sender;
+-(IBAction)didClickPasswordReset:(id)sender;
 -(void)reset:(BOOL)showLogin;
 -(void)enableButtons:(BOOL)enabled;
 @end

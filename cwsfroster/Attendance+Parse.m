@@ -18,31 +18,35 @@
     // refreshes object from parse
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
-            self.date = [self.pfObject objectForKey:@"date"];
-            self.attended = [self.pfObject objectForKey:@"attended"];
-
-            // relationships
-            PFObject *object = [self.pfObject objectForKey:@"member"];
-            if (object.objectId)
-                self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
-            object = [self.pfObject objectForKey:@"practice"];
-            if (object.objectId)
-                self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
-            object = [self.pfObject objectForKey:@"payment"];
-            if (object.objectId) {
-                self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
-            }
-            else {
-                // payments can be removed. nothing else should ever be nil after it's been set
-                self.payment = nil;
-            }
-            object = [self.pfObject objectForKey:@"organization"];
-            if (object.objectId)
-                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
+            [self updateAttributesFromPFObject];
         }
         if (completion)
             completion(success);
     }];
+}
+
+-(void)updateAttributesFromPFObject {
+    self.date = [self.pfObject objectForKey:@"date"];
+    self.attended = [self.pfObject objectForKey:@"attended"];
+
+    // relationships
+    PFObject *object = [self.pfObject objectForKey:@"member"];
+    if (object.objectId)
+        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    object = [self.pfObject objectForKey:@"practice"];
+    if (object.objectId)
+        self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
+    object = [self.pfObject objectForKey:@"payment"];
+    if (object.objectId) {
+        self.payment = [[[Payment where:@{@"parseID":object.objectId}] all] firstObject];
+    }
+    else {
+        // payments can be removed. nothing else should ever be nil after it's been set
+        self.payment = nil;
+    }
+    object = [self.pfObject objectForKey:@"organization"];
+    if (object.objectId)
+        self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {

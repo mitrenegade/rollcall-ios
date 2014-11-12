@@ -483,6 +483,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E80086B16196884003E9B16 /* Build configuration list for PBXNativeTarget "cwsfroster" */;
 			buildPhases = (
+				9C57DFE933734A1D9CE6D6D8 /* Label Optimizely Views */,
 				44A1240314BB46F4ADCB4E68 /* Check Pods Manifest.lock */,
 				9E80084916196883003E9B16 /* Sources */,
 				9E80084A16196883003E9B16 /* Frameworks */,
@@ -587,6 +588,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9C57DFE933734A1D9CE6D6D8 /* Label Optimizely Views */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Label Optimizely Views";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/var/rbenv/shims/ruby \"$PODS_ROOT/Optimizely-iOS-SDK/scripts/OptimizelyPrepareNibs.rb\"";
 		};
 		9E9F19BD19AF81A400DE3F27 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -751,7 +766,7 @@
 				GCC_PREFIX_HEADER = "cwsfroster/cwsfroster-Prefix.pch";
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				PRODUCT_NAME = "Roll Call";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "17787e79-a6ff-482a-b6df-7e0c8302ff0f";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b1a40ce6-cebd-4de7-aa96-9d9a83966e5e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

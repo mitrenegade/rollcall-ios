@@ -14,19 +14,23 @@
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
-            self.date = [self.pfObject objectForKey:@"date"];
-            self.title = [self.pfObject objectForKey:@"title"];
-            self.details = [self.pfObject objectForKey:@"details"];
-
-            // relationships
-            self.parseID = self.pfObject.objectId;
-            PFObject *object = [self.pfObject objectForKey:@"organization"];
-            if (object.objectId)
-                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
+            [self updateAttributesFromPFObject];
         }
         if (completion)
             completion(success);
     }];
+}
+
+-(void)updateAttributesFromPFObject {
+    self.date = [self.pfObject objectForKey:@"date"];
+    self.title = [self.pfObject objectForKey:@"title"];
+    self.details = [self.pfObject objectForKey:@"details"];
+
+    // relationships
+    self.parseID = self.pfObject.objectId;
+    PFObject *object = [self.pfObject objectForKey:@"organization"];
+    if (object.objectId)
+        self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {

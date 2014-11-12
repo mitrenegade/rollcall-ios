@@ -34,6 +34,9 @@
     IBOutlet UIButton *buttonDrawing;
 
     NSMutableArray *drawn;
+
+    NSString *emailFrom;
+    NSString *emailTo;
 }
 
 @property (nonatomic) Practice *practice;
