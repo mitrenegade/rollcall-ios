@@ -246,6 +246,9 @@
             }
             else {
                 [progress hide:YES];
+                if ([className isEqualToString:@"Practice"]) {
+                    NSLog(@"Here");
+                }
                 [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
                     ready[className] = @YES;
                     if ([self isReady])

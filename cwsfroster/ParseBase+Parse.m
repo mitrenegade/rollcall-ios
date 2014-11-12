@@ -22,11 +22,15 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
     else {
         newObject = [[self class] createEntityInContext:_appDelegate.managedObjectContext];
     }
+
     ((ParseBase *)newObject).parseID = object.objectId;
     ((ParseBase *)newObject).pfObject = object;
-    [newObject updateFromParseWithCompletion:nil];
+
+    [newObject updateAttributesFromPFObject]; // update from the immediate pfobject
+    [newObject updateFromParseWithCompletion:nil]; // update from web
     return newObject;
 }
+
 
 -(NSString *)className {
     return NSStringFromClass(self.class);
@@ -57,7 +61,7 @@ static NSMutableDictionary *pfObjectCache; // a cache to store pfObjects so that
     }
     else {
         [self.pfObject refreshInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-            [self updateEntityWithParams:nil];
+            //[self updateEntityWithParams:nil];
             if (completion)
                 completion(YES);
         }];

@@ -15,24 +15,28 @@
 -(void)updateFromParseWithCompletion:(void (^)(BOOL))completion {
     [super updateFromParseWithCompletion:^(BOOL success) {
         if (success) {
-            self.amount= [self.pfObject objectForKey:@"amount"];
-            self.startDate = [self.pfObject objectForKey:@"startDate"];
-            self.endDate = [self.pfObject objectForKey:@"endDate"];
-            self.days = [self.pfObject objectForKey:@"days"];
-            self.source = [self.pfObject objectForKey:@"source"];
-            self.type = [self.pfObject objectForKey:@"type"];
-
-            // relationships
-            PFObject *object = [self.pfObject objectForKey:@"member"];
-            if (object.objectId)
-                self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
-            PFObject *organization = [self.pfObject objectForKey:@"organization"];
-            if (organization.objectId)
-                self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
+            [self updateAttributesFromPFObject];
         }
         if (completion)
             completion(success);
     }];
+}
+
+-(void)updateAttributesFromPFObject {
+    self.amount= [self.pfObject objectForKey:@"amount"];
+    self.startDate = [self.pfObject objectForKey:@"startDate"];
+    self.endDate = [self.pfObject objectForKey:@"endDate"];
+    self.days = [self.pfObject objectForKey:@"days"];
+    self.source = [self.pfObject objectForKey:@"source"];
+    self.type = [self.pfObject objectForKey:@"type"];
+
+    // relationships
+    PFObject *object = [self.pfObject objectForKey:@"member"];
+    if (object.objectId)
+        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    PFObject *organization = [self.pfObject objectForKey:@"organization"];
+    if (organization.objectId)
+        self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
 }
 
 -(void)saveOrUpdateToParseWithCompletion:(void (^)(BOOL))completion {
