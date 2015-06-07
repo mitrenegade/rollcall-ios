@@ -96,7 +96,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		83ECB7C44E1F43D089ABEE5A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
@@ -230,6 +230,7 @@
 		9EC5F3381936D9080056140F /* MemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberViewController.m; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +265,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C4305D59A25C7952551F7E9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */,
+				5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,7 +313,7 @@
 				9E80085716196883003E9B16 /* cwsfroster */,
 				9E80085016196883003E9B16 /* Frameworks */,
 				9E80084E16196883003E9B16 /* Products */,
-				1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */,
+				8C4305D59A25C7952551F7E9 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -483,7 +493,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E80086B16196884003E9B16 /* Build configuration list for PBXNativeTarget "cwsfroster" */;
 			buildPhases = (
-				9C57DFE933734A1D9CE6D6D8 /* Label Optimizely Views */,
 				44A1240314BB46F4ADCB4E68 /* Check Pods Manifest.lock */,
 				9E80084916196883003E9B16 /* Sources */,
 				9E80084A16196883003E9B16 /* Frameworks */,
@@ -586,22 +595,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		9C57DFE933734A1D9CE6D6D8 /* Label Optimizely Views */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Label Optimizely Views";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/var/rbenv/shims/ruby \"$PODS_ROOT/Optimizely-iOS-SDK/scripts/OptimizelyPrepareNibs.rb\"";
 		};
 		9E9F19BD19AF81A400DE3F27 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -735,7 +730,7 @@
 		};
 		9E80086C16196884003E9B16 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */;
+			baseConfigurationReference = E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -754,7 +749,7 @@
 		};
 		9E80086D16196884003E9B16 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C93ED5066F44B3AAAA89D88 /* Pods.xcconfig */;
+			baseConfigurationReference = 5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
 				FRAMEWORK_SEARCH_PATHS = (
