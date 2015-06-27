@@ -865,7 +865,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PracticeCell" textLabel="lkp-yI-jSw" detailTextLabel="4ae-7Q-aka" style="IBUITableViewCellStyleSubtitle" id="GEG-Bz-5kT">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PracticeCell" textLabel="lkp-yI-jSw" detailTextLabel="4ae-7Q-aka" style="IBUITableViewCellStyleSubtitle" id="GEG-Bz-5kT">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GEG-Bz-5kT" id="QaW-gD-sYV">
@@ -900,9 +900,6 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCell-GEG-Bz-5kT"/>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="tyl-mR-lat" kind="modal" identifier="PracticesTableToAttendances" id="CgY-we-JoQ"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <userDefinedRuntimeAttributes>
@@ -917,50 +914,17 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="5LB-52-enZ">
                             <connections>
                                 <action selector="didClickNew:" destination="qXS-mn-38d" id="TiI-TE-XSG"/>
-                                <segue destination="gCo-Ij-mWG" kind="modal" identifier="PracticesTableToNewPractice" id="VC3-ap-S3B"/>
+                                <segue destination="ycX-fJ-ygP" kind="push" identifier="EventListToNewEvent" id="9rA-0l-Lys"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="ycX-fJ-ygP" kind="push" identifier="EventListToDetail" id="Pc5-W3-jbR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFN-h8-IyW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="643"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="IHa-bs-CjO">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="gCo-Ij-mWG" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fc1-8y-CA8">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-navigationBar-fc1-8y-CA8"/>
-                        </userDefinedRuntimeAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="ycX-fJ-ygP" kind="relationship" relationship="rootViewController" id="DkY-9F-l4o"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VoD-xB-AjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1193" y="592"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="hvp-kC-cm2">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="tyl-mR-lat" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gda-EN-5Qm">
-                        <autoresizingMask key="autoresizingMask"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-navigationBar-Gda-EN-5Qm"/>
-                        </userDefinedRuntimeAttributes>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Fy5-S1-vxc" kind="relationship" relationship="rootViewController" id="jqE-I7-eEW"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ZnK-09-iT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1193" y="1280"/>
         </scene>
         <!--Attendances View Controller-->
         <scene sceneID="6zJ-96-c3v">
@@ -1097,16 +1061,12 @@
                                 <action selector="didClickClose:" destination="Fy5-S1-vxc" id="jdG-w2-5M8"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8">
-                            <connections>
-                                <segue destination="ycX-fJ-ygP" kind="push" identifier="AttendanceToEditPractice" id="BrM-em-W4r"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1665" y="1280"/>
+            <point key="canvasLocation" x="1400" y="643"/>
         </scene>
         <!--Info-->
         <scene sceneID="at9-FT-Q4a">
@@ -1249,7 +1209,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2147" y="592"/>
+            <point key="canvasLocation" x="980" y="643"/>
         </scene>
         <!--Events-->
         <scene sceneID="2yw-ik-mgm">
@@ -1301,7 +1261,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="BrM-em-W4r"/>
+        <segue reference="Pc5-W3-jbR"/>
         <segue reference="VAt-N1-2wa"/>
     </inferredMetricsTieBreakers>
 </document>

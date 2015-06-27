@@ -77,11 +77,6 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"AttendanceToEditPractice"]) {
-        PracticeEditViewController *controller = (PracticeEditViewController *)[segue destinationViewController];
-        [controller setPractice:self.practice];
-        [controller setDelegate:self];
-    }
 }
 #pragma mark - Table view data source
 -(void)reloadData {
@@ -317,17 +312,5 @@
     }
 }
 
-#pragma mark PracticeEditDelegate
--(void)didEditPractice {
-    self.title = self.practice.title;
-
-    [self notify:@"practice:info:updated"];
-
-    // update all attendances
-    for (Attendance *attendance in self.practice.attendances) {
-        attendance.date = self.practice.date;
-        [attendance saveOrUpdateToParseWithCompletion:nil];
-    }
-}
 
 @end

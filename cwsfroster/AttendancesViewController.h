@@ -10,7 +10,7 @@
 #import "PracticeEditViewController.h"
 
 @class Practice;
-@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PracticeEditDelegate>
+@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 {
     NSMutableArray *attendances;
     NSMutableArray *membersActive;

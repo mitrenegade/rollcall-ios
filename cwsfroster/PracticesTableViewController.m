@@ -118,6 +118,11 @@
     }
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"EventListToDetail" sender:self];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,12 +170,21 @@
     // Pass the selected object to the new view controller.
     UINavigationController *nav = [segue destinationViewController];
 
-    if ([segue.identifier isEqualToString:@"PracticesTableToNewPractice"]) {
+    if ([segue.identifier isEqualToString:@"EventListToNewEvent"]) {
         // create new practice
-        PracticeEditViewController *controller = nav.topViewController;
+        PracticeEditViewController *controller = (PracticeEditViewController *)segue.destinationViewController;
+        [controller setDelegate:self];
+    }
+    else if ([segue.identifier isEqualToString:@"EventListToDetail"]) {
+        // Edit practice details
+        PracticeEditViewController *controller = (PracticeEditViewController *)segue.destinationViewController;
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
+            [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
         [controller setDelegate:self];
     }
     else if ([segue.identifier isEqualToString:@"PracticesTableToAttendances"]) {
+        /* removed */
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         AttendancesViewController *controller = nav.topViewController;
         if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
@@ -178,9 +192,24 @@
     }
 }
 
+#pragma mark PracticeEditDelegate
 -(void)didEditPractice {
     [self reloadPractices];
 }
+
+/*
+-(void)didEditPractice {
+    self.title = self.practice.title;
+    
+    [self notify:@"practice:info:updated"];
+    
+    // update all attendances
+    for (Attendance *attendance in self.practice.attendances) {
+        attendance.date = self.practice.date;
+        [attendance saveOrUpdateToParseWithCompletion:nil];
+    }
+}
+ */
 
 -(void)deletePracticeAtIndexPath:(NSIndexPath *)indexPath {
     Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
