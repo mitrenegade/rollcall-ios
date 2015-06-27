@@ -75,6 +75,7 @@
         inputTo.text = [NSString stringWithFormat:@"To: %@", emailTo];
     }
 
+    /*
     emailFrom = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:from"];
     if (emailFrom) {
         inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
@@ -83,6 +84,7 @@
         emailFrom = _currentUser.email;
         inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
     }
+    */
 
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
 }
@@ -101,6 +103,11 @@
 }
 
 -(IBAction)didClickSave:(id)sender {
+    [self save];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)save {
     NSLog(@"Saving");
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
@@ -108,14 +115,13 @@
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
 
     if (self.practice) {
-        progress.labelText = @"Saving new event date";
+        progress.labelText = @"Saving event date";
         if (dateForDateString[inputDate.text]) {
             self.practice.date = dateForDateString[inputDate.text];
             self.practice.title = [Util simpleDateFormat:self.practice.date];
         }
         self.practice.details = inputDetails.text;
         [self.delegate didEditPractice];
-        [self.navigationController popViewControllerAnimated:YES];
         [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
             [self.navigationItem.leftBarButtonItem setEnabled:YES];
@@ -139,7 +145,6 @@
         practice.title = [Util simpleDateFormat:practice.date];
         practice.details = inputDetails.text;
         [self.delegate didEditPractice];
-        [self.navigationController popViewControllerAnimated:YES];
 
         [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
@@ -242,17 +247,19 @@
 
         [self pickerView:(UIPickerView *)textField.inputView didSelectRow:0 inComponent:0];
     }
+    /*
     else if (textField == inputFrom) {
         inputFrom.text = emailFrom;
     }
+    */
     else if (textField == inputTo) {
         inputTo.text = emailTo;
     }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == inputTo || textField == inputFrom) {
-        if (inputTo.text.length == 0 || inputFrom.text.length == 0) {
+    if (textField == inputTo) {
+        if (inputTo.text.length == 0) {
             [buttonEmail setEnabled:NO];
             [buttonEmail setAlpha:.5];
         }
@@ -265,9 +272,11 @@
         if (textField == inputTo) {
             emailTo = textField.text;
         }
+        /*
         else if (textField == inputFrom) {
             emailFrom = textField.text;
         }
+         */
 
     }
     else if (textField == inputDate) {
@@ -295,7 +304,7 @@
 #pragma mark emailing
 -(IBAction)didClickEmail:(id)sender {
     [inputTo resignFirstResponder];
-    [inputFrom resignFirstResponder];
+//    [inputFrom resignFirstResponder];
     
     if (inputTo.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -303,15 +312,17 @@
         [progress hide:YES afterDelay:1.5];
         return;
     }
+    /*
     if (inputFrom.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         progress.labelText = @"Please enter your email";
         [progress hide:YES afterDelay:1.5];
         return;
     }
+    */
 
     // save any changes. at least sets new details to practice before sending email
-    [self didClickSave:nil];
+    [self save];
 
     [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
     [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
@@ -344,8 +355,53 @@
             message = [message stringByAppendingString:paymentStatus];
         }
     }
-    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
+//    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
+    if ([MFMailComposeViewController canSendMail]){
+        MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+        composer.mailComposeDelegate = self;
+        [composer setSubject:title];
+        [composer setMessageBody:message isHTML:YES];
+        [composer setToRecipients:@[emailTo]];        
+        
+        [self.navigationController presentViewController:composer animated:YES completion:nil];
+    }
+    else {
+        [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
+    }
+
 }
+
+#pragma mark MessageController delegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            //feedbackMsg.text = @"Result: Mail sending canceled";
+            break;
+        case MFMailComposeResultSaved:
+            //feedbackMsg.text = @"Result: Mail saved";
+            break;
+        case MFMailComposeResultSent:
+            //feedbackMsg.text = @"Result: Mail sent";
+            [UIAlertView alertViewWithTitle:[NSString stringWithFormat:@"Attendance for %@ sent",[Util simpleDateFormat:self.practice.date]] message:nil cancelButtonTitle:@"OK"];
+            break;
+        case MFMailComposeResultFailed:
+            //feedbackMsg.text = @"Result: Mail sending failed";
+            [UIAlertView alertViewWithTitle:@"There was an error sending the attendance list" message:nil];
+            break;
+        default:
+            //feedbackMsg.text = @"Result: Mail not sent";
+            break;
+    }
+    // dismiss the composer
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
 
 #pragma mark Drawing
 

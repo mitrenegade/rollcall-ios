@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
 @protocol PracticeEditDelegate <NSObject>
 
@@ -15,7 +16,7 @@
 @end
 
 @class Practice;
-@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -27,7 +28,6 @@
 
     IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputTo;
-    IBOutlet UITextField *inputFrom;
     IBOutlet UIButton *buttonEmail;
 
     IBOutlet UIView *viewDrawing;

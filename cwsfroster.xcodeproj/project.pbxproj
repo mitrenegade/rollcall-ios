@@ -529,6 +529,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Bobby Ren";
+				TargetAttributes = {
+					9E80084C16196883003E9B16 = {
+						DevelopmentTeam = H799H8B8DD;
+					};
+				};
 			};
 			buildConfigurationList = 9E80084716196883003E9B16 /* Build configuration list for PBXProject "cwsfroster" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -744,7 +749,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Bobby Ren (UQA7D88UV9)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -756,7 +762,7 @@
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Roll Call";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5F8D8DD9-44FA-4BED-9B9C-A4E450CF9F89";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -765,7 +771,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */;
 			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -777,6 +784,7 @@
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "Roll Call";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "b1a40ce6-cebd-4de7-aa96-9d9a83966e5e";
 				WRAPPER_EXTENSION = app;
 			};

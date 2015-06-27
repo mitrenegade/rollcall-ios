@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="htV-wN-I0X">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="htV-wN-I0X">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Intro View Controller-->
@@ -33,9 +33,8 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-imageView-Vm1-wf-m0P"/>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <button appearanceType="aqua" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXC-DM-uPm">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXC-DM-uPm">
                                 <rect key="frame" x="19" y="133" width="281" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="4wA-Qp-iwr"/>
                                     <constraint firstAttribute="width" constant="281" id="a7U-HN-aau"/>
@@ -220,7 +219,7 @@
             </objects>
             <point key="canvasLocation" x="-432" y="288"/>
         </scene>
-        <!--Members Table View Controller - Members-->
+        <!--Members-->
         <scene sceneID="ima-lD-0RY">
             <objects>
                 <tableViewController id="nKy-LQ-H91" customClass="MembersTableViewController" sceneMemberID="viewController">
@@ -311,7 +310,7 @@
             </objects>
             <point key="canvasLocation" x="459" y="-85"/>
         </scene>
-        <!--Settings View Controller - Settings-->
+        <!--Settings-->
         <scene sceneID="SXM-r0-oRM">
             <objects>
                 <tableViewController id="z8n-ZM-Ikr" customClass="SettingsViewController" sceneMemberID="viewController">
@@ -392,7 +391,7 @@
             </objects>
             <point key="canvasLocation" x="921" y="-79"/>
         </scene>
-        <!--Member View Controller - Add member-->
+        <!--Add member-->
         <scene sceneID="5s6-nR-sgp">
             <objects>
                 <viewController id="XNl-Q5-lQr" customClass="MemberViewController" sceneMemberID="viewController">
@@ -558,7 +557,7 @@
             </objects>
             <point key="canvasLocation" x="1384" y="-85"/>
         </scene>
-        <!--Payment View Controller - Payments-->
+        <!--Payments-->
         <scene sceneID="jA6-pq-roR">
             <objects>
                 <viewController id="un6-AR-ONY" customClass="PaymentViewController" sceneMemberID="viewController">
@@ -730,7 +729,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-aTd-Wh-raQ"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-aTd-Wh-raQ"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vif-aG-Ron">
@@ -739,7 +738,7 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-Vif-aG-Ron"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-Vif-aG-Ron"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2j-Ri-HMW">
@@ -747,7 +746,7 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-W2j-Ri-HMW"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-W2j-Ri-HMW"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                     </subviews>
@@ -804,7 +803,7 @@
             </objects>
             <point key="canvasLocation" x="1768" y="-85"/>
         </scene>
-        <!--Practices Table View Controller - Events-->
+        <!--Events-->
         <scene sceneID="6wc-aj-vv7">
             <objects>
                 <tableViewController id="qXS-mn-38d" customClass="PracticesTableViewController" sceneMemberID="viewController">
@@ -998,7 +997,7 @@
             </objects>
             <point key="canvasLocation" x="1665" y="1280"/>
         </scene>
-        <!--Practice Edit View Controller - Info-->
+        <!--Info-->
         <scene sceneID="at9-FT-Q4a">
             <objects>
                 <viewController id="ycX-fJ-ygP" customClass="PracticeEditViewController" sceneMemberID="viewController">
@@ -1038,7 +1037,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kfi-8T-jXo">
                                         <rect key="frame" x="20" y="40" width="262" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-Kfi-8T-jXo"/>
                                         </userDefinedRuntimeAttributes>
@@ -1046,19 +1045,17 @@
                                             <outlet property="delegate" destination="ycX-fJ-ygP" id="0dQ-Fg-uWS"/>
                                         </connections>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="From: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Waf-wc-UgQ">
-                                        <rect key="frame" x="20" y="78" width="262" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email a summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyC-il-qjK">
+                                        <rect key="frame" x="20" y="11" width="246" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-Waf-wc-UgQ"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YyC-il-qjK"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="r0U-Ic-DaH"/>
-                                        </connections>
-                                    </textField>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtT-kZ-Rf3">
-                                        <rect key="frame" x="20" y="116" width="262" height="30"/>
+                                        <rect key="frame" x="20" y="78" width="262" height="30"/>
                                         <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Send attendance summary">
                                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -1071,15 +1068,6 @@
                                             <action selector="didClickEmail:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="8bO-kX-Wh1"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email a summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyC-il-qjK">
-                                        <rect key="frame" x="20" y="11" width="246" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YyC-il-qjK"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
@@ -1143,7 +1131,6 @@
                         <outlet property="buttonEmail" destination="jtT-kZ-Rf3" id="Oqi-DH-FUb"/>
                         <outlet property="inputDate" destination="3Db-KI-mVC" id="VTI-cv-fg6"/>
                         <outlet property="inputDetails" destination="xL1-Ta-Cga" id="ntm-jq-rqR"/>
-                        <outlet property="inputFrom" destination="Waf-wc-UgQ" id="g49-4u-DqJ"/>
                         <outlet property="inputTo" destination="Kfi-8T-jXo" id="sou-7y-A9X"/>
                         <outlet property="viewDrawing" destination="eo7-Rm-8o8" id="xUI-Mk-hbb"/>
                         <outlet property="viewEmail" destination="7DB-lq-D2b" id="oCp-n1-xVG"/>
@@ -1153,7 +1140,7 @@
             </objects>
             <point key="canvasLocation" x="2147" y="592"/>
         </scene>
-        <!--Navigation Controller - Events-->
+        <!--Events-->
         <scene sceneID="2yw-ik-mgm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" sceneMemberID="viewController">
@@ -1172,7 +1159,7 @@
             </objects>
             <point key="canvasLocation" x="63" y="643"/>
         </scene>
-        <!--Navigation Controller - Members-->
+        <!--Members-->
         <scene sceneID="B2w-ju-klW">
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" sceneMemberID="viewController">
