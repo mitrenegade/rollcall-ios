@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Intro View Controller-->
@@ -236,7 +237,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1u-2L-0Dp">
-                                            <rect key="frame" x="239" y="2" width="40" height="40"/>
+                                            <rect key="frame" x="169" y="2" width="40" height="40"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="VvE-C4-QER">
                                                     <rect key="frame" x="5" y="5" width="30" height="30"/>
@@ -259,7 +260,7 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" red="0.043137254899999998" green="0.68235294120000001" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="VvE-C4-QER" firstAttribute="centerX" secondItem="d1u-2L-0Dp" secondAttribute="centerX" id="BIM-uV-ed8"/>
                                                 <constraint firstAttribute="height" constant="40" id="FYy-Gm-tZt"/>
@@ -274,7 +275,7 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="d1u-2L-0Dp" secondAttribute="trailing" constant="8" id="GRW-C0-lvS"/>
+                                        <constraint firstAttribute="trailing" secondItem="d1u-2L-0Dp" secondAttribute="trailing" constant="78" id="GRW-C0-lvS"/>
                                         <constraint firstAttribute="centerY" secondItem="d1u-2L-0Dp" secondAttribute="centerY" id="f9S-OZ-5cM"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
@@ -286,6 +287,58 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="Ylx-5L-NNK" kind="modal" identifier="MembersToEditMember" id="UXd-Ef-d5t"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell2" id="fBb-g4-hSM">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fBb-g4-hSM" id="GLZ-Zu-MEH">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="ppe-tp-baJ">
+                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="6XT-OP-TcA"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-VvE-C4-QER"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o98-iA-Rem">
+                                            <rect key="frame" x="46" y="8" width="266" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0t-Ac-mYp">
+                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-Tjs-d7-jXY"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="didTapAccessory:event:" destination="nKy-LQ-H91" eventType="touchUpInside" id="KfW-ac-p9B"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ppe-tp-baJ" firstAttribute="top" secondItem="GLZ-Zu-MEH" secondAttribute="top" constant="7" id="0Hz-wc-RQU"/>
+                                        <constraint firstItem="ppe-tp-baJ" firstAttribute="leading" secondItem="GLZ-Zu-MEH" secondAttribute="leading" constant="8" id="7lC-4i-rdW"/>
+                                        <constraint firstItem="o98-iA-Rem" firstAttribute="top" secondItem="GLZ-Zu-MEH" secondAttribute="top" constant="8" id="8cv-v8-AIz"/>
+                                        <constraint firstAttribute="trailing" secondItem="o98-iA-Rem" secondAttribute="trailing" constant="8" id="Fob-8t-ZW8"/>
+                                        <constraint firstAttribute="bottom" secondItem="ppe-tp-baJ" secondAttribute="bottom" constant="6.5" id="ReE-98-Is2"/>
+                                        <constraint firstItem="s0t-Ac-mYp" firstAttribute="centerY" secondItem="ppe-tp-baJ" secondAttribute="centerY" id="aPV-uk-PC7"/>
+                                        <constraint firstItem="s0t-Ac-mYp" firstAttribute="centerX" secondItem="ppe-tp-baJ" secondAttribute="centerX" id="eV6-gB-5nN"/>
+                                        <constraint firstItem="o98-iA-Rem" firstAttribute="leading" secondItem="ppe-tp-baJ" secondAttribute="trailing" constant="8" id="oEC-Eh-CoJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="o98-iA-Rem" secondAttribute="bottom" constant="6.5" id="zIy-b3-Wgw"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="Ylx-5L-NNK" kind="modal" identifier="MembersToEditMember" id="VAt-N1-2wa"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -971,6 +1024,64 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCell-aGj-MF-tdJ"/>
                                 </userDefinedRuntimeAttributes>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell2" id="hee-Jy-gla">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hee-Jy-gla" id="65c-aL-bUb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DIz-bl-tpP">
+                                            <rect key="frame" x="56" y="8" width="256" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ha1-hV-LpR">
+                                            <rect key="frame" x="8" y="2" width="40" height="40"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gku-tC-crI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-zOJ-qk-VdL"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="didTapAccessory:event:" destination="Fy5-S1-vxc" eventType="touchUpInside" id="YJl-vt-WRk"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="A" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="elP-HU-meQ">
+                                                    <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-dCp-FE-IBX"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="40" id="3Cn-Lm-icq"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="3Xg-RB-Q9K"/>
+                                                <constraint firstAttribute="height" constant="40" id="uwa-q0-GSc"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-jel-Tb-ntb"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ha1-hV-LpR" firstAttribute="top" secondItem="65c-aL-bUb" secondAttribute="topMargin" constant="-6" id="5uO-QM-oDu"/>
+                                        <constraint firstItem="DIz-bl-tpP" firstAttribute="leading" secondItem="ha1-hV-LpR" secondAttribute="trailing" constant="8" id="9eM-fG-iEU"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ha1-hV-LpR" secondAttribute="bottom" constant="-6.5" id="FUB-IM-vxU"/>
+                                        <constraint firstAttribute="trailing" secondItem="DIz-bl-tpP" secondAttribute="trailing" constant="8" id="Ib9-pM-bcR"/>
+                                        <constraint firstItem="ha1-hV-LpR" firstAttribute="leading" secondItem="65c-aL-bUb" secondAttribute="leadingMargin" id="Tha-id-Il1"/>
+                                        <constraint firstAttribute="bottom" secondItem="DIz-bl-tpP" secondAttribute="bottom" constant="6.5" id="bsp-y6-IHq"/>
+                                        <constraint firstItem="DIz-bl-tpP" firstAttribute="top" secondItem="65c-aL-bUb" secondAttribute="top" constant="8" id="kbq-O6-gM9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableView-O56-LA-GD8"/>
@@ -1191,6 +1302,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="BrM-em-W4r"/>
-        <segue reference="UXd-Ef-d5t"/>
+        <segue reference="VAt-N1-2wa"/>
     </inferredMetricsTieBreakers>
 </document>

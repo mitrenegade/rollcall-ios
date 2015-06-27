@@ -112,21 +112,23 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell2" forIndexPath:indexPath];
 
     // Configure the cell...
 
     Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
-    cell.textLabel.font = [UIFont systemFontOfSize:16];
-    cell.textLabel.textColor = [UIColor darkGrayColor];
-    cell.textLabel.text = member.name;
+    UILabel *label = [cell viewWithTag:2];
+    label.font = [UIFont systemFontOfSize:16];
+    label.textColor = [UIColor darkGrayColor];
+    label.text = member.name;
 
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
     statusView.layer.borderWidth = 2;
     statusView.layer.borderColor = [[member colorForStatusForMonth:[NSDate date]] CGColor];
     statusView.layer.cornerRadius = 5;
     statusView.text = [member textForStatusForMonth:[NSDate date]];
-    cell.accessoryView = statusView.superview;
+//    statusView.frame = CGRectMake(200, 0, 50, 50);
+//    cell.accessoryView = statusView.superview;
 
     return cell;
 }

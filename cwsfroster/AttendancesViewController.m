@@ -168,7 +168,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell2" forIndexPath:indexPath];
 
     // Configure the cell...
     int section = indexPath.section;
@@ -210,10 +210,11 @@
         statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
         statusView.text = [member textForStatusForMonth:self.practice.date];
     }
-    cell.accessoryView = statusView.superview;
-    cell.textLabel.text = name;
-    cell.textLabel.font = [UIFont systemFontOfSize:16];
-    cell.textLabel.textColor = [UIColor darkGrayColor];
+//    cell.accessoryView = statusView.superview;
+    UILabel *label = [cell viewWithTag:2];
+    label.text = name;
+    label.font = [UIFont systemFontOfSize:16];
+    label.textColor = [UIColor darkGrayColor];
 
     return cell;
 }
