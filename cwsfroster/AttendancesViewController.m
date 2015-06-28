@@ -69,7 +69,7 @@
 
 #pragma mark - Navigation
 -(IBAction)didClickClose:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

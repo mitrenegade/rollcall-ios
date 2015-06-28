@@ -926,6 +926,47 @@
             </objects>
             <point key="canvasLocation" x="545" y="643"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="TAl-qm-f4p">
+            <objects>
+                <viewController id="RxU-iv-Sm2" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zfA-Pd-UPo"/>
+                        <viewControllerLayoutGuide type="bottom" id="fb9-Qp-ZvN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lK7-Z3-KZL">
+                        <rect key="frame" x="0.0" y="0.0" width="568" height="256"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wIp-TO-vDg">
+                                <rect key="frame" x="16" y="20" width="536" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your email" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ie9-kE-y13">
+                                <rect key="frame" x="16" y="58" width="536" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qr8-sg-pcw">
+                                <rect key="frame" x="16" y="157" width="536" height="42"/>
+                                <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Sign me up">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="WDZ-FO-Cyg"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wco-FK-IhH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1625" y="1081"/>
+        </scene>
         <!--Attendances View Controller-->
         <scene sceneID="6zJ-96-c3v">
             <objects>
@@ -1061,12 +1102,11 @@
                                 <action selector="didClickClose:" destination="Fy5-S1-vxc" id="jdG-w2-5M8"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Info" id="gBJ-cz-bK8"/>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1400" y="643"/>
+            <point key="canvasLocation" x="1454" y="418"/>
         </scene>
         <!--Info-->
         <scene sceneID="at9-FT-Q4a">
@@ -1080,75 +1120,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Event Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
-                                <rect key="frame" x="29" y="94" width="262" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-3Db-KI-mVC"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="ycX-fJ-ygP" id="hQp-b3-xeX"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xL1-Ta-Cga">
-                                <rect key="frame" x="29" y="132" width="262" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-xL1-Ta-Cga"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <outlet property="delegate" destination="ycX-fJ-ygP" id="Zh6-TZ-XsW"/>
-                                </connections>
-                            </textField>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7DB-lq-D2b">
-                                <rect key="frame" x="10" y="170" width="302" height="150"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-Rm-8o8">
+                                <rect key="frame" x="9" y="417" width="302" height="99"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kfi-8T-jXo">
-                                        <rect key="frame" x="20" y="40" width="262" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-Kfi-8T-jXo"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="0dQ-Fg-uWS"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email a summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyC-il-qjK">
-                                        <rect key="frame" x="20" y="11" width="246" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YyC-il-qjK"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtT-kZ-Rf3">
-                                        <rect key="frame" x="20" y="78" width="262" height="30"/>
-                                        <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Send attendance summary">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="didClickEmail:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="8bO-kX-Wh1"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-7DB-lq-D2b"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-Rm-8o8">
-                                <rect key="frame" x="10" y="317" width="302" height="99"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05W-pu-KQM">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05W-pu-KQM">
                                         <rect key="frame" x="20" y="49" width="262" height="30"/>
                                         <color key="backgroundColor" red="0.92549019610000005" green="0.4823529412" blue="0.1843137255" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Pick an attendee">
@@ -1162,8 +1137,11 @@
                                             <action selector="didClickDrawing:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="j32-jA-sGo"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Random Drawing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1C5-bD-ak5">
-                                        <rect key="frame" x="20" y="20" width="246" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Random Drawing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1C5-bD-ak5">
+                                        <rect key="frame" x="20" y="20" width="262" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="1HA-7a-Ri1"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -1173,12 +1151,179 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="1C5-bD-ak5" firstAttribute="top" secondItem="eo7-Rm-8o8" secondAttribute="top" constant="20" id="153-Sh-6jn"/>
+                                    <constraint firstItem="05W-pu-KQM" firstAttribute="top" secondItem="1C5-bD-ak5" secondAttribute="bottom" constant="8" id="GRo-Rs-Ref"/>
+                                    <constraint firstAttribute="bottom" secondItem="05W-pu-KQM" secondAttribute="bottom" constant="20" id="OYY-1u-e7g"/>
+                                    <constraint firstItem="05W-pu-KQM" firstAttribute="leading" secondItem="eo7-Rm-8o8" secondAttribute="leading" constant="20" id="Ws4-R8-MPZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="05W-pu-KQM" secondAttribute="trailing" constant="20" id="mIP-Xu-Q8h"/>
+                                    <constraint firstAttribute="trailing" secondItem="1C5-bD-ak5" secondAttribute="trailing" constant="20" id="nw4-cP-Zu5"/>
+                                    <constraint firstItem="1C5-bD-ak5" firstAttribute="leading" secondItem="eo7-Rm-8o8" secondAttribute="leading" constant="20" id="wO5-Pq-q33"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-eo7-Rm-8o8"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7DB-lq-D2b">
+                                <rect key="frame" x="9" y="281" width="302" height="128"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kfi-8T-jXo">
+                                        <rect key="frame" x="20" y="40" width="262" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="qR6-Ik-QUT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-Kfi-8T-jXo"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="0dQ-Fg-uWS"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email a summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyC-il-qjK">
+                                        <rect key="frame" x="20" y="11" width="262" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="NVO-55-qyO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YyC-il-qjK"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtT-kZ-Rf3">
+                                        <rect key="frame" x="20" y="78" width="262" height="30"/>
+                                        <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="RK1-Lh-DMW"/>
+                                        </constraints>
+                                        <state key="normal" title="Send attendance summary">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didClickEmail:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="8bO-kX-Wh1"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="jtT-kZ-Rf3" firstAttribute="leading" secondItem="7DB-lq-D2b" secondAttribute="leading" constant="20" id="IzA-zE-mVU"/>
+                                    <constraint firstAttribute="trailing" secondItem="jtT-kZ-Rf3" secondAttribute="trailing" constant="20" id="Qqk-Ad-Se0"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kfi-8T-jXo" secondAttribute="trailing" constant="20" id="Spp-a3-42G"/>
+                                    <constraint firstAttribute="trailing" secondItem="YyC-il-qjK" secondAttribute="trailing" constant="20" id="Tg7-8Z-2Mc"/>
+                                    <constraint firstAttribute="bottom" secondItem="jtT-kZ-Rf3" secondAttribute="bottom" constant="20" id="ak5-i5-e1Y"/>
+                                    <constraint firstItem="jtT-kZ-Rf3" firstAttribute="top" secondItem="Kfi-8T-jXo" secondAttribute="bottom" constant="8" id="diq-lv-9aa"/>
+                                    <constraint firstItem="YyC-il-qjK" firstAttribute="leading" secondItem="7DB-lq-D2b" secondAttribute="leading" constant="20" id="e4N-YF-VWW"/>
+                                    <constraint firstItem="Kfi-8T-jXo" firstAttribute="top" secondItem="YyC-il-qjK" secondAttribute="bottom" constant="8" id="gxQ-6S-a3l"/>
+                                    <constraint firstItem="Kfi-8T-jXo" firstAttribute="leading" secondItem="7DB-lq-D2b" secondAttribute="leading" constant="20" id="y6h-Z4-mT6"/>
+                                    <constraint firstItem="YyC-il-qjK" firstAttribute="top" secondItem="7DB-lq-D2b" secondAttribute="top" constant="11" id="ynE-F1-99t"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-7DB-lq-D2b"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sf7-S9-Bib">
+                                <rect key="frame" x="9" y="74" width="302" height="199"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xL1-Ta-Cga">
+                                        <rect key="frame" x="20" y="58" width="262" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="EjB-xy-ims"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-xL1-Ta-Cga"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="Zh6-TZ-XsW"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Event Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Db-KI-mVC">
+                                        <rect key="frame" x="20" y="20" width="262" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="1LV-5h-atg"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-3Db-KI-mVC"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="ycX-fJ-ygP" id="hQp-b3-xeX"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgd-UJ-hHZ">
+                                        <rect key="frame" x="20" y="96" width="262" height="30"/>
+                                        <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="XqO-va-PtR"/>
+                                        </constraints>
+                                        <state key="normal" title="Edit attendees">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="Fy5-S1-vxc" kind="push" identifier="EventDetailToAttendance" id="hrd-aG-Gj3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUp-ha-AGn">
+                                        <rect key="frame" x="20" y="134" width="262" height="30"/>
+                                        <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="OKA-fA-Esn"/>
+                                        </constraints>
+                                        <state key="normal" title="New Signups">
+                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="RxU-iv-Sm2" kind="push" id="deG-Pc-2Pm"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="hgd-UJ-hHZ" secondAttribute="trailing" constant="20" id="0Wd-Kq-OQs"/>
+                                    <constraint firstItem="xL1-Ta-Cga" firstAttribute="leading" secondItem="sf7-S9-Bib" secondAttribute="leading" constant="20" id="8JB-fj-eaW"/>
+                                    <constraint firstItem="xL1-Ta-Cga" firstAttribute="top" secondItem="3Db-KI-mVC" secondAttribute="bottom" constant="8" id="Lnd-Rh-6Zq"/>
+                                    <constraint firstItem="3Db-KI-mVC" firstAttribute="top" secondItem="sf7-S9-Bib" secondAttribute="top" constant="20" id="ScY-Ys-nUt"/>
+                                    <constraint firstItem="hgd-UJ-hHZ" firstAttribute="leading" secondItem="sf7-S9-Bib" secondAttribute="leading" constant="20" id="Vhh-Vy-piF"/>
+                                    <constraint firstItem="mUp-ha-AGn" firstAttribute="leading" secondItem="sf7-S9-Bib" secondAttribute="leading" constant="20" id="WWw-9C-0RT"/>
+                                    <constraint firstAttribute="trailing" secondItem="3Db-KI-mVC" secondAttribute="trailing" constant="20" id="gkS-ej-Pwk"/>
+                                    <constraint firstItem="mUp-ha-AGn" firstAttribute="top" secondItem="hgd-UJ-hHZ" secondAttribute="bottom" constant="8" id="mAh-AB-Vkr"/>
+                                    <constraint firstAttribute="trailing" secondItem="xL1-Ta-Cga" secondAttribute="trailing" constant="20" id="qjd-8Z-h8u"/>
+                                    <constraint firstItem="3Db-KI-mVC" firstAttribute="leading" secondItem="sf7-S9-Bib" secondAttribute="leading" constant="20" id="sab-DP-g48"/>
+                                    <constraint firstAttribute="trailing" secondItem="mUp-ha-AGn" secondAttribute="trailing" constant="20" id="scx-Tf-cOd"/>
+                                    <constraint firstItem="hgd-UJ-hHZ" firstAttribute="top" secondItem="xL1-Ta-Cga" secondAttribute="bottom" constant="8" id="vC8-ro-XNa"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eo7-Rm-8o8" firstAttribute="leading" secondItem="l2U-H5-3kh" secondAttribute="leadingMargin" constant="-7" id="8Vr-i3-5Lx"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7DB-lq-D2b" secondAttribute="trailing" constant="-7" id="Civ-29-jt6"/>
+                            <constraint firstItem="7DB-lq-D2b" firstAttribute="leading" secondItem="l2U-H5-3kh" secondAttribute="leadingMargin" constant="-7" id="SwT-5Q-UiX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sf7-S9-Bib" secondAttribute="trailing" constant="-7" id="ZON-dk-q1v"/>
+                            <constraint firstItem="7DB-lq-D2b" firstAttribute="top" secondItem="sf7-S9-Bib" secondAttribute="bottom" constant="8" id="eCZ-wn-xMN"/>
+                            <constraint firstItem="sf7-S9-Bib" firstAttribute="top" secondItem="K5Y-65-mfc" secondAttribute="bottom" constant="10" id="gCt-RZ-4cs"/>
+                            <constraint firstItem="sf7-S9-Bib" firstAttribute="leading" secondItem="l2U-H5-3kh" secondAttribute="leadingMargin" constant="-7" id="hOn-ej-0r0"/>
+                            <constraint firstItem="sZP-l2-fbX" firstAttribute="top" secondItem="eo7-Rm-8o8" secondAttribute="bottom" constant="8" id="jz7-co-8w5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eo7-Rm-8o8" secondAttribute="trailing" constant="-7" id="r8z-xg-bOk"/>
+                            <constraint firstItem="eo7-Rm-8o8" firstAttribute="top" secondItem="7DB-lq-D2b" secondAttribute="bottom" constant="8" id="sos-i2-2wm"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-l2U-H5-3kh"/>
                         </userDefinedRuntimeAttributes>
@@ -1200,11 +1345,13 @@
                     <connections>
                         <outlet property="buttonDrawing" destination="05W-pu-KQM" id="N5L-Wc-LRf"/>
                         <outlet property="buttonEmail" destination="jtT-kZ-Rf3" id="Oqi-DH-FUb"/>
+                        <outlet property="buttonRollCall" destination="hgd-UJ-hHZ" id="5D2-43-yWa"/>
                         <outlet property="inputDate" destination="3Db-KI-mVC" id="VTI-cv-fg6"/>
                         <outlet property="inputDetails" destination="xL1-Ta-Cga" id="ntm-jq-rqR"/>
                         <outlet property="inputTo" destination="Kfi-8T-jXo" id="sou-7y-A9X"/>
                         <outlet property="viewDrawing" destination="eo7-Rm-8o8" id="xUI-Mk-hbb"/>
                         <outlet property="viewEmail" destination="7DB-lq-D2b" id="oCp-n1-xVG"/>
+                        <outlet property="viewInfo" destination="sf7-S9-Bib" id="alW-Vi-DLx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>

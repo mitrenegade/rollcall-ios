@@ -183,13 +183,6 @@
             [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
         [controller setDelegate:self];
     }
-    else if ([segue.identifier isEqualToString:@"PracticesTableToAttendances"]) {
-        /* removed */
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        AttendancesViewController *controller = nav.topViewController;
-        if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
-            [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
-    }
 }
 
 #pragma mark PracticeEditDelegate

@@ -25,6 +25,9 @@
     NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
     NSString *lastInputDate;
     NSString *originalDescription;
+    
+    IBOutlet UIView *viewInfo;
+    IBOutlet UIButton *buttonRollCall;
 
     IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputTo;
