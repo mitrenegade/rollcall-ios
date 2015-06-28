@@ -18,6 +18,7 @@
 #import "UIAlertView+MKBlockAdditions.h"
 
 #import "AttendancesViewController.h"
+#import "OnsiteSignupViewController.h"
 
 @interface PracticeEditViewController ()
 
@@ -177,6 +178,14 @@
     if ([segue.identifier isEqualToString:@"EventDetailToAttendance"]) {
         AttendancesViewController *controller = (AttendancesViewController *)segue.destinationViewController;
         [controller setPractice:self.practice];
+    }
+    else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
+        /*
+        UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
+        OnsiteSignupViewController *controller = (OnsiteSignupViewController *) nav.viewControllers[0];
+        UIViewController *root = self.navigationController.viewControllers.lastObject;
+        [root presentViewController:nav animated:YES completion:nil];
+         */
     }
 }
 
@@ -442,5 +451,10 @@
         }
 
     } onCancel:nil];
+}
+
+#pragma mark Onsite signup
+-(IBAction)didClickOnsiteSignup:(id)sender {
+    [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
 }
 @end

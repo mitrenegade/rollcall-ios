@@ -172,12 +172,14 @@
 
     if ([segue.identifier isEqualToString:@"EventListToNewEvent"]) {
         // create new practice
-        PracticeEditViewController *controller = (PracticeEditViewController *)segue.destinationViewController;
+        UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
+        PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         [controller setDelegate:self];
     }
     else if ([segue.identifier isEqualToString:@"EventListToDetail"]) {
         // Edit practice details
-        PracticeEditViewController *controller = (PracticeEditViewController *)segue.destinationViewController;
+        UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
+        PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
             [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
