@@ -8,16 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+@class Practice;
 @interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate>
 {
     IBOutlet UITextField *inputName;
     IBOutlet UITextField *inputEmail;
     IBOutlet UITextField *inputAbout;
     
+    IBOutlet UILabel *labelAttendanceCount;
+    NSMutableArray *newAttendees;
+    
     UITextField *currentInput;
     
     IBOutlet NSLayoutConstraint *constraintTopOffset;
+    
+    IBOutlet UILabel *labelWelcome;
 }
+
+@property (nonatomic) Practice *practice;
 
 -(IBAction)didClickSignup:(id)sender;
 

@@ -192,12 +192,8 @@
         [controller setPractice:self.practice];
     }
     else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
-        /*
-        UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
-        OnsiteSignupViewController *controller = (OnsiteSignupViewController *) nav.viewControllers[0];
-        UIViewController *root = self.navigationController.viewControllers.lastObject;
-        [root presentViewController:nav animated:YES completion:nil];
-         */
+        OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
     }
 }
 
