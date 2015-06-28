@@ -12,4 +12,7 @@
 #define PARSE_APP_ID @"1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 #define PARSE_CLIENT_KEY @"Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"
 
+#define _defaults [NSUserDefaults standardUserDefaults]
+#define APP_ID 916600723
+
 #endif

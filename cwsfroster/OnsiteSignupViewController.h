@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 
 @class Practice;
-@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate>
+@class RatingViewController;
+@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 {
     IBOutlet UITextField *inputName;
     IBOutlet UITextField *inputEmail;
@@ -23,6 +25,8 @@
     IBOutlet NSLayoutConstraint *constraintTopOffset;
     
     IBOutlet UILabel *labelWelcome;
+    
+    RatingViewController *rater;
 }
 
 @property (nonatomic) Practice *practice;
