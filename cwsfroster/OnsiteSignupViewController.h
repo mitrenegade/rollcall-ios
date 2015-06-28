@@ -15,6 +15,8 @@
     IBOutlet UITextField *inputAbout;
     
     UITextField *currentInput;
+    
+    IBOutlet NSLayoutConstraint *constraintTopOffset;
 }
 
 -(IBAction)didClickSignup:(id)sender;

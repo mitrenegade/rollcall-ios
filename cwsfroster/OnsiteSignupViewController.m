@@ -46,6 +46,15 @@
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
     currentInput = textField;
+    if (currentInput == inputEmail) {
+        constraintTopOffset.constant = -40;
+    }
+    else if (currentInput == inputAbout) {
+        constraintTopOffset.constant = -80;
+    }
+    else {
+        constraintTopOffset.constant = 0;
+    }
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
@@ -54,6 +63,9 @@
     }
     else if (textField == inputEmail) {
         [inputAbout becomeFirstResponder];
+    }
+    else if (textField == inputAbout) {
+        constraintTopOffset.constant = 0;
     }
     return YES;
 }
