@@ -147,14 +147,17 @@
         progress.labelText = @"Creating new event";
         if (!dateForDateString[inputDate.text]) {
             // invalid date, or date not selected. shouldn't go here if we disable save
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Please enter a date";
+            [progress hide:YES afterDelay:1];
             completion(NO);
+            return;
         }
         Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
         practice.organization = [Organization currentOrganization];
         practice.date = dateForDateString[inputDate.text];
         practice.title = [Util simpleDateFormat:practice.date];
         practice.details = inputDetails.text;
-        [self.delegate didEditPractice];
 
         [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
@@ -168,8 +171,10 @@
                 [_appDelegate.managedObjectContext deleteObject:practice];
             }
             else {
+                self.practice = practice;
                 [_appDelegate.managedObjectContext save:nil];
                 [progress hide:YES];
+                [self.delegate didEditPractice];
                 completion(YES);
             }
         }];
@@ -465,7 +470,13 @@
         [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
     }
     else {
-        NSLog(@"No practice exists");
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
+            }
+        }];
     }
 }
 
@@ -475,7 +486,13 @@
         [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
     }
     else {
-        NSLog(@"No practice exists");
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+            }
+        }];
     }
 }
 @end
