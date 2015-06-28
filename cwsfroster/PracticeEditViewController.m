@@ -90,6 +90,9 @@
     */
 
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,9 +111,22 @@
 -(IBAction)didClickSave:(id)sender {
     [self saveWithCompletion:^(BOOL success) {
         if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
+            self.navigationItem.leftBarButtonItem.title = @"Close";
+            if (!didShowRater) {
+                if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
+                    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                }
+                didShowRater = YES;
+            }
+            else {
+                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            }
         }
     }];
+}
+
+-(void)didCloseRating {
+    // don't need
 }
 
 -(void)saveWithCompletion:(void(^)(BOOL success))completion {

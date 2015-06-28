@@ -37,18 +37,37 @@
     [inputEmail setInputAccessoryView:keyboardDoneButtonView];
     [inputAbout setInputAccessoryView:keyboardDoneButtonView];
     
-    UIBarButtonItem *close = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self.navigationController action:@selector(popViewControllerAnimated:)];
+    UIBarButtonItem *close = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
     self.navigationItem.leftBarButtonItem = close;
     
     if (self.practice.details.length) {
         self.title = self.practice.details;
     }
     labelWelcome.alpha = 0;
+    
+    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)close {
+    if (!didShowRater) {
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        didShowRater = YES;
+    }
+    else {
+    }
+}
+
+-(void)didCloseRating {
+    self.navigationItem.leftBarButtonItem.enabled = YES;
 }
 
 #pragma mark UITextFieldDelegate
@@ -82,10 +101,6 @@
 }
 
 -(void)didClickSignup:(id)sender {
-    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
-    [rater showRatingsIfConditionsMetFromView:self.view forced:YES];
-    rater.delegate = self;
-
     if ([inputName.text length] == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a name" message:nil];
         return;

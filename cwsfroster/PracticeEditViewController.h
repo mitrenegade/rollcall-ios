@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
+#import "RatingViewController.h"
 
 @protocol PracticeEditDelegate <NSObject>
 
@@ -16,7 +17,8 @@
 @end
 
 @class Practice;
-@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate>
+@class RatingViewController;
+@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -41,6 +43,9 @@
 
     NSString *emailFrom;
     NSString *emailTo;
+    
+    RatingViewController *rater;
+    BOOL didShowRater;
 }
 
 @property (nonatomic) Practice *practice;

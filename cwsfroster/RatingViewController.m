@@ -25,7 +25,7 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)showRatingsIfConditionsMetFromView:(UIView *)view forced:(BOOL)forced {
+-(BOOL)showRatingsIfConditionsMetFromView:(UIView *)view forced:(BOOL)forced {
     
     if (!forced) {
         // increment event
@@ -34,8 +34,10 @@
             eventCount = 0;
         [_defaults setInteger:eventCount forKey:kRatingEventCount];
         
-        if (![self canShow])
-            return;
+        if (![self canShow]) {
+            [self.delegate didCloseRating];
+            return NO;
+        }
     }
     self.view.frame = CGRectMake(0, 0, view.frame.size.width, 40);
     self.view.layer.borderWidth = 1;
@@ -47,6 +49,7 @@
     } completion:^(BOOL finished) {
         [self performSelector:@selector(close) withObject:nil afterDelay:10];
     }];
+    return YES;
 }
 
 
@@ -103,6 +106,7 @@
         self.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self.view removeFromSuperview];
+        [self.delegate didCloseRating];
     }];
 }
 
@@ -125,7 +129,7 @@
 
 -(BOOL)canShow {
     // already rated this version
-#if GPRATER_DEBUG
+#if RATING_DEBUG
     return YES;
 #endif
     

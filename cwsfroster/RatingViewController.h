@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-#define GPRATER_DEBUG 0
+#define RATING_DEBUG 0
 #define EVENTS_UNTIL_PROMPT 3
-#define DAYS_AFTER_OPEN 7
-#define DAYS_BEFORE_REPROMPT 21
+#define DAYS_AFTER_OPEN 0
+#define DAYS_BEFORE_REPROMPT 14
 
 static NSString *const kRatingLastDate = @"kRatingLastDate";
 static NSString *const kRatingFirstOpenDate = @"kRatingFirstOpenDate";
@@ -26,6 +26,7 @@ static NSString *templateReviewURLiOS8 = @"itms-apps://itunes.apple.com/WebObjec
 @protocol RatingDelegate <NSObject>
 
 -(void)goToFeedback;
+-(void)didCloseRating;
 
 @end
 
@@ -46,6 +47,6 @@ static NSString *templateReviewURLiOS8 = @"itms-apps://itunes.apple.com/WebObjec
 
 @property (weak, nonatomic) id delegate;
 
--(void)showRatingsIfConditionsMetFromView:(UIView *)view forced:(BOOL)forced;
-
+-(BOOL)showRatingsIfConditionsMetFromView:(UIView *)view forced:(BOOL)forced;
+-(BOOL)canShow;
 @end

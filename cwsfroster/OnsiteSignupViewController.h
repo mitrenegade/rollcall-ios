@@ -27,6 +27,7 @@
     IBOutlet UILabel *labelWelcome;
     
     RatingViewController *rater;
+    BOOL didShowRater;
 }
 
 @property (nonatomic) Practice *practice;

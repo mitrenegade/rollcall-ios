@@ -50,6 +50,9 @@
 
     [self listenFor:@"member:deleted" action:@selector(reloadData)];
     [self listenFor:@"member:updated" action:@selector(reloadData)];
+
+    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +72,20 @@
 
 #pragma mark - Navigation
 -(IBAction)didClickClose:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (!didShowRater) {
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        didShowRater = YES;
+    }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+-(void)didCloseRating {
+    self.navigationItem.leftBarButtonItem.enabled = YES;
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
