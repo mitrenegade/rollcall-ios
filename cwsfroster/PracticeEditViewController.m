@@ -139,6 +139,7 @@
                 completion(NO);
             }
             else {
+                [progress hide:YES];
                 completion(YES);
             }
         }];
@@ -351,14 +352,14 @@
         NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
         for (Attendance *attendance in self.practice.attendances) {
             if ([attendance.attended boolValue]) {
-                message = [message stringByAppendingString:attendance.member.name];
+                message = [NSString stringWithFormat:@"%@\n%@ %@ ", message, attendance.member.name, attendance.member.email];
                 
                 NSString *paymentStatus = @"<br>";
                 Payment *payment = attendance.payment;
                 Member *member = attendance.member;
                 if (!payment) {
                     if ([member.status intValue] == MemberStatusBeginner) {
-                        paymentStatus = @" (guest))<br>";
+                        paymentStatus = @" (guest)<br>";
                     }
                     else if ([member.status intValue] == MemberStatusInactive) {
                         paymentStatus = @" (inactive status)<br>";
