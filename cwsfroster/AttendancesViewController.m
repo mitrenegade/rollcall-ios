@@ -135,10 +135,10 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Attendees";
+        return @"Attendees of event";
     }
     else if (section == 1) {
-        return @"Active members";
+        return @"Active members not at event";
     }
     else if (section == 2) {
         return @"Inactive members";
@@ -150,7 +150,10 @@
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return attendances.count;
+        if (attendances.count > 0) {
+            return attendances.count;
+        }
+        return 1;
     }
     else if (section == 1) {
         return membersActive.count;
@@ -172,41 +175,54 @@
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
     statusView.layer.borderWidth = 2;
     statusView.layer.cornerRadius = 5;
-    
+    UILabel *label = [cell viewWithTag:2];
+
     NSString *name;
     if (section == 0) {
-        Attendance *attendance = attendances[row];
-        name = attendance.member.name;
-
-        if (attendance.payment) {
-            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
-            statusView.text = @"Paid";
-        }
-        else if ([attendance isFreebie]) {
-            statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
-            statusView.text = @"Trial";
+        if (attendances.count == 0) {
+            statusView.layer.borderColor = [[UIColor blackColor] CGColor];
+            name = @"Click a row to add a member";
+            statusView.text = @"+";
+            
+            label.alpha = 0.5;
+            statusView.alpha = 0.5;
         }
         else {
-            statusView.layer.borderColor = [[UIColor redColor] CGColor];
-            statusView.text = @"!";
+            label.alpha = 1;
+            statusView.alpha = 1;
+            
+            Attendance *attendance = attendances[row];
+            name = attendance.member.name;
+            
+            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
+            if (attendance.payment) {
+                statusView.text = @"✓";
+            }
+            else if ([attendance isFreebie]) {
+//                statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
+                statusView.text = @"✓";
+            }
+            else {
+//                statusView.layer.borderColor = [[UIColor redColor] CGColor];
+                statusView.text = @"✓";
+            }
         }
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = [member textForStatusForMonth:self.practice.date];
+        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = @"+"; //[member textForStatusForMonth:self.practice.date];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = [member textForStatusForMonth:self.practice.date];
+        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = @"+";//[member textForStatusForMonth:self.practice.date];
     }
 //    cell.accessoryView = statusView.superview;
-    UILabel *label = [cell viewWithTag:2];
     label.text = name;
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -215,10 +231,14 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     int section = indexPath.section;
     int row = indexPath.row;
 
     if (section == 0) {
+        if (attendances.count == 0) {
+            return;
+        }
         // clicked on an attendance
         Attendance *attendance = attendances[row];
         attendance.attended = @(DidNotAttend);
