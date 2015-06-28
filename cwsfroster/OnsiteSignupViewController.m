@@ -7,6 +7,8 @@
 //
 
 #import "OnsiteSignupViewController.h"
+#import "Member+Info.h"
+#import "Member+Parse.h"
 
 @interface OnsiteSignupViewController ()
 
@@ -71,8 +73,32 @@
 }
 
 -(void)didClickSignup:(id)sender {
+    if ([inputName.text length] == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter a name" message:nil];
+        return;
+    }
+    if ([inputEmail.text length] == 0) {
+        [UIAlertView alertViewWithTitle:@"Please enter an email" message:nil];
+        return;
+    }
     
+    Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
+    member.organization = [Organization currentOrganization];
+    [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
+    [self notify:@"member:updated"];
+    
+    [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            [_appDelegate.managedObjectContext save:nil];
+        }
+        else {
+            NSLog(@"Could not save member!");
+            [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save information"];
+        }
+    }];
+
 }
+
 
 /*
 #pragma mark - Navigation

@@ -106,11 +106,14 @@
 }
 
 -(IBAction)didClickSave:(id)sender {
-    [self save];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self saveWithCompletion:^(BOOL success) {
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
 }
 
--(void)save {
+-(void)saveWithCompletion:(void(^)(BOOL success))completion {
     NSLog(@"Saving");
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
@@ -133,6 +136,10 @@
                 progress.labelText = @"Save error";
                 progress.detailsLabelText = @"Could not save event!";
                 [progress hide:YES afterDelay:1.5];
+                completion(NO);
+            }
+            else {
+                completion(YES);
             }
         }];
     }
@@ -140,7 +147,7 @@
         progress.labelText = @"Creating new event";
         if (!dateForDateString[inputDate.text]) {
             // invalid date, or date not selected. shouldn't go here if we disable save
-            return;
+            completion(NO);
         }
         Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
         practice.organization = [Organization currentOrganization];
@@ -163,7 +170,7 @@
             else {
                 [_appDelegate.managedObjectContext save:nil];
                 [progress hide:YES];
-                [self didClickCancel:nil];
+                completion(YES);
             }
         }];
     }
@@ -175,7 +182,7 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"EventDetailToAttendance"]) {
+    if ([segue.identifier isEqualToString:@"ToEditAttendees"]) {
         AttendancesViewController *controller = (AttendancesViewController *)segue.destinationViewController;
         [controller setPractice:self.practice];
     }
@@ -335,53 +342,52 @@
     */
 
     // save any changes. at least sets new details to practice before sending email
-    [self save];
-
-    [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
-    [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
-
-    NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
-    NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
-    for (Attendance *attendance in self.practice.attendances) {
-        if ([attendance.attended boolValue]) {
-            message = [message stringByAppendingString:attendance.member.name];
-
-            NSString *paymentStatus = @"<br>";
-            Payment *payment = attendance.payment;
-            Member *member = attendance.member;
-            if (!payment) {
-                if ([member.status intValue] == MemberStatusBeginner) {
-                    paymentStatus = @" (guest))<br>";
-                }
-                else if ([member.status intValue] == MemberStatusInactive) {
-                    paymentStatus = @" (inactive status)<br>";
-                }
-                else {
-                    paymentStatus = @" (unpaid)<br>";
-                }
-            }
-            else if (payment.isMonthly)
-                paymentStatus = @" (monthly)<br>";
-            else if (payment.isDaily)
-                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
-
-            message = [message stringByAppendingString:paymentStatus];
-        }
-    }
-//    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
-    if ([MFMailComposeViewController canSendMail]){
-        MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
-        composer.mailComposeDelegate = self;
-        [composer setSubject:title];
-        [composer setMessageBody:message isHTML:YES];
-        [composer setToRecipients:@[emailTo]];        
+    [self saveWithCompletion:^(BOOL success) {
+        [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
+        [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
         
-        [self.navigationController presentViewController:composer animated:YES completion:nil];
-    }
-    else {
-        [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
-    }
-
+        NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
+        NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
+        for (Attendance *attendance in self.practice.attendances) {
+            if ([attendance.attended boolValue]) {
+                message = [message stringByAppendingString:attendance.member.name];
+                
+                NSString *paymentStatus = @"<br>";
+                Payment *payment = attendance.payment;
+                Member *member = attendance.member;
+                if (!payment) {
+                    if ([member.status intValue] == MemberStatusBeginner) {
+                        paymentStatus = @" (guest))<br>";
+                    }
+                    else if ([member.status intValue] == MemberStatusInactive) {
+                        paymentStatus = @" (inactive status)<br>";
+                    }
+                    else {
+                        paymentStatus = @" (unpaid)<br>";
+                    }
+                }
+                else if (payment.isMonthly)
+                    paymentStatus = @" (monthly)<br>";
+                else if (payment.isDaily)
+                    paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
+                
+                message = [message stringByAppendingString:paymentStatus];
+            }
+        }
+        //    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
+        if ([MFMailComposeViewController canSendMail]){
+            MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+            composer.mailComposeDelegate = self;
+            [composer setSubject:title];
+            [composer setMessageBody:message isHTML:YES];
+            [composer setToRecipients:@[emailTo]];
+            
+            [self.navigationController presentViewController:composer animated:YES completion:nil];
+        }
+        else {
+            [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
+        }
+    }];
 }
 
 #pragma mark MessageController delegate
@@ -453,8 +459,23 @@
     } onCancel:nil];
 }
 
+#pragma mark attendees
+-(IBAction)didClickAttendees:(id)sender {
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists");
+    }
+}
+
 #pragma mark Onsite signup
 -(IBAction)didClickOnsiteSignup:(id)sender {
-    [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists");
+    }
 }
 @end

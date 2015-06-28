@@ -27,6 +27,7 @@
     NSString *originalDescription;
     
     IBOutlet UIView *viewInfo;
+    IBOutlet UIButton *buttonEditAttendees;
     IBOutlet UIButton *buttonRollCall;
 
     IBOutlet UIView *viewEmail;
@@ -49,4 +50,5 @@
 -(IBAction)didClickSave:(id)sender;
 -(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
+-(IBAction)didClickAttendees:(id)sender;
 @end

@@ -935,7 +935,7 @@
                         <viewControllerLayoutGuide type="bottom" id="fb9-Qp-ZvN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lK7-Z3-KZL">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qr8-sg-pcw">
@@ -1027,7 +1027,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wco-FK-IhH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="1357"/>
+            <point key="canvasLocation" x="1595" y="1309"/>
         </scene>
         <!--Attendances View Controller-->
         <scene sceneID="6zJ-96-c3v">
@@ -1186,10 +1186,10 @@
             </objects>
             <point key="canvasLocation" x="846" y="638"/>
         </scene>
-        <!--Info-->
+        <!--PracticeEdit-->
         <scene sceneID="at9-FT-Q4a">
             <objects>
-                <viewController id="ycX-fJ-ygP" customClass="PracticeEditViewController" sceneMemberID="viewController">
+                <viewController title="PracticeEdit" id="ycX-fJ-ygP" customClass="PracticeEditViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="K5Y-65-mfc"/>
                         <viewControllerLayoutGuide type="bottom" id="sZP-l2-fbX"/>
@@ -1351,7 +1351,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="Fy5-S1-vxc" kind="push" identifier="EventDetailToAttendance" id="hrd-aG-Gj3"/>
+                                            <action selector="didClickAttendees:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="yHc-2N-88z"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUp-ha-AGn">
@@ -1368,7 +1368,7 @@
                                             <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="RxU-iv-Sm2" kind="push" identifier="Test" id="Ubb-SM-XIX"/>
+                                            <action selector="didClickOnsiteSignup:" destination="ycX-fJ-ygP" eventType="touchUpInside" id="D4l-g7-FCU"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1422,14 +1422,17 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="buttonDrawing" destination="05W-pu-KQM" id="N5L-Wc-LRf"/>
+                        <outlet property="buttonEditAttendees" destination="hgd-UJ-hHZ" id="b0t-EW-D5o"/>
                         <outlet property="buttonEmail" destination="jtT-kZ-Rf3" id="Oqi-DH-FUb"/>
-                        <outlet property="buttonRollCall" destination="hgd-UJ-hHZ" id="5D2-43-yWa"/>
+                        <outlet property="buttonRollCall" destination="mUp-ha-AGn" id="amJ-o2-1EC"/>
                         <outlet property="inputDate" destination="3Db-KI-mVC" id="VTI-cv-fg6"/>
                         <outlet property="inputDetails" destination="xL1-Ta-Cga" id="ntm-jq-rqR"/>
                         <outlet property="inputTo" destination="Kfi-8T-jXo" id="sou-7y-A9X"/>
                         <outlet property="viewDrawing" destination="eo7-Rm-8o8" id="xUI-Mk-hbb"/>
                         <outlet property="viewEmail" destination="7DB-lq-D2b" id="oCp-n1-xVG"/>
                         <outlet property="viewInfo" destination="sf7-S9-Bib" id="alW-Vi-DLx"/>
+                        <segue destination="RxU-iv-Sm2" kind="push" identifier="ToOnsiteSignup" id="uIp-yE-4FR"/>
+                        <segue destination="Fy5-S1-vxc" kind="push" identifier="ToEditAttendees" id="nYR-CI-ftT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NL9-P0-UUa" userLabel="First Responder" sceneMemberID="firstResponder"/>
