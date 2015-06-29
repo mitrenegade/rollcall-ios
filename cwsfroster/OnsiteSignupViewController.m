@@ -63,6 +63,7 @@
         didShowRater = YES;
     }
     else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

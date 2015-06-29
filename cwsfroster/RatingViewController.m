@@ -7,6 +7,7 @@
 //
 
 #import "RatingViewController.h"
+#import <Parse/Parse.h>
 
 @interface RatingViewController ()
 
@@ -98,6 +99,16 @@
             [self close];
         }];
     }
+    
+    // log to parse
+    PFObject *pfObject = [[PFObject alloc] initWithClassName:@"Rating"];
+    [pfObject setObject:@(stars) forKey:@"stars"];
+    if (_currentUser)
+        [pfObject setObject:_currentUser forKey:@"user"];
+    if (VERSION)
+        [pfObject setObject:VERSION forKey:@"version"];
+    [pfObject saveEventually];
+
     [_defaults setObject:[NSDate date] forKey:kRatingLastDate];
 }
 
