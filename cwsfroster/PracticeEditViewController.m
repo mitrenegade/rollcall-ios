@@ -17,6 +17,9 @@
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
 
+#import "AttendancesViewController.h"
+#import "OnsiteSignupViewController.h"
+
 @interface PracticeEditViewController ()
 
 @end
@@ -75,6 +78,7 @@
         inputTo.text = [NSString stringWithFormat:@"To: %@", emailTo];
     }
 
+    /*
     emailFrom = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:from"];
     if (emailFrom) {
         inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
@@ -83,8 +87,12 @@
         emailFrom = _currentUser.email;
         inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
     }
+    */
 
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,6 +109,27 @@
 }
 
 -(IBAction)didClickSave:(id)sender {
+    [self saveWithCompletion:^(BOOL success) {
+        if (success) {
+            self.navigationItem.leftBarButtonItem.title = @"Close";
+            if (!didShowRater) {
+                if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
+                    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+                }
+                didShowRater = YES;
+            }
+            else {
+                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+            }
+        }
+    }];
+}
+
+-(void)didCloseRating {
+    // don't need
+}
+
+-(void)saveWithCompletion:(void(^)(BOOL success))completion {
     NSLog(@"Saving");
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
@@ -108,14 +137,13 @@
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
 
     if (self.practice) {
-        progress.labelText = @"Saving new event date";
+        progress.labelText = @"Saving event date";
         if (dateForDateString[inputDate.text]) {
             self.practice.date = dateForDateString[inputDate.text];
             self.practice.title = [Util simpleDateFormat:self.practice.date];
         }
         self.practice.details = inputDetails.text;
         [self.delegate didEditPractice];
-        [self.navigationController popViewControllerAnimated:YES];
         [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
             [self.navigationItem.leftBarButtonItem setEnabled:YES];
@@ -124,6 +152,11 @@
                 progress.labelText = @"Save error";
                 progress.detailsLabelText = @"Could not save event!";
                 [progress hide:YES afterDelay:1.5];
+                completion(NO);
+            }
+            else {
+                [progress hide:YES];
+                completion(YES);
             }
         }];
     }
@@ -131,6 +164,10 @@
         progress.labelText = @"Creating new event";
         if (!dateForDateString[inputDate.text]) {
             // invalid date, or date not selected. shouldn't go here if we disable save
+            progress.mode = MBProgressHUDModeText;
+            progress.labelText = @"Please enter a date";
+            [progress hide:YES afterDelay:1];
+            completion(NO);
             return;
         }
         Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
@@ -138,8 +175,6 @@
         practice.date = dateForDateString[inputDate.text];
         practice.title = [Util simpleDateFormat:practice.date];
         practice.details = inputDetails.text;
-        [self.delegate didEditPractice];
-        [self.navigationController popViewControllerAnimated:YES];
 
         [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
@@ -153,14 +188,15 @@
                 [_appDelegate.managedObjectContext deleteObject:practice];
             }
             else {
+                self.practice = practice;
                 [_appDelegate.managedObjectContext save:nil];
                 [progress hide:YES];
-                [self didClickCancel:nil];
+                [self.delegate didEditPractice];
+                completion(YES);
             }
         }];
     }
 }
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -168,8 +204,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ToEditAttendees"]) {
+        AttendancesViewController *controller = (AttendancesViewController *)segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
+    else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
+        OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
 }
-*/
 
 #pragma mark Picker DataSource/Delegate
 -(void)generatePickerDates {
@@ -242,17 +285,19 @@
 
         [self pickerView:(UIPickerView *)textField.inputView didSelectRow:0 inComponent:0];
     }
+    /*
     else if (textField == inputFrom) {
         inputFrom.text = emailFrom;
     }
+    */
     else if (textField == inputTo) {
         inputTo.text = emailTo;
     }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == inputTo || textField == inputFrom) {
-        if (inputTo.text.length == 0 || inputFrom.text.length == 0) {
+    if (textField == inputTo) {
+        if (inputTo.text.length == 0) {
             [buttonEmail setEnabled:NO];
             [buttonEmail setAlpha:.5];
         }
@@ -265,9 +310,11 @@
         if (textField == inputTo) {
             emailTo = textField.text;
         }
+        /*
         else if (textField == inputFrom) {
             emailFrom = textField.text;
         }
+         */
 
     }
     else if (textField == inputDate) {
@@ -295,7 +342,7 @@
 #pragma mark emailing
 -(IBAction)didClickEmail:(id)sender {
     [inputTo resignFirstResponder];
-    [inputFrom resignFirstResponder];
+//    [inputFrom resignFirstResponder];
     
     if (inputTo.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -303,49 +350,95 @@
         [progress hide:YES afterDelay:1.5];
         return;
     }
+    /*
     if (inputFrom.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         progress.labelText = @"Please enter your email";
         [progress hide:YES afterDelay:1.5];
         return;
     }
+    */
 
     // save any changes. at least sets new details to practice before sending email
-    [self didClickSave:nil];
-
-    [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
-    [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
-
-    NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
-    NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
-    for (Attendance *attendance in self.practice.attendances) {
-        if ([attendance.attended boolValue]) {
-            message = [message stringByAppendingString:attendance.member.name];
-
-            NSString *paymentStatus = @"<br>";
-            Payment *payment = attendance.payment;
-            Member *member = attendance.member;
-            if (!payment) {
-                if ([member.status intValue] == MemberStatusBeginner) {
-                    paymentStatus = @" (guest))<br>";
+    [self saveWithCompletion:^(BOOL success) {
+        [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
+        [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
+        
+        NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
+        NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
+        for (Attendance *attendance in self.practice.attendances) {
+            if ([attendance.attended boolValue]) {
+                message = [NSString stringWithFormat:@"%@\n%@ %@ ", message, attendance.member.name, attendance.member.email];
+                
+                NSString *paymentStatus = @"<br>";
+                Payment *payment = attendance.payment;
+                Member *member = attendance.member;
+                if (!payment) {
+                    if ([member.status intValue] == MemberStatusBeginner) {
+                        paymentStatus = @" (guest)<br>";
+                    }
+                    else if ([member.status intValue] == MemberStatusInactive) {
+                        paymentStatus = @" (inactive status)<br>";
+                    }
+                    else {
+                        paymentStatus = @" (unpaid)<br>";
+                    }
                 }
-                else if ([member.status intValue] == MemberStatusInactive) {
-                    paymentStatus = @" (inactive status)<br>";
-                }
-                else {
-                    paymentStatus = @" (unpaid)<br>";
-                }
+                else if (payment.isMonthly)
+                    paymentStatus = @" (monthly)<br>";
+                else if (payment.isDaily)
+                    paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
+                
+                message = [message stringByAppendingString:paymentStatus];
             }
-            else if (payment.isMonthly)
-                paymentStatus = @" (monthly)<br>";
-            else if (payment.isDaily)
-                paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
-
-            message = [message stringByAppendingString:paymentStatus];
         }
-    }
-    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
+        //    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
+        if ([MFMailComposeViewController canSendMail]){
+            MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
+            composer.mailComposeDelegate = self;
+            [composer setSubject:title];
+            [composer setMessageBody:message isHTML:YES];
+            [composer setToRecipients:@[emailTo]];
+            
+            [self.navigationController presentViewController:composer animated:YES completion:nil];
+        }
+        else {
+            [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
+        }
+    }];
 }
+
+#pragma mark MessageController delegate
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    // Notifies users about errors associated with the interface
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            //feedbackMsg.text = @"Result: Mail sending canceled";
+            break;
+        case MFMailComposeResultSaved:
+            //feedbackMsg.text = @"Result: Mail saved";
+            break;
+        case MFMailComposeResultSent:
+            //feedbackMsg.text = @"Result: Mail sent";
+            [UIAlertView alertViewWithTitle:[NSString stringWithFormat:@"Attendance for %@ sent",[Util simpleDateFormat:self.practice.date]] message:nil cancelButtonTitle:@"OK"];
+            break;
+        case MFMailComposeResultFailed:
+            //feedbackMsg.text = @"Result: Mail sending failed";
+            [UIAlertView alertViewWithTitle:@"There was an error sending the attendance list" message:nil];
+            break;
+        default:
+            //feedbackMsg.text = @"Result: Mail not sent";
+            break;
+    }
+    // dismiss the composer
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
 
 #pragma mark Drawing
 
@@ -382,5 +475,37 @@
         }
 
     } onCancel:nil];
+}
+
+#pragma mark attendees
+-(IBAction)didClickAttendees:(id)sender {
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
+            }
+        }];
+    }
+}
+
+#pragma mark Onsite signup
+-(IBAction)didClickOnsiteSignup:(id)sender {
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+            }
+        }];
+    }
 }
 @end

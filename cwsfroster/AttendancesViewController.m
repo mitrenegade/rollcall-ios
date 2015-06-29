@@ -50,6 +50,9 @@
 
     [self listenFor:@"member:deleted" action:@selector(reloadData)];
     [self listenFor:@"member:updated" action:@selector(reloadData)];
+
+    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,7 +72,20 @@
 
 #pragma mark - Navigation
 -(IBAction)didClickClose:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    if (!didShowRater) {
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        didShowRater = YES;
+    }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+-(void)didCloseRating {
+    self.navigationItem.leftBarButtonItem.enabled = YES;
 }
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -77,11 +93,6 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"AttendanceToEditPractice"]) {
-        PracticeEditViewController *controller = (PracticeEditViewController *)[segue destinationViewController];
-        [controller setPractice:self.practice];
-        [controller setDelegate:self];
-    }
 }
 #pragma mark - Table view data source
 -(void)reloadData {
@@ -140,10 +151,10 @@
 
 -(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"Attendees";
+        return @"Attendees of event";
     }
     else if (section == 1) {
-        return @"Active members";
+        return @"Active members not at event";
     }
     else if (section == 2) {
         return @"Inactive members";
@@ -155,7 +166,10 @@
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return attendances.count;
+        if (attendances.count > 0) {
+            return attendances.count;
+        }
+        return 1;
     }
     else if (section == 1) {
         return membersActive.count;
@@ -168,7 +182,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell2" forIndexPath:indexPath];
 
     // Configure the cell...
     int section = indexPath.section;
@@ -177,52 +191,70 @@
     UILabel *statusView = (UILabel *)[cell viewWithTag:1];
     statusView.layer.borderWidth = 2;
     statusView.layer.cornerRadius = 5;
-    
+    UILabel *label = [cell viewWithTag:2];
+
     NSString *name;
     if (section == 0) {
-        Attendance *attendance = attendances[row];
-        name = attendance.member.name;
-
-        if (attendance.payment) {
-            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
-            statusView.text = @"Paid";
-        }
-        else if ([attendance isFreebie]) {
-            statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
-            statusView.text = @"Trial";
+        if (attendances.count == 0) {
+            statusView.layer.borderColor = [[UIColor blackColor] CGColor];
+            name = @"Click a row to add a member";
+            statusView.text = @"+";
+            
+            label.alpha = 0.5;
+            statusView.alpha = 0.5;
         }
         else {
-            statusView.layer.borderColor = [[UIColor redColor] CGColor];
-            statusView.text = @"!";
+            label.alpha = 1;
+            statusView.alpha = 1;
+            
+            Attendance *attendance = attendances[row];
+            name = attendance.member.name;
+            
+            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
+            if (attendance.payment) {
+                statusView.text = @"✓";
+            }
+            else if ([attendance isFreebie]) {
+//                statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
+                statusView.text = @"✓";
+            }
+            else {
+//                statusView.layer.borderColor = [[UIColor redColor] CGColor];
+                statusView.text = @"✓";
+            }
         }
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = [member textForStatusForMonth:self.practice.date];
+        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = @"+"; //[member textForStatusForMonth:self.practice.date];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
 
-        statusView.layer.borderColor = [[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = [member textForStatusForMonth:self.practice.date];
+        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
+        statusView.text = @"+";//[member textForStatusForMonth:self.practice.date];
     }
-    cell.accessoryView = statusView.superview;
-    cell.textLabel.text = name;
-    cell.textLabel.font = [UIFont systemFontOfSize:16];
-    cell.textLabel.textColor = [UIColor darkGrayColor];
+//    cell.accessoryView = statusView.superview;
+    label.text = name;
+    label.font = [UIFont systemFontOfSize:16];
+    label.textColor = [UIColor darkGrayColor];
 
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     int section = indexPath.section;
     int row = indexPath.row;
 
     if (section == 0) {
+        if (attendances.count == 0) {
+            return;
+        }
         // clicked on an attendance
         Attendance *attendance = attendances[row];
         attendance.attended = @(DidNotAttend);
@@ -316,17 +348,5 @@
     }
 }
 
-#pragma mark PracticeEditDelegate
--(void)didEditPractice {
-    self.title = self.practice.title;
-
-    [self notify:@"practice:info:updated"];
-
-    // update all attendances
-    for (Attendance *attendance in self.practice.attendances) {
-        attendance.date = self.practice.date;
-        [attendance saveOrUpdateToParseWithCompletion:nil];
-    }
-}
 
 @end

@@ -9,10 +9,11 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
-#import <Crashlytics/Crashlytics.h>
 #import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "IntroViewController.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -25,8 +26,7 @@
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_KEY];
 
-    [Crashlytics startWithAPIKey:@"70160b7dec925a91c6fe09e38bf1f8659c1eda41"];
-
+    [Fabric with:@[CrashlyticsKit]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
     return YES;

@@ -8,13 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "PracticeEditViewController.h"
+#import "RatingViewController.h"
 
 @class Practice;
-@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, PracticeEditDelegate>
+@class RatingViewController;
+
+@interface AttendancesViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate, RatingDelegate>
 {
     NSMutableArray *attendances;
     NSMutableArray *membersActive;
     NSMutableArray *membersInactive;
+
+    RatingViewController *rater;
+    BOOL didShowRater;
 }
 @property (nonatomic, weak) Practice *practice;
 

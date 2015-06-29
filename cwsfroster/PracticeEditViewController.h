@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
+#import "RatingViewController.h"
 
 @protocol PracticeEditDelegate <NSObject>
 
@@ -15,7 +17,8 @@
 @end
 
 @class Practice;
-@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@class RatingViewController;
+@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -24,10 +27,13 @@
     NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
     NSString *lastInputDate;
     NSString *originalDescription;
+    
+    IBOutlet UIView *viewInfo;
+    IBOutlet UIButton *buttonEditAttendees;
+    IBOutlet UIButton *buttonRollCall;
 
     IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputTo;
-    IBOutlet UITextField *inputFrom;
     IBOutlet UIButton *buttonEmail;
 
     IBOutlet UIView *viewDrawing;
@@ -37,6 +43,9 @@
 
     NSString *emailFrom;
     NSString *emailTo;
+    
+    RatingViewController *rater;
+    BOOL didShowRater;
 }
 
 @property (nonatomic) Practice *practice;
@@ -46,4 +55,5 @@
 -(IBAction)didClickSave:(id)sender;
 -(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
+-(IBAction)didClickAttendees:(id)sender;
 @end
