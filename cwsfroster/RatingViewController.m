@@ -74,10 +74,10 @@
                 // iOS 7 needs a different templateReviewURL @see https://github.com/arashpayan/appirater/issues/131
                 if (IS_ABOVE_IOS7) {
                     // iOS 8 needs a different templateReviewURL also @see https://github.com/arashpayan/appirater/issues/182
-                    reviewURL = [templateReviewURLiOS8 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", APP_ID]];
+                    reviewURL = [templateReviewURLiOS8 stringByReplacingOccurrencesOfString:@"APP_ID" withString:APP_ID];
                 }
                 else if (IS_ABOVE_IOS6) {
-                    reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%@", APP_ID]];
+                    reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:APP_ID];
                 }
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
             }
