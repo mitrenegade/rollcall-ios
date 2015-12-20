@@ -12,6 +12,8 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="monthPaid" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Attendance" inverseName="member" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Organization" inverseName="members" inverseEntity="Organization" syncable="YES"/>
@@ -44,16 +46,17 @@
     <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
         <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Organization" inverseName="practices" inverseEntity="Organization" syncable="YES"/>
     </entity>
     <elements>
         <element name="Attendance" positionX="-36" positionY="45" width="128" height="135"/>
-        <element name="Member" positionX="-54" positionY="18" width="128" height="150"/>
+        <element name="Member" positionX="-54" positionY="18" width="128" height="180"/>
         <element name="Organization" positionX="-36" positionY="99" width="128" height="105"/>
         <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="105"/>
         <element name="Payment" positionX="-18" positionY="72" width="128" height="195"/>
-        <element name="Practice" positionX="-36" positionY="54" width="128" height="120"/>
+        <element name="Practice" positionX="-36" positionY="54" width="128" height="135"/>
     </elements>
 </model>

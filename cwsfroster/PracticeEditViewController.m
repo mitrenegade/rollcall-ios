@@ -58,6 +58,8 @@
     if (IS_ABOVE_IOS6) {
         [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
     }
+    
+    currentRow = -1;
 
     [inputDate setInputView:pickerView];
     if (self.practice) {
@@ -212,6 +214,10 @@
         OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
         [controller setPractice:self.practice];
     }
+    else if ([segue.identifier isEqualToString:@"ToEventNotes"]) {
+        NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
 }
 
 #pragma mark Picker DataSource/Delegate
@@ -220,8 +226,9 @@
         datesForPicker = [NSMutableArray array];
         dateForDateString = [NSMutableDictionary dictionary];
         
-        for (int row = 0; row < 31; row++) {
-            NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*row];
+        int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
+        for (int row = 0; row < 31 + futureDays; row++) {
+            NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*(row-futureDays)];
             NSString *title = [self titleForDate:date];
             if (title) {
                 [datesForPicker addObject:title];
@@ -266,6 +273,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
     [inputDate setText:title];
+    currentRow = row;
 }
 
 -(void)selectDate:(id)sender {
@@ -280,10 +288,16 @@
 
 #pragma mark TextFieldDelegate
 -(void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (currentRow == -1) {
+        currentRow = FUTURE_DAYS - 1;
+        UIPickerView *pickerView = textField.inputView;
+        [pickerView selectRow:currentRow inComponent:0 animated:YES];
+    }
+    
     if (textField == inputDate) {
         lastInputDate = textField.text;
 
-        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:0 inComponent:0];
+        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:currentRow inComponent:0];
     }
     /*
     else if (textField == inputFrom) {
@@ -401,6 +415,8 @@
             [composer setToRecipients:@[emailTo]];
             
             [self.navigationController presentViewController:composer animated:YES completion:nil];
+            
+            [PFAnalytics trackEvent:@"email event details"];
         }
         else {
             [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
@@ -504,6 +520,22 @@
             if (success) {
                 self.navigationItem.leftBarButtonItem.title = @"Close";
                 [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
+            }
+        }];
+    }
+}
+
+#pragma mark Event info
+-(IBAction)didClickEventNotes:(id)sender {
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
             }
         }];
     }

@@ -221,5 +221,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     [self notify:@"practice:deleted"]; // no one listens for this now
+
+    [PFAnalytics trackEvent:@"practice deleted"];
 }
 @end

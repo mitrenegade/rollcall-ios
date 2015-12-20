@@ -114,7 +114,15 @@
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
+    if (newPhoto) {
+        member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @YES}];
+    }
+    else {
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @NO}];
+    }
     [self notify:@"member:updated"];
+    
     
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -177,6 +185,8 @@
     inputEmail.text = nil;
     inputName.text = nil;
     inputAbout.text = nil;
+    [buttonPhoto setImage:[UIImage imageNamed:@"add_user"] forState:UIControlStateNormal];
+    buttonPhoto.layer.cornerRadius = 0;
     constraintTopOffset.constant = 0;
 }
 
@@ -195,6 +205,8 @@
     else {
         [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
     }
+
+    [PFAnalytics trackEvent:@"feedback entered"];
 }
 
 #pragma mark MessageController delegate
@@ -227,6 +239,38 @@
     }];
 }
 
+#pragma mark Photo
+-(IBAction)didClickAddPhoto:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [self presentViewController:picker animated:YES completion:nil];
+
+    [PFAnalytics trackEvent:@"edit onsite signup photo"];
+}
+
+#pragma mark UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(!img) img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [buttonPhoto setImage:img forState:UIControlStateNormal];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2;
+    
+    newPhoto = img;
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

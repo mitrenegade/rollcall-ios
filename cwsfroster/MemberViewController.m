@@ -66,7 +66,23 @@
             [self refresh];
         }];
     }];
-
+    
+    if (self.member.photo != nil) {
+        UIImage *image = [[UIImage alloc] initWithData:self.member.photo];
+        [buttonPhoto setImage:image forState:UIControlStateNormal];
+        buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2;
+    }
+    else if ([self.member.pfObject objectForKey:@"photo"] != nil) {
+        PFFile *file = [self.member.pfObject objectForKey:@"photo"];
+        [file getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            if (data) {
+                UIImage *image = [[UIImage alloc] initWithData:data];
+                [buttonPhoto setImage:image forState:UIControlStateNormal];
+                buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2;
+            }
+        }];
+    }
+    newPhoto = nil;
     [self refresh];
 }
 
@@ -160,9 +176,11 @@
             [labelCredits setAlpha:.25];
             [labelCreditsTitle setAlpha:.25];
         }
+        buttonEditNotes.enabled = YES;
     }
     else {
         self.title = @"Add member";
+        buttonEditNotes.enabled = NO;
     }
 
     if (changed)
@@ -178,9 +196,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    PaymentViewController *controller = (PaymentViewController *)[segue destinationViewController];
-    [controller setMember:self.member];
-    [controller setDelegate:self];
+    if ([segue.identifier isEqualToString:@"ToMemberNotes"]) {
+        NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
+        [controller setMember:self.member];
+    }
+    else {
+        PaymentViewController *controller = (PaymentViewController *)[segue destinationViewController];
+        [controller setMember:self.member];
+        [controller setDelegate:self];
+    }
 }
 
 - (IBAction)didClickBack:(id)sender {
@@ -207,11 +231,14 @@
 
         self.member.name = inputName.text;
         self.member.status = @(status);
+        if (newPhoto) {
+            self.member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
+        }
         [self.delegate updateMember:self.member];
     }
     else {
         if ([inputName.text length] > 0)
-            [self.delegate saveNewMember:inputName.text status:status];
+            [self.delegate saveNewMember:inputName.text status:status photo:newPhoto];
     }
 }
 
@@ -267,5 +294,49 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark notes
+-(IBAction)didClickEditNotes:(id)sender {
+    if (self.member) {
+        [self performSegueWithIdentifier:@"ToMemberNotes" sender:nil];
+
+        [PFAnalytics trackEvent:@"edit member notes"];
+    }
+}
+
+#pragma mark Photo
+-(IBAction)didClickAddPhoto:(id)sender {
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }
+    else {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    [self presentViewController:picker animated:YES completion:nil];
+    
+    [PFAnalytics trackEvent:@"edit member photo"];
+}
+
+#pragma mark UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(!img) img = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [buttonPhoto setImage:img forState:UIControlStateNormal];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2;
+
+    newPhoto = img;
+    changed = YES;
+    [self refresh];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [picker dismissViewControllerAnimated:YES completion:nil];
 }
 @end

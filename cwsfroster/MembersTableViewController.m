@@ -207,10 +207,13 @@
 }
 
 #pragma mark Delegate
--(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
+-(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
+    if (newPhoto) {
+        member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
+    }
     [self notify:@"member:updated"];
 
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -229,6 +232,7 @@
             [UIAlertView alertViewWithTitle:@"Save error" message:@"Your last member edit was not saved"];
         }
     }];
+    [PFAnalytics trackEvent:@"member created"];
 }
 
 -(void)updateMember:(Member *)member {
@@ -246,6 +250,8 @@
             NSLog(@"Could not update member!");
         }
     }];
+    
+    [PFAnalytics trackEvent:@"member updated"];
 }
 
 -(void)cancel {
@@ -269,5 +275,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.memberFetcher performFetch:nil];
     [self notify:@"member:deleted"];
+    
+    [PFAnalytics trackEvent:@"member deleted"];
 }
 @end

@@ -26,7 +26,13 @@
     self.email = [self.pfObject objectForKey:@"email"];
     self.status = [self.pfObject objectForKey:@"status"];
     self.monthPaid = [self.pfObject objectForKey:@"monthPaid"];
-
+    self.notes = [self.pfObject objectForKey:@"notes"];
+    PFFile *photoFile = [self.pfObject objectForKey:@"photo"];
+    if (photoFile != nil) {
+        [photoFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            self.photo = data;
+        }];
+    }
     // relationships
     PFObject *object = [self.pfObject objectForKey:@"organization"];
     if (object.objectId)
@@ -43,6 +49,13 @@
             self.pfObject[@"status"] = self.status;
         if (self.monthPaid)
             self.pfObject[@"monthPaid"] = self.monthPaid;
+        if (self.notes)
+            self.pfObject[@"notes"] = self.notes;
+        if (self.photo) {
+            PFFile *file = [PFFile fileWithData:self.photo];
+            [file saveInBackground];
+            self.pfObject[@"photo"] = file;
+        }
 
         if (self.organization.pfObject)
             self.pfObject[@"organization"] = self.organization.pfObject;

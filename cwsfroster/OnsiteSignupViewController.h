@@ -11,7 +11,7 @@
 
 @class Practice;
 @class RatingViewController;
-@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     IBOutlet UITextField *inputName;
     IBOutlet UITextField *inputEmail;
@@ -28,10 +28,14 @@
     
     RatingViewController *rater;
     BOOL didShowRater;
+
+    IBOutlet UIButton *buttonPhoto;
+    UIImage *newPhoto;
 }
 
 @property (nonatomic) Practice *practice;
 
 -(IBAction)didClickSignup:(id)sender;
+- (IBAction)didClickAddPhoto:(id)sender;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "TutorialScrollView.h"
+#import <Parse/Parse.h>
 
 @implementation TutorialScrollView
 
@@ -63,6 +64,8 @@
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     int page = scrollView.contentOffset.x / self.bounds.size.width;
     [pageControl setCurrentPage:page];
+    
+    [PFAnalytics trackEvent:@"tutorial scrolled"];
 }
 /*
 // Only override drawRect: if you perform custom drawing.
