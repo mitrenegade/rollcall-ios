@@ -807,7 +807,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = RollCall;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8874fae5-7169-414b-9b6c-573a7b06426d";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7ee18773-f449-486d-a042-84ec8f5476b0";
 				SWIFT_OBJC_BRIDGING_HEADER = "cwsfroster/cwsfroster-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
