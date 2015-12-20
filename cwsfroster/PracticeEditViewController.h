@@ -10,6 +10,8 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "RatingViewController.h"
 
+#define FUTURE_DAYS 14
+
 @protocol PracticeEditDelegate <NSObject>
 
 -(void)didEditPractice;
@@ -46,6 +48,8 @@
     
     RatingViewController *rater;
     BOOL didShowRater;
+    
+    int currentRow;
 }
 
 @property (nonatomic) Practice *practice;
