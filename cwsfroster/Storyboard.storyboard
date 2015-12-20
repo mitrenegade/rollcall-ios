@@ -1015,7 +1015,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qr8-sg-pcw">
-                                <rect key="frame" x="16" y="154" width="288" height="42"/>
+                                <rect key="frame" x="16" y="227" width="288" height="42"/>
                                 <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="k6s-YZ-vhl"/>
@@ -1090,7 +1090,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f9g-HR-rO2">
-                                <rect key="frame" x="16" y="209" width="288" height="39"/>
+                                <rect key="frame" x="16" y="282" width="288" height="39"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="39" id="ymh-2i-dq1"/>
                                 </constraints>
@@ -1098,11 +1098,22 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BmN-tZ-gBy">
+                                <rect key="frame" x="133" y="154" width="55" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="J5q-uz-liX"/>
+                                    <constraint firstAttribute="height" constant="55" id="f5I-bj-Fne"/>
+                                </constraints>
+                                <state key="normal" title="Add Photo" image="add_user.png"/>
+                                <connections>
+                                    <action selector="didClickAddPhoto:" destination="RxU-iv-Sm2" eventType="touchUpInside" id="Hxb-IX-3CL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="f9g-HR-rO2" firstAttribute="leading" secondItem="lK7-Z3-KZL" secondAttribute="leadingMargin" id="2km-hf-7uf"/>
-                            <constraint firstItem="Qr8-sg-pcw" firstAttribute="top" secondItem="n0j-Ky-YM6" secondAttribute="bottom" constant="8" id="85L-1N-eND"/>
+                            <constraint firstItem="BmN-tZ-gBy" firstAttribute="centerX" secondItem="lK7-Z3-KZL" secondAttribute="centerX" id="7oP-ii-6Ze"/>
                             <constraint firstItem="f9g-HR-rO2" firstAttribute="top" secondItem="Qr8-sg-pcw" secondAttribute="bottom" constant="13" id="9Dk-MI-AUd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XC0-o7-aGF" secondAttribute="trailing" constant="-6" id="Dd0-bP-z5W"/>
                             <constraint firstItem="n0j-Ky-YM6" firstAttribute="leading" secondItem="lK7-Z3-KZL" secondAttribute="leading" id="IQq-3h-h4X"/>
@@ -1110,6 +1121,8 @@
                             <constraint firstItem="f9g-HR-rO2" firstAttribute="trailing" secondItem="lK7-Z3-KZL" secondAttribute="trailingMargin" id="Vk2-6C-lYJ"/>
                             <constraint firstItem="fb9-Qp-ZvN" firstAttribute="top" secondItem="XC0-o7-aGF" secondAttribute="bottom" constant="8" id="Xj1-Dt-hic"/>
                             <constraint firstItem="XC0-o7-aGF" firstAttribute="leading" secondItem="lK7-Z3-KZL" secondAttribute="leadingMargin" constant="-5" id="hE1-0f-7Gt"/>
+                            <constraint firstItem="Qr8-sg-pcw" firstAttribute="top" secondItem="BmN-tZ-gBy" secondAttribute="bottom" constant="18" id="hEy-5J-ddl"/>
+                            <constraint firstItem="BmN-tZ-gBy" firstAttribute="top" secondItem="n0j-Ky-YM6" secondAttribute="bottom" constant="8" id="tB4-cg-cEq"/>
                             <constraint firstAttribute="trailing" secondItem="n0j-Ky-YM6" secondAttribute="trailing" id="uoA-v1-O0e"/>
                             <constraint firstItem="Qr8-sg-pcw" firstAttribute="leading" secondItem="lK7-Z3-KZL" secondAttribute="leadingMargin" id="xmH-hC-caP"/>
                             <constraint firstItem="Qr8-sg-pcw" firstAttribute="trailing" secondItem="lK7-Z3-KZL" secondAttribute="trailingMargin" id="zIC-W5-uzD"/>
@@ -1119,6 +1132,7 @@
                     <navigationItem key="navigationItem" id="WDZ-FO-Cyg"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
+                        <outlet property="buttonPhoto" destination="BmN-tZ-gBy" id="ZVz-r8-B20"/>
                         <outlet property="constraintTopOffset" destination="Mjp-vX-jnv" id="9z7-NT-pgP"/>
                         <outlet property="inputAbout" destination="b1w-Kl-X1V" id="PCf-Ik-go0"/>
                         <outlet property="inputEmail" destination="Ie9-kE-y13" id="aWA-EW-xzX"/>
