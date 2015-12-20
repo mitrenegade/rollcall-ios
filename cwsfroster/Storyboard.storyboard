@@ -575,6 +575,20 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-X5o-iM-t9N"/>
                                 </userDefinedRuntimeAttributes>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A34-eD-jXY">
+                                <rect key="frame" x="20" y="246" width="280" height="30"/>
+                                <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Add notes">
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didClickEditNotes:" destination="XNl-Q5-lQr" eventType="touchUpInside" id="SOm-F0-Hrc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
@@ -605,6 +619,7 @@
                         <outlet property="labelPaymentWarning" destination="X5o-iM-t9N" id="6op-iC-R5G"/>
                         <outlet property="switchBeginner" destination="p95-7o-uOV" id="GJU-E2-axU"/>
                         <outlet property="switchInactive" destination="DiW-UN-EkA" id="AM0-P2-TsE"/>
+                        <segue destination="YlF-kp-Hcn" kind="push" identifier="ToMemberNotes" id="GG5-Zi-MqR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGu-Ew-1R1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -855,7 +870,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xvM-Ka-o8b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1768" y="-85"/>
+            <point key="canvasLocation" x="1976" y="-97"/>
         </scene>
         <!--Events-->
         <scene sceneID="6wc-aj-vv7">
@@ -939,7 +954,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fUb-Gc-6P4">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fUb-Gc-6P4">
                                 <rect key="frame" x="8" y="101" width="304" height="415"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -952,7 +967,7 @@
                                     <constraint firstAttribute="height" constant="21" id="7JX-j0-PE4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -977,7 +992,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wej-qX-mIw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1119" y="1433"/>
+            <point key="canvasLocation" x="1728" y="649"/>
         </scene>
         <!--Onsite Signup View Controller-->
         <scene sceneID="TAl-qm-f4p">
@@ -1072,7 +1087,7 @@
                                     <constraint firstAttribute="height" constant="39" id="ymh-2i-dq1"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -1106,7 +1121,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wco-FK-IhH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="1433"/>
+            <point key="canvasLocation" x="1220" y="1453"/>
         </scene>
         <!--Attendances View Controller-->
         <scene sceneID="6zJ-96-c3v">
@@ -1247,7 +1262,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ilh-dY-04b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="638"/>
+            <point key="canvasLocation" x="1696" y="1446"/>
         </scene>
         <!--Rating View Controller-->
         <scene sceneID="FmU-hl-mQ5">
@@ -1268,7 +1283,7 @@
                                     <constraint firstAttribute="width" constant="64" id="P60-cW-j0h"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.png" translatesAutoresizingMaskIntoConstraints="NO" id="9mj-5v-xfU">
@@ -1427,7 +1442,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kwL-Dv-mAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2078" y="781"/>
+            <point key="canvasLocation" x="2150" y="1129"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9sS-df-QOs">
@@ -1770,7 +1785,8 @@
         <image name="unchecked.png" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VAt-N1-2wa"/>
         <segue reference="dtw-ZV-q6Y"/>
+        <segue reference="VAt-N1-2wa"/>
+        <segue reference="GG5-Zi-MqR"/>
     </inferredMetricsTieBreakers>
 </document>

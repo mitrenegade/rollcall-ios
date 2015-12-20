@@ -65,7 +65,7 @@ class NotesViewController: UIViewController {
             }
 
             if self.member!.notes != nil {
-                self.inputNotes.text = self.practice!.notes
+                self.inputNotes.text = self.member!.notes
             }
             else {
                 self.inputNotes.text = "Enter some notes here"

@@ -42,6 +42,8 @@
 
     MemberStatus originalStatus;
     BOOL changed;
+    
+    IBOutlet UIButton *buttonEditNotes;
 }
 
 @property (nonatomic, assign) Member *member;
@@ -50,4 +52,5 @@
 - (IBAction)didClickBack:(id)sender;
 - (IBAction)didClickSave:(id)sender;
 - (IBAction)didClickSwitch:(id)sender;
+- (IBAction)didClickEditNotes:(id)sender;
 @end

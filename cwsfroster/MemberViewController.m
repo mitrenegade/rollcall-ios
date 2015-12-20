@@ -160,9 +160,11 @@
             [labelCredits setAlpha:.25];
             [labelCreditsTitle setAlpha:.25];
         }
+        buttonEditNotes.enabled = YES;
     }
     else {
         self.title = @"Add member";
+        buttonEditNotes.enabled = NO;
     }
 
     if (changed)
@@ -178,9 +180,15 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    PaymentViewController *controller = (PaymentViewController *)[segue destinationViewController];
-    [controller setMember:self.member];
-    [controller setDelegate:self];
+    if ([segue.identifier isEqualToString:@"ToMemberNotes"]) {
+        NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
+        [controller setMember:self.member];
+    }
+    else {
+        PaymentViewController *controller = (PaymentViewController *)[segue destinationViewController];
+        [controller setMember:self.member];
+        [controller setDelegate:self];
+    }
 }
 
 - (IBAction)didClickBack:(id)sender {
@@ -267,5 +275,12 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark notes
+-(IBAction)didClickEditNotes:(id)sender {
+    if (self.member) {
+        [self performSegueWithIdentifier:@"ToMemberNotes" sender:nil];
+    }
 }
 @end
