@@ -21,6 +21,7 @@
 #import "NSObject+Notify.h"
 #import "Constants.h"
 #import "Organization+Info.h"
+#import <RollCall-Swift.h>
 
 #define _currentUser [PFUser currentUser]
 #define _appDelegate ((AppDelegate *)[UIApplication sharedApplication].delegate)

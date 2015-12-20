@@ -214,6 +214,10 @@
         OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
         [controller setPractice:self.practice];
     }
+    else if ([segue.identifier isEqualToString:@"ToEventNotes"]) {
+        NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
 }
 
 #pragma mark Picker DataSource/Delegate

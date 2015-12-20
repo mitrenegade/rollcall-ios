@@ -2,30 +2,23 @@
 //  Practice.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 8/29/14.
-//  Copyright (c) 2014 Bobby Ren. All rights reserved.
+//  Created by Bobby Ren on 12/19/15.
+//  Copyright © 2015 Bobby Ren. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 #import "ParseBase.h"
 
 @class Attendance, Organization;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface Practice : ParseBase
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSString * details;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSSet *attendances;
-@property (nonatomic, retain) Organization *organization;
-@end
-
-@interface Practice (CoreDataGeneratedAccessors)
-
-- (void)addAttendancesObject:(Attendance *)value;
-- (void)removeAttendancesObject:(Attendance *)value;
-- (void)addAttendances:(NSSet *)values;
-- (void)removeAttendances:(NSSet *)values;
+// Insert code here to declare functionality of your managed object subclass
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#import "Practice+CoreDataProperties.h"

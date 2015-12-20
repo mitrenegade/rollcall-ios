@@ -54,8 +54,6 @@
 		9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */; };
 		9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E9F19D319AF963A00DE3F27 /* Organization+Parse.m */; };
 		9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993619B0BBCF007BC1FD /* ParseBase.m */; };
-		9EA0993D19B0BD98007BC1FD /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993C19B0BD98007BC1FD /* Member.m */; };
-		9EA0994019B0BD98007BC1FD /* Practice.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0993F19B0BD98007BC1FD /* Practice.m */; };
 		9EA0994319B0BF62007BC1FD /* Payment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994219B0BF62007BC1FD /* Payment.m */; };
 		9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994519B0BF63007BC1FD /* Attendance.m */; };
 		9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994819B0EB7F007BC1FD /* Organization+Info.m */; };
@@ -95,6 +93,10 @@
 		AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3178CA1B409ADA00668B98 /* star@2x.png */; };
 		AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3178CD1B409B1000668B98 /* RatingViewController.m */; };
 		AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */; };
+		AC8EF0EB1C265F0D0029EBAE /* Member+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */; };
+		AC8EF0EC1C265F0D0029EBAE /* Practice+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */; };
+		AC8EF0F11C265F2C0029EBAE /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0EE1C265F2C0029EBAE /* Member.m */; };
+		AC8EF0F21C265F2C0029EBAE /* Practice.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0F01C265F2C0029EBAE /* Practice.m */; };
 		AC950F171B371EAA005C3998 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F131B371EAA005C3998 /* libc++.dylib */; };
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
 		AC950F191B371EAA005C3998 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F151B371EAA005C3998 /* Fabric.framework */; };
@@ -166,10 +168,6 @@
 		9E9F19D319AF963A00DE3F27 /* Organization+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Parse.m"; sourceTree = "<group>"; };
 		9EA0993519B0BBCF007BC1FD /* ParseBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParseBase.h; sourceTree = "<group>"; };
 		9EA0993619B0BBCF007BC1FD /* ParseBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParseBase.m; sourceTree = "<group>"; };
-		9EA0993B19B0BD98007BC1FD /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
-		9EA0993C19B0BD98007BC1FD /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
-		9EA0993E19B0BD98007BC1FD /* Practice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Practice.h; sourceTree = "<group>"; };
-		9EA0993F19B0BD98007BC1FD /* Practice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Practice.m; sourceTree = "<group>"; };
 		9EA0994119B0BF62007BC1FD /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
 		9EA0994219B0BF62007BC1FD /* Payment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Payment.m; sourceTree = "<group>"; };
 		9EA0994419B0BF63007BC1FD /* Attendance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attendance.h; sourceTree = "<group>"; };
@@ -241,6 +239,15 @@
 		AC3178CD1B409B1000668B98 /* RatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingViewController.m; sourceTree = "<group>"; };
 		AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		AC8EF0E51C265A330029EBAE /* cwsfroster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cwsfroster-Bridging-Header.h"; sourceTree = "<group>"; };
+		AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model2.xcdatamodel; sourceTree = "<group>"; };
+		AC8EF0E71C265F0D0029EBAE /* Member+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+CoreDataProperties.h"; sourceTree = "<group>"; };
+		AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+CoreDataProperties.m"; sourceTree = "<group>"; };
+		AC8EF0E91C265F0D0029EBAE /* Practice+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Practice+CoreDataProperties.h"; sourceTree = "<group>"; };
+		AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Practice+CoreDataProperties.m"; sourceTree = "<group>"; };
+		AC8EF0ED1C265F2C0029EBAE /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
+		AC8EF0EE1C265F2C0029EBAE /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
+		AC8EF0EF1C265F2C0029EBAE /* Practice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Practice.h; sourceTree = "<group>"; };
+		AC8EF0F01C265F2C0029EBAE /* Practice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Practice.m; sourceTree = "<group>"; };
 		AC950F131B371EAA005C3998 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		AC950F141B371EAA005C3998 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		AC950F151B371EAA005C3998 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -436,6 +443,14 @@
 		9EC5F2E51936CFC00056140F /* Parse Models */ = {
 			isa = PBXGroup;
 			children = (
+				AC8EF0ED1C265F2C0029EBAE /* Member.h */,
+				AC8EF0EE1C265F2C0029EBAE /* Member.m */,
+				AC8EF0EF1C265F2C0029EBAE /* Practice.h */,
+				AC8EF0F01C265F2C0029EBAE /* Practice.m */,
+				AC8EF0E71C265F0D0029EBAE /* Member+CoreDataProperties.h */,
+				AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */,
+				AC8EF0E91C265F0D0029EBAE /* Practice+CoreDataProperties.h */,
+				AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */,
 				9EA0994419B0BF63007BC1FD /* Attendance.h */,
 				9EA0994519B0BF63007BC1FD /* Attendance.m */,
 				9EA0994119B0BF62007BC1FD /* Payment.h */,
@@ -446,10 +461,6 @@
 				9EA0995419B10343007BC1FD /* Organization.h */,
 				9EA0995519B10343007BC1FD /* Organization.m */,
 				9EC5F2E91936D0960056140F /* Model.xcdatamodeld */,
-				9EA0993E19B0BD98007BC1FD /* Practice.h */,
-				9EA0993F19B0BD98007BC1FD /* Practice.m */,
-				9EA0993B19B0BD98007BC1FD /* Member.h */,
-				9EA0993C19B0BD98007BC1FD /* Member.m */,
 				9EC3031C19A1398700777F79 /* Payment+Info.h */,
 				9EC3031D19A1398700777F79 /* Payment+Info.m */,
 				9EA0994719B0EB7F007BC1FD /* Organization+Info.h */,
@@ -654,6 +665,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC8EF0F21C265F2C0029EBAE /* Practice.m in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
 				9EA0994319B0BF62007BC1FD /* Payment.m in Sources */,
@@ -661,10 +673,9 @@
 				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
 				9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
+				AC8EF0EB1C265F0D0029EBAE /* Member+CoreDataProperties.m in Sources */,
 				9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
-				9EA0993D19B0BD98007BC1FD /* Member.m in Sources */,
-				9EA0994019B0BD98007BC1FD /* Practice.m in Sources */,
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				9EC5F31B1936D2410056140F /* Query.m in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
@@ -676,6 +687,7 @@
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EA0995619B10343007BC1FD /* Organization.m in Sources */,
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
+				AC8EF0F11C265F2C0029EBAE /* Member.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
@@ -699,6 +711,7 @@
 				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */,
+				AC8EF0EC1C265F0D0029EBAE /* Practice+CoreDataProperties.m in Sources */,
 				9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -846,9 +859,10 @@
 		9EC5F2E91936D0960056140F /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */,
 				9EC5F2EA1936D0960056140F /* Model.xcdatamodel */,
 			);
-			currentVersion = 9EC5F2EA1936D0960056140F /* Model.xcdatamodel */;
+			currentVersion = AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
