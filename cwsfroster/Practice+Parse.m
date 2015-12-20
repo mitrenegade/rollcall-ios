@@ -25,7 +25,8 @@
     self.date = [self.pfObject objectForKey:@"date"];
     self.title = [self.pfObject objectForKey:@"title"];
     self.details = [self.pfObject objectForKey:@"details"];
-
+    self.notes = [self.pfObject objectForKey:@"notes"];
+    
     // relationships
     self.parseID = self.pfObject.objectId;
     PFObject *object = [self.pfObject objectForKey:@"organization"];
@@ -42,6 +43,8 @@
             self.pfObject[@"title"] = self.title;
         if (self.details)
             self.pfObject[@"details"] = self.details;
+        if (self.notes)
+            self.pfObject[@"notes"] = self.notes;
 
         if (self.organization.pfObject)
             self.pfObject[@"organization"] = self.organization.pfObject;

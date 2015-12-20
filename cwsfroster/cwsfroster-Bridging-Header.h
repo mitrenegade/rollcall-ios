@@ -9,6 +9,7 @@
 #ifndef cwsfroster_Bridging_Header_h
 #define cwsfroster_Bridging_Header_h
 
-#import "Practice.h"
+#import "Practice+Parse.h"
+#import "Member+Parse.h"
 
 #endif /* cwsfroster_Bridging_Header_h */

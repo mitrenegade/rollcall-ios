@@ -17,6 +17,7 @@ class NotesViewController: UIViewController {
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
     
     var practice: Practice?
+    var member: Member?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +32,45 @@ class NotesViewController: UIViewController {
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
+        if self.practice != nil {
+            if self.practice!.title != nil {
+                self.labelTitle.text = "Notes about \(self.practice!.title!)"
+                if self.practice!.details != nil {
+                    self.labelTitle.text = "Notes about \(self.practice!.title!) \(self.practice!.details!)"
+                }
+            }
+            else if self.practice!.details != nil {
+                self.labelTitle.text = "Notes about \(self.practice!.details!)"
+            }
+            else {
+                self.labelTitle.text = "Notes about this event"
+            }
+            
+            if self.practice!.notes != nil {
+                self.inputNotes.text = self.practice!.notes
+            }
+            else {
+                self.inputNotes.text = "Enter some notes here"
+            }
+        }
+        else if self.member != nil {
+            if self.member!.name != nil {
+                self.labelTitle.text = "Notes about \(self.member!.name!)"
+            }
+            else {
+                self.labelTitle.text = "Notes about this member"
+            }
+
+            if self.member!.notes != nil {
+                self.inputNotes.text = self.practice!.notes
+            }
+            else {
+                self.inputNotes.text = "Enter some notes here"
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -44,6 +81,14 @@ class NotesViewController: UIViewController {
     func dismissKeyboard() {
         self.view.endEditing(true)
         
+        if self.practice != nil {
+            self.practice!.notes = self.inputNotes.text
+            self.practice!.saveOrUpdateToParseWithCompletion(nil)
+        }
+        if self.member != nil {
+            self.member!.notes = self.inputNotes.text
+            self.member!.saveOrUpdateToParseWithCompletion(nil)
+        }
     }
     
     // MARK: - keyboard notifications
