@@ -366,6 +366,8 @@
         UITextField * text = [alertView textFieldAtIndex:0];
         NSLog(@"Reset with email %@", text.text);
 
+        [PFAnalytics trackEvent:@"password reset"];
+
         [PFUser requestPasswordResetForEmailInBackground:text.text block:^(BOOL succeeded, NSError *error) {
             if (succeeded) {
                 NSLog(@"Success");

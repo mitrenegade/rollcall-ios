@@ -142,6 +142,8 @@
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 1;
     [alert show];
+
+    [PFAnalytics trackEvent:@"update organization name"];
 }
 
 -(void)goToUpdateUsername {
@@ -151,6 +153,8 @@
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 2;
     [alert show];
+
+    [PFAnalytics trackEvent:@"update organization login"];
 }
 
 -(void)goToUpdateUserEmail {
@@ -162,6 +166,8 @@
     text.keyboardType = UIKeyboardTypeEmailAddress;
     alert.tag = 3;
     [alert show];
+
+    [PFAnalytics trackEvent:@"update organization email"];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -255,6 +261,8 @@
     _picker.delegate = self;
 
     [self presentViewController:_picker animated:YES completion:nil];
+
+    [PFAnalytics trackEvent:@"update organization logo"];
 }
 
 #pragma mark ImagePickerController delegate

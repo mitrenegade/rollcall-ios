@@ -116,8 +116,13 @@
     [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
     if (newPhoto) {
         member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @YES}];
+    }
+    else {
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @NO}];
     }
     [self notify:@"member:updated"];
+    
     
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -200,6 +205,8 @@
     else {
         [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
     }
+
+    [PFAnalytics trackEvent:@"feedback entered"];
 }
 
 #pragma mark MessageController delegate
@@ -245,6 +252,8 @@
     }
     
     [self presentViewController:picker animated:YES completion:nil];
+
+    [PFAnalytics trackEvent:@"edit onsite signup photo"];
 }
 
 #pragma mark UIImagePickerControllerDelegate

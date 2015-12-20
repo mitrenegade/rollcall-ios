@@ -415,6 +415,8 @@
             [composer setToRecipients:@[emailTo]];
             
             [self.navigationController presentViewController:composer animated:YES completion:nil];
+            
+            [PFAnalytics trackEvent:@"email event details"];
         }
         else {
             [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];

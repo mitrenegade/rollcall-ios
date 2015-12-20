@@ -263,6 +263,8 @@
             NSLog(@"new payment: %@", attendance.payment);
             [self reloadData];
         }];
+        
+        [PFAnalytics trackEvent:@"attendance removed"];
     }
     else {
         Member *member;
@@ -293,6 +295,8 @@
                 [self reloadData];
             }];
         }
+        
+        [PFAnalytics trackEvent:@"attendance added"];
     }
     [self reloadData];
 }
@@ -302,6 +306,9 @@
     UITouch *touch = [touches anyObject];
     CGPoint currentTouchPosition = [touch locationInView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
+    
+    [PFAnalytics trackEvent:@"attendance accessory tapped"];
+
     if (indexPath != nil){
         NSString *message;
         if (indexPath.section == 0) {

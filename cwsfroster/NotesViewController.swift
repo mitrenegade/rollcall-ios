@@ -84,11 +84,14 @@ class NotesViewController: UIViewController {
         if self.practice != nil {
             self.practice!.notes = self.inputNotes.text
             self.practice!.saveOrUpdateToParseWithCompletion(nil)
+            PFAnalytics.trackEvent("notes entered", dimensions: ["for": "practice"])
         }
         if self.member != nil {
             self.member!.notes = self.inputNotes.text
             self.member!.saveOrUpdateToParseWithCompletion(nil)
+            PFAnalytics.trackEvent("notes entered", dimensions: ["for": "member"])
         }
+        
     }
     
     // MARK: - keyboard notifications

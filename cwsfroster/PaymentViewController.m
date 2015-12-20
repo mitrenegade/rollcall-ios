@@ -64,6 +64,8 @@
 
     self.inputDate.inputAccessoryView = keyboardDoneButtonView;
     self.inputAmount.text = @"60";
+    
+    [PFAnalytics trackEvent:@"payment entered"];
 }
 
 - (void)didReceiveMemoryWarning

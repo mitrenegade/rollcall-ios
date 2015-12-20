@@ -300,6 +300,8 @@
 -(IBAction)didClickEditNotes:(id)sender {
     if (self.member) {
         [self performSegueWithIdentifier:@"ToMemberNotes" sender:nil];
+
+        [PFAnalytics trackEvent:@"edit member notes"];
     }
 }
 
@@ -316,6 +318,8 @@
     }
     
     [self presentViewController:picker animated:YES completion:nil];
+    
+    [PFAnalytics trackEvent:@"edit member photo"];
 }
 
 #pragma mark UIImagePickerControllerDelegate
