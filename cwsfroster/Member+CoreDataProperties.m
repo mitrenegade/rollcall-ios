@@ -2,7 +2,7 @@
 //  Member+CoreDataProperties.m
 //  cwsfroster
 //
-//  Created by Bobby Ren on 12/19/15.
+//  Created by Bobby Ren on 12/20/15.
 //  Copyright © 2015 Bobby Ren. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,8 +16,9 @@
 @dynamic email;
 @dynamic monthPaid;
 @dynamic name;
-@dynamic status;
 @dynamic notes;
+@dynamic status;
+@dynamic photo;
 @dynamic attendances;
 @dynamic organization;
 @dynamic payments;

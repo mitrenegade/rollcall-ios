@@ -101,6 +101,7 @@
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
 		AC950F191B371EAA005C3998 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F151B371EAA005C3998 /* Fabric.framework */; };
 		AC950F1A1B371EAA005C3998 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F161B371EAA005C3998 /* Crashlytics.framework */; };
+		ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */ = {isa = PBXBuildFile; fileRef = ACF58F8E1C266A0B0087EE70 /* add_user.png */; };
 		ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -252,6 +253,7 @@
 		AC950F141B371EAA005C3998 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		AC950F151B371EAA005C3998 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		AC950F161B371EAA005C3998 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		ACF58F8E1C266A0B0087EE70 /* add_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_user.png; sourceTree = "<group>"; };
 		ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnsiteSignupViewController.h; sourceTree = "<group>"; };
 		ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnsiteSignupViewController.m; sourceTree = "<group>"; };
 		E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				ACF58F8E1C266A0B0087EE70 /* add_user.png */,
 				AC3178CA1B409ADA00668B98 /* star@2x.png */,
 				9E649FDA19B6040A00334B34 /* icon29.png */,
 				9E649FDB19B6040A00334B34 /* icon57.png */,
@@ -601,6 +604,7 @@
 				9E649FE519B6040A00334B34 /* icon120.png in Resources */,
 				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
 				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
+				ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */,
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
 				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
 				9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */,

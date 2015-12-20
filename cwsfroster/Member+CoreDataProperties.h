@@ -2,7 +2,7 @@
 //  Member+CoreDataProperties.h
 //  cwsfroster
 //
-//  Created by Bobby Ren on 12/19/15.
+//  Created by Bobby Ren on 12/20/15.
 //  Copyright © 2015 Bobby Ren. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,8 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *email;
 @property (nullable, nonatomic, retain) NSNumber *monthPaid;
 @property (nullable, nonatomic, retain) NSString *name;
-@property (nullable, nonatomic, retain) NSNumber *status;
 @property (nullable, nonatomic, retain) NSString *notes;
+@property (nullable, nonatomic, retain) NSNumber *status;
+@property (nullable, nonatomic, retain) NSData *photo;
 @property (nullable, nonatomic, retain) NSSet<Attendance *> *attendances;
 @property (nullable, nonatomic, retain) Organization *organization;
 @property (nullable, nonatomic, retain) NSSet<Payment *> *payments;

@@ -207,10 +207,13 @@
 }
 
 #pragma mark Delegate
--(void)saveNewMember:(NSString *)name status:(MemberStatus)status {
+-(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
+    if (newPhoto) {
+        member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
+    }
     [self notify:@"member:updated"];
 
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];

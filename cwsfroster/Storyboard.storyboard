@@ -458,7 +458,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R3z-DK-P5f">
-                                <rect key="frame" x="26" y="105" width="280" height="30"/>
+                                <rect key="frame" x="80" y="105" width="226" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <userDefinedRuntimeAttributes>
@@ -589,6 +589,13 @@
                                     <action selector="didClickEditNotes:" destination="XNl-Q5-lQr" eventType="touchUpInside" id="SOm-F0-Hrc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDX-31-aGf">
+                                <rect key="frame" x="17" y="92" width="55" height="55"/>
+                                <state key="normal" title="Add Photo" image="add_user.png"/>
+                                <connections>
+                                    <action selector="didClickAddPhoto:" destination="XNl-Q5-lQr" eventType="touchUpInside" id="Lbh-s5-gmn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <userDefinedRuntimeAttributes>
@@ -609,6 +616,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="buttonAddPayment" destination="nDN-JG-UYr" id="zOD-2s-wI1"/>
+                        <outlet property="buttonPhoto" destination="YDX-31-aGf" id="auF-W4-m15"/>
                         <outlet property="iconDaily" destination="iBr-WI-InX" id="9a1-8z-rx1"/>
                         <outlet property="iconMonthly" destination="oKm-UP-VB4" id="cOZ-Fs-5so"/>
                         <outlet property="inputName" destination="R3z-DK-P5f" id="k8H-Ax-9Rn"/>
@@ -1779,6 +1787,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add_user.png" width="512" height="512"/>
         <image name="icon-calendar.png" width="30" height="30"/>
         <image name="icon-users.png" width="30" height="30"/>
         <image name="star.png" width="42" height="42"/>

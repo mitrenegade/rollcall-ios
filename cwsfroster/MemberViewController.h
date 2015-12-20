@@ -13,12 +13,12 @@
 @protocol MemberDelegate <NSObject>
 
 -(void)cancel;
--(void)saveNewMember:(NSString *)name status:(MemberStatus)status;
+-(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto;
 -(void)updateMember:(Member *)member;
 
 @end
 
-@interface MemberViewController : UIViewController <PaymentViewDelegate>
+@interface MemberViewController : UIViewController <PaymentViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     IBOutlet UITextField *inputName;
 
@@ -44,6 +44,8 @@
     BOOL changed;
     
     IBOutlet UIButton *buttonEditNotes;
+    IBOutlet UIButton *buttonPhoto;
+    UIImage *newPhoto;
 }
 
 @property (nonatomic, assign) Member *member;
@@ -53,4 +55,5 @@
 - (IBAction)didClickSave:(id)sender;
 - (IBAction)didClickSwitch:(id)sender;
 - (IBAction)didClickEditNotes:(id)sender;
+- (IBAction)didClickAddPhoto:(id)sender;
 @end
