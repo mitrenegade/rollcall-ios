@@ -518,4 +518,20 @@
         }];
     }
 }
+
+#pragma mark Event info
+-(IBAction)didClickEventNotes:(id)sender {
+    if (self.practice) {
+        [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
+    }
+    else {
+        NSLog(@"No practice exists, creating one");
+        [self saveWithCompletion:^(BOOL success) {
+            if (success) {
+                self.navigationItem.leftBarButtonItem.title = @"Close";
+                [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
+            }
+        }];
+    }
+}
 @end
