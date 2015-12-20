@@ -173,4 +173,12 @@
     _managedObjectModel = nil;
 }
 
+-(void)goToIntro {
+    IntroViewController *controller = (IntroViewController *)self.window.rootViewController;
+    [controller dismissViewControllerAnimated:YES completion:^{
+        [controller enableButtons:YES];
+        [controller reset:YES];
+    }];
+}
+
 @end
