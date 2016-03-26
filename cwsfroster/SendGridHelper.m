@@ -15,7 +15,7 @@ static SendGrid *sendgrid;
 +(void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sendgrid = [SendGrid apiUser:@"rollCallApp" apiKey:@"JvRjPb66QrcvaU"];
+        sendgrid = [SendGrid apiUser:@"rollCallApp" apiKey:@""];
     });
 }
 
