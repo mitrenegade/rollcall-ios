@@ -1,5 +1,5 @@
-platform :ios, '7.0'
-pod 'SendGrid', :podspec => 'https://raw.githubusercontent.com/sendgrid/sendgrid-objc/master/SendGrid.podspec'
-#pod 'SendGrid'
-pod 'SBJson4'
-#pod 'Optimizely-iOS-SDK', :git => 'git@github.com:optimizely/Optimizely-iOS-SDK.git', :tag => '0.7.55'
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'Fabric'
+pod 'Crashlytics'
