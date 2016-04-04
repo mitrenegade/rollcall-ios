@@ -23,8 +23,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Parse setApplicationId:PARSE_APP_ID
-                  clientKey:PARSE_CLIENT_KEY];
+    [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_CLIENT_KEY];
 
     [Fabric with:@[[Crashlytics class]]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

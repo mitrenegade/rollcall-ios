@@ -3,3 +3,4 @@ use_frameworks!
 
 pod 'Fabric'
 pod 'Crashlytics'
+pod 'Parse'
