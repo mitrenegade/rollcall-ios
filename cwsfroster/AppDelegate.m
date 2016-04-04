@@ -26,7 +26,7 @@
     [Parse setApplicationId:PARSE_APP_ID
                   clientKey:PARSE_CLIENT_KEY];
 
-    [Fabric with:@[CrashlyticsKit]];
+    [Fabric with:@[[Crashlytics class]]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
     return YES;

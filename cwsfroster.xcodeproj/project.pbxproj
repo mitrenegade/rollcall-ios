@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83ECB7C44E1F43D089ABEE5A /* libPods.a */; };
+		15589B3D61D2E12F8386A3B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1B0653011D1ABC9965C2DF /* Pods.framework */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
@@ -63,7 +63,6 @@
 		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
 		9EA0995619B10343007BC1FD /* Organization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995519B10343007BC1FD /* Organization.m */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
-		9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */; };
 		9EC0F50619A4CE7E003441AC /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50519A4CE7E003441AC /* Parse.framework */; };
 		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
 		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
@@ -107,7 +106,6 @@
 
 /* Begin PBXFileReference section */
 		5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		83ECB7C44E1F43D089ABEE5A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
@@ -185,8 +183,6 @@
 		9EA0995519B10343007BC1FD /* Organization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Organization.m; sourceTree = "<group>"; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendGridHelper.h; sourceTree = "<group>"; };
-		9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendGridHelper.m; sourceTree = "<group>"; };
 		9EC0F50219A4CB7B003441AC /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		9EC0F50519A4CE7E003441AC /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9EC0F50719A4CEFF003441AC /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -256,6 +252,7 @@
 		ACF58F8E1C266A0B0087EE70 /* add_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_user.png; sourceTree = "<group>"; };
 		ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnsiteSignupViewController.h; sourceTree = "<group>"; };
 		ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnsiteSignupViewController.m; sourceTree = "<group>"; };
+		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E827AE2190CE9E491FFF1B7A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -287,7 +284,7 @@
 				9E828A6216196B8D009A6C44 /* CFNetwork.framework in Frameworks */,
 				9E828A6416196B8D009A6C44 /* Accounts.framework in Frameworks */,
 				9E828A6516196B8D009A6C44 /* AudioToolbox.framework in Frameworks */,
-				7E388A09545D4117BEFDEA16 /* libPods.a in Frameworks */,
+				15589B3D61D2E12F8386A3B5 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +379,7 @@
 				9E80085116196883003E9B16 /* UIKit.framework */,
 				9E80085316196883003E9B16 /* Foundation.framework */,
 				9E80085516196883003E9B16 /* CoreGraphics.framework */,
-				83ECB7C44E1F43D089ABEE5A /* libPods.a */,
+				CC1B0653011D1ABC9965C2DF /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -417,8 +414,6 @@
 				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
 				9EC3031919A0EA9500777F79 /* PaymentViewController.h */,
 				9EC3031A19A0EA9500777F79 /* PaymentViewController.m */,
-				9EA94BDD19A3BE6400A74F90 /* SendGridHelper.h */,
-				9EA94BDE19A3BE6400A74F90 /* SendGridHelper.m */,
 				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
 				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
@@ -561,7 +556,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Bobby Ren";
 				TargetAttributes = {
 					9E80084C16196883003E9B16 = {
@@ -677,7 +672,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run 70160b7dec925a91c6fe09e38bf1f8659c1eda41 0fa711cea5cca0c6a4b57c1a8955f0518514bfdd7a9e6f28b3eca2c60d905a9c";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 70160b7dec925a91c6fe09e38bf1f8659c1eda41 0fa711cea5cca0c6a4b57c1a8955f0518514bfdd7a9e6f28b3eca2c60d905a9c";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -728,7 +723,6 @@
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */,
-				9EA94BDF19A3BE6400A74F90 /* SendGridHelper.m in Sources */,
 				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */,
@@ -762,6 +756,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -820,6 +815,7 @@
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.BobbyRen.cwsfroster;
 				PRODUCT_NAME = RollCall;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "cwsfroster/cwsfroster-Bridging-Header.h";
@@ -847,6 +843,7 @@
 				INFOPLIST_FILE = "cwsfroster/cwsfroster-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.BobbyRen.cwsfroster;
 				PRODUCT_NAME = RollCall;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7ee18773-f449-486d-a042-84ec8f5476b0";

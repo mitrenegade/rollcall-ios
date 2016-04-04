@@ -8,7 +8,6 @@
 
 #import "PracticeEditViewController.h"
 #import "Practice+Parse.h"
-#import "SendGridHelper.h"
 #import "Attendance+Info.h"
 
 #import "Member+Info.h"
@@ -406,7 +405,6 @@
                 message = [message stringByAppendingString:paymentStatus];
             }
         }
-        //    [SendGridHelper emailTo:emailTo from:emailFrom subject:title message:message];
         if ([MFMailComposeViewController canSendMail]){
             MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
             composer.mailComposeDelegate = self;
