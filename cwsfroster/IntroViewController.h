@@ -23,6 +23,8 @@
     IBOutlet UIButton *buttonSignup;
     IBOutlet UIButton *buttonReset;
 
+    IBOutlet NSLayoutConstraint *constraintConfirmationHeight;
+    
     NSMutableDictionary *ready;
 
     MBProgressHUD *progress;
