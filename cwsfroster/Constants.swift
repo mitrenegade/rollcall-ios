@@ -9,6 +9,8 @@
 import UIKit
 import Foundation
 
+let TEST = false
+
 enum NotificationType: String {
     case LogoutSuccess
     case LoginSuccess

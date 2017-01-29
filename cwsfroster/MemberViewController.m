@@ -271,6 +271,7 @@
 -(void)didAddPayment {
     // member.payment now exists
     NSLog(@"Update member status, credits, and toggle switches here");
+    [ParseLog logWithTypeString:@"EditMemberPayments" title:nil message:nil params:nil error:nil];
     [self.navigationController popViewControllerAnimated:YES];
     [self refresh];
 }
@@ -301,7 +302,7 @@
     if (self.member) {
         [self performSegueWithIdentifier:@"ToMemberNotes" sender:nil];
 
-        [PFAnalytics trackEvent:@"edit member notes"];
+        [ParseLog logWithTypeString:@"EditMemberNotes" title:nil message:nil params:nil error:nil];
     }
 }
 
@@ -319,7 +320,7 @@
     
     [self presentViewController:picker animated:YES completion:nil];
     
-    [PFAnalytics trackEvent:@"edit member photo"];
+    [ParseLog logWithTypeString:@"EditMemberPhoto" title:nil message:nil params:nil error:nil];
 }
 
 #pragma mark UIImagePickerControllerDelegate

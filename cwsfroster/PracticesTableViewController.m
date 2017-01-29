@@ -222,6 +222,6 @@
 
     [self notify:@"practice:deleted"]; // no one listens for this now
 
-    [PFAnalytics trackEvent:@"practice deleted"];
+    [ParseLog logWithTypeString:@"PracticeDeleted" title:nil message:nil params:nil error:nil];
 }
 @end
