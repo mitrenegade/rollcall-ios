@@ -10,21 +10,24 @@ import UIKit
 
 extension UIViewController {
     
-    func simpleAlert(_ title: String, defaultMessage: String?, error: NSError?) {
-        if error != nil {
-            if let msg = error!.userInfo["error"] as? String {
-                self.simpleAlert(title, message: msg)
-                return
-            }
+    func simpleAlert(_ title: String, defaultMessage: String?, error: NSError?, completion: (() -> Void)? = nil) {
+        if let msg = error?.userInfo["error"] as? String {
+            self.simpleAlert(title, message: msg, completion: completion)
+            return
         }
-        self.simpleAlert(title, message: defaultMessage)
+        else if let msg = error?.userInfo["NSLocalizedDescription"] as? String {
+            self.simpleAlert(title, message: msg, completion: completion)
+            return
+        }
+        
+        self.simpleAlert(title, message: defaultMessage, completion: completion)
     }
     
     func simpleAlert(_ title: String, message: String?) {
         self.simpleAlert(title, message: message, completion: nil)
     }
     
-    func simpleAlert(_ title: String, message: String?, completion: (() -> Void)?) {
+    func simpleAlert(_ title: String, message: String?, completion: (() -> Void)? = nil) {
         let alert: UIAlertController = UIAlertController.simpleAlert(title, message: message, completion: completion)
         self.present(alert, animated: true, completion: nil)
     }
