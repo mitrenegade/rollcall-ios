@@ -1,6 +1,8 @@
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
+target 'rollcall' do
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Parse'
+end
