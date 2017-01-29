@@ -11,5 +11,6 @@
 
 #import "Practice+Parse.h"
 #import "Member+Parse.h"
+#import "AppDelegate.h"
 
 #endif /* cwsfroster_Bridging_Header_h */
