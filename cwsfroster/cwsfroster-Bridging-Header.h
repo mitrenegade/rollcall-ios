@@ -15,4 +15,7 @@
 #import "IntroViewController.h"
 #import "SettingsViewController.h"
 
+// PARSE MODEL FILES TO BE DEPRECATED
+#import "Organization+Info.h"
+
 #endif /* cwsfroster_Bridging_Header_h */

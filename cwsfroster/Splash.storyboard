@@ -4,9 +4,9 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,18 +39,39 @@ for your awesome event</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dIT-l8-rgW">
+                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-qx-1sF">
+                                <rect key="frame" x="16" y="360" width="343" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="3SC-gK-gYd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="10"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.094117647058823528" green="0.4823529411764706" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="ZX3-qx-1sF" firstAttribute="top" secondItem="dIT-l8-rgW" secondAttribute="bottom" constant="8" id="5NH-3T-qfg"/>
                             <constraint firstItem="ALn-og-M8C" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" id="E4W-SC-vL8"/>
                             <constraint firstItem="ALn-og-M8C" firstAttribute="width" secondItem="fMS-lE-Vdm" secondAttribute="width" multiplier="1:3" id="HBP-7S-bMv"/>
+                            <constraint firstItem="ZX3-qx-1sF" firstAttribute="trailing" secondItem="fMS-lE-Vdm" secondAttribute="trailingMargin" id="Hwl-ZJ-8I5"/>
+                            <constraint firstItem="dIT-l8-rgW" firstAttribute="centerY" secondItem="fMS-lE-Vdm" secondAttribute="centerY" id="OUh-Oo-PYl"/>
                             <constraint firstItem="pa8-Kv-w65" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" constant="8" id="P99-OB-KiZ"/>
+                            <constraint firstItem="ZX3-qx-1sF" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leadingMargin" id="Qzn-FJ-iVx"/>
                             <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="pa8-Kv-w65" secondAttribute="bottom" id="haK-1J-Ylm"/>
                             <constraint firstAttribute="trailing" secondItem="pa8-Kv-w65" secondAttribute="trailing" constant="8" id="l6T-69-T2W"/>
                             <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="ALn-og-M8C" secondAttribute="bottom" constant="-4" id="ooR-10-kml"/>
                             <constraint firstItem="ALn-og-M8C" firstAttribute="height" secondItem="pa8-Kv-w65" secondAttribute="height" id="peu-5e-mvc"/>
+                            <constraint firstItem="dIT-l8-rgW" firstAttribute="centerX" secondItem="fMS-lE-Vdm" secondAttribute="centerX" id="yjx-Wp-qoY"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="dIT-l8-rgW" id="7KF-qJ-xST"/>
+                        <outlet property="labelInfo" destination="ZX3-qx-1sF" id="CLt-Os-WBP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erC-hP-5do" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

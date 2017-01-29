@@ -12,5 +12,6 @@
 
 +(Organization *)currentOrganization;
 +(void)reset;
++(void)createOrganizationWithCompletion:(void(^)(Organization *organization))completion;
 
 @end

@@ -22,13 +22,8 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
 
-    if ([PFUser currentUser]) {
-        [self loggedIn];
-    }
-    else {
-        [self enableButtons:YES];
-        [self reset:YES];
-    }
+    [self enableButtons:YES];
+    [self reset:YES];
 }
 
 -(void)reset:(BOOL)showLogin {
@@ -67,57 +62,6 @@
     }
 }
 
--(void)loggedIn {
-    ready = [NSMutableDictionary dictionary];
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance"];
-    for (NSString *className in classes) {
-        ready[className] = @NO;
-    }
-    isFailed = NO;
-
-    [self reset:NO];
-    PFObject *organizationObject = _currentUser[@"organization"];
-    NSLog(@"Fetching organization %@ for user %@", organizationObject, _currentUser);
-    if (!organizationObject) {
-        // todo
-        NSLog(@"Handle this!");
-    }
-    [organizationObject fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        if (error) {
-            // organization doesn't exist
-            [PFUser logOut];
-            [Organization reset];
-            progress.mode = MBProgressHUDModeText;
-            progress.labelText = @"Invalid organization";
-            progress.detailsLabelText = @"Please sign up with a valid organization";
-            [progress hide:YES afterDelay:1.5];
-            [self enableButtons:YES];
-            [self reset:YES];
-        }
-        else {
-            [ParseBase synchronizeClass:@"Organization" fromObjects:@[object] replaceExisting:YES completion:nil];
-
-            if ([organizationObject objectForKey:@"logoData"]) {
-                PFFile *imageFile = organizationObject[@"logoData"];
-                [imageFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                    logo.alpha = 0;
-                    UIImage *image = [UIImage imageWithData:data];
-                    [logo setImage:image];
-                    [UIView animateWithDuration:1 animations:^{
-                        logo.alpha = 1;
-                    } completion:^(BOOL finished) {
-                    }];
-                }];
-            }
-            else {
-                [logo setImage:nil];
-            }
-
-            [self synchronizeWithParse];
-        }
-    }];
-}
-
 -(void)enableButtons:(BOOL)enabled {
     [buttonLogin setAlpha:enabled?1:.5];
     [buttonSignup setAlpha:enabled?1:.5];
@@ -146,7 +90,8 @@
     progress.taskInProgress = YES;
     [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
         if (user) {
-            [self loggedIn];
+            //[self loggedIn];
+            [self goToPractices];
         }
         else {
             NSString *message = nil;
@@ -206,8 +151,13 @@
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [self createOrganizationWithCompletion:^(Organization *organization) {
-                [self loggedIn];
+            [Organization createOrganizationWithCompletion:^(Organization *organization) {
+                if (!organization) {
+                    [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization or try again."];
+                }
+                else {
+                    [self goToPractices];
+                }
             }];
         }
         else {
@@ -225,55 +175,6 @@
             [progress hide:YES afterDelay:1.5];
         }
     }];
-}
-
--(void)synchronizeWithParse {
-    // make sure all parse objects are in core data
-    NSArray *classes = @[@"Member", @"Practice", @"Attendance", @"Payment"];
-    [self performSelector:@selector(showProgress) withObject:progress afterDelay:3];
-
-    for (NSString *className in classes) {
-        PFQuery *query = [PFQuery queryWithClassName:className];
-        PFUser *user = _currentUser;
-        [user fetchIfNeeded];
-        [query whereKey:@"organization" equalTo:_currentUser[@"organization"]];
-        NSLog(@"Querying for %@ for organization %@", className, _currentUser[@"organization"]);
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (error) {
-                NSLog(@"Error: %@", error);
-                if (!isFailed) {
-                    if (!progress || ![progress taskInProgress]) {
-                        progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    }
-                    progress.mode = MBProgressHUDModeText;
-                    progress.labelText = @"Synchronization error";
-                    if (error.code == 1000) {
-                        progress.detailsLabelText = @"Request timeout. Make sure you are connected to the Internet";
-                    }
-                    else {
-                        progress.detailsLabelText = [NSString stringWithFormat:@"Parse error code %ld", (long)error.code];
-                    }
-                    isFailed = YES;
-                    [self performSelector:@selector(hideProgress) withObject:nil afterDelay:3];
-
-                    // still proceed and allow offline usave
-                    [self performSelector:@selector(goToPractices) withObject:nil afterDelay:3];
-                }
-            }
-            else {
-                [progress hide:YES];
-                if ([className isEqualToString:@"Practice"]) {
-                    NSLog(@"Here");
-                }
-                NSLog(@"Synchronizing class %@", className);
-                [ParseBase synchronizeClass:className fromObjects:objects replaceExisting:YES completion:^{
-                    ready[className] = @YES;
-                    if ([self isReady])
-                        [self goToPractices];
-                }];
-            }
-        }];
-    }
 }
 
 -(void)showProgress {
@@ -317,34 +218,6 @@
 -(void)dismissKeyboard {
     [inputLogin resignFirstResponder];
     [inputPassword resignFirstResponder];
-}
-
-#pragma mark core data
--(void)createOrganizationWithCompletion:(void(^)(Organization *organization))completion {
-    Organization *object = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
-    [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
-    [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-            _currentUser[@"organization"] = object.pfObject;
-
-            NSError *error;
-            if ([_appDelegate.managedObjectContext save:&error]) {
-                [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if (succeeded) {
-                        if (completion)
-                            completion(object);
-                        else
-                            completion(nil);
-                    }
-                }];
-            }
-        }
-        else {
-            NSLog(@"Could not save organization!");
-            [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization."];
-            completion(nil);
-        }
-    }];
 }
 
 #pragma mark Password reset stuff

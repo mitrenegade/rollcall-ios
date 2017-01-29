@@ -27,4 +27,32 @@ static Organization *currentOrganization;
 +(void)reset {
     currentOrganization = nil;
 }
+
++(void)createOrganizationWithCompletion:(void(^)(Organization *organization))completion {
+    Organization *object = (Organization *)[Organization createEntityInContext:_appDelegate.managedObjectContext];
+    [object updateEntityWithParams:@{@"name":[[PFUser currentUser] username]}];
+    [object saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        if (success) {
+            _currentUser[@"organization"] = object.pfObject;
+            
+            NSError *error;
+            if ([_appDelegate.managedObjectContext save:&error]) {
+                [_currentUser saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        if (completion)
+                            completion(object);
+                        else
+                            completion(nil);
+                    }
+                }];
+            }
+        }
+        else {
+            NSLog(@"Could not save organization!");
+            completion(nil);
+        }
+    }];
+}
+
+
 @end
