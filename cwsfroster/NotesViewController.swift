@@ -27,9 +27,9 @@ class NotesViewController: UIViewController {
         
         let keyboardDoneButtonView: UIToolbar = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
-        keyboardDoneButtonView.barStyle = UIBarStyle.Black
-        keyboardDoneButtonView.tintColor = UIColor.whiteColor()
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.Done, target: self, action: "dismissKeyboard")
+        keyboardDoneButtonView.barStyle = UIBarStyle.black
+        keyboardDoneButtonView.tintColor = UIColor.white
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.done, target: self, action: #selector(NotesViewController.dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
         
@@ -84,36 +84,36 @@ class NotesViewController: UIViewController {
         
         if self.practice != nil {
             self.practice!.notes = self.inputNotes.text
-            self.practice!.saveOrUpdateToParseWithCompletion(nil)
+            self.practice!.saveOrUpdateToParse(completion: nil)
             PFAnalytics.trackEvent("notes entered", dimensions: ["for": "practice"])
         }
         if self.member != nil {
             self.member!.notes = self.inputNotes.text
-            self.member!.saveOrUpdateToParseWithCompletion(nil)
+            self.member!.saveOrUpdateToParse(completion: nil)
             PFAnalytics.trackEvent("notes entered", dimensions: ["for": "member"])
         }
         
     }
     
     // MARK: - keyboard notifications
-    func keyboardWillShow(n: NSNotification) {
-        let size = n.userInfo![UIKeyboardFrameBeginUserInfoKey]?.CGRectValue.size
+    func keyboardWillShow(_ n: Notification) {
+        let size = (n.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
         
         // these values come from the position/offsets of the current textfields
         // offsets bring the top of the email field to the top of the screen
-        self.constraintBottomOffset.constant = size!.height
-        self.constraintTopOffset.constant = -size!.height
+        self.constraintBottomOffset.constant = size.height
+        self.constraintTopOffset.constant = -size.height
         self.view.layoutIfNeeded()
     }
     
-    func keyboardWillHide(n: NSNotification) {
+    func keyboardWillHide(_ n: Notification) {
         self.constraintBottomOffset.constant = 0 // by default, from iboutlet settings
         self.constraintTopOffset.constant = 0
         self.view.layoutIfNeeded()
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     /*
