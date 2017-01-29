@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		15589B3D61D2E12F8386A3B5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC1B0653011D1ABC9965C2DF /* Pods.framework */; };
+		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
+		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
+		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
+		8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005AF1E3D951900272DC0 /* SplashViewController.swift */; };
+		8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */; };
+		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
+		8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */; };
+		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
+		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
@@ -31,9 +40,6 @@
 		9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9E80085A16196883003E9B16 /* InfoPlist.strings */; };
 		9E80085E16196883003E9B16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80085D16196883003E9B16 /* main.m */; };
 		9E80086216196883003E9B16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80086116196883003E9B16 /* AppDelegate.m */; };
-		9E80086416196883003E9B16 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086316196883003E9B16 /* Default.png */; };
-		9E80086616196883003E9B16 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086516196883003E9B16 /* Default@2x.png */; };
-		9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E80086716196884003E9B16 /* Default-568h@2x.png */; };
 		9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */; };
 		9E828A5B16196B8D009A6C44 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5616196B75009A6C44 /* StoreKit.framework */; };
 		9E828A5D16196B8D009A6C44 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5216196B6F009A6C44 /* Security.framework */; };
@@ -83,7 +89,7 @@
 		9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30E1936D2410056140F /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */; };
 		9EC5F31F1936D2410056140F /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3121936D2410056140F /* Util.m */; };
-		9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Storyboard.storyboard */; };
+		9EC5F3331936D60D0056140F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Main.storyboard */; };
 		9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3351936D74E0056140F /* MembersTableViewController.m */; };
 		9EC5F3391936D9080056140F /* MemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3381936D9080056140F /* MemberViewController.m */; };
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
@@ -103,6 +109,15 @@
 
 /* Begin PBXFileReference section */
 		5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
+		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8EE005AF1E3D951900272DC0 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
+		8EE005B31E3D955200272DC0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IntroViewController+Utils.swift"; sourceTree = "<group>"; };
+		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
@@ -135,9 +150,6 @@
 		9E80085F16196883003E9B16 /* cwsfroster-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cwsfroster-Prefix.pch"; sourceTree = "<group>"; };
 		9E80086016196883003E9B16 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9E80086116196883003E9B16 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9E80086316196883003E9B16 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		9E80086516196883003E9B16 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		9E80086716196884003E9B16 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		9E828A4216196B47009A6C44 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9E828A4416196B4A009A6C44 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		9E828A4816196B52009A6C44 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -220,7 +232,7 @@
 		9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		9EC5F3111936D2410056140F /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		9EC5F3121936D2410056140F /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
-		9EC5F3321936D60D0056140F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		9EC5F3321936D60D0056140F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9EC5F3341936D74E0056140F /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
 		9EC5F3351936D74E0056140F /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
 		9EC5F3371936D9080056140F /* MemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberViewController.h; sourceTree = "<group>"; };
@@ -289,6 +301,34 @@
 				5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		8EE005A41E3D833E00272DC0 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				9EC5F3321936D60D0056140F /* Main.storyboard */,
+				8EE005A81E3D83F500272DC0 /* Login.storyboard */,
+				8EE005AA1E3D844400272DC0 /* Splash.storyboard */,
+				8EE005B81E3DA30C00272DC0 /* Settings.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		8EE005AE1E3D94FE00272DC0 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				8EE005AF1E3D951900272DC0 /* SplashViewController.swift */,
+			);
+			name = Splash;
+			sourceTree = "<group>";
+		};
+		8EE005B11E3D952E00272DC0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */,
+				8EE005B31E3D955200272DC0 /* Constants.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		9E15616F1992661200A31398 /* Images */ = {
@@ -381,13 +421,17 @@
 				9EC0F50219A4CB7B003441AC /* Constants.h */,
 				9EC5F2E51936CFC00056140F /* Parse Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
-				9EC5F3321936D60D0056140F /* Storyboard.storyboard */,
+				8EE005A41E3D833E00272DC0 /* Storyboards */,
+				8EE005AE1E3D94FE00272DC0 /* Splash */,
+				8EE005B11E3D952E00272DC0 /* Utils */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
+				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
 				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
 				9E98DB4B19B2E63D006D81FC /* ShellViewController.m */,
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
+				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				9EC5F3371936D9080056140F /* MemberViewController.h */,
@@ -418,10 +462,8 @@
 				9E80085A16196883003E9B16 /* InfoPlist.strings */,
 				9E80085D16196883003E9B16 /* main.m */,
 				9E80085F16196883003E9B16 /* cwsfroster-Prefix.pch */,
-				9E80086316196883003E9B16 /* Default.png */,
-				9E80086516196883003E9B16 /* Default@2x.png */,
-				9E80086716196884003E9B16 /* Default-568h@2x.png */,
 				AC8EF0E51C265A330029EBAE /* cwsfroster-Bridging-Header.h */,
+				8EE005AC1E3D875600272DC0 /* Assets.xcassets */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -549,6 +591,7 @@
 				TargetAttributes = {
 					9E80084C16196883003E9B16 = {
 						DevelopmentTeam = H799H8B8DD;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -580,24 +623,25 @@
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				9E649FEF19B60EEC00334B34 /* IntroTutorial2.xib in Resources */,
-				9E80086416196883003E9B16 /* Default.png in Resources */,
 				9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */,
+				8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */,
 				9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */,
-				9E80086616196883003E9B16 /* Default@2x.png in Resources */,
 				9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */,
+				8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */,
 				9E649FE519B6040A00334B34 /* icon120.png in Resources */,
 				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
 				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
 				ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */,
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
 				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
-				9E80086816196884003E9B16 /* Default-568h@2x.png in Resources */,
 				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,
-				9EC5F3331936D60D0056140F /* Storyboard.storyboard in Resources */,
+				9EC5F3331936D60D0056140F /* Main.storyboard in Resources */,
+				8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */,
 				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
 				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
 				AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */,
 				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
+				8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -672,6 +716,7 @@
 				AC8EF0F21C265F2C0029EBAE /* Practice.m in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
+				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9EA0994319B0BF62007BC1FD /* Payment.m in Sources */,
 				9E15616B19924B7800A31398 /* Member+Info.m in Sources */,
 				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
@@ -684,6 +729,8 @@
 				9EC5F31B1936D2410056140F /* Query.m in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
+				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
+				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
 				9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */,
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
@@ -693,6 +740,7 @@
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
 				AC8EF0F11C265F2C0029EBAE /* Member.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
+				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
 				9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */,
@@ -712,6 +760,7 @@
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */,
 				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
+				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */,
 				AC8EF0EC1C265F0D0029EBAE /* Practice+CoreDataProperties.m in Sources */,
@@ -790,7 +839,6 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -808,6 +856,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "cwsfroster/cwsfroster-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -817,8 +866,7 @@
 			baseConfigurationReference = 5B3618C4EAA94B1A7236F0C5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Bobby Ren (H799H8B8DD)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -833,9 +881,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.BobbyRen.cwsfroster;
 				PRODUCT_NAME = RollCall;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "7ee18773-f449-486d-a042-84ec8f5476b0";
+				PROVISIONING_PROFILE = "4e050f4a-ad5f-44d0-a210-054faa32e850";
 				SWIFT_OBJC_BRIDGING_HEADER = "cwsfroster/cwsfroster-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

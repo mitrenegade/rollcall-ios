@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hbg-wf-fgx">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Splash View Controller-->
+        <scene sceneID="Q3V-VK-n6y">
+            <objects>
+                <viewController id="Hbg-wf-fgx" customClass="SplashViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iyY-un-avd"/>
+                        <viewControllerLayoutGuide type="bottom" id="xya-mh-rLc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fMS-lE-Vdm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="icon120.png" translatesAutoresizingMaskIntoConstraints="NO" id="ALn-og-M8C">
+                                <rect key="frame" x="0.0" y="546" width="125" height="125"/>
+                                <color key="backgroundColor" red="0.094117647058823528" green="0.4823529411764706" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ALn-og-M8C" secondAttribute="height" multiplier="1:1" id="ic7-uc-w5s"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pa8-Kv-w65">
+                                <rect key="frame" x="8" y="542" width="359" height="125"/>
+                                <string key="text">rollcall and
+random drawing 
+for your awesome event</string>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.094117647058823528" green="0.4823529411764706" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="ALn-og-M8C" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" id="E4W-SC-vL8"/>
+                            <constraint firstItem="ALn-og-M8C" firstAttribute="width" secondItem="fMS-lE-Vdm" secondAttribute="width" multiplier="1:3" id="HBP-7S-bMv"/>
+                            <constraint firstItem="pa8-Kv-w65" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" constant="8" id="P99-OB-KiZ"/>
+                            <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="pa8-Kv-w65" secondAttribute="bottom" id="haK-1J-Ylm"/>
+                            <constraint firstAttribute="trailing" secondItem="pa8-Kv-w65" secondAttribute="trailing" constant="8" id="l6T-69-T2W"/>
+                            <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="ALn-og-M8C" secondAttribute="bottom" constant="-4" id="ooR-10-kml"/>
+                            <constraint firstItem="ALn-og-M8C" firstAttribute="height" secondItem="pa8-Kv-w65" secondAttribute="height" id="peu-5e-mvc"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="erC-hP-5do" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="104.8" y="90.404797601199405"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="icon120.png" width="120" height="120"/>
+    </resources>
+</document>
