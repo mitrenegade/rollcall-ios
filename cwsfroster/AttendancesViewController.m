@@ -51,7 +51,7 @@
     [self listenFor:@"member:deleted" action:@selector(reloadData)];
     [self listenFor:@"member:updated" action:@selector(reloadData)];
 
-    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
 }
 

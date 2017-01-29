@@ -45,7 +45,7 @@
     }
     labelWelcome.alpha = 0;
     
-    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
 }
 
@@ -116,10 +116,10 @@
     [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
     if (newPhoto) {
         member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
-        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @YES}];
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @"yes"}];
     }
     else {
-        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @NO}];
+        [PFAnalytics trackEvent:@"onsite signup" dimensions: @{@"photo": @"no"}];
     }
     [self notify:@"member:updated"];
     
