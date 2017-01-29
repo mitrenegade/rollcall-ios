@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
+		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
+		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
 		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
 		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
@@ -17,6 +19,7 @@
 		8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */; };
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
+		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
@@ -110,6 +113,8 @@
 /* Begin PBXFileReference section */
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
+		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -119,6 +124,7 @@
 		8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IntroViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
+		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableNavigationController.swift; sourceTree = "<group>"; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
@@ -302,6 +308,8 @@
 				8EE005A81E3D83F500272DC0 /* Login.storyboard */,
 				8EE005AA1E3D844400272DC0 /* Splash.storyboard */,
 				8EE005B81E3DA30C00272DC0 /* Settings.storyboard */,
+				8E800D2B1E3E614A0085EC4D /* Members.storyboard */,
+				8E800D2E1E3E61C10085EC4D /* Events.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -321,6 +329,28 @@
 				8EE005B31E3D955200272DC0 /* Constants.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		8EE5514F1E3E6117001FB0C4 /* Members */ = {
+			isa = PBXGroup;
+			children = (
+				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
+				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
+				9EC5F3371936D9080056140F /* MemberViewController.h */,
+				9EC5F3381936D9080056140F /* MemberViewController.m */,
+			);
+			name = Members;
+			sourceTree = "<group>";
+		};
+		8EE551501E3E611D001FB0C4 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */,
+				9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */,
+				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
+				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
+			);
+			name = Events;
 			sourceTree = "<group>";
 		};
 		9E15616F1992661200A31398 /* Images */ = {
@@ -412,12 +442,15 @@
 				9E80086016196883003E9B16 /* AppDelegate.h */,
 				9E80086116196883003E9B16 /* AppDelegate.m */,
 				9EC0F50219A4CB7B003441AC /* Constants.h */,
+				8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */,
 				9EC5F2E51936CFC00056140F /* Parse Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				8EE005A41E3D833E00272DC0 /* Storyboards */,
 				8EE005AE1E3D94FE00272DC0 /* Splash */,
 				8EE005B11E3D952E00272DC0 /* Utils */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
+				8EE5514F1E3E6117001FB0C4 /* Members */,
+				8EE551501E3E611D001FB0C4 /* Events */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
 				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
@@ -425,14 +458,6 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
-				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
-				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
-				9EC5F3371936D9080056140F /* MemberViewController.h */,
-				9EC5F3381936D9080056140F /* MemberViewController.m */,
-				9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */,
-				9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */,
-				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
-				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
 				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
 				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
@@ -632,7 +657,9 @@
 				9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */,
 				8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */,
 				9E649FE519B6040A00334B34 /* icon120.png in Resources */,
+				8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */,
 				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
+				8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */,
 				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
 				ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */,
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
@@ -729,6 +756,7 @@
 				9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
+				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				9EC5F31B1936D2410056140F /* Query.m in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,

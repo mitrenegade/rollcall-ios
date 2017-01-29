@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y4t-OF-Pff">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Members-->
+        <scene sceneID="UoF-TX-GAG">
+            <objects>
+                <tableViewController id="Y4t-OF-Pff" customClass="MembersTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c1h-Dz-bL7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MemberCell" id="Zkv-g3-rfw">
+                                <rect key="frame" x="0.0" y="22" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zkv-g3-rfw" id="jup-2u-nFZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YXF-ZI-ene">
+                                            <rect key="frame" x="224" y="2" width="40" height="40"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="38N-v2-t5w">
+                                                    <rect key="frame" x="5" y="5" width="30" height="30"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-VvE-C4-QER"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ajQ-d1-S0W">
+                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal">
+                                                        <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-Tjs-d7-jXY"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="didTapAccessory:event:" destination="Y4t-OF-Pff" eventType="touchUpInside" id="44b-kP-dVz"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.043137254899999998" green="0.68235294120000001" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="38N-v2-t5w" firstAttribute="centerX" secondItem="YXF-ZI-ene" secondAttribute="centerX" id="74P-x6-4t3"/>
+                                                <constraint firstItem="38N-v2-t5w" firstAttribute="centerY" secondItem="YXF-ZI-ene" secondAttribute="centerY" id="Prc-p7-kd6"/>
+                                                <constraint firstAttribute="width" constant="40" id="XXf-H3-a5h"/>
+                                                <constraint firstItem="38N-v2-t5w" firstAttribute="top" secondItem="YXF-ZI-ene" secondAttribute="top" constant="5" id="b8e-6X-i6q"/>
+                                                <constraint firstItem="38N-v2-t5w" firstAttribute="leading" secondItem="YXF-ZI-ene" secondAttribute="leading" constant="5" id="ekq-jX-fiL"/>
+                                                <constraint firstAttribute="height" constant="40" id="lL1-xe-kB9"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-d1u-2L-0Dp"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="YXF-ZI-ene" secondAttribute="trailing" constant="78" id="AJy-cp-d5w"/>
+                                        <constraint firstAttribute="centerY" secondItem="YXF-ZI-ene" secondAttribute="centerY" id="asx-sx-RXt"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCellContentView-w1d-Mp-2Lm"/>
+                                    </userDefinedRuntimeAttributes>
+                                </tableViewCellContentView>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCell-j5h-aK-gZU"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="UwJ-89-nQa" kind="modal" identifier="MembersToEditMember" id="0IW-kU-nrd"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell2" id="OVn-ba-i2m">
+                                <rect key="frame" x="0.0" y="66" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVn-ba-i2m" id="PBu-nq-OJK">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="M" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="30" translatesAutoresizingMaskIntoConstraints="NO" id="LBD-2f-4Nl">
+                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="VoP-Oj-OQO"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="12"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-VvE-C4-QER"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FU2-h2-tnm">
+                                            <rect key="frame" x="46" y="8" width="321" height="29"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0BK-8w-uFn">
+                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <state key="normal">
+                                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </state>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-Tjs-d7-jXY"/>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="didTapAccessory:event:" destination="Y4t-OF-Pff" eventType="touchUpInside" id="pKe-MP-bBj"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="0BK-8w-uFn" firstAttribute="centerY" secondItem="LBD-2f-4Nl" secondAttribute="centerY" id="A3A-Pw-CAJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="FU2-h2-tnm" secondAttribute="bottom" constant="6.5" id="EOi-Oz-vjo"/>
+                                        <constraint firstAttribute="trailing" secondItem="FU2-h2-tnm" secondAttribute="trailing" constant="8" id="Fef-7s-lSX"/>
+                                        <constraint firstItem="FU2-h2-tnm" firstAttribute="top" secondItem="PBu-nq-OJK" secondAttribute="top" constant="8" id="Mng-3r-H18"/>
+                                        <constraint firstAttribute="bottom" secondItem="LBD-2f-4Nl" secondAttribute="bottom" constant="6.5" id="TRA-rM-w75"/>
+                                        <constraint firstItem="LBD-2f-4Nl" firstAttribute="top" secondItem="PBu-nq-OJK" secondAttribute="top" constant="7" id="TjJ-C9-JUQ"/>
+                                        <constraint firstItem="FU2-h2-tnm" firstAttribute="leading" secondItem="LBD-2f-4Nl" secondAttribute="trailing" constant="8" id="Wvc-nI-KPu"/>
+                                        <constraint firstItem="0BK-8w-uFn" firstAttribute="centerX" secondItem="LBD-2f-4Nl" secondAttribute="centerX" id="Ykb-4H-Dav"/>
+                                        <constraint firstItem="LBD-2f-4Nl" firstAttribute="leading" secondItem="PBu-nq-OJK" secondAttribute="leading" constant="8" id="iWf-lE-iWI"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="UwJ-89-nQa" kind="modal" identifier="MembersToEditMember" id="nGA-pw-8RZ"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableView-fqV-2r-31Y"/>
+                        </userDefinedRuntimeAttributes>
+                        <connections>
+                            <outlet property="dataSource" destination="Y4t-OF-Pff" id="KHW-ar-Nyn"/>
+                            <outlet property="delegate" destination="Y4t-OF-Pff" id="HRk-Qc-AHf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Members" id="Mg8-rj-ziS">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="G52-bL-MHg">
+                            <connections>
+                                <action selector="didClickNew:" destination="Y4t-OF-Pff" id="tjC-Ui-rch"/>
+                                <segue destination="UwJ-89-nQa" kind="modal" identifier="MembersToAddMember" id="r03-4n-eOw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MVX-Z8-aaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-202" y="-34"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ggp-lH-Vrh">
+            <objects>
+                <navigationController definesPresentationContext="YES" id="UwJ-89-nQa" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="M2C-Ad-wBZ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AFJ-gh-fYE">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-navigationBar-6LQ-io-6b8"/>
+                        </userDefinedRuntimeAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Lnu-I3-xE9" kind="relationship" relationship="rootViewController" id="dJi-Zb-HkV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E69-5j-oSv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="983" y="-33"/>
+        </scene>
+        <!--Add member-->
+        <scene sceneID="RCr-JD-09Z">
+            <objects>
+                <viewController id="Lnu-I3-xE9" customClass="MemberViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LMq-yK-Esm"/>
+                        <viewControllerLayoutGuide type="bottom" id="9iT-d9-Xbn"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tbW-Ge-CFg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vW4-J9-m2j">
+                                <rect key="frame" x="80" y="105" width="226" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-R3z-DK-P5f"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="delegate" destination="Lnu-I3-xE9" id="BOW-Cy-AQN"/>
+                                </connections>
+                            </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gPz-Nm-e4G">
+                                <rect key="frame" x="257" y="168" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-switch-p95-7o-uOV"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="Lnu-I3-xE9" eventType="valueChanged" id="INS-lD-BhQ"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Guest" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fha-KT-Iv9">
+                                <rect key="frame" x="26" y="173" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-1Cz-t0-i0e"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Inactive" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NEI-3z-7Yf">
+                                <rect key="frame" x="26" y="212" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YsE-Hw-dq9"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vQ4-dL-0TQ">
+                                <rect key="frame" x="257" y="207" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-switch-DiW-UN-EkA"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="Lnu-I3-xE9" eventType="valueChanged" id="aX4-FK-Rf9"/>
+                                </connections>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Pc-uO-yF4">
+                                <rect key="frame" x="10" y="424" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Payments">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-nDN-JG-UYr"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="4wK-n6-6pn" kind="push" id="xVH-bp-UxQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Credits" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VqL-Cx-HTs">
+                                <rect key="frame" x="23" y="365" width="195" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.4908759124" blue="0.69174840329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-YLf-28-z4Q"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Days" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZVi-18-U1j">
+                                <rect key="frame" x="138" y="365" width="171" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-fey-Fe-uzw"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Monthly" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJm-p0-kbx">
+                                <rect key="frame" x="26" y="286" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-JOH-qr-mXC"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Daily" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nh6-pd-hBt">
+                                <rect key="frame" x="26" y="325" width="206" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-hya-TW-reO"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="vAm-Xb-Dwy">
+                                <rect key="frame" x="270" y="286" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-imageView-oKm-UP-VB4"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="unchecked.png" translatesAutoresizingMaskIntoConstraints="NO" id="3yp-uz-agB">
+                                <rect key="frame" x="270" y="325" width="22" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-imageView-iBr-WI-InX"/>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This member needs to add a payment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XE6-Le-aI4">
+                                <rect key="frame" x="17" y="395" width="287" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-X5o-iM-t9N"/>
+                                </userDefinedRuntimeAttributes>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fO6-aG-cf6">
+                                <rect key="frame" x="20" y="246" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.21458675990000001" green="0.62942441500000001" blue="0.841796875" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Add notes">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-jtT-kZ-Rf3"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didClickEditNotes:" destination="Lnu-I3-xE9" eventType="touchUpInside" id="LXd-FC-WGm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-x9-8Ac">
+                                <rect key="frame" x="17" y="92" width="55" height="55"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Photo" image="add_user.png"/>
+                                <connections>
+                                    <action selector="didClickAddPhoto:" destination="Lnu-I3-xE9" eventType="touchUpInside" id="c0x-kf-lP7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-dnc-w3-LcF"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add member" id="Fmp-cg-Zls">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="zqJ-ZF-O6r">
+                            <connections>
+                                <action selector="didClickBack:" destination="Lnu-I3-xE9" id="lNv-i3-Qts"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="Eof-GP-VxY">
+                            <connections>
+                                <action selector="didClickSave:" destination="Lnu-I3-xE9" id="cEA-Py-Bcs"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="buttonAddPayment" destination="4Pc-uO-yF4" id="aBf-6p-qK2"/>
+                        <outlet property="buttonPhoto" destination="PHK-x9-8Ac" id="ABr-Jd-T0E"/>
+                        <outlet property="iconDaily" destination="3yp-uz-agB" id="Ps9-s7-uLX"/>
+                        <outlet property="iconMonthly" destination="vAm-Xb-Dwy" id="V58-7q-JFm"/>
+                        <outlet property="inputName" destination="vW4-J9-m2j" id="pFU-gL-R9S"/>
+                        <outlet property="labelBeginner" destination="fha-KT-Iv9" id="CKy-PT-lkj"/>
+                        <outlet property="labelCredits" destination="ZVi-18-U1j" id="O6I-Ij-oWD"/>
+                        <outlet property="labelCreditsTitle" destination="VqL-Cx-HTs" id="5Aj-Wy-HvK"/>
+                        <outlet property="labelInactive" destination="NEI-3z-7Yf" id="aPP-pi-KJg"/>
+                        <outlet property="labelPaymentWarning" destination="XE6-Le-aI4" id="Guo-xJ-tje"/>
+                        <outlet property="switchBeginner" destination="gPz-Nm-e4G" id="kMC-Bl-X1a"/>
+                        <outlet property="switchInactive" destination="vQ4-dL-0TQ" id="bNI-ef-b4j"/>
+                        <segue destination="Q5I-yW-DZ5" kind="push" identifier="ToMemberNotes" id="ksm-4A-Mkl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HnL-2C-dgc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1833" y="-35"/>
+        </scene>
+        <!--Payments-->
+        <scene sceneID="0cI-Bp-bbB">
+            <objects>
+                <viewController id="4wK-n6-6pn" customClass="PaymentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2fQ-h5-ia9"/>
+                        <viewControllerLayoutGuide type="bottom" id="n67-uu-TbD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mJ9-bt-Si7">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9D-a2-3Ow">
+                                <rect key="frame" x="0.0" y="64" width="320" height="141"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DgQ-dm-kfd">
+                                        <rect key="frame" x="20" y="9" width="115" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-4Zd-xi-AQc"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Day pass" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wMq-Fu-d1q">
+                                        <rect key="frame" x="206" y="114" width="82" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-F6d-Yk-7K5"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mVh-yH-Fa0">
+                                        <rect key="frame" x="159" y="84" width="39" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="unchecked.png">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-SOq-zA-Gub"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="4wK-n6-6pn" eventType="touchUpInside" id="Y30-ya-VJN"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="85n-OY-zh4">
+                                        <rect key="frame" x="159" y="5" width="141" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-lU9-iq-jVr"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="4wK-n6-6pn" id="rPw-0k-rmP"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Monthly" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qIk-m6-Pfz">
+                                        <rect key="frame" x="206" y="84" width="82" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-ZRm-ah-DEp"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Other" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0rm-BC-kVt">
+                                        <rect key="frame" x="67" y="114" width="82" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-JXn-5e-ePS"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ye-lF-laO">
+                                        <rect key="frame" x="20" y="114" width="39" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="unchecked.png">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-4UN-PC-TDN"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="4wK-n6-6pn" eventType="touchUpInside" id="YGU-xv-7rs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIZ-rw-XDV">
+                                        <rect key="frame" x="20" y="84" width="39" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="unchecked.png">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-YfP-i8-8BT"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="4wK-n6-6pn" eventType="touchUpInside" id="qnp-Ue-zAd"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Cash" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Pi-Cr-Q6T">
+                                        <rect key="frame" x="67" y="84" width="82" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-Jq0-aX-edD"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9k-5K-L1X">
+                                        <rect key="frame" x="159" y="114" width="39" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <inset key="titleEdgeInsets" minX="19" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <state key="normal" image="unchecked.png">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-Lwv-37-sF5"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="didClickButton:" destination="4wK-n6-6pn" eventType="touchUpInside" id="xAy-Tb-1FR"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mk2-hP-57x">
+                                        <rect key="frame" x="159" y="43" width="141" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-JWU-nS-Xk0"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="delegate" destination="4wK-n6-6pn" id="bTg-FL-3cq"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fo6-fx-YiJ">
+                                        <rect key="frame" x="20" y="47" width="118" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-UCu-y4-Qdu"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="320" id="8uH-yw-1k8"/>
+                                    <constraint firstAttribute="height" constant="141" id="PfP-Wu-3Lk"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-VRl-YI-Mxd"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldF-oa-j03">
+                                <rect key="frame" x="0.0" y="205" width="320" height="314"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="56" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="F59-sL-VCM">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="314"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PaymentCell" rowHeight="56" id="4FL-A6-6hG">
+                                                <rect key="frame" x="0.0" y="22" width="320" height="56"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4FL-A6-6hG" id="bQ0-t2-aY8">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xnP-Or-SIx">
+                                                            <rect key="frame" x="10" y="6" width="175" height="29"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-aTd-Wh-raQ"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nvd-fC-3Jd">
+                                                            <rect key="frame" x="10" y="27" width="175" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-Vif-aG-Ron"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Type" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cAW-9P-pHM">
+                                                            <rect key="frame" x="211" y="9" width="97" height="38"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-W2j-Ri-HMW"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCellContentView-I94-z5-AQU"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </tableViewCellContentView>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCell-0Ce-jm-uNe"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableView-68E-73-edw"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="4wK-n6-6pn" id="r96-1K-M5l"/>
+                                            <outlet property="delegate" destination="4wK-n6-6pn" id="jZl-hi-TKi"/>
+                                        </connections>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-F8C-Xc-ppX"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="P9D-a2-3Ow" firstAttribute="top" secondItem="2fQ-h5-ia9" secondAttribute="bottom" id="JQD-PJ-6JP"/>
+                            <constraint firstItem="ldF-oa-j03" firstAttribute="top" secondItem="P9D-a2-3Ow" secondAttribute="bottom" id="RIu-dG-ZGv"/>
+                            <constraint firstItem="P9D-a2-3Ow" firstAttribute="leading" secondItem="mJ9-bt-Si7" secondAttribute="leading" id="Sr1-Wo-5iL"/>
+                            <constraint firstItem="ldF-oa-j03" firstAttribute="leading" secondItem="mJ9-bt-Si7" secondAttribute="leading" id="kuR-NV-ull"/>
+                            <constraint firstItem="n67-uu-TbD" firstAttribute="top" secondItem="ldF-oa-j03" secondAttribute="bottom" id="tFj-QA-ETo"/>
+                            <constraint firstAttribute="trailing" secondItem="ldF-oa-j03" secondAttribute="trailing" id="xv9-Vo-zZ7"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-eBH-Xg-r3n"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" title="Payments" id="12q-Fo-RwU"/>
+                    <connections>
+                        <outlet property="buttonCash" destination="NIZ-rw-XDV" id="GtQ-sW-YSu"/>
+                        <outlet property="buttonDaily" destination="Y9k-5K-L1X" id="FlK-bM-huM"/>
+                        <outlet property="buttonMonthly" destination="mVh-yH-Fa0" id="sLz-UY-BHe"/>
+                        <outlet property="buttonVenmo" destination="9Ye-lF-laO" id="mxF-uL-2hY"/>
+                        <outlet property="inputAmount" destination="85n-OY-zh4" id="fEA-eR-MR7"/>
+                        <outlet property="inputDate" destination="mk2-hP-57x" id="pEA-TB-Uha"/>
+                        <outlet property="labelDate" destination="fo6-fx-YiJ" id="nfN-se-Lri"/>
+                        <outlet property="tableView" destination="F59-sL-VCM" id="3hL-Jl-wpQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ygK-BB-Npn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2686" y="-34"/>
+        </scene>
+        <!--Notes-->
+        <scene sceneID="28S-au-WDd">
+            <objects>
+                <viewController id="Q5I-yW-DZ5" customClass="NotesViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2Nl-zw-mhw"/>
+                        <viewControllerLayoutGuide type="bottom" id="Y84-U8-QrE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Km7-t7-AdG">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T3P-Hq-STB">
+                                <rect key="frame" x="8" y="101" width="304" height="415"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes about your..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPT-BK-pNZ">
+                                <rect key="frame" x="8" y="72" width="359" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="gUN-Vr-xOq"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="T3P-Hq-STB" firstAttribute="leading" secondItem="Km7-t7-AdG" secondAttribute="leading" constant="8" id="5oj-gy-GU7"/>
+                            <constraint firstItem="Y84-U8-QrE" firstAttribute="top" secondItem="T3P-Hq-STB" secondAttribute="bottom" constant="8" id="B1p-n3-hza"/>
+                            <constraint firstAttribute="trailing" secondItem="T3P-Hq-STB" secondAttribute="trailing" constant="8" id="TYV-Qf-x3J"/>
+                            <constraint firstItem="T3P-Hq-STB" firstAttribute="top" secondItem="yPT-BK-pNZ" secondAttribute="bottom" constant="8" id="Vfr-Jc-WSk"/>
+                            <constraint firstItem="yPT-BK-pNZ" firstAttribute="leading" secondItem="Km7-t7-AdG" secondAttribute="leading" constant="8" id="Wps-ut-pRm"/>
+                            <constraint firstItem="yPT-BK-pNZ" firstAttribute="top" secondItem="2Nl-zw-mhw" secondAttribute="bottom" constant="8" id="cSp-Zg-p8G"/>
+                            <constraint firstAttribute="trailing" secondItem="yPT-BK-pNZ" secondAttribute="trailing" constant="8" id="jmU-nc-OKj"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Notes" id="KLx-jt-jrb"/>
+                    <connections>
+                        <outlet property="constraintBottomOffset" destination="B1p-n3-hza" id="nRS-HU-2qV"/>
+                        <outlet property="constraintTopOffset" destination="cSp-Zg-p8G" id="uS3-cq-yV2"/>
+                        <outlet property="inputNotes" destination="T3P-Hq-STB" id="4jE-cx-lDz"/>
+                        <outlet property="labelTitle" destination="yPT-BK-pNZ" id="t1z-pQ-Ux7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YAk-50-9Ix" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1833" y="753"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="add_user.png" width="512" height="512"/>
+        <image name="unchecked.png" width="22" height="22"/>
+    </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="r03-4n-eOw"/>
+    </inferredMetricsTieBreakers>
+</document>
