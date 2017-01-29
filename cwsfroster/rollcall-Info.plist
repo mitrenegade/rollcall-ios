@@ -38,7 +38,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>5</string>
+	<string>6</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -57,6 +57,8 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>RollCall needs to access your camera if you want to upload an organization photo.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>RollCall needs to access your photo library if you want to select an organization photo.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Splash</string>
 	<key>UIMainStoryboardFile</key>
