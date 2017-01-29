@@ -10,7 +10,7 @@
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
-		8E800D311E3E94770085EC4D /* ParseTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseTestService.swift */; };
+		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
 		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
 		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
@@ -116,7 +116,7 @@
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
-		8E800D301E3E94770085EC4D /* ParseTestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseTestService.swift; sourceTree = "<group>"; };
+		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseLogService.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -447,7 +447,7 @@
 				9E80086116196883003E9B16 /* AppDelegate.m */,
 				9EC0F50219A4CB7B003441AC /* Constants.h */,
 				8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */,
-				8E800D301E3E94770085EC4D /* ParseTestService.swift */,
+				8E800D301E3E94770085EC4D /* ParseLogService.swift */,
 				9EC5F2E51936CFC00056140F /* Parse Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				8EE005A41E3D833E00272DC0 /* Storyboards */,
@@ -793,7 +793,7 @@
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				9E99F8D1193D717A004EB5C1 /* Practice+Parse.m in Sources */,
-				8E800D311E3E94770085EC4D /* ParseTestService.swift in Sources */,
+				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
 				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,

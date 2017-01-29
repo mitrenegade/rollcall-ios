@@ -58,7 +58,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(close) object:nil];
     [self didRateWithStars:sender.tag];
     
-    [PFAnalytics trackEvent:@"clicked on star" dimensions:@{@"stars": [NSString stringWithFormat:@"%ld", (long)sender.tag]}];
+    [ParseLog logWithTypeString:@"ClickedOnStar" title:nil message:nil params:@{@"stars": @(sender.tag)} error:nil];
 }
 
 -(IBAction)didClickClose:(id)sender {

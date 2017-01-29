@@ -13,13 +13,13 @@ enum TestAlertType: String {
     case GenericTestAlert
 }
 
-extension UIViewController {
-    func parseLog(type: TestAlertType, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
-        parseLog(typeString: type.rawValue, title: title, message: message, params: params, error: error)
+class ParseLog: NSObject {
+    class func log(type: TestAlertType, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
+        log(typeString: type.rawValue, title: title, message: message, params: params, error: error)
     }
 
     // compatible with ObjC
-    func parseLog(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
+    class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
 
         let object = PFObject(className: "TestLog")
         object.setValue(PFUser.current()?.objectId, forKey: "userId")
@@ -46,15 +46,23 @@ extension UIViewController {
         }
         object.saveInBackground()
     }
-    
+}
+
+extension UIViewController {
+
     func testAlert(_ title: String, message: String?, type: TestAlertType, error: Error? = nil, params: [String: Any]? = nil, completion: (() -> Void)? = nil) {
         
-        self.parseLog(type: type, title: title, message: message, params: params, error: error)
+        var paramsDict: NSDictionary? = nil
+        if let params = params {
+            paramsDict = NSDictionary(dictionary: params)
+        }
+        let err: NSError? = error as? NSError
+        ParseLog.log(type: type, title: title, message: message, params: paramsDict, error: err)
         
         guard TEST else {
             return
         }
         
-        self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: error as? NSError, completion: completion)
+        self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: err, completion: completion)
     }
 }

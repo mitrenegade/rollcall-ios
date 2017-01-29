@@ -236,7 +236,7 @@
             [self reloadData];
         }];
         
-        [PFAnalytics trackEvent:@"attendance removed"];
+        [ParseLog logWithTypeString:@"AttendanceRemoved" title:nil message:nil params:nil error:nil];
     }
     else {
         Member *member;
@@ -268,7 +268,7 @@
             }];
         }
         
-        [PFAnalytics trackEvent:@"attendance added"];
+        [ParseLog logWithTypeString:@"AttendanceAdded" title:nil message:nil params:nil error:nil];
     }
     [self reloadData];
 }

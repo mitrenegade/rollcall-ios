@@ -85,12 +85,12 @@ class NotesViewController: UIViewController {
         if self.practice != nil {
             self.practice!.notes = self.inputNotes.text
             self.practice!.saveOrUpdateToParse(completion: nil)
-            PFAnalytics.trackEvent("notes entered", dimensions: ["for": "practice"])
+            ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "practice"], error: nil)
         }
         if self.member != nil {
             self.member!.notes = self.inputNotes.text
             self.member!.saveOrUpdateToParse(completion: nil)
-            PFAnalytics.trackEvent("notes entered", dimensions: ["for": "member"])
+            ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "member"], error: nil)
         }
         
     }

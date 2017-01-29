@@ -181,7 +181,7 @@
             [UIAlertView alertViewWithTitle:@"Save error" message:@"Your last member edit was not saved"];
         }
     }];
-    [PFAnalytics trackEvent:@"member created"];
+    [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
 }
 
 -(void)updateMember:(Member *)member {
@@ -200,7 +200,7 @@
         }
     }];
     
-    [PFAnalytics trackEvent:@"member updated"];
+    [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
 }
 
 -(void)cancel {
@@ -225,6 +225,6 @@
     [self.memberFetcher performFetch:nil];
     [self notify:@"member:deleted"];
     
-    [PFAnalytics trackEvent:@"member deleted"];
+    [ParseLog logWithTypeString:@"MemberDeleted" title:nil message:nil params:nil error:nil];
 }
 @end
