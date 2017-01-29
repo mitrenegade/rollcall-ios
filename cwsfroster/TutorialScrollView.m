@@ -23,6 +23,8 @@
 -(void)awakeFromNib {
     self.backgroundColor = [UIColor clearColor];
     [self setupScroll];
+    
+    [super awakeFromNib];
 }
 
 -(void)setupScroll {
@@ -36,8 +38,8 @@
     [scrollView setBounces:NO];
 
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 80, 40)];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor orangeColor];
+    pageControl.pageIndicatorTintColor = [UIColor whiteColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:91.0/255.0 green:196.0/255.0 blue:188.0/255.0 alpha:1];
 
     [self addSubview:scrollView];
     [self addSubview:pageControl];
