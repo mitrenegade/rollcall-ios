@@ -26,7 +26,9 @@
 }
 
 -(void)setupScroll {
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height)];
+    CGFloat width = _appDelegate.window.frame.size.width;
+    CGFloat height = _appDelegate.window.frame.size.height;
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     [scrollView setPagingEnabled:YES];
     [scrollView setShowsHorizontalScrollIndicator:NO];
     [scrollView setShowsVerticalScrollIndicator:NO];
@@ -39,7 +41,6 @@
 
     [self addSubview:scrollView];
     [self addSubview:pageControl];
-
 }
 
 -(void)setTutorialPages:(NSArray *)pageNames {
@@ -62,8 +63,8 @@
 }
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    int page = scrollView.contentOffset.x / self.bounds.size.width;
-    [pageControl setCurrentPage:page];
+    int currpage = scrollView.contentOffset.x / self.bounds.size.width;
+    [pageControl setCurrentPage:currpage];
     
     [PFAnalytics trackEvent:@"tutorial scrolled"];
 }
