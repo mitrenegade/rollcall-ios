@@ -301,7 +301,8 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     [logo setAlpha:1];
-    [self performSegueWithIdentifier:@"IntroToPractices" sender:self];
+    
+    [self notifyForLoggedInSuccess];
 }
 
 #pragma mark TextFieldDelegate

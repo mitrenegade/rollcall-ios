@@ -14,6 +14,7 @@
 		8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005AF1E3D951900272DC0 /* SplashViewController.swift */; };
 		8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */; };
 		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
+		8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */; };
 		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
@@ -112,6 +113,7 @@
 		8EE005AF1E3D951900272DC0 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE005B31E3D955200272DC0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IntroViewController+Utils.swift"; sourceTree = "<group>"; };
 		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
 		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				8EE005B11E3D952E00272DC0 /* Utils */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
+				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
 				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
 				9E98DB4B19B2E63D006D81FC /* ShellViewController.m */,
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
@@ -706,6 +709,7 @@
 				AC8EF0F21C265F2C0029EBAE /* Practice.m in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
+				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9EA0994319B0BF62007BC1FD /* Payment.m in Sources */,
 				9E15616B19924B7800A31398 /* Member+Info.m in Sources */,
 				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
