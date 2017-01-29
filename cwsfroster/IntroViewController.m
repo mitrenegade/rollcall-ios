@@ -41,6 +41,7 @@
     inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     inputConfirmation.superview.layer.borderWidth = 1;
     inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    constraintConfirmationHeight.constant = 0;
 
     [UIView animateWithDuration:.25 animations:^{
         if (showLogin)
@@ -128,6 +129,7 @@
 -(IBAction)didClickLogin:(id)sender {
     inputConfirmation.superview.alpha = 0;
     inputConfirmation.superview.hidden = YES;
+    constraintConfirmationHeight.constant = 0;
 
     if (inputLogin.text.length == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
@@ -168,6 +170,7 @@
         inputConfirmation.superview.alpha = 1;
         [inputConfirmation.superview setHidden:NO];
         inputConfirmation.alpha = 1;
+        constraintConfirmationHeight.constant = 40;
         return;
     }
 
