@@ -92,7 +92,7 @@
 
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
 
-    rater = [_storyboard instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
 }
 
