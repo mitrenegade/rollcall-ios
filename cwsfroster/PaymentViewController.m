@@ -136,6 +136,8 @@
         return;
     }
 
+    [ParseLog logWithTypeString:@"AddPaymentClicked" title:nil message:nil params:@{@"type": @(paymentType), @"source": @(paymentSource)} error:nil];
+    
     PFRelation *relation = [self.member.pfObject relationForKey:@"payments"];
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if ([objects count] == 0) {
@@ -150,6 +152,8 @@
             NSLog(@"Objects: %lu", (unsigned long)[objects count]);
             // todo: prevent multiple payments for a month
         }
+        
+        [ParseLog logWithTypeString:@"AddPaymentSuccess" title:nil message:nil params:nil error:nil];
 
         [self enableNavigation:NO];
         [self.inputDate resignFirstResponder];
