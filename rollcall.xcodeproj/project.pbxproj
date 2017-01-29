@@ -349,6 +349,8 @@
 				9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */,
 				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
 				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
+				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
+				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -458,8 +460,6 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
-				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
-				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
 				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
 				9EC3031919A0EA9500777F79 /* PaymentViewController.h */,

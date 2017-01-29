@@ -182,63 +182,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell2" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AttendanceCell" forIndexPath:indexPath];
 
     // Configure the cell...
-    int section = indexPath.section;
-    int row = indexPath.row;
-
-    UILabel *statusView = (UILabel *)[cell viewWithTag:1];
-    statusView.layer.borderWidth = 2;
-    statusView.layer.cornerRadius = 5;
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
     UILabel *label = [cell viewWithTag:2];
 
     NSString *name;
     if (section == 0) {
         if (attendances.count == 0) {
-            statusView.layer.borderColor = [[UIColor blackColor] CGColor];
             name = @"Click a row to add a member";
-            statusView.text = @"+";
             
             label.alpha = 0.5;
-            statusView.alpha = 0.5;
         }
         else {
             label.alpha = 1;
-            statusView.alpha = 1;
             
             Attendance *attendance = attendances[row];
             name = attendance.member.name;
-            
-            statusView.layer.borderColor = [[UIColor greenColor] CGColor];
-            if (attendance.payment) {
-                statusView.text = @"✓";
-            }
-            else if ([attendance isFreebie]) {
-//                statusView.layer.borderColor = [[UIColor yellowColor] CGColor];
-                statusView.text = @"✓";
-            }
-            else {
-//                statusView.layer.borderColor = [[UIColor redColor] CGColor];
-                statusView.text = @"✓";
-            }
         }
     }
     else if (section == 1) {
         Member *member = membersActive[row];
         name = member.name;
-
-        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = @"+"; //[member textForStatusForMonth:self.practice.date];
     }
     else if (section == 2) {
         Member *member = membersInactive[row];
         name = member.name;
-
-        statusView.layer.borderColor = [[UIColor blackColor] CGColor];//[[member colorForStatusForMonth:self.practice.date] CGColor];
-        statusView.text = @"+";//[member textForStatusForMonth:self.practice.date];
     }
-//    cell.accessoryView = statusView.superview;
     label.text = name;
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -248,8 +220,8 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    int section = indexPath.section;
-    int row = indexPath.row;
+    NSInteger section = indexPath.section;
+    NSInteger row = indexPath.row;
 
     if (section == 0) {
         if (attendances.count == 0) {
@@ -299,60 +271,6 @@
         [PFAnalytics trackEvent:@"attendance added"];
     }
     [self reloadData];
-}
-
-- (IBAction)didTapAccessory:(id)sender event:(id)event{
-    NSSet *touches = [event allTouches];
-    UITouch *touch = [touches anyObject];
-    CGPoint currentTouchPosition = [touch locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint: currentTouchPosition];
-    
-    [PFAnalytics trackEvent:@"attendance accessory tapped"];
-
-    if (indexPath != nil){
-        NSString *message;
-        if (indexPath.section == 0) {
-            // clicked on an attendance
-            Attendance *attendance = attendances[indexPath.row];
-            Payment *payment = attendance.payment;
-            if (payment) {
-                if ([payment isMonthly])
-                    message = @"is paid for the month";
-                else
-                    message = @"paid for a day pass";
-            }
-            else if ([attendance isFreebie]) {
-                message = @"has a free pass for the day";
-            }
-            else {
-                message = @"needs to pay for this attendance";
-            }
-            message = [NSString stringWithFormat:@"%@ %@", attendance.member.name, message];
-        }
-        else {
-            Member *member;
-            if (indexPath.section == 1) {
-                member = membersActive[indexPath.row];
-                Payment *payment = [member paymentForMonth:self.practice.date];
-                if (payment)
-                    message = @"is paid for the month";
-                else if ([member.currentDailyPayment daysLeft])
-                    message = [NSString stringWithFormat:@"has %d days left on a day pass", [member.currentDailyPayment daysLeft]];
-                else if ([member isBeginner])
-                    message = @"gets freebie attendances";
-                else
-                    message = @"has not paid for the month";
-            }
-            else {
-                member = membersInactive[indexPath.row];
-                message = @"is inactive for the month";
-            }
-            message = [NSString stringWithFormat:@"%@ %@", member.name, message];
-        }
-        if (message) {
-            [UIAlertView alertViewWithTitle:nil message:message];
-        }
-    }
 }
 
 
