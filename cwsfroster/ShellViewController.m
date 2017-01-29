@@ -55,7 +55,7 @@
 }
 
 -(void)goToSettings:(NSNotification *)n {
-    UINavigationController *nav = [_storyboard instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
+    UINavigationController *nav = [[UIStoryboard storyboardWithName:@"Settings" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingsNavigationController"];
     [self presentViewController:nav animated:YES completion:nil];
 }
 - (void)didReceiveMemoryWarning

@@ -302,7 +302,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     [logo setAlpha:1];
     
-    [self notifyForLoggedInSuccess];
+    [self notifyForLogInSuccess];
 }
 
 #pragma mark TextFieldDelegate

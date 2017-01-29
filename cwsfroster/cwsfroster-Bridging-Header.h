@@ -13,5 +13,6 @@
 #import "Member+Parse.h"
 #import "AppDelegate.h"
 #import "IntroViewController.h"
+#import "SettingsViewController.h"
 
 #endif /* cwsfroster_Bridging_Header_h */

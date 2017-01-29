@@ -115,7 +115,7 @@
         // logout
         [PFUser logOut];
         [Organization reset];
-        [_appDelegate goToIntro];
+        [self notifyForLogoutInSuccess];
     }
 }
 

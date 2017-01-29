@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: Swift notifications
 extension IntroViewController {
-    func notifyForLoggedInSuccess() {
+    func notifyForLogInSuccess() {
         self.notify(.LoginSuccess, object: nil, userInfo: nil)
     }
 }
