@@ -24,5 +24,4 @@
 }
 @property (nonatomic, weak) Practice *practice;
 
-- (IBAction)didTapAccessory:(id)sender event:(id)event;
 @end
