@@ -127,6 +127,7 @@
 #pragma login
 -(IBAction)didClickLogin:(id)sender {
     inputConfirmation.superview.alpha = 0;
+    inputConfirmation.superview.hidden = YES;
 
     if (inputLogin.text.length == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
@@ -163,7 +164,7 @@
 }
 
 -(IBAction)didClickSignup:(id)sender {
-    if ([inputConfirmation.superview isHidden]) {
+    if (inputConfirmation.superview.hidden) {
         inputConfirmation.superview.alpha = 1;
         [inputConfirmation.superview setHidden:NO];
         inputConfirmation.alpha = 1;
