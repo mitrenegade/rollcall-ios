@@ -18,7 +18,7 @@
 
 @end
 
-@interface MemberViewController : UIViewController <PaymentViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MemberViewController : UIViewController <PaymentViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 {
     IBOutlet UITextField *inputName;
 
