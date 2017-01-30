@@ -211,11 +211,11 @@
     if (changed) {
         [UIAlertView alertViewWithTitle:@"Save changed?" message:@"You've edited the member. Do you want to save the changes?" cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Don't Save"] onDismiss:^(int buttonIndex) {
             self.member.status = @(originalStatus);
-            [self.delegate cancel];
+            [self.delegate close];
         } onCancel:nil];
     }
     else {
-        [self.delegate cancel];
+        [self.delegate close];
     }
 }
 

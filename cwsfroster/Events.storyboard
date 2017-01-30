@@ -63,16 +63,10 @@
                             <outlet property="delegate" destination="1zk-g2-Z21" id="rEy-iD-5uP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Events" id="iNk-Lz-XeV">
-                        <barButtonItem key="rightBarButtonItem" title="New" id="ctV-XN-art">
-                            <connections>
-                                <action selector="didClickNew:" destination="1zk-g2-Z21" id="cQi-Ln-knh"/>
-                                <segue destination="kav-aK-mQv" kind="modal" identifier="EventListToNewEvent" id="Iaw-ko-TF2"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Events" id="iNk-Lz-XeV"/>
                     <connections>
                         <segue destination="kav-aK-mQv" kind="modal" identifier="EventListToDetail" id="c2W-3u-KTk"/>
+                        <segue destination="kav-aK-mQv" kind="presentation" identifier="toNewEvent" id="NE7-e5-kCb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WAR-rj-iFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -610,6 +604,6 @@
         <image name="add_user.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="c2W-3u-KTk"/>
+        <segue reference="NE7-e5-kCb"/>
     </inferredMetricsTieBreakers>
 </document>
