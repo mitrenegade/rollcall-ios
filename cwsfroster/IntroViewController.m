@@ -156,6 +156,8 @@
                     [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization or try again."];
                 }
                 else {
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                     [self goToPractices];
                 }
             }];

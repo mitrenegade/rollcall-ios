@@ -55,10 +55,12 @@
                         <barButtonItem key="rightBarButtonItem" title="New" id="G52-bL-MHg">
                             <connections>
                                 <action selector="didClickNew:" destination="Y4t-OF-Pff" id="tjC-Ui-rch"/>
-                                <segue destination="UwJ-89-nQa" kind="modal" identifier="MembersToAddMember" id="r03-4n-eOw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="UwJ-89-nQa" kind="presentation" identifier="toAddMember" id="oG3-kG-6yv"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVX-Z8-aaA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,7 +107,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-R3z-DK-P5f"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outlet property="delegate" destination="Lnu-I3-xE9" id="BOW-Cy-AQN"/>
+                                    <outlet property="delegate" destination="Lnu-I3-xE9" id="8ZB-Xt-VMm"/>
                                 </connections>
                             </textField>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="gPz-Nm-e4G">
@@ -608,6 +610,6 @@
         <image name="unchecked.png" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="r03-4n-eOw"/>
+        <segue reference="oG3-kG-6yv"/>
     </inferredMetricsTieBreakers>
 </document>

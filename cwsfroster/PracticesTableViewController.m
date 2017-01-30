@@ -36,8 +36,19 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_white"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettings:)];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"hamburger4-square"] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 30, 30)];
+    [button addTarget:self action:@selector(goToSettings:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = left;
+
+    UIButton *rightbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightbutton setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+    [rightbutton setFrame:CGRectMake(0, 0, 30, 30)];
+    [rightbutton addTarget:self action:@selector(goToAddEvent:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightbutton];
+    self.navigationItem.rightBarButtonItem = right;
 
     [self reloadPractices];
 
@@ -57,6 +68,10 @@
 
 -(void)goToSettings:(id)sender {
     [self notify:@"goToSettings"];
+}
+
+-(void)goToAddEvent:(id)sender {
+    [self performSegueWithIdentifier:@"toNewEvent" sender:nil];
 }
 
 #pragma mark - Table view data source
@@ -170,7 +185,7 @@
     // Pass the selected object to the new view controller.
     UINavigationController *nav = [segue destinationViewController];
 
-    if ([segue.identifier isEqualToString:@"EventListToNewEvent"]) {
+    if ([segue.identifier isEqualToString:@"toNewEvent"]) {
         // create new practice
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];

@@ -32,8 +32,19 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu_white"] style:UIBarButtonItemStylePlain target:self action:@selector(goToSettings:)];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setImage:[UIImage imageNamed:@"hamburger4-square"] forState:UIControlStateNormal];
+    [button setFrame:CGRectMake(0, 0, 30, 30)];
+    [button addTarget:self action:@selector(goToSettings:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = left;
+
+    UIButton *rightbutton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightbutton setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
+    [rightbutton setFrame:CGRectMake(0, 0, 30, 30)];
+    [rightbutton addTarget:self action:@selector(goToAddMember:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightbutton];
+    self.navigationItem.rightBarButtonItem = right;
 
     [self listenFor:@"payment:updated" action:@selector(reloadMembers)];
     [self reloadMembers];
@@ -52,6 +63,10 @@
 
 -(void)goToSettings:(id)sender {
     [self notify:@"goToSettings"];
+}
+
+-(void)goToAddMember:(id)sender {
+    [self performSegueWithIdentifier:@"toAddMember" sender:nil];
 }
 
 #pragma mark FetchedResultsController
@@ -148,7 +163,7 @@
         [controller setDelegate:self];
         [controller setMember:member];
     }
-    else if ([segue.identifier isEqualToString:@"MembersToAddMember"]) {
+    else if ([segue.identifier isEqualToString:@"toAddMember"]) {
         [controller setDelegate:self];
     }
     // Get the new view controller using [segue destinationViewController].
@@ -165,7 +180,6 @@
     }
     [self notify:@"member:updated"];
 
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [self reloadMembers];
 
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
@@ -175,6 +189,7 @@
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadMembers];
             }
+            [self close];
         }
         else {
             NSLog(@"Could not save member!");
@@ -185,7 +200,6 @@
 }
 
 -(void)updateMember:(Member *)member {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
 
@@ -193,6 +207,8 @@
             if ([_appDelegate.managedObjectContext save:&error]) {
                 [self reloadMembers];
                 [self notify:@"member:updated"];
+                
+                [self close];
             }
         }
         else {
@@ -203,7 +219,7 @@
     [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
 }
 
--(void)cancel {
+-(void)close {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 

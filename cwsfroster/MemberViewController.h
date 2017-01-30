@@ -12,13 +12,13 @@
 
 @protocol MemberDelegate <NSObject>
 
--(void)cancel;
+-(void)close;
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto;
 -(void)updateMember:(Member *)member;
 
 @end
 
-@interface MemberViewController : UIViewController <PaymentViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface MemberViewController : UIViewController <PaymentViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate>
 {
     IBOutlet UITextField *inputName;
 

@@ -68,7 +68,6 @@
 		9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994519B0BF63007BC1FD /* Attendance.m */; };
 		9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994819B0EB7F007BC1FD /* Organization+Info.m */; };
 		9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994B19B0F160007BC1FD /* AsyncImageView.m */; };
-		9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */; };
 		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
 		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
 		9EA0995619B10343007BC1FD /* Organization.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995519B10343007BC1FD /* Organization.m */; };
@@ -193,7 +192,6 @@
 		9EA0994819B0EB7F007BC1FD /* Organization+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Info.m"; sourceTree = "<group>"; };
 		9EA0994A19B0F160007BC1FD /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		9EA0994B19B0F160007BC1FD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
-		9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu_white@2x.png"; sourceTree = "<group>"; };
 		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		9EA0995019B0F448007BC1FD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		9EA0995219B0FCBA007BC1FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -370,7 +368,6 @@
 				9E649FDF19B6040A00334B34 /* icon120.png */,
 				9E98DB4D19B2EA5B006D81FC /* checked@2x.png */,
 				9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */,
-				9EA0994D19B0F40A007BC1FD /* menu_white@2x.png */,
 				9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */,
 				9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */,
 				9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */,
@@ -673,7 +670,6 @@
 				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
 				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
 				AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */,
-				9EA0994E19B0F40A007BC1FD /* menu_white@2x.png in Resources */,
 				8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -32,6 +32,22 @@
     [self updateTabBarIcons];
     [self listenFor:@"organization:name:changed" action:@selector(updateTabBarIcons)];
     [self listenFor:@"goToSettings" action:@selector(goToSettings:)];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"organization:is:new"]) {
+        [self setSelectedIndex:1];
+    }
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"organization:is:new"]) {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"organization:is:new"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSString *title = [NSString stringWithFormat: @"Welcome to %@", [[Organization currentOrganization] name]];
+        [self simpleAlert:title message:@"Add some members to your new organization."];
+    }
 }
 
 -(void)updateTabBarIcons {

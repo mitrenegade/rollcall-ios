@@ -96,10 +96,16 @@
     rater.delegate = self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] mutableCopy];
+    if ([attendees count] == 0) {
+        [buttonEditAttendees setTitle:@"Add Attendees" forState:UIControlStateNormal];
+    }
+    else {
+        [buttonEditAttendees setTitle:@"Edit Attendees" forState:UIControlStateNormal];
+    }
 }
 
 -(IBAction)didClickCancel:(id)sender {
@@ -459,7 +465,11 @@
 -(void)didClickDrawing:(id)sender {
     NSString *title = @"Random drawing";
     NSString *message = @"Click to select one attendee at random";
-    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = true", @"attended"]] mutableCopy];
+    NSSet *attendances = self.practice.attendances;
+    for (Attendance *a in attendances) {
+        NSLog(@"Attendance %@, attended %@", a, a.attended);
+    }
+    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] mutableCopy];
     [self doDrawingFromAttendees:attendees title:title message:message];
 }
 

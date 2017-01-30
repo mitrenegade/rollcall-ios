@@ -63,16 +63,10 @@
                             <outlet property="delegate" destination="1zk-g2-Z21" id="rEy-iD-5uP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Events" id="iNk-Lz-XeV">
-                        <barButtonItem key="rightBarButtonItem" title="New" id="ctV-XN-art">
-                            <connections>
-                                <action selector="didClickNew:" destination="1zk-g2-Z21" id="cQi-Ln-knh"/>
-                                <segue destination="kav-aK-mQv" kind="modal" identifier="EventListToNewEvent" id="Iaw-ko-TF2"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Events" id="iNk-Lz-XeV"/>
                     <connections>
                         <segue destination="kav-aK-mQv" kind="modal" identifier="EventListToDetail" id="c2W-3u-KTk"/>
+                        <segue destination="kav-aK-mQv" kind="presentation" identifier="toNewEvent" id="NE7-e5-kCb"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WAR-rj-iFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -362,7 +356,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="gEX-KT-veL"/>
                                         </constraints>
-                                        <state key="normal" title="Pick an attendee">
+                                        <state key="normal" title="Random Drawing">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -373,27 +367,12 @@
                                             <action selector="didClickDrawing:" destination="ol8-CI-xXO" eventType="touchUpInside" id="c7b-iO-2Rl"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Random Drawing" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eid-l0-CP0">
-                                        <rect key="frame" x="20" y="0.0" width="325" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="WhE-nZ-dwB"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-label-1C5-bD-ak5"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="lfs-e5-kyw" firstAttribute="leading" secondItem="Kbv-fS-SHQ" secondAttribute="leading" constant="20" id="2BD-d1-cV6"/>
                                     <constraint firstAttribute="trailing" secondItem="lfs-e5-kyw" secondAttribute="trailing" constant="20" id="2Ce-nX-9id"/>
-                                    <constraint firstItem="lfs-e5-kyw" firstAttribute="top" secondItem="eid-l0-CP0" secondAttribute="bottom" constant="8" id="Ch5-mp-yI1"/>
-                                    <constraint firstItem="eid-l0-CP0" firstAttribute="leading" secondItem="Kbv-fS-SHQ" secondAttribute="leading" constant="20" id="Iow-Xg-RE6"/>
-                                    <constraint firstItem="eid-l0-CP0" firstAttribute="top" secondItem="Kbv-fS-SHQ" secondAttribute="top" id="cOD-KC-lFE"/>
-                                    <constraint firstAttribute="trailing" secondItem="eid-l0-CP0" secondAttribute="trailing" constant="20" id="zLG-7r-we9"/>
+                                    <constraint firstItem="lfs-e5-kyw" firstAttribute="top" secondItem="Kbv-fS-SHQ" secondAttribute="top" constant="29" id="FS6-db-IXi"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-eo7-Rm-8o8"/>
@@ -625,6 +604,6 @@
         <image name="add_user.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="c2W-3u-KTk"/>
+        <segue reference="NE7-e5-kCb"/>
     </inferredMetricsTieBreakers>
 </document>
