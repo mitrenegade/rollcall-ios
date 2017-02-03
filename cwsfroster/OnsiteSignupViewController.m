@@ -158,9 +158,9 @@
     newAttendance.organization = [Organization currentOrganization];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    NSNumber *status = @(DidAttend); // attended by default
+    NSNumber *status = @(AttendedStatusPresent); // attended by default
     if ([member isBeginner]) {
-        status = @(DidAttendFreebie);
+        status = @(AttendedStatusFreebie);
     }
     [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {

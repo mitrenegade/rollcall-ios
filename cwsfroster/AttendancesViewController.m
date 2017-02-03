@@ -98,7 +98,7 @@
 -(void)reloadData {
     membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
-    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(DidNotAttend)}] all] mutableCopy];
+    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(AttendedStatusNone)}] all] mutableCopy];
     for (Attendance *attendance in attendances) {
         Member *member = attendance.member;
         [membersActive removeObject:member];
@@ -120,9 +120,9 @@
     newAttendance.organization = [Organization currentOrganization];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    NSNumber *status = @(DidAttend); // attended by default
+    NSNumber *status = @(AttendedStatusPresent); // attended by default
     if ([member isBeginner]) {
-        status = @(DidAttendFreebie);
+        status = @(AttendedStatusFreebie);
     }
     [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [self reloadData];
@@ -229,7 +229,7 @@
         }
         // clicked on an attendance
         Attendance *attendance = attendances[row];
-        attendance.attended = @(DidNotAttend);
+        attendance.attended = @(AttendedStatusNone);
         NSLog(@"old payment: %@", attendance.payment);
         [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
             NSLog(@"new payment: %@", attendance.payment);
@@ -251,9 +251,9 @@
         NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
         if (at.count) {
             Attendance *attendance = at[0];
-            NSNumber *status = @(DidAttend); // attended by default
+            NSNumber *status = @(AttendedStatusPresent); // attended by default
             if ([attendance.member isBeginner]) {
-                status = @(DidAttendFreebie);
+                status = @(AttendedStatusFreebie);
             }
             attendance.attended = status;
             [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {

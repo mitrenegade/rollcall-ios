@@ -8,12 +8,6 @@
 
 #import "Attendance.h"
 
-typedef enum AttendedStatusEnum {
-    DidNotAttend = 0,
-    DidAttend = 1,
-    DidAttendFreebie = 2
-} AttendedStatus;
-
 @interface Attendance (Info)
 
 -(BOOL)isFreebie;

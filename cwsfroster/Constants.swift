@@ -19,3 +19,16 @@ enum NotificationType: String {
         return Notification.Name(self.rawValue)
     }
 }
+
+@objc enum AttendedStatus: Int {
+    case None = 0
+    case Present = 1
+    case Freebie = 2
+}
+
+@objc enum MemberStatus: Int {
+    case Inactive = 0
+    case Beginner = 1 // member can be a beginner and all their attendances will be marked as freebie.
+    case Active = 2
+}
+

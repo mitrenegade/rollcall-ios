@@ -8,12 +8,6 @@
 
 #import "Member.h"
 
-typedef  enum MemberStatus {
-    MemberStatusInactive = 0,
-    MemberStatusBeginner, // member can be a beginner and all their attendances will be marked as freebie.
-    MemberStatusActive
-} MemberStatus;
-
 @class Payment;
 @interface Member (Info)
 
