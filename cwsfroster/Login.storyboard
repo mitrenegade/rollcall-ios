@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -26,15 +25,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pVS-wZ-mWP" userLabel="Tutorial view" customClass="TutorialScrollView">
                                 <rect key="frame" x="0.0" y="272" width="375" height="267"/>
                                 <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-DIV-9J-YOD"/>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="inm-tS-E1k">
                                 <rect key="frame" x="0.0" y="272" width="375" height="267"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-imageView-Vm1-wf-m0P"/>
-                                </userDefinedRuntimeAttributes>
                             </imageView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osw-4I-ylC" userLabel="View - name">
                                 <rect key="frame" x="-2" y="49" width="379" height="40"/>
@@ -43,9 +36,6 @@
                                         <rect key="frame" x="20" y="5" width="338" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" enablesReturnKeyAutomatically="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-vUu-m2-Gbc"/>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="9uJ-lQ-vUW" id="dPo-id-tlq"/>
                                         </connections>
@@ -59,9 +49,6 @@
                                     <constraint firstAttribute="height" constant="40" id="d9C-18-hWP"/>
                                     <constraint firstItem="AaE-em-p36" firstAttribute="top" secondItem="osw-4I-ylC" secondAttribute="top" constant="5" id="dHl-9b-8ME"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-5vD-Fh-RMC"/>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bh4-Ff-dBX" userLabel="View - password">
                                 <rect key="frame" x="-2" y="88" width="379" height="40"/>
@@ -70,9 +57,6 @@
                                         <rect key="frame" x="20" y="5" width="338" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-iZQ-aF-0Dd"/>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="9uJ-lQ-vUW" id="qmK-I5-omb"/>
                                         </connections>
@@ -86,9 +70,6 @@
                                     <constraint firstAttribute="trailing" secondItem="UhD-LC-do0" secondAttribute="trailing" constant="21" id="K8T-jj-5qN"/>
                                     <constraint firstItem="UhD-LC-do0" firstAttribute="leading" secondItem="bh4-Ff-dBX" secondAttribute="leading" constant="20" id="ozt-Qv-BQD"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-jx2-9E-qkh"/>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-c8-FeH" userLabel="View - confirmation">
                                 <rect key="frame" x="-2" y="127" width="379" height="40"/>
@@ -97,9 +78,6 @@
                                         <rect key="frame" x="20" y="5" width="338" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-textField-EWW-qd-v8i"/>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="delegate" destination="9uJ-lQ-vUW" id="Zh4-cV-Jux"/>
                                         </connections>
@@ -113,9 +91,6 @@
                                     <constraint firstAttribute="trailing" secondItem="Ihc-T7-JxB" secondAttribute="trailing" constant="21" id="goL-EO-IJE"/>
                                     <constraint firstAttribute="height" constant="40" id="l76-nd-IBb"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-QcM-mU-1rf"/>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="icon120.png" translatesAutoresizingMaskIntoConstraints="NO" id="gmp-C9-0up">
                                 <rect key="frame" x="0.0" y="551" width="120" height="120"/>
@@ -143,9 +118,6 @@ for your awesome event</string>
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-WSm-U1-fiP"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didClickLogin:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="Ohl-cD-1fA"/>
                                 </connections>
@@ -160,9 +132,6 @@ for your awesome event</string>
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-button-U80-sb-HIq"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didClickSignup:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="e7Z-hM-cXY"/>
                                 </connections>
@@ -208,9 +177,6 @@ for your awesome event</string>
                             <constraint firstAttribute="trailing" secondItem="SlV-fn-YsY" secondAttribute="trailing" id="xKe-ST-nOU"/>
                             <constraint firstItem="pVS-wZ-mWP" firstAttribute="height" secondItem="4bH-1C-WF5" secondAttribute="height" multiplier="2:5" id="zwd-o0-rI5"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-view-ixt-aI-UVL"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="buttonLogin" destination="EFw-un-Kez" id="vN6-2W-J0T"/>
