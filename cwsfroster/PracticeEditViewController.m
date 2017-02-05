@@ -53,21 +53,15 @@
         [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
     }
     
+    [self setupTextView];
+    [self configureForPractice];
+    
     currentRow = -1;
 
     [inputDate setInputView:pickerView];
-    if (self.practice) {
-        [inputDate setText:[self titleForDate:self.practice.date]];
-    }
-    else {
-        self.title = @"New event date";
-        [viewEmail setHidden:YES];
-        [viewDrawing setHidden:YES];
-    }
-    [inputDetails setText:self.practice.details];
-    originalDescription = inputDetails.text;
 
     inputDate.inputAccessoryView = keyboardDoneButtonView;
+    inputDate.text = [self titleForDate:[NSDate date]];
 
     emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
     if (emailTo) {
@@ -85,47 +79,10 @@
     }
     */
 
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-
     rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    NSMutableArray *attendees = [self.practice getAttendances];
-    if ([attendees count] == 0) {
-        [buttonEditAttendees setTitle:@"Add Attendees" forState:UIControlStateNormal];
-    }
-    else {
-        [buttonEditAttendees setTitle:@"Edit Attendees" forState:UIControlStateNormal];
-    }
-}
-
--(IBAction)didClickCancel:(id)sender {
-    if (self.navigationController.viewControllers[0] == self)
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    else
-        [self.navigationController popViewControllerAnimated:YES];
-}
-
--(IBAction)didClickSave:(id)sender {
-    [self saveWithCompletion:^(BOOL success) {
-        if (success) {
-            self.navigationItem.leftBarButtonItem.title = @"Close";
-            if (!didShowRater) {
-                if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
-                    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-                }
-                didShowRater = YES;
-            }
-            else {
-                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-            }
-        }
-    }];
-}
 
 -(void)didCloseRating {
     // don't need
@@ -135,7 +92,6 @@
     NSLog(@"Saving");
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
 
     if (self.practice) {
@@ -224,7 +180,7 @@
         dateForDateString = [NSMutableDictionary dictionary];
         
         int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
-        for (int row = 0; row < 31 + futureDays; row++) {
+        for (int row = 31 + futureDays; row > 0; row--) {
             NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*(row-futureDays)];
             NSString *title = [self titleForDate:date];
             if (title) {
@@ -239,15 +195,18 @@
     NSString *dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
     NSString *dateString = [Util simpleDateFormat:date];
     NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
+    NSLog(@"practice: %@", self.practice);
+    /*
     if ([dateString isEqualToString:self.practice.title]) {
         // current practice is allowed to be shown
         return title;
     }
     else {
-        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != %@", @"title", dateString]]; //[[Practice where:@{@"title":dateString}] all];
+        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K == %@", @"title", dateString]];
         if ([practices count])
             return nil;
     }
+     */
     return title;
 }
 
@@ -281,73 +240,6 @@
     // revert to old date
     inputDate.text = lastInputDate;
     [inputDate resignFirstResponder];
-}
-
-#pragma mark TextFieldDelegate
--(void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (currentRow == -1) {
-        currentRow = FUTURE_DAYS - 1;
-        UIPickerView *pickerView = textField.inputView;
-        [pickerView selectRow:currentRow inComponent:0 animated:YES];
-    }
-    
-    if (textField == inputDate) {
-        lastInputDate = textField.text;
-
-        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:currentRow inComponent:0];
-    }
-    /*
-    else if (textField == inputFrom) {
-        inputFrom.text = emailFrom;
-    }
-    */
-    else if (textField == inputTo) {
-        inputTo.text = emailTo;
-    }
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == inputTo) {
-        if (inputTo.text.length == 0) {
-            [buttonEmail setEnabled:NO];
-            [buttonEmail setAlpha:.5];
-        }
-        else {
-            [buttonEmail setEnabled:YES];
-            [buttonEmail setAlpha:1];
-
-        }
-
-        if (textField == inputTo) {
-            emailTo = textField.text;
-        }
-        /*
-        else if (textField == inputFrom) {
-            emailFrom = textField.text;
-        }
-         */
-
-    }
-    else if (textField == inputDate) {
-        if (textField.text.length == 0) {
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        }
-        else {
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        }
-    }
-    else if (textField == inputDetails) {
-        if ([textField.text isEqualToString:originalDescription] || inputDate.text.length == 0)
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        else
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    }
-    [textField resignFirstResponder];
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
 }
 
 #pragma mark emailing

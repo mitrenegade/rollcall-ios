@@ -14,16 +14,18 @@
 
 @protocol PracticeEditDelegate <NSObject>
 
+-(void)didCreatePractice;
 -(void)didEditPractice;
 
 @end
 
 @class Practice;
 @class RatingViewController;
-@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
+@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
+    IBOutlet UITextView *inputNotes;
 
     NSMutableDictionary *dateForDateString;
     NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
@@ -31,14 +33,11 @@
     NSString *originalDescription;
     
     IBOutlet UIView *viewInfo;
-    IBOutlet UIButton *buttonEditAttendees;
-    IBOutlet UIButton *buttonRollCall;
 
     IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputTo;
     IBOutlet UIButton *buttonEmail;
 
-    IBOutlet UIView *viewDrawing;
     IBOutlet UIButton *buttonDrawing;
 
     NSMutableArray *drawn;
@@ -52,11 +51,36 @@
     int currentRow;
 }
 
-@property (nonatomic) Practice *practice;
-@property (nonatomic) id delegate;
+@property (nonatomic, assign) BOOL isNewPractice;
 
--(IBAction)didClickCancel:(id)sender;
--(IBAction)didClickSave:(id)sender;
+
+@property (nonatomic) Practice *practice;
+@property (nonatomic) id<PracticeEditDelegate> delegate;
+
+@property (nonatomic) IBOutlet UILabel *labelTitle;
+@property (nonatomic) IBOutlet UITextField *inputDate;
+@property (nonatomic) IBOutlet UITextField *inputDetails;
+@property (nonatomic) IBOutlet UITextView *inputNotes;
+
+@property (nonatomic) IBOutlet UIButton *buttonAttendees;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonAttendeesHeight;
+
+@property (nonatomic) NSString *originalDescription;
+
+@property (nonatomic) IBOutlet UIView *viewEmail;
+@property (nonatomic) IBOutlet UITextField *inputTo;
+@property (nonatomic) IBOutlet UIButton *buttonEmail;
+
+@property (nonatomic) IBOutlet UIButton *buttonDrawing;
+
+@property (assign) int currentRow;
+@property (nonatomic) NSString *lastInputDate;
+@property (nonatomic) NSString *emailFrom;
+@property (nonatomic) NSString *emailTo;
+
+
+-(NSString *)titleForDate:(NSDate *)date;
+
 -(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;

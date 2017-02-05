@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PracticeEditViewController.h"
 
-@interface PracticesTableViewController : UITableViewController <PracticeEditDelegate>
+@interface PracticesTableViewController : UITableViewController
 {
 }
 

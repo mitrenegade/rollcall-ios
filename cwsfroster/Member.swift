@@ -41,6 +41,7 @@ extension Member {
         orgQuery.whereKey("objectId", equalTo: org.objectId!)
         
         query.whereKey("organization", matchesQuery: orgQuery)
+        query.addAscendingOrder("name")
         query.findObjectsInBackground { (results, error) in
             if let members = results as? [Member] {
                 completion(members, nil)

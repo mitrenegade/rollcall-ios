@@ -59,10 +59,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)reloadPractices {
-    [self.tableView reloadData];
-}
-
 -(void)goToSettings:(id)sender {
     [self notify:@"goToSettings"];
 }
@@ -170,6 +166,7 @@
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         [controller setDelegate:self];
+        controller.isNewPractice = YES;
     }
     else if ([segue.identifier isEqualToString:@"EventListToDetail"]) {
         // Edit practice details
@@ -179,13 +176,10 @@
         if (indexPath.row < [[[Organization current] practices] count])
             [controller setPractice:[[Organization current] practices][indexPath.row]];
         [controller setDelegate:self];
+        controller.isNewPractice = NO;
     }
 }
 
-#pragma mark PracticeEditDelegate
--(void)didEditPractice {
-    [self reloadPractices];
-}
 
 /*
 -(void)didEditPractice {

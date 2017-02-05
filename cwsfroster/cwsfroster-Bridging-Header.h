@@ -13,5 +13,7 @@
 #import "IntroViewController.h"
 #import "SettingsViewController.h"
 #import "MembersTableViewController.h"
+#import "PracticeEditViewController.h"
+#import "PracticesTableViewController.h"
 
 #endif /* cwsfroster_Bridging_Header_h */
