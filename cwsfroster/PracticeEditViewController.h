@@ -20,7 +20,7 @@
 
 @class Practice;
 @class RatingViewController;
-@interface PracticeEditViewController : UIViewController <UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
+@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -50,6 +50,9 @@
     int currentRow;
 }
 
+@property (nonatomic, assign) BOOL isNewPractice;
+
+
 @property (nonatomic) Practice *practice;
 @property (nonatomic) id delegate;
 
@@ -69,10 +72,14 @@
 
 @property (nonatomic) IBOutlet UIButton *buttonDrawing;
 
+@property (assign) int currentRow;
+@property (nonatomic) NSString *lastInputDate;
+@property (nonatomic) NSString *emailFrom;
+@property (nonatomic) NSString *emailTo;
+
+
 -(NSString *)titleForDate:(NSDate *)date;
 
--(IBAction)didClickCancel:(id)sender;
--(IBAction)didClickSave:(id)sender;
 -(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;

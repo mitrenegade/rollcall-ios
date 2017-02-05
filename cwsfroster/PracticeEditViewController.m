@@ -85,29 +85,6 @@
     rater.delegate = self;
 }
 
--(IBAction)didClickCancel:(id)sender {
-    if (self.navigationController.viewControllers[0] == self)
-        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    else
-        [self.navigationController popViewControllerAnimated:YES];
-}
-
--(IBAction)didClickSave:(id)sender {
-    [self saveWithCompletion:^(BOOL success) {
-        if (success) {
-            self.navigationItem.leftBarButtonItem.title = @"Close";
-            if (!didShowRater) {
-                if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
-                    [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-                }
-                didShowRater = YES;
-            }
-            else {
-                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-            }
-        }
-    }];
-}
 
 -(void)didCloseRating {
     // don't need
@@ -266,73 +243,6 @@
     // revert to old date
     inputDate.text = lastInputDate;
     [inputDate resignFirstResponder];
-}
-
-#pragma mark TextFieldDelegate
--(void)textFieldDidBeginEditing:(UITextField *)textField {
-    if (currentRow == -1) {
-        currentRow = FUTURE_DAYS - 1;
-        UIPickerView *pickerView = textField.inputView;
-        [pickerView selectRow:currentRow inComponent:0 animated:YES];
-    }
-    
-    if (textField == inputDate) {
-        lastInputDate = textField.text;
-
-        [self pickerView:(UIPickerView *)textField.inputView didSelectRow:currentRow inComponent:0];
-    }
-    /*
-    else if (textField == inputFrom) {
-        inputFrom.text = emailFrom;
-    }
-    */
-    else if (textField == inputTo) {
-        inputTo.text = emailTo;
-    }
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == inputTo) {
-        if (inputTo.text.length == 0) {
-            [buttonEmail setEnabled:NO];
-            [buttonEmail setAlpha:.5];
-        }
-        else {
-            [buttonEmail setEnabled:YES];
-            [buttonEmail setAlpha:1];
-
-        }
-
-        if (textField == inputTo) {
-            emailTo = textField.text;
-        }
-        /*
-        else if (textField == inputFrom) {
-            emailFrom = textField.text;
-        }
-         */
-
-    }
-    else if (textField == inputDate) {
-        if (textField.text.length == 0) {
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        }
-        else {
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-        }
-    }
-    else if (textField == inputDetails) {
-        if ([textField.text isEqualToString:originalDescription] || inputDate.text.length == 0)
-            [self.navigationItem.rightBarButtonItem setEnabled:NO];
-        else
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    }
-    [textField resignFirstResponder];
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return YES;
 }
 
 #pragma mark emailing

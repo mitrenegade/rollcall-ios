@@ -445,14 +445,14 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Info" id="lGn-W3-qKI">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="wVT-uN-1Uu">
+                        <barButtonItem key="leftBarButtonItem" title="Close" id="wVT-uN-1Uu">
                             <connections>
-                                <action selector="didClickCancel:" destination="ol8-CI-xXO" id="Uan-8b-6PG"/>
+                                <action selector="didClickClose:" destination="ol8-CI-xXO" id="cKk-uo-4Wj"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="exY-5N-3bj">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="exY-5N-3bj">
                             <connections>
-                                <action selector="didClickSave:" destination="ol8-CI-xXO" id="Xld-GP-ZGx"/>
+                                <action selector="didClickNext:" destination="ol8-CI-xXO" id="99x-Jq-Ec6"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
