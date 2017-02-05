@@ -225,7 +225,7 @@
         dateForDateString = [NSMutableDictionary dictionary];
         
         int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
-        for (int row = 0; row < 31 + futureDays; row++) {
+        for (int row = 31 + futureDays; row > 0; row--) {
             NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*(row-futureDays)];
             NSString *title = [self titleForDate:date];
             if (title) {
