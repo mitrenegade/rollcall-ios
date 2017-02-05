@@ -74,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[[Organization current] practices] count];
+    return [[[Organization current] members] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -83,7 +83,7 @@
 
     // Configure the cell...
 
-    Member *member = [[Organization current] practices][indexPath.row];
+    Member *member = [[Organization current] members][indexPath.row];
     UILabel *label = [cell viewWithTag:2];
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -111,7 +111,7 @@
     UINavigationController *nav = segue.destinationViewController;
     MemberInfoViewController *controller = (MemberInfoViewController *)(nav.topViewController);
     if ([segue.identifier isEqualToString:@"toEditMember"]) {
-        Member *member = [[Organization current] practices][[self.tableView indexPathForSelectedRow].row];
+        Member *member = [[Organization current] members][[self.tableView indexPathForSelectedRow].row];
         [controller setDelegate:self];
         [controller setMember:member];
     }

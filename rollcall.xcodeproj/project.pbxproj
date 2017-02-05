@@ -10,7 +10,6 @@
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
 		8E1F63F21E46D330004E8723 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F11E46D330004E8723 /* Member.swift */; };
-		8E1F63F91E46D8AD004E8723 /* MembersTableViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F81E46D8AD004E8723 /* MembersTableViewController+Swift.swift */; };
 		8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FA1E46E06A004E8723 /* Organization.swift */; };
 		8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FC1E46E072004E8723 /* Practice.swift */; };
 		8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FE1E46E079004E8723 /* Attendance.swift */; };
@@ -98,7 +97,6 @@
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
 		8E1F63F11E46D330004E8723 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
-		8E1F63F81E46D8AD004E8723 /* MembersTableViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MembersTableViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E1F63FA1E46E06A004E8723 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		8E1F63FC1E46E072004E8723 /* Practice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		8E1F63FE1E46E079004E8723 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
@@ -278,7 +276,6 @@
 			children = (
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
-				8E1F63F81E46D8AD004E8723 /* MembersTableViewController+Swift.swift */,
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 			);
 			name = Members;
@@ -653,7 +650,6 @@
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
-				8E1F63F91E46D8AD004E8723 /* MembersTableViewController+Swift.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
