@@ -39,6 +39,7 @@ extension Practice {
         orgQuery.whereKey("objectId", equalTo: org.objectId!)
         
         query.whereKey("organization", matchesQuery: orgQuery)
+        query.addDescendingOrder("title")
         query.findObjectsInBackground { (results, error) in
             if let objects = results as? [Practice] {
                 completion(objects, nil)
