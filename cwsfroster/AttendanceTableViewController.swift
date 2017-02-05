@@ -60,5 +60,39 @@ extension AttendanceTableViewController {
 
 // MARK: Table view delegate
 extension AttendanceTableViewController {
-
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let members = Organization.current?.members, indexPath.row < members.count else { return }
+        let member = members[indexPath.row]
+        guard let practice = self.practice else { return }
+        
+        if let attendance = practice.attendanceFor(member: member) {
+            if let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
+                attendance.attended = NSNumber(value: AttendedStatus.None.rawValue)
+            }
+            else {
+                attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+            }
+            attendance.saveInBackground { (success, error) in
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        else {
+            self.saveNewAttendanceFor(member: member)
+        }
+    }
+    
+    func saveNewAttendanceFor(member: Member) {
+        let attendance = Attendance()
+        attendance.organization = Organization.current
+        attendance.practice = self.practice
+        attendance.member = member
+        attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+        attendance.date = self.practice?.date
+        attendance.saveInBackground { (success, error) in
+            Organization.current?.attendances?.append(attendance)
+            self.tableView.reloadData()
+        }
+    }
 }
