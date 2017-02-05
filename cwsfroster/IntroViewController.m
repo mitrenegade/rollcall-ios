@@ -8,11 +8,8 @@
 
 #import "IntroViewController.h"
 #import <Parse/Parse.h>
-#import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
-#import "Organization+Parse.h"
 #import "AsyncImageView.h"
-#import "Payment+Parse.h"
 #import "TutorialScrollView.h"
 #import "UIAlertView+MKBlockAdditions.h"
 
@@ -150,16 +147,11 @@
 
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            [Organization createOrganizationWithCompletion:^(Organization *organization) {
-                if (!organization) {
-                    [UIAlertView alertViewWithTitle:@"Save error" message:@"There was an error creating an organization. Please contact us to update your organization or try again."];
-                }
-                else {
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    [self goToPractices];
-                }
-            }];
+            Organization *org = [[Organization alloc] init];
+            [user setObject:org forKey:@"organization"];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            [self goToPractices];
         }
         else {
             NSString *message = nil;

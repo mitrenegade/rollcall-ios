@@ -7,12 +7,8 @@
 //
 
 #import "AttendancesViewController.h"
-#import "Practice+Parse.h"
 #import "Util.h"
-#import "Attendance+Parse.h"
-#import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
-#import "Payment+Info.h"
 
 @interface AttendancesViewController ()
 
@@ -35,10 +31,6 @@
     // Do any additional setup after loading the view.
 
     self.title = self.practice.title;
-    if (!self.practice.pfObject) {
-        [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        }];
-    }
 
     membersActive = [NSMutableArray array];
     membersInactive = [NSMutableArray array];
@@ -117,7 +109,7 @@
     /*
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
-    newAttendance.organization = [Organization currentOrganization];
+    newAttendance.organization = [Organization current];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
     NSNumber *status = @(AttendedStatusPresent); // attended by default

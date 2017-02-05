@@ -7,8 +7,6 @@
 //
 
 #import "PracticesTableViewController.h"
-#import "Practice+Parse.h"
-#import "Attendance+Parse.h"
 #import "Util.h"
 #import "AttendancesViewController.h"
 #import "SettingsViewController.h"
@@ -62,7 +60,6 @@
 }
 
 -(void)reloadPractices {
-    [self.practiceFetcher performFetch:nil];
     [self.tableView reloadData];
 }
 
@@ -84,7 +81,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.practiceFetcher fetchedObjects] count];
+    return [[[Organization current] practices] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -92,7 +89,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PracticeCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
+    Practice *practice = [[Organization current] practices][indexPath.row];
     cell.textLabel.text = practice.title;
     cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
     cell.textLabel.textColor = [UIColor blackColor];
@@ -102,23 +99,6 @@
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];
 
     return cell;
-}
-
--(NSFetchedResultsController *)practiceFetcher {
-    if (_practiceFetcher) {
-        return _practiceFetcher;
-    }
-
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Practice"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
-    [request setSortDescriptors:@[sortDescriptor]];
-
-    // todo: use months as section?
-    _practiceFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
-    NSError *error;
-    [_practiceFetcher performFetch:&error];
-
-    return _practiceFetcher;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -196,8 +176,8 @@
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        if (indexPath.row < [self.practiceFetcher.fetchedObjects count])
-            [controller setPractice:self.practiceFetcher.fetchedObjects[indexPath.row]];
+        if (indexPath.row < [[[Organization current] practices] count])
+            [controller setPractice:[[Organization current] practices][indexPath.row]];
         [controller setDelegate:self];
     }
 }
@@ -222,6 +202,7 @@
  */
 
 -(void)deletePracticeAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = practice.attendances;
     for (Attendance *at in attendances) {
@@ -236,7 +217,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     [self notify:@"practice:deleted"]; // no one listens for this now
-
+*/
     [ParseLog logWithTypeString:@"PracticeDeleted" title:nil message:nil params:nil error:nil];
 }
 @end

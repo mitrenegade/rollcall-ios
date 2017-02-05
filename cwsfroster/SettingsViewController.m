@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
 #import "UIImage+Resize.h"
 
@@ -82,7 +81,7 @@
     }
     else if (row == 1) {
         // my company
-        NSString *title = [Organization currentOrganization].name;
+        NSString *title = [Organization current].name;
         NSString *message = @"Please select from the following options";
         [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Cancel" otherButtonTitles:@[@"Change name", @"Change logo"] onDismiss:^(int buttonIndex) {
             if (buttonIndex == 0) {
@@ -122,7 +121,7 @@
 -(void)goToFeedback {
     if ([MFMailComposeViewController canSendMail]){
         NSString *title = @"RollCall feedback";
-        NSString *message = [NSString stringWithFormat:@"\n\nOrganization: %@\nVersion %@", [Organization currentOrganization].name, VERSION];
+        NSString *message = [NSString stringWithFormat:@"\n\nOrganization: %@\nVersion %@", [Organization current].name, VERSION];
         MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
         composer.mailComposeDelegate = self;
         [composer setSubject:title];
@@ -178,10 +177,10 @@
         NSLog(@"else");
         UITextField * text = [alertView textFieldAtIndex:0];
         if (alertView.tag == 1) {
-            Organization *organization = [Organization currentOrganization];
+            Organization *organization = [Organization current];
             organization.name = text.text;
-            [organization saveOrUpdateToParseWithCompletion:^(BOOL success) {
-                if (success) {
+            [organization saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
                     NSLog(@"Saved");
                     [UIAlertView alertViewWithTitle:@"Name saved" message:[NSString stringWithFormat:@"Your organization is now called %@", organization.name]];
                     [self notify:@"organization:name:changed"];
@@ -285,7 +284,8 @@
             [progress hide:YES];
 
             // Create a PFObject around a PFFile and associate it with the current user
-            PFObject *organization = [Organization currentOrganization].pfObject;
+            /*
+            PFObject *organization = [Organization current].pfObject;
             [organization setObject:imageFile forKey:@"logoData"];
             [organization saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (!error) {
@@ -296,6 +296,7 @@
                     NSLog(@"Error: %@ %@", error, [error userInfo]);
                 }
             }];
+             */
         }
         else{
             progress.labelText = @"Upload failed";

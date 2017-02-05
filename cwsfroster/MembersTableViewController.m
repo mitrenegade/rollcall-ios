@@ -7,9 +7,6 @@
 //
 
 #import "MembersTableViewController.h"
-#import "Attendance+Parse.h"
-#import "Payment+Parse.h"
-#import "Organization+Parse.h"
 
 @interface MembersTableViewController ()
 
@@ -66,10 +63,6 @@
     [self performSegueWithIdentifier:@"toAddMember" sender:nil];
 }
 
--(NSArray *)allMembers {
-    return nil;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -81,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self allMembers] count];
+    return [[[Organization current] members] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,7 +83,7 @@
 
     // Configure the cell...
 
-    Member *member = [self allMembers][indexPath.row];
+    Member *member = [[Organization current] members][indexPath.row];
     UILabel *label = [cell viewWithTag:2];
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -118,7 +111,7 @@
     UINavigationController *nav = segue.destinationViewController;
     MemberInfoViewController *controller = (MemberInfoViewController *)(nav.topViewController);
     if ([segue.identifier isEqualToString:@"toEditMember"]) {
-        Member *member = [self allMembers][[self.tableView indexPathForSelectedRow].row];
+        Member *member = [[Organization current] members][[self.tableView indexPathForSelectedRow].row];
         [controller setDelegate:self];
         [controller setMember:member];
     }
@@ -134,7 +127,7 @@
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
     /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    member.organization = [Organization currentOrganization];
+    member.organization = [Organization current];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
     if (newPhoto) {
         member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);

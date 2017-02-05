@@ -1,5 +1,5 @@
 //
-//  Member.swift
+//  Attendance.swift
 //  rollcall
 //
 //  Created by Bobby Ren on 2/4/17.
@@ -9,29 +9,25 @@
 import UIKit
 import Parse
 
-class Member: PFObject {
-    @NSManaged var name: String?
-    @NSManaged var email: String?
-    @NSManaged var notes: String?
-    @NSManaged var photo: PFFile?
-    @NSManaged var status: NSNumber?
+class Attendance: PFObject {
 
-    @NSManaged var organization: Organization?
-}
-
-extension Member: PFSubclassing {
-    static func parseClassName() -> String {
-        return "Member"
-    }
-}
-
-extension Member {
-    var isInactive: Bool {
-        return status?.intValue == MemberStatus.Inactive.rawValue
-    }
+    @NSManaged var date: Date?
+    @NSManaged var attended: NSNumber?
     
-    class func queryMembers(org: Organization, completion: @escaping ((_ members: [Member]?, _ error: NSError?) -> Void)) {
-        guard let query = Member.query() else {
+    @NSManaged var organization: Organization?
+    @NSManaged var member: Member?
+    @NSManaged var practice: Practice?
+}
+
+extension Attendance: PFSubclassing {
+    static func parseClassName() -> String {
+        return "Attendance"
+    }
+}
+
+extension Attendance {
+    class func queryAttendances(org: Organization, completion: @escaping ((_ results: [Attendance]?, _ error: NSError?) -> Void)) {
+        guard let query = Attendance.query() else {
             completion(nil, nil)
             return
         }
@@ -42,8 +38,8 @@ extension Member {
         
         query.whereKey("organization", matchesQuery: orgQuery)
         query.findObjectsInBackground { (results, error) in
-            if let members = results as? [Member] {
-                completion(members, nil)
+            if let objects = results as? [Attendance] {
+                completion(objects, nil)
             }
             else {
                 completion(nil, error as? NSError)

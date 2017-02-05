@@ -19,7 +19,6 @@
 
 @interface MembersTableViewController : UITableViewController <MemberDelegate>
 {
-    NSFetchedResultsController *memberFetcher;
 }
 
 -(void)reloadMembers;

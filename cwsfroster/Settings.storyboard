@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,18 +23,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q4d-Te-AUt" id="zSO-jh-u23">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCellContentView-qP9-IF-UP1"/>
-                                    </userDefinedRuntimeAttributes>
                                 </tableViewCellContentView>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableViewCell-Yif-zK-MvK"/>
-                                </userDefinedRuntimeAttributes>
                             </tableViewCell>
                         </prototypes>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-tableView-Sf9-OJ-uhL"/>
-                        </userDefinedRuntimeAttributes>
                         <connections>
                             <outlet property="dataSource" destination="aBt-N9-VLP" id="8vU-xy-c1z"/>
                             <outlet property="delegate" destination="aBt-N9-VLP" id="NTw-mT-Lcv"/>
@@ -57,12 +47,9 @@
         <scene sceneID="zxz-0z-UHG">
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigationController" definesPresentationContext="YES" id="JYb-Zx-95R" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="k77-U6-dAO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="k77-U6-dAO">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="optimizelyId" value="_Storyboard-navigationBar-ekw-Pn-pY4"/>
-                        </userDefinedRuntimeAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="aBt-N9-VLP" kind="relationship" relationship="rootViewController" id="QId-XJ-JIO"/>
