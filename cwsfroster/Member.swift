@@ -16,7 +16,7 @@ class Member: PFObject {
     @NSManaged var photo: PFFile?
     @NSManaged var status: NSNumber?
 
-    @NSManaged var organization: Any?
+    @NSManaged var organization: Organization?
 }
 
 extension Member: PFSubclassing {

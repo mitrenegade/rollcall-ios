@@ -83,32 +83,31 @@ extension SplashViewController {
         // make sure org exists
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
             labelInfo.text = "Creating organization"
-            Organization.createOrganization(completion: { (org) in
-                self.synchronizeWithParse()
-            })
+            let org = Organization()
+            user.setObject(org, forKey: "organization")
+            self.synchronizeWithParse()
             return
         }
 
         orgPointer.fetchInBackground { (object, error) in
             guard let org = object else { return }
-            ParseBase.synchronizeClass("Organization", from: [org], replaceExisting: true) {
-                if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                    imageFile.getDataInBackground(block: { (data, error) in
-                        // TODO: Load org image
-                        /*
-                         logo.alpha = 0;
-                         UIImage *image = [UIImage imageWithData:data];
-                         [logo setImage:image];
-                         [UIView animateWithDuration:1 animations:^{
-                         logo.alpha = 1;
-                         } completion:^(BOOL finished) {
-                         }];
-                         */
-                    })
-                }
-                
-                self.synchronizeClasses(classNames: ["Member", "Practice", "Attendance", "Payment"], org: org)
+            Organization.current = org
+            if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
+                imageFile.getDataInBackground(block: { (data, error) in
+                    // TODO: Load org image
+                    /*
+                     logo.alpha = 0;
+                     UIImage *image = [UIImage imageWithData:data];
+                     [logo setImage:image];
+                     [UIView animateWithDuration:1 animations:^{
+                     logo.alpha = 1;
+                     } completion:^(BOOL finished) {
+                     }];
+                     */
+                })
             }
+            
+            self.synchronizeClasses(classNames: ["Member", "Practice", "Attendance", "Payment"], org: org)
         }
     }
     
