@@ -79,8 +79,6 @@
     }
     */
 
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-
     rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
 }
@@ -94,7 +92,6 @@
     NSLog(@"Saving");
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     progress.mode = MBProgressHUDModeIndeterminate;
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
 
     if (self.practice) {

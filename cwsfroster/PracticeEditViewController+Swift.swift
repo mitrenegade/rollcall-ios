@@ -39,6 +39,7 @@ extension PracticeEditViewController {
             
             self.viewEmail.isHidden = true
             self.buttonDrawing.isHidden = true
+            self.buttonAttendees.isHidden = true
             self.inputNotes.text = nil
         }
         else {
@@ -171,6 +172,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
         if !self.isNewPractice {
             self.practice.saveEventually()
         }
+        
         textField.resignFirstResponder()
         
     }
