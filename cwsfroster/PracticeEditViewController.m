@@ -68,6 +68,7 @@
     originalDescription = inputDetails.text;
 
     inputDate.inputAccessoryView = keyboardDoneButtonView;
+    inputDate.text = [self titleForDate:[NSDate date]];
 
     emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
     if (emailTo) {
@@ -240,6 +241,7 @@
     NSString *dateString = [Util simpleDateFormat:date];
     NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
     NSLog(@"practice: %@", self.practice);
+    /*
     if ([dateString isEqualToString:self.practice.title]) {
         // current practice is allowed to be shown
         return title;
@@ -249,6 +251,7 @@
         if ([practices count])
             return nil;
     }
+     */
     return title;
 }
 
