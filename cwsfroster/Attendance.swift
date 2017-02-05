@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class Attendance: PFObject {
 
@@ -21,5 +22,28 @@ class Attendance: PFObject {
 extension Attendance: PFSubclassing {
     static func parseClassName() -> String {
         return "Attendance"
+    }
+}
+
+extension Attendance {
+    class func queryAttendances(org: Organization, completion: @escaping ((_ results: [Attendance]?, _ error: NSError?) -> Void)) {
+        guard let query = Attendance.query() else {
+            completion(nil, nil)
+            return
+        }
+        
+        // because organization is a pointer, we have to use matchesQuery
+        let orgQuery = PFQuery(className: "Organization")
+        orgQuery.whereKey("objectId", equalTo: org.parseID)
+        
+        query.whereKey("organization", matchesQuery: orgQuery)
+        query.findObjectsInBackground { (results, error) in
+            if let objects = results as? [Attendance] {
+                completion(objects, nil)
+            }
+            else {
+                completion(nil, error as? NSError)
+            }
+        }
     }
 }

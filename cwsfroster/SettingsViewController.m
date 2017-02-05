@@ -7,7 +7,6 @@
 //
 
 #import "SettingsViewController.h"
-#import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
 #import "UIImage+Resize.h"
 

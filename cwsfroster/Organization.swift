@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import Parse
 
 var _currentOrganization: Organization?
 
 class Organization: PFObject {
     @NSManaged var name: String?
     @NSManaged var logoData: Data?
+    
+    var members: [Member]?
+    var practices: [Practice]?
+    var attendances: [Attendance]?
 }
 
 extension Organization: PFSubclassing {

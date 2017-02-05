@@ -7,9 +7,6 @@
 //
 
 #import "MembersTableViewController.h"
-#import "Attendance+Parse.h"
-#import "Payment+Parse.h"
-#import "Organization+Parse.h"
 
 @interface MembersTableViewController ()
 

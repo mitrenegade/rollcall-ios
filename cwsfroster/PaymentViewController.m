@@ -7,9 +7,7 @@
 //
 
 #import "PaymentViewController.h"
-#import "Payment+Parse.h"
 #import "Payment+Info.h"
-#import "ParseBase+Parse.h"
 
 @interface PaymentViewController ()
 

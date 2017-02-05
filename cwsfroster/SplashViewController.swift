@@ -90,7 +90,7 @@ extension SplashViewController {
         }
 
         orgPointer.fetchInBackground { (object, error) in
-            guard let org = object else { return }
+            guard let org = object as? Organization else { return }
             Organization.current = org
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
                 imageFile.getDataInBackground(block: { (data, error) in
@@ -107,36 +107,52 @@ extension SplashViewController {
                 })
             }
             
-            self.synchronizeClasses(classNames: ["Member", "Practice", "Attendance", "Payment"], org: org)
+            labelInfo.text = "Loading..."
+            var classNames = ["members", "practices", "attendances"]
+            Member.queryMembers(org: org, completion: { (results, error) in
+                classNames.remove("members")
+                labelInfo.text = "Loaded members"
+                if let members = results {
+                    org.members = members
+                    if classNames.count == 0 {
+                        self.activityIndicator.stopAnimating()
+                        self.labelInfo.isHidden = true
+                        self.labelInfo.text = nil
+                        goHome()
+                        return
+                    }
+                }
+            })
+            
+            Practice.queryPractices(org: org, completion: { (results, error) in
+                classNames.remove("practices")
+                labelInfo.text = "Loaded practices"
+                if let practices = results {
+                    org.practices = practices
+                    if classNames.count == 0 {
+                        self.activityIndicator.stopAnimating()
+                        self.labelInfo.isHidden = true
+                        self.labelInfo.text = nil
+                        goHome()
+                        return
+                    }
+                }
+            })
+            
+            Attendance.queryAttendances(org: org, completion: { (results, error) in
+                classNames.remove("attendances")
+                labelInfo.text = "Loaded attendances"
+                if let attendances = results {
+                    org.attendances = attendances
+                    if classNames.count == 0 {
+                        self.activityIndicator.stopAnimating()
+                        self.labelInfo.isHidden = true
+                        self.labelInfo.text = nil
+                        goHome()
+                        return
+                    }
+                }
+            })
         }
-    }
-    
-    private func synchronizeClasses(classNames: [String], org: PFObject) {
-        var classNames = classNames
-        guard classNames.count > 0 else {
-            self.activityIndicator.stopAnimating()
-            self.labelInfo.isHidden = true
-            self.labelInfo.text = nil
-            goHome()
-            return
-        }
-
-        // make sure Member, Practice, Attendance, Payment exist
-        guard let className = classNames.first else { return }
-        
-        classNames.remove(at: 0)
-        labelInfo.text = "Loading " + className.lowercased() + "s"
-        let query = PFQuery(className: className)
-        query.whereKey("organization", equalTo: org)
-        
-        query.findObjectsInBackground(block: { (results, error) in
-            if let error = error as? NSError {
-                print("Error \(error)")
-            }
-            else {
-                ParseBase.synchronizeClass(className, from: results, replaceExisting: true, completion: nil)
-                self.synchronizeClasses(classNames: classNames, org: org)
-            }
-        })
     }
 }

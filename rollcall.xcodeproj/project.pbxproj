@@ -66,7 +66,6 @@
 		9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4D19B2EA5B006D81FC /* checked@2x.png */; };
 		9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */; };
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
-		9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994819B0EB7F007BC1FD /* Organization+Info.m */; };
 		9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0994B19B0F160007BC1FD /* AsyncImageView.m */; };
 		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
 		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
@@ -171,8 +170,6 @@
 		9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticesTableViewController.h; sourceTree = "<group>"; };
 		9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticesTableViewController.m; sourceTree = "<group>"; };
-		9EA0994719B0EB7F007BC1FD /* Organization+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Organization+Info.h"; sourceTree = "<group>"; };
-		9EA0994819B0EB7F007BC1FD /* Organization+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Organization+Info.m"; sourceTree = "<group>"; };
 		9EA0994A19B0F160007BC1FD /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		9EA0994B19B0F160007BC1FD /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -265,8 +262,8 @@
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8E1F63F11E46D330004E8723 /* Member.swift */,
 				8E1F63FA1E46E06A004E8723 /* Organization.swift */,
+				8E1F63F11E46D330004E8723 /* Member.swift */,
 				8E1F63FC1E46E072004E8723 /* Practice.swift */,
 				8E1F63FE1E46E079004E8723 /* Attendance.swift */,
 			);
@@ -453,8 +450,6 @@
 			children = (
 				9EC3031C19A1398700777F79 /* Payment+Info.h */,
 				9EC3031D19A1398700777F79 /* Payment+Info.m */,
-				9EA0994719B0EB7F007BC1FD /* Organization+Info.h */,
-				9EA0994819B0EB7F007BC1FD /* Organization+Info.m */,
 				9E15616C199264BF00A31398 /* Attendance+Info.h */,
 				9E15616D199264BF00A31398 /* Attendance+Info.m */,
 			);
@@ -709,7 +704,6 @@
 				9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */,
-				9EA0994919B0EB7F007BC1FD /* Organization+Info.m in Sources */,
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,

@@ -7,9 +7,7 @@
 //
 
 #import "AttendancesViewController.h"
-#import "Practice+Parse.h"
 #import "Util.h"
-#import "Attendance+Parse.h"
 #import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
 #import "Payment+Info.h"

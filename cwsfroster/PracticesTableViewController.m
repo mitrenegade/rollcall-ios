@@ -7,8 +7,6 @@
 //
 
 #import "PracticesTableViewController.h"
-#import "Practice+Parse.h"
-#import "Attendance+Parse.h"
 #import "Util.h"
 #import "AttendancesViewController.h"
 #import "SettingsViewController.h"

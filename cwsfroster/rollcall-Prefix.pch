@@ -19,7 +19,6 @@
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
 #import "NSObject+Notify.h"
-#import "Organization+Info.h"
 #import <RollCall-Swift.h>
 
 #define _currentUser [PFUser currentUser]

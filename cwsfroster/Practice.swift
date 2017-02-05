@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class Practice: PFObject {
 
@@ -23,3 +24,27 @@ extension Practice: PFSubclassing {
         return "Practice"
     }
 }
+
+extension Practice {
+    class func queryPractices(org: Organization, completion: @escaping ((_ results: [Practice]?, _ error: NSError?) -> Void)) {
+        guard let query = Practice.query() else {
+            completion(nil, nil)
+            return
+        }
+        
+        // because organization is a pointer, we have to use matchesQuery
+        let orgQuery = PFQuery(className: "Organization")
+        orgQuery.whereKey("objectId", equalTo: org.objectId)
+        
+        query.whereKey("organization", matchesQuery: orgQuery)
+        query.findObjectsInBackground { (results, error) in
+            if let objects = results as? [Practice] {
+                completion(objects, nil)
+            }
+            else {
+                completion(nil, error as? NSError)
+            }
+        }
+    }
+}
+
