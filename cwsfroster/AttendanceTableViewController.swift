@@ -14,13 +14,41 @@ class AttendanceTableViewController: UITableViewController {
     var practice: Practice?
     var newAttendances: [Member: Attendance] = [Member: Attendance]()
 
+    var delegate: PracticeEditDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if !isNewPractice {
+            // all changes to attendances are automatically saved
+            self.navigationItem.rightBarButtonItem = nil
+        }
     }
     
     @IBAction func didClickClose(_ sender: AnyObject?) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func didClickSave(_ sender: AnyObject?) {
+        if isNewPractice {
+            for (_, attendance) in newAttendances {
+                attendance.organization?.attendances?.append(attendance)
+                attendance.saveInBackground()
+            }
+            // because didCreatePractice does not reload attendances
+            Organization.current?.saveInBackground()
+            
+            practice?.saveInBackground(block: { (success, error) in
+                self.delegate?.didCreatePractice()
+                self.navigationController?.dismiss(animated: true, completion: {
+                })
+            })
+        }
+        else {
+            self.delegate?.didEditPractice()
+            self.navigationController?.dismiss(animated: true, completion: {
+            })
+        }
     }
 }
 

@@ -243,6 +243,11 @@
                                 <action selector="didClickClose:" destination="z2Z-nI-mGK" id="hdD-Z9-WHX"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wq2-SD-dkz">
+                            <connections>
+                                <action selector="didClickSave:" destination="z2Z-nI-mGK" id="Uln-ly-FsB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAl-0i-qBt" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -163,6 +163,7 @@
         AttendanceTableViewController *controller = (AttendanceTableViewController *)segue.destinationViewController;
         [controller setPractice:self.practice];
         [controller setIsNewPractice: self.isNewPractice];
+        controller.delegate = self.delegate;
     }
     else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
         OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
