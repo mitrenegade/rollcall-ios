@@ -186,12 +186,9 @@
                 progress.labelText = @"Save error";
                 progress.detailsLabelText = @"Could not save event!";
                 [progress hide:YES afterDelay:1.5];
-
-                [_appDelegate.managedObjectContext deleteObject:practice];
             }
             else {
                 self.practice = practice;
-                [_appDelegate.managedObjectContext save:nil];
                 [progress hide:YES];
                 [self.delegate didEditPractice];
                 completion(YES);

@@ -63,10 +63,6 @@
     [self performSegueWithIdentifier:@"toAddMember" sender:nil];
 }
 
--(NSArray *)allMembers {
-    return nil;
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -78,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self allMembers] count];
+    return [[[Organization current] practices] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -87,7 +83,7 @@
 
     // Configure the cell...
 
-    Member *member = [self allMembers][indexPath.row];
+    Member *member = [[Organization current] practices][indexPath.row];
     UILabel *label = [cell viewWithTag:2];
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -115,7 +111,7 @@
     UINavigationController *nav = segue.destinationViewController;
     MemberInfoViewController *controller = (MemberInfoViewController *)(nav.topViewController);
     if ([segue.identifier isEqualToString:@"toEditMember"]) {
-        Member *member = [self allMembers][[self.tableView indexPathForSelectedRow].row];
+        Member *member = [[Organization current] practices][[self.tableView indexPathForSelectedRow].row];
         [controller setDelegate:self];
         [controller setMember:member];
     }

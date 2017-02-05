@@ -11,9 +11,7 @@
 
 @interface PracticesTableViewController : UITableViewController <PracticeEditDelegate>
 {
-    NSFetchedResultsController *_practiceFetcher;
 }
 
--(NSFetchedResultsController *)practiceFetcher;
 -(IBAction)didClickNew:(id)sender;
 @end

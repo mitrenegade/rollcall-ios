@@ -75,10 +75,7 @@
 		9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3001936D2410056140F /* UIActionSheet+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3021936D2410056140F /* UIAlertView+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3041936D2410056140F /* NSManagedObject+Entity.m */; };
-		9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3061936D2410056140F /* NSManagedObject+Query.m */; };
 		9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3081936D2410056140F /* NSObject+Notify.m */; };
-		9EC5F31B1936D2410056140F /* Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30A1936D2410056140F /* Query.m */; };
 		9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30C1936D2410056140F /* UIImage+Alpha.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30E1936D2410056140F /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */; };
@@ -183,14 +180,8 @@
 		9EC5F3001936D2410056140F /* UIActionSheet+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+MKBlockAdditions.m"; sourceTree = "<group>"; };
 		9EC5F3011936D2410056140F /* UIAlertView+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+MKBlockAdditions.h"; sourceTree = "<group>"; };
 		9EC5F3021936D2410056140F /* UIAlertView+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+MKBlockAdditions.m"; sourceTree = "<group>"; };
-		9EC5F3031936D2410056140F /* NSManagedObject+Entity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Entity.h"; sourceTree = "<group>"; };
-		9EC5F3041936D2410056140F /* NSManagedObject+Entity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Entity.m"; sourceTree = "<group>"; };
-		9EC5F3051936D2410056140F /* NSManagedObject+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+Query.h"; sourceTree = "<group>"; };
-		9EC5F3061936D2410056140F /* NSManagedObject+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+Query.m"; sourceTree = "<group>"; };
 		9EC5F3071936D2410056140F /* NSObject+Notify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Notify.h"; sourceTree = "<group>"; };
 		9EC5F3081936D2410056140F /* NSObject+Notify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Notify.m"; sourceTree = "<group>"; };
-		9EC5F3091936D2410056140F /* Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Query.h; sourceTree = "<group>"; };
-		9EC5F30A1936D2410056140F /* Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Query.m; sourceTree = "<group>"; };
 		9EC5F30B1936D2410056140F /* UIImage+Alpha.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Alpha.h"; sourceTree = "<group>"; };
 		9EC5F30C1936D2410056140F /* UIImage+Alpha.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Alpha.m"; sourceTree = "<group>"; };
 		9EC5F30D1936D2410056140F /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -441,14 +432,8 @@
 				9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */,
 				9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */,
 				9EC5F2FB1936D2410056140F /* MKAdditions */,
-				9EC5F3031936D2410056140F /* NSManagedObject+Entity.h */,
-				9EC5F3041936D2410056140F /* NSManagedObject+Entity.m */,
-				9EC5F3051936D2410056140F /* NSManagedObject+Query.h */,
-				9EC5F3061936D2410056140F /* NSManagedObject+Query.m */,
 				9EC5F3071936D2410056140F /* NSObject+Notify.h */,
 				9EC5F3081936D2410056140F /* NSObject+Notify.m */,
-				9EC5F3091936D2410056140F /* Query.h */,
-				9EC5F30A1936D2410056140F /* Query.m */,
 				9EC5F30B1936D2410056140F /* UIImage+Alpha.h */,
 				9EC5F30C1936D2410056140F /* UIImage+Alpha.m */,
 				9EC5F30D1936D2410056140F /* UIImage+Resize.h */,
@@ -648,14 +633,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E80085E16196883003E9B16 /* main.m in Sources */,
-				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
-				9EC5F31B1936D2410056140F /* Query.m in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
@@ -682,7 +665,6 @@
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
-				9EC5F3181936D2410056140F /* NSManagedObject+Entity.m in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
