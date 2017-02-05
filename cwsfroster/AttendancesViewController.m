@@ -9,9 +9,7 @@
 #import "AttendancesViewController.h"
 #import "Practice+Parse.h"
 #import "Util.h"
-#import "Member+Parse.h"
 #import "Attendance+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
 #import "Payment+Info.h"
@@ -96,6 +94,7 @@
 }
 #pragma mark - Table view data source
 -(void)reloadData {
+    /*
     membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(AttendedStatusNone)}] all] mutableCopy];
@@ -110,11 +109,12 @@
     membersInactive = [[membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     attendances = [[attendances sortedArrayUsingDescriptors:@[sortDescriptor2]] mutableCopy];
-
+*/
     [self.tableView reloadData];
 }
 
 -(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success, Attendance *attendance))completion{
+    /*
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.organization = [Organization currentOrganization];
@@ -138,6 +138,7 @@
                 completion(NO, nil);
         }
     }];
+     */
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -220,6 +221,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    /*
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 
@@ -270,6 +272,7 @@
         
         [ParseLog logWithTypeString:@"AttendanceAdded" title:nil message:nil params:nil error:nil];
     }
+     */
     [self reloadData];
 }
 

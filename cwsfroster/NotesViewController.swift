@@ -89,7 +89,8 @@ class NotesViewController: UIViewController {
         }
         if self.member != nil {
             self.member!.notes = self.inputNotes.text
-            self.member!.saveOrUpdateToParse(completion: nil)
+            //self.member!.saveOrUpdateToParse(completion: nil)
+            self.member!.saveEventually()
             ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "member"], error: nil)
         }
         

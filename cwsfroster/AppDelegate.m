@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "IntroViewController.h"
 #import <Fabric/Fabric.h>

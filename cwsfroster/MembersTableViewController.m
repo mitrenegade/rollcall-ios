@@ -7,8 +7,6 @@
 //
 
 #import "MembersTableViewController.h"
-#import "Member+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Parse.h"
 #import "Payment+Parse.h"
 #import "Organization+Parse.h"
@@ -157,7 +155,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UINavigationController *nav = segue.destinationViewController;
-    MemberViewController *controller = (MemberViewController *)(nav.topViewController);
+    MemberInfoViewController *controller = (MemberInfoViewController *)(nav.topViewController);
     if ([segue.identifier isEqualToString:@"toEditMember"]) {
         Member *member = [self.memberFetcher objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         [controller setDelegate:self];
@@ -173,6 +171,7 @@
 
 #pragma mark Delegate
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
+    /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
@@ -198,9 +197,11 @@
         }
     }];
     [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
+     */
 }
 
 -(void)updateMember:(Member *)member {
+    /*
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
 
@@ -218,6 +219,7 @@
     }];
     
     [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
+     */
 }
 
 -(void)close {
@@ -225,6 +227,7 @@
 }
 
 -(void)deleteMemberAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = member.attendances;
     NSSet *payments = member.payments;
@@ -237,7 +240,7 @@
     }
     [member.pfObject deleteInBackgroundWithBlock:nil];
     [_appDelegate.managedObjectContext deleteObject:member];
-
+     */
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.memberFetcher performFetch:nil];
     [self notify:@"member:deleted"];

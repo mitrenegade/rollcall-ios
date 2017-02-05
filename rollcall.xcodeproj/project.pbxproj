@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
+		8E1F63F21E46D330004E8723 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F11E46D330004E8723 /* Member.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
@@ -23,7 +24,6 @@
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
-		9E15616B19924B7800A31398 /* Member+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616A19924B7800A31398 /* Member+Info.m */; };
 		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
@@ -81,7 +81,6 @@
 		9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031A19A0EA9500777F79 /* PaymentViewController.m */; };
 		9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031D19A1398700777F79 /* Payment+Info.m */; };
 		9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2E91936D0960056140F /* Model.xcdatamodeld */; };
-		9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2ED1936D1380056140F /* Member+Parse.m */; };
 		9EC5F2F51936D1B30056140F /* ParseBase+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */; };
 		9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3001936D2410056140F /* UIActionSheet+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -96,15 +95,12 @@
 		9EC5F31F1936D2410056140F /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3121936D2410056140F /* Util.m */; };
 		9EC5F3331936D60D0056140F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Main.storyboard */; };
 		9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3351936D74E0056140F /* MembersTableViewController.m */; };
-		9EC5F3391936D9080056140F /* MemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3381936D9080056140F /* MemberViewController.m */; };
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
 		9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33C1936DD000056140F /* CoreLocation.framework */; };
 		AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3178CA1B409ADA00668B98 /* star@2x.png */; };
 		AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3178CD1B409B1000668B98 /* RatingViewController.m */; };
 		AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */; };
-		AC8EF0EB1C265F0D0029EBAE /* Member+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */; };
 		AC8EF0EC1C265F0D0029EBAE /* Practice+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */; };
-		AC8EF0F11C265F2C0029EBAE /* Member.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0EE1C265F2C0029EBAE /* Member.m */; };
 		AC8EF0F21C265F2C0029EBAE /* Practice.m in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0F01C265F2C0029EBAE /* Practice.m */; };
 		AC950F171B371EAA005C3998 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F131B371EAA005C3998 /* libc++.dylib */; };
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
@@ -116,6 +112,8 @@
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
+		8E1F63F11E46D330004E8723 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
+		8E1F63F31E46D43E004E8723 /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
@@ -130,8 +128,6 @@
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
-		9E15616919924B7800A31398 /* Member+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Info.h"; sourceTree = "<group>"; };
-		9E15616A19924B7800A31398 /* Member+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Info.m"; sourceTree = "<group>"; };
 		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
 		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
@@ -214,8 +210,6 @@
 		9EC3031C19A1398700777F79 /* Payment+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+Info.h"; sourceTree = "<group>"; };
 		9EC3031D19A1398700777F79 /* Payment+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+Info.m"; sourceTree = "<group>"; };
 		9EC5F2EA1936D0960056140F /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		9EC5F2EC1936D1380056140F /* Member+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+Parse.h"; sourceTree = "<group>"; };
-		9EC5F2ED1936D1380056140F /* Member+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+Parse.m"; sourceTree = "<group>"; };
 		9EC5F2EF1936D1720056140F /* PFObjectFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFObjectFactory.h; sourceTree = "<group>"; };
 		9EC5F2F31936D1B30056140F /* ParseBase+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ParseBase+Parse.h"; sourceTree = "<group>"; };
 		9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ParseBase+Parse.m"; sourceTree = "<group>"; };
@@ -245,8 +239,6 @@
 		9EC5F3321936D60D0056140F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9EC5F3341936D74E0056140F /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
 		9EC5F3351936D74E0056140F /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
-		9EC5F3371936D9080056140F /* MemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberViewController.h; sourceTree = "<group>"; };
-		9EC5F3381936D9080056140F /* MemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberViewController.m; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC3178CA1B409ADA00668B98 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
@@ -255,12 +247,8 @@
 		AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		AC8EF0E51C265A330029EBAE /* cwsfroster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cwsfroster-Bridging-Header.h"; sourceTree = "<group>"; };
 		AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model2.xcdatamodel; sourceTree = "<group>"; };
-		AC8EF0E71C265F0D0029EBAE /* Member+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Member+CoreDataProperties.h"; sourceTree = "<group>"; };
-		AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Member+CoreDataProperties.m"; sourceTree = "<group>"; };
 		AC8EF0E91C265F0D0029EBAE /* Practice+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Practice+CoreDataProperties.h"; sourceTree = "<group>"; };
 		AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Practice+CoreDataProperties.m"; sourceTree = "<group>"; };
-		AC8EF0ED1C265F2C0029EBAE /* Member.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Member.h; sourceTree = "<group>"; };
-		AC8EF0EE1C265F2C0029EBAE /* Member.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Member.m; sourceTree = "<group>"; };
 		AC8EF0EF1C265F2C0029EBAE /* Practice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Practice.h; sourceTree = "<group>"; };
 		AC8EF0F01C265F2C0029EBAE /* Practice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Practice.m; sourceTree = "<group>"; };
 		AC950F131B371EAA005C3998 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -330,8 +318,6 @@
 			children = (
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
-				9EC5F3371936D9080056140F /* MemberViewController.h */,
-				9EC5F3381936D9080056140F /* MemberViewController.m */,
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 			);
 			name = Members;
@@ -482,12 +468,8 @@
 		9EC5F2E51936CFC00056140F /* Parse Models */ = {
 			isa = PBXGroup;
 			children = (
-				AC8EF0ED1C265F2C0029EBAE /* Member.h */,
-				AC8EF0EE1C265F2C0029EBAE /* Member.m */,
 				AC8EF0EF1C265F2C0029EBAE /* Practice.h */,
 				AC8EF0F01C265F2C0029EBAE /* Practice.m */,
-				AC8EF0E71C265F0D0029EBAE /* Member+CoreDataProperties.h */,
-				AC8EF0E81C265F0D0029EBAE /* Member+CoreDataProperties.m */,
 				AC8EF0E91C265F0D0029EBAE /* Practice+CoreDataProperties.h */,
 				AC8EF0EA1C265F0D0029EBAE /* Practice+CoreDataProperties.m */,
 				9EA0994419B0BF63007BC1FD /* Attendance.h */,
@@ -504,22 +486,19 @@
 				9EC3031D19A1398700777F79 /* Payment+Info.m */,
 				9EA0994719B0EB7F007BC1FD /* Organization+Info.h */,
 				9EA0994819B0EB7F007BC1FD /* Organization+Info.m */,
-				9E15616919924B7800A31398 /* Member+Info.h */,
-				9E15616A19924B7800A31398 /* Member+Info.m */,
 				9E15616C199264BF00A31398 /* Attendance+Info.h */,
 				9E15616D199264BF00A31398 /* Attendance+Info.m */,
 				9EC5F2F31936D1B30056140F /* ParseBase+Parse.h */,
 				9EC5F2F41936D1B30056140F /* ParseBase+Parse.m */,
 				9EC302F4199E760A00777F79 /* Payment+Parse.h */,
 				9EC302F5199E760A00777F79 /* Payment+Parse.m */,
-				9EC5F2EC1936D1380056140F /* Member+Parse.h */,
-				9EC5F2ED1936D1380056140F /* Member+Parse.m */,
 				9E9F19D219AF963A00DE3F27 /* Organization+Parse.h */,
 				9E9F19D319AF963A00DE3F27 /* Organization+Parse.m */,
 				9E99F8CF193D717A004EB5C1 /* Practice+Parse.h */,
 				9E99F8D0193D717A004EB5C1 /* Practice+Parse.m */,
 				9E99F8DB193D71EC004EB5C1 /* Attendance+Parse.h */,
 				9E99F8DC193D71EC004EB5C1 /* Attendance+Parse.m */,
+				8E1F63F11E46D330004E8723 /* Member.swift */,
 			);
 			name = "Parse Models";
 			sourceTree = "<group>";
@@ -743,11 +722,8 @@
 				9EC5F3191936D2410056140F /* NSManagedObject+Query.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9EA0994319B0BF62007BC1FD /* Payment.m in Sources */,
-				9E15616B19924B7800A31398 /* Member+Info.m in Sources */,
-				9EC5F2EE1936D1380056140F /* Member+Parse.m in Sources */,
 				9EC302F6199E760A00777F79 /* Payment+Parse.m in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
-				AC8EF0EB1C265F0D0029EBAE /* Member+CoreDataProperties.m in Sources */,
 				9E99F8DD193D71EC004EB5C1 /* Attendance+Parse.m in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
@@ -757,6 +733,7 @@
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
+				8E1F63F21E46D330004E8723 /* Member.swift in Sources */,
 				9EC5F2EB1936D0960056140F /* Model.xcdatamodeld in Sources */,
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
@@ -764,13 +741,11 @@
 				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EA0995619B10343007BC1FD /* Organization.m in Sources */,
 				9E9F19D419AF963A00DE3F27 /* Organization+Parse.m in Sources */,
-				AC8EF0F11C265F2C0029EBAE /* Member.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EA0993719B0BBCF007BC1FD /* ParseBase.m in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
 				9EA0994619B0BF63007BC1FD /* Attendance.m in Sources */,
-				9EC5F3391936D9080056140F /* MemberViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
@@ -948,10 +923,11 @@
 		9EC5F2E91936D0960056140F /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				8E1F63F31E46D43E004E8723 /* Model3.xcdatamodel */,
 				AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */,
 				9EC5F2EA1936D0960056140F /* Model.xcdatamodel */,
 			);
-			currentVersion = AC8EF0E61C265E7B0029EBAE /* Model2.xcdatamodel */;
+			currentVersion = 8E1F63F31E46D43E004E8723 /* Model3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

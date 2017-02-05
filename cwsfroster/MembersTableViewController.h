@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MemberViewController.h"
+#import <RollCall-Swift.h>
 
 @interface MembersTableViewController : UITableViewController <MemberDelegate>
 {

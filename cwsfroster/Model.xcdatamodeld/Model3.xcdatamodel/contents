@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="15G1108" minimumToolsVersion="Xcode 4.3" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="Attendance" representedClassName="Attendance" parentEntity="ParseBase" syncable="YES">
+        <attribute name="attended" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Organization" syncable="YES"/>
+        <relationship name="payment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Payment" inverseName="attendances" inverseEntity="Payment" syncable="YES"/>
+        <relationship name="practice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="attendances" inverseEntity="Practice" syncable="YES"/>
+    </entity>
+    <entity name="Organization" representedClassName="Organization" parentEntity="ParseBase" syncable="YES">
+        <attribute name="logoData" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="practices" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Practice" inverseName="organization" inverseEntity="Practice" syncable="YES"/>
+    </entity>
+    <entity name="ParseBase" representedClassName="ParseBase" isAbstract="YES" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="parseID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pfUserID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="Payment" representedClassName="Payment" parentEntity="ParseBase" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Decimal" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="days" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="receiptDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Attendance" inverseName="payment" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Organization" syncable="YES"/>
+    </entity>
+    <entity name="Practice" representedClassName="Practice" parentEntity="ParseBase" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="attendances" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Attendance" inverseName="practice" inverseEntity="Attendance" syncable="YES"/>
+        <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Organization" inverseName="practices" inverseEntity="Organization" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Attendance" positionX="-36" positionY="45" width="128" height="120"/>
+        <element name="Organization" positionX="-36" positionY="99" width="128" height="90"/>
+        <element name="ParseBase" positionX="-63" positionY="-18" width="128" height="105"/>
+        <element name="Payment" positionX="-18" positionY="72" width="128" height="180"/>
+        <element name="Practice" positionX="-36" positionY="54" width="128" height="135"/>
+    </elements>
+</model>

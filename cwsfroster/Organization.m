@@ -7,7 +7,6 @@
 //
 
 #import "Organization.h"
-#import "Member.h"
 #import "Practice.h"
 
 
