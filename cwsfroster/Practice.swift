@@ -17,8 +17,6 @@ class Practice: PFObject {
     @NSManaged var details: String?
     
     @NSManaged var organization: Organization?
-    
-    var attendances: [Attendance]?
 }
 
 extension Practice: PFSubclassing {
@@ -49,8 +47,8 @@ extension Practice {
             }
         }
     }
-    
-    func getAttendances() -> [Attendance] {
+
+    var attendances: [Attendance]? {
         guard let allAttendances = Organization.current?.attendances else { return [] }
         let myAttendances = allAttendances.filter { (a) -> Bool in
             if a.practice?.objectId == self.objectId, a.attended?.intValue ?? 0 != AttendedStatus.None.rawValue {
@@ -59,6 +57,17 @@ extension Practice {
             return false
         }
         return myAttendances
+    }
+    
+    func attendanceFor(member: Member) -> Attendance? {
+        guard let allAttendances = Organization.current?.attendances else { return nil }
+        let myAttendances = allAttendances.filter { (a) -> Bool in
+            if a.practice?.objectId == self.objectId, a.member?.objectId == member.objectId {
+                return true
+            }
+            return false
+        }
+        return myAttendances.first
     }
 }
 
