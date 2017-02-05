@@ -12,6 +12,7 @@ class AttendanceTableViewController: UITableViewController {
 
     var isNewPractice: Bool = false
     var practice: Practice?
+    var newAttendances: [Member: Attendance] = [Member: Attendance]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,11 @@ extension AttendanceTableViewController {
             checked.image = UIImage(named: "checked")
             cell.accessoryView = checked
         }
+        else if let attendance = newAttendances[member], let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
+            let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            checked.image = UIImage(named: "checked")
+            cell.accessoryView = checked
+        }
         
         return cell
     }
@@ -68,31 +74,50 @@ extension AttendanceTableViewController {
         guard let practice = self.practice else { return }
         
         if let attendance = practice.attendanceFor(member: member) {
-            if let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
-                attendance.attended = NSNumber(value: AttendedStatus.None.rawValue)
-            }
-            else {
-                attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
-            }
+            self.toggleAttendance(attendance: attendance)
             attendance.saveInBackground { (success, error) in
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
             }
         }
+        else if let attendance = newAttendances[member] {
+            self.toggleAttendance(attendance: attendance)
+            newAttendances[member] = attendance
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
         else {
-            self.saveNewAttendanceFor(member: member)
+            self.saveNewAttendanceFor(member: member, indexPath: indexPath)
         }
     }
     
-    func saveNewAttendanceFor(member: Member) {
+    func toggleAttendance(attendance: Attendance) {
+        if let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
+            attendance.attended = NSNumber(value: AttendedStatus.None.rawValue)
+        }
+        else {
+            attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+        }
+    }
+    
+    func saveNewAttendanceFor(member: Member, indexPath: IndexPath) {
         let attendance = Attendance()
         attendance.organization = Organization.current
         attendance.practice = self.practice
         attendance.member = member
         attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
         attendance.date = self.practice?.date
-        attendance.saveInBackground { (success, error) in
-            Organization.current?.attendances?.append(attendance)
-            self.tableView.reloadData()
+        if self.isNewPractice {
+            newAttendances[member] = attendance
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        else {
+            attendance.saveInBackground { (success, error) in
+                DispatchQueue.main.async {
+                    Organization.current?.attendances?.append(attendance)
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
         }
     }
 }
