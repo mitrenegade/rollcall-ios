@@ -7,8 +7,6 @@
 //
 
 #import "MembersTableViewController.h"
-#import "Member+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Parse.h"
 #import "Payment+Parse.h"
 #import "Organization+Parse.h"
@@ -57,7 +55,6 @@
 }
 
 -(void)reloadMembers {
-    [self.memberFetcher performFetch:nil];
     [self.tableView reloadData];
 }
 
@@ -69,25 +66,8 @@
     [self performSegueWithIdentifier:@"toAddMember" sender:nil];
 }
 
-#pragma mark FetchedResultsController
--(NSFetchedResultsController *)memberFetcher {
-    if (memberFetcher) {
-        return memberFetcher;
-    }
-
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Member"];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"status" ascending:NO];
-    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
-    [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];
-
-    //    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K != %d", @"status", MemberStatusInactive];
-    //    [request setPredicate:predicate];
-
-    memberFetcher = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:_appDelegate.managedObjectContext sectionNameKeyPath:@"status" cacheName:nil];
-    NSError *error;
-    [memberFetcher performFetch:&error];
-
-    return memberFetcher;
+-(NSArray *)allMembers {
+    return nil;
 }
 
 #pragma mark - Table view data source
@@ -95,34 +75,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return [[self.memberFetcher sections] count];
-}
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSNumber *sectionTitle = self.memberFetcher.sectionIndexTitles[section];
-    NSString *title = @"";
-    switch ([sectionTitle intValue]) {
-        case MemberStatusInactive:
-            title = @"Inactive";
-            break;
-        case MemberStatusBeginner:
-            title = @"Guest";
-            break;
-        case MemberStatusActive:
-            title = @"Active";
-            break;
-
-        default:
-            break;
-    }
-    return title;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.memberFetcher.sections objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    return [[self allMembers] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -131,7 +90,7 @@
 
     // Configure the cell...
 
-    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
+    Member *member = [self allMembers][indexPath.row];
     UILabel *label = [cell viewWithTag:2];
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
@@ -157,14 +116,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UINavigationController *nav = segue.destinationViewController;
-    MemberViewController *controller = (MemberViewController *)(nav.topViewController);
-    if ([segue.identifier isEqualToString:@"MembersToEditMember"]) {
-        Member *member = [self.memberFetcher objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
+    MemberInfoViewController *controller = (MemberInfoViewController *)(nav.topViewController);
+    if ([segue.identifier isEqualToString:@"toEditMember"]) {
+        Member *member = [self allMembers][[self.tableView indexPathForSelectedRow].row];
         [controller setDelegate:self];
         [controller setMember:member];
     }
     else if ([segue.identifier isEqualToString:@"toAddMember"]) {
         [controller setDelegate:self];
+        [controller setMember: nil];
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
@@ -172,6 +132,7 @@
 
 #pragma mark Delegate
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
+    /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
@@ -197,9 +158,11 @@
         }
     }];
     [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
+     */
 }
 
 -(void)updateMember:(Member *)member {
+    /*
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
 
@@ -217,6 +180,7 @@
     }];
     
     [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
+     */
 }
 
 -(void)close {
@@ -224,6 +188,7 @@
 }
 
 -(void)deleteMemberAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = member.attendances;
     NSSet *payments = member.payments;
@@ -236,9 +201,8 @@
     }
     [member.pfObject deleteInBackgroundWithBlock:nil];
     [_appDelegate.managedObjectContext deleteObject:member];
-
+     */
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.memberFetcher performFetch:nil];
     [self notify:@"member:deleted"];
     
     [ParseLog logWithTypeString:@"MemberDeleted" title:nil message:nil params:nil error:nil];

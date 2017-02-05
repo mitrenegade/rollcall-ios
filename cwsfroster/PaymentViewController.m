@@ -7,8 +7,6 @@
 //
 
 #import "PaymentViewController.h"
-#import "Member+Info.h"
-#import "Member+Parse.h"
 #import "Payment+Parse.h"
 #import "Payment+Info.h"
 #import "ParseBase+Parse.h"
@@ -137,7 +135,7 @@
     }
 
     [ParseLog logWithTypeString:@"AddPaymentClicked" title:nil message:nil params:@{@"type": @(paymentType), @"source": @(paymentSource)} error:nil];
-    
+    /*
     PFRelation *relation = [self.member.pfObject relationForKey:@"payments"];
     [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if ([objects count] == 0) {
@@ -159,9 +157,11 @@
         [self.inputDate resignFirstResponder];
         [self.inputAmount resignFirstResponder];
     }];
+     */
 }
 
 -(void)createPaymentOfType:(PaymentType)type completion:(void(^)(Payment *payment))completion {
+    /*
     Payment *newObj = (Payment *)[Payment createEntityInContext:_appDelegate.managedObjectContext];
     newObj.organization = [Organization currentOrganization];
     newObj.member = self.member;
@@ -195,6 +195,7 @@
                 completion(nil);
         }
     }];
+     */
 }
 
 #pragma mark TableViewDatasource
@@ -204,7 +205,7 @@
     }
 
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Payment"];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"member.parseID = %@", self.member.parseID]];
+//    [request setPredicate:[NSPredicate predicateWithFormat:@"member.parseID = %@", self.member.parseID]];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:NO];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"startDate" ascending:YES];
     [request setSortDescriptors:@[sortDescriptor, sortDescriptor2]];

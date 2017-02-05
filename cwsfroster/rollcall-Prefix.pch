@@ -19,7 +19,6 @@
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
 #import "NSObject+Notify.h"
-#import "Constants.h"
 #import "Organization+Info.h"
 #import <RollCall-Swift.h>
 

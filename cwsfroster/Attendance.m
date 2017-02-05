@@ -7,7 +7,6 @@
 //
 
 #import "Attendance.h"
-#import "Member.h"
 #import "Organization.h"
 #import "Payment.h"
 #import "Practice.h"

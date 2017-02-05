@@ -9,9 +9,7 @@
 #import "AttendancesViewController.h"
 #import "Practice+Parse.h"
 #import "Util.h"
-#import "Member+Parse.h"
 #import "Attendance+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
 #import "Payment+Info.h"
@@ -96,9 +94,10 @@
 }
 #pragma mark - Table view data source
 -(void)reloadData {
+    /*
     membersActive = [[[[Member where:@{}] not:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
     membersInactive = [[[Member where:@{@"status":@(MemberStatusInactive)}] all] mutableCopy];
-    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(DidNotAttend)}] all] mutableCopy];
+    attendances = [[[[Attendance where:@{@"practice.parseID": self.practice.parseID}] not:@{@"attended":@(AttendedStatusNone)}] all] mutableCopy];
     for (Attendance *attendance in attendances) {
         Member *member = attendance.member;
         [membersActive removeObject:member];
@@ -110,19 +109,20 @@
     membersInactive = [[membersInactive sortedArrayUsingDescriptors:@[sortDescriptor]] mutableCopy];
     NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"member.name" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
     attendances = [[attendances sortedArrayUsingDescriptors:@[sortDescriptor2]] mutableCopy];
-
+*/
     [self.tableView reloadData];
 }
 
 -(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success, Attendance *attendance))completion{
+    /*
     NSLog(@"Need to create an attendance for member %@", member.name);
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.organization = [Organization currentOrganization];
     newAttendance.practice = self.practice;
     newAttendance.member = member;
-    NSNumber *status = @(DidAttend); // attended by default
+    NSNumber *status = @(AttendedStatusPresent); // attended by default
     if ([member isBeginner]) {
-        status = @(DidAttendFreebie);
+        status = @(AttendedStatusFreebie);
     }
     [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [self reloadData];
@@ -138,6 +138,7 @@
                 completion(NO, nil);
         }
     }];
+     */
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -220,6 +221,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    /*
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
 
@@ -229,7 +231,7 @@
         }
         // clicked on an attendance
         Attendance *attendance = attendances[row];
-        attendance.attended = @(DidNotAttend);
+        attendance.attended = @(AttendedStatusNone);
         NSLog(@"old payment: %@", attendance.payment);
         [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
             NSLog(@"new payment: %@", attendance.payment);
@@ -251,9 +253,9 @@
         NSArray *at = [[Attendance where:@{@"member.parseID":member.parseID, @"practice.parseID":self.practice.parseID}] all];
         if (at.count) {
             Attendance *attendance = at[0];
-            NSNumber *status = @(DidAttend); // attended by default
+            NSNumber *status = @(AttendedStatusPresent); // attended by default
             if ([attendance.member isBeginner]) {
-                status = @(DidAttendFreebie);
+                status = @(AttendedStatusFreebie);
             }
             attendance.attended = status;
             [attendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
@@ -270,6 +272,7 @@
         
         [ParseLog logWithTypeString:@"AttendanceAdded" title:nil message:nil params:nil error:nil];
     }
+     */
     [self reloadData];
 }
 

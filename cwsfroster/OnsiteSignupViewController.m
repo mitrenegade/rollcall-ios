@@ -7,8 +7,6 @@
 //
 
 #import "OnsiteSignupViewController.h"
-#import "Member+Info.h"
-#import "Member+Parse.h"
 #import "Practice.h"
 #import "Attendance+Parse.h"
 #import "Attendance+Info.h"
@@ -110,7 +108,7 @@
         [UIAlertView alertViewWithTitle:@"Please enter an email" message:nil];
         return;
     }
-    
+    /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
     member.organization = [Organization currentOrganization];
     [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
@@ -149,6 +147,7 @@
             [UIAlertView alertViewWithTitle:@"Save error" message:@"Could not save new member, please try again."];
         }
     }];
+     */
 
 }
 
@@ -157,11 +156,13 @@
     Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
     newAttendance.organization = [Organization currentOrganization];
     newAttendance.practice = self.practice;
-    newAttendance.member = member;
-    NSNumber *status = @(DidAttend); // attended by default
+//    newAttendance.member = member;
+    NSNumber *status = @(AttendedStatusPresent); // attended by default
+    /*
     if ([member isBeginner]) {
-        status = @(DidAttendFreebie);
+        status = @(AttendedStatusFreebie);
     }
+     */
     [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {

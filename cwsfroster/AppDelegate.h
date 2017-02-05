@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define _defaults [NSUserDefaults standardUserDefaults]
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

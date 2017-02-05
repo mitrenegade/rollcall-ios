@@ -7,7 +7,6 @@
 //
 
 #import "Payment+Parse.h"
-#import "Member+Parse.h"
 #import "Organization+Parse.h"
 
 @implementation Payment (Parse)
@@ -32,8 +31,9 @@
 
     // relationships
     PFObject *object = [self.pfObject objectForKey:@"member"];
-    if (object.objectId)
-        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    if (object.objectId) {
+//        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    }
     PFObject *organization = [self.pfObject objectForKey:@"organization"];
     if (organization.objectId)
         self.organization = [[[Organization where:@{@"parseID":object.objectId}] all] firstObject];
@@ -57,8 +57,8 @@
             self.pfObject[@"type"] = self.type;
 
         // relationships
-        if (self.member)
-            self.pfObject[@"member"] = self.member.pfObject;
+//        if (self.member)
+//            self.pfObject[@"member"] = self.member.pfObject;
         if (self.organization.pfObject)
             self.pfObject[@"organization"] = self.organization.pfObject;
 

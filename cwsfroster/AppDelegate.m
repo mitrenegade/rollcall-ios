@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
-#import "Member+Info.h"
 #import "Attendance+Info.h"
 #import "IntroViewController.h"
 #import <Fabric/Fabric.h>
@@ -23,13 +22,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-//    [Parse setApplicationId:PARSE_APP_ID clientKey:PARSE_CLIENT_KEY];
-    ParseClientConfiguration *config = [ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration>  _Nonnull configuration) {
-        configuration.clientKey = PARSE_CLIENT_KEY;
-        configuration.applicationId = PARSE_APP_ID;
-        configuration.server = PARSE_SERVER;
-    }];
-    [Parse initializeWithConfiguration:config];
+    [self registerParse];
 
     [Fabric with:@[[Crashlytics class]]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

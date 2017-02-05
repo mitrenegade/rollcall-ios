@@ -10,7 +10,6 @@
 #import <Parse/Parse.h>
 #import "ParseBase+Parse.h"
 #import "MBProgressHUD.h"
-#import "Member+Info.h"
 #import "Organization+Parse.h"
 #import "AsyncImageView.h"
 #import "Payment+Parse.h"

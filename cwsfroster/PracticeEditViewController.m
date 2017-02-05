@@ -10,7 +10,6 @@
 #import "Practice+Parse.h"
 #import "Attendance+Info.h"
 
-#import "Member+Info.h"
 #import "Payment+Info.h"
 #import "MBProgressHUD.h"
 #import "Util.h"

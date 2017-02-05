@@ -7,7 +7,6 @@
 //
 
 #import "Attendance+Parse.h"
-#import "Member+Parse.h"
 #import "Practice+Parse.h"
 #import "Payment+Parse.h"
 #import "Organization+Parse.h"
@@ -31,8 +30,9 @@
 
     // relationships
     PFObject *object = [self.pfObject objectForKey:@"member"];
-    if (object.objectId)
-        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    if (object.objectId) {
+//        self.member = [[[Member where:@{@"parseID":object.objectId}] all] firstObject];
+    }
     object = [self.pfObject objectForKey:@"practice"];
     if (object.objectId)
         self.practice = [[[Practice where:@{@"parseID":object.objectId}] all] firstObject];
@@ -59,8 +59,8 @@
             self.pfObject[@"attended"] = self.attended;
 
         // relationships
-        if (self.member.pfObject)
-            self.pfObject[@"member"] = self.member.pfObject;
+//        if (self.member.pfObject)
+//            self.pfObject[@"member"] = self.member.pfObject;
         if (self.practice.pfObject)
             self.pfObject[@"practice"] = self.practice.pfObject;
         if (self.payment.pfObject)
