@@ -53,19 +53,12 @@
         [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
     }
     
+    [self setupTextView];
+    [self configureForPractice];
+    
     currentRow = -1;
 
     [inputDate setInputView:pickerView];
-    if (self.practice) {
-        [inputDate setText:[self titleForDate:self.practice.date]];
-    }
-    else {
-        self.title = @"New event date";
-        [viewEmail setHidden:YES];
-        [viewDrawing setHidden:YES];
-    }
-    [inputDetails setText:self.practice.details];
-    originalDescription = inputDetails.text;
 
     inputDate.inputAccessoryView = keyboardDoneButtonView;
     inputDate.text = [self titleForDate:[NSDate date]];
@@ -90,18 +83,6 @@
 
     rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
-}
-
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    NSMutableArray *attendees = [self.practice getAttendances];
-    if ([attendees count] == 0) {
-        [buttonEditAttendees setTitle:@"Add Attendees" forState:UIControlStateNormal];
-    }
-    else {
-        [buttonEditAttendees setTitle:@"Edit Attendees" forState:UIControlStateNormal];
-    }
 }
 
 -(IBAction)didClickCancel:(id)sender {

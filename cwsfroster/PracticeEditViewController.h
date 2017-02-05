@@ -24,6 +24,7 @@
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
+    IBOutlet UITextView *inputNotes;
 
     NSMutableDictionary *dateForDateString;
     NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
@@ -31,14 +32,11 @@
     NSString *originalDescription;
     
     IBOutlet UIView *viewInfo;
-    IBOutlet UIButton *buttonEditAttendees;
-    IBOutlet UIButton *buttonRollCall;
 
     IBOutlet UIView *viewEmail;
     IBOutlet UITextField *inputTo;
     IBOutlet UIButton *buttonEmail;
 
-    IBOutlet UIView *viewDrawing;
     IBOutlet UIButton *buttonDrawing;
 
     NSMutableArray *drawn;
@@ -54,6 +52,24 @@
 
 @property (nonatomic) Practice *practice;
 @property (nonatomic) id delegate;
+
+@property (nonatomic) IBOutlet UILabel *labelTitle;
+@property (nonatomic) IBOutlet UITextField *inputDate;
+@property (nonatomic) IBOutlet UITextField *inputDetails;
+@property (nonatomic) IBOutlet UITextView *inputNotes;
+
+@property (nonatomic) IBOutlet UIButton *buttonAttendees;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonAttendeesHeight;
+
+@property (nonatomic) NSString *originalDescription;
+
+@property (nonatomic) IBOutlet UIView *viewEmail;
+@property (nonatomic) IBOutlet UITextField *inputTo;
+@property (nonatomic) IBOutlet UIButton *buttonEmail;
+
+@property (nonatomic) IBOutlet UIButton *buttonDrawing;
+
+-(NSString *)titleForDate:(NSDate *)date;
 
 -(IBAction)didClickCancel:(id)sender;
 -(IBAction)didClickSave:(id)sender;
