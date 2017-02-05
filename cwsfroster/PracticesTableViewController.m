@@ -180,10 +180,6 @@
     }
 }
 
-#pragma mark PracticeEditDelegate
--(void)didEditPractice {
-    [self reloadPractices];
-}
 
 /*
 -(void)didEditPractice {

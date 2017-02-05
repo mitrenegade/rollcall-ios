@@ -31,15 +31,7 @@ extension PracticeEditViewController {
     }
     
     func configureForPractice() {
-        if let practice = self.practice, self.isNewPractice {
-            self.title = "Edit event"
-            self.inputDate.text = practice.title
-            self.inputDetails.text = practice.details
-            self.inputNotes.text = practice.notes
-            
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        else {
+        if self.isNewPractice {
             self.title = "New event";
             self.practice = Practice()
             self.inputDate.text = self.title(for: Date())
@@ -49,6 +41,14 @@ extension PracticeEditViewController {
             self.buttonDrawing.isHidden = true
             self.inputNotes.text = nil
         }
+        else {
+            self.title = "Edit event"
+            self.inputDate.text = self.practice.title
+            self.inputDetails.text = self.practice.details
+            self.inputNotes.text = self.practice.notes
+            
+            self.navigationItem.rightBarButtonItem = nil
+        }
         originalDescription = inputDetails.text;
 
     }
@@ -57,7 +57,18 @@ extension PracticeEditViewController {
 // MARK: Navigation
 extension PracticeEditViewController {
     @IBAction func didClickClose(_ sender: AnyObject?) {
-        self.navigationController?.dismiss(animated: true, completion: nil)
+        if !self.isNewPractice {
+            self.view.endEditing(true)
+            self.practice.saveInBackground(block: { (success, error) in
+                self.delegate?.didEditPractice()
+                self.navigationController?.dismiss(animated: true, completion: {
+                })
+            })
+        }
+        else {
+            // do not save new practice
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func didClickNext(_ sender: AnyObject?) {
@@ -88,11 +99,14 @@ extension PracticeEditViewController {
 }
 
 // Notes
-extension PracticeEditViewController {
+extension PracticeEditViewController: UITextViewDelegate {
+    public func textViewDidEndEditing(_ textView: UITextView) {
+        self.practice.notes = self.inputNotes.text
+    }
+    
     func dismissKeyboard() {
         self.view.endEditing(true)
 
-        self.practice.notes = self.inputNotes.text
         if !self.isNewPractice {
             self.practice.saveEventually()
         }

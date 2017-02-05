@@ -16,3 +16,16 @@ extension PracticesTableViewController {
         }
     }
 }
+
+extension PracticesTableViewController: PracticeEditDelegate {
+    public func didCreatePractice() {
+        // query from web
+        self.reloadPractices()
+    }
+    
+    public func didEditPractice() {
+        // just reload existing practices from data
+        self.tableView.reloadData()
+    }
+
+}

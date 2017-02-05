@@ -14,6 +14,7 @@
 
 @protocol PracticeEditDelegate <NSObject>
 
+-(void)didCreatePractice;
 -(void)didEditPractice;
 
 @end
@@ -54,7 +55,7 @@
 
 
 @property (nonatomic) Practice *practice;
-@property (nonatomic) id delegate;
+@property (nonatomic) id<PracticeEditDelegate> delegate;
 
 @property (nonatomic) IBOutlet UILabel *labelTitle;
 @property (nonatomic) IBOutlet UITextField *inputDate;
