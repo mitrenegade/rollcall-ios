@@ -109,7 +109,7 @@ extension SplashViewController {
             
             self.labelInfo.text = "Loading..."
             var classNames = ["members", "practices", "attendances"]
-            Member.queryMembers(org: org, completion: { (results, error) in
+            Organization.queryForMembers(completion: { (results, error) in
                 classNames.remove(at: classNames.index(of: "members")!)
                 self.labelInfo.text = "Loaded members"
                 if let members = results {
@@ -124,7 +124,7 @@ extension SplashViewController {
                 }
             })
             
-            Practice.queryPractices(org: org, completion: { (results, error) in
+            Organization.queryForPractices(completion: { (results, error) in
                 classNames.remove(at: classNames.index(of: "practices")!)
                 self.labelInfo.text = "Loaded practices"
                 if let practices = results {
@@ -139,7 +139,7 @@ extension SplashViewController {
                 }
             })
             
-            Attendance.queryAttendances(org: org, completion: { (results, error) in
+            Organization.queryForAttendances(completion: { (results, error) in
                 classNames.remove(at: classNames.index(of: "attendances")!)
                 self.labelInfo.text = "Loaded attendances"
                 if let attendances = results {

@@ -59,10 +59,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)reloadPractices {
-    [self.tableView reloadData];
-}
-
 -(void)goToSettings:(id)sender {
     [self notify:@"goToSettings"];
 }

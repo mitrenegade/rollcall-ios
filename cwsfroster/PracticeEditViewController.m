@@ -239,12 +239,13 @@
     NSString *dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
     NSString *dateString = [Util simpleDateFormat:date];
     NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
+    NSLog(@"practice: %@", self.practice);
     if ([dateString isEqualToString:self.practice.title]) {
         // current practice is allowed to be shown
         return title;
     }
     else {
-        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != %@", @"title", dateString]]; //[[Practice where:@{@"title":dateString}] all];
+        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K == %@", @"title", dateString]];
         if ([practices count])
             return nil;
     }

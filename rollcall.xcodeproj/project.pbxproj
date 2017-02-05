@@ -13,6 +13,8 @@
 		8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FA1E46E06A004E8723 /* Organization.swift */; };
 		8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FC1E46E072004E8723 /* Practice.swift */; };
 		8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FE1E46E079004E8723 /* Attendance.swift */; };
+		8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */; };
+		8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64021E478627004E8723 /* PracticesTableViewController+Swift.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
@@ -100,6 +102,8 @@
 		8E1F63FA1E46E06A004E8723 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		8E1F63FC1E46E072004E8723 /* Practice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		8E1F63FE1E46E079004E8723 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
+		8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticeEditViewController+Swift.swift"; sourceTree = "<group>"; };
+		8E1F64021E478627004E8723 /* PracticesTableViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticesTableViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
@@ -286,8 +290,10 @@
 			children = (
 				9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */,
 				9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */,
+				8E1F64021E478627004E8723 /* PracticesTableViewController+Swift.swift */,
 				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
 				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
+				8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */,
 				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
 				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 			);
@@ -633,6 +639,7 @@
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */,
+				8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
@@ -653,6 +660,7 @@
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
+				8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
