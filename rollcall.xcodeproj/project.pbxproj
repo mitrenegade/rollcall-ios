@@ -72,7 +72,6 @@
 		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
 		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
-		9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031A19A0EA9500777F79 /* PaymentViewController.m */; };
 		9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3001936D2410056140F /* UIActionSheet+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3021936D2410056140F /* UIAlertView+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -177,8 +176,6 @@
 		9EC0F50919A4D05F003441AC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9EC15480198009EA003F80CA /* AttendancesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendancesViewController.h; sourceTree = "<group>"; };
 		9EC15481198009EA003F80CA /* AttendancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendancesViewController.m; sourceTree = "<group>"; };
-		9EC3031919A0EA9500777F79 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
-		9EC3031A19A0EA9500777F79 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		9EC5F2FC1936D2410056140F /* MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKBlockAdditions.h; sourceTree = "<group>"; };
 		9EC5F2FD1936D2410056140F /* NSObject+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MKBlockAdditions.h"; sourceTree = "<group>"; };
 		9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MKBlockAdditions.m"; sourceTree = "<group>"; };
@@ -414,8 +411,6 @@
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
 				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
 				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
-				9EC3031919A0EA9500777F79 /* PaymentViewController.h */,
-				9EC3031A19A0EA9500777F79 /* PaymentViewController.m */,
 				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
 				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
@@ -681,7 +676,6 @@
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */,
-				9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */,
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,

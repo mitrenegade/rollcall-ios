@@ -45,15 +45,15 @@
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"organization:is:new"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        NSString *title = [NSString stringWithFormat: @"Welcome to %@", [[Organization currentOrganization] name]];
+        NSString *title = [NSString stringWithFormat: @"Welcome to %@", [[Organization current] name]];
         [self simpleAlert:title message:@"Add some members to your new organization."];
     }
 }
 
 -(void)updateTabBarIcons {
-    NSString *name = [[Organization currentOrganization].name lowercaseString];
+    NSString *name = [[Organization current].name lowercaseString];
     if (name &&
-        ([[[Organization currentOrganization].name lowercaseString] rangeOfString:@"taekwondo"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tkd"].location != NSNotFound || [[[Organization currentOrganization].name lowercaseString] rangeOfString:@"tae kwon do"].location != NSNotFound)) {
+        ([[[Organization current].name lowercaseString] rangeOfString:@"taekwondo"].location != NSNotFound || [[[Organization current].name lowercaseString] rangeOfString:@"tkd"].location != NSNotFound || [[[Organization current].name lowercaseString] rangeOfString:@"tae kwon do"].location != NSNotFound)) {
         [self setIcon:@"icon-tkd-paddle" forTabBar:0];
         [self setIcon:@"icon-tkd-helmet" forTabBar:1];
     }

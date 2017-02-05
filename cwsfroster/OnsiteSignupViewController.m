@@ -7,7 +7,6 @@
 //
 
 #import "OnsiteSignupViewController.h"
-#import "Practice.h"
 #import "RatingViewController.h"
 
 @interface OnsiteSignupViewController ()
@@ -108,7 +107,7 @@
     }
     /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    member.organization = [Organization currentOrganization];
+    member.organization = [Organization current];
     [member updateEntityWithParams:@{@"name":inputName.text, @"status":@(MemberStatusBeginner), @"email":inputEmail.text}];
     if (newPhoto) {
         member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
@@ -151,16 +150,12 @@
 
 -(void)saveNewAttendanceForMember:(Member *)member completion:(void(^)(BOOL success, Attendance *attendance))completion{
     NSLog(@"Need to create an attendance for member %@", member.name);
-    Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
-    newAttendance.organization = [Organization currentOrganization];
-    newAttendance.practice = self.practice;
-//    newAttendance.member = member;
-    NSNumber *status = @(AttendedStatusPresent); // attended by default
     /*
-    if ([member isBeginner]) {
-        status = @(AttendedStatusFreebie);
-    }
-     */
+    Attendance *newAttendance = (Attendance *)[Attendance createEntityInContext:_appDelegate.managedObjectContext];
+    newAttendance.organization = [Organization current];
+    newAttendance.practice = self.practice;
+    newAttendance.member = member;
+    NSNumber *status = @(AttendedStatusPresent); // attended by default
     [newAttendance updateEntityWithParams:@{@"date":self.practice.date, @"attended":status}];
     [newAttendance saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {
@@ -174,6 +169,7 @@
                 completion(NO, nil);
         }
     }];
+     */
 }
 
 -(void)reset {
@@ -189,7 +185,7 @@
 -(void)goToFeedback {
     if ([MFMailComposeViewController canSendMail]){
         NSString *title = @"RollCall feedback";
-        NSString *message = [NSString stringWithFormat:@"\n\nOrganization: %@\nVersion %@", [Organization currentOrganization].name, VERSION];
+        NSString *message = [NSString stringWithFormat:@"\n\nOrganization: %@\nVersion %@", [Organization current].name, VERSION];
         MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
         composer.mailComposeDelegate = self;
         [composer setSubject:title];

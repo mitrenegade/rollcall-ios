@@ -94,7 +94,7 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] mutableCopy];
+    NSMutableArray *attendees = [self.practice getAttendances];
     if ([attendees count] == 0) {
         [buttonEditAttendees setTitle:@"Add Attendees" forState:UIControlStateNormal];
     }
@@ -146,10 +146,10 @@
         }
         self.practice.details = inputDetails.text;
         [self.delegate didEditPractice];
-        [self.practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        [self.practice saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
             [self.navigationItem.leftBarButtonItem setEnabled:YES];
-            if (!success) {
+            if (!succeeded) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
                 progress.detailsLabelText = @"Could not save event!";
@@ -172,16 +172,16 @@
             completion(NO);
             return;
         }
-        Practice *practice = (Practice *)[Practice createEntityInContext:_appDelegate.managedObjectContext];
-        practice.organization = [Organization currentOrganization];
+        Practice *practice = [[Practice alloc] init];
+        practice.organization = [Organization current];
         practice.date = dateForDateString[inputDate.text];
         practice.title = [Util simpleDateFormat:practice.date];
         practice.details = inputDetails.text;
-
-        [practice saveOrUpdateToParseWithCompletion:^(BOOL success) {
+        
+        [practice saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
             [self.navigationItem.leftBarButtonItem setEnabled:YES];
-            if (!success) {
+            if (!succeeded) {
                 progress.mode = MBProgressHUDModeText;
                 progress.labelText = @"Save error";
                 progress.detailsLabelText = @"Could not save event!";
@@ -247,7 +247,7 @@
         return title;
     }
     else {
-        NSArray *practices = [[Practice where:@{@"title":dateString}] all];
+        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != %@", @"title", dateString]]; //[[Practice where:@{@"title":dateString}] all];
         if ([practices count])
             return nil;
     }
@@ -462,11 +462,11 @@
 -(void)didClickDrawing:(id)sender {
     NSString *title = @"Random drawing";
     NSString *message = @"Click to select one attendee at random";
-    NSSet *attendances = self.practice.attendances;
-    for (Attendance *a in attendances) {
+    NSMutableArray *attendees = [[[[Organization current] attendances] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"practice = %@", self.practice.objectId]]; //[[Practice where:@{@"title":dateString}] all];
+    for (Attendance *a in attendees) {
         NSLog(@"Attendance %@, attended %@", a, a.attended);
     }
-    NSMutableArray *attendees = [[[self.practice.attendances allObjects] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] mutableCopy];
+
     [self doDrawingFromAttendees:attendees title:title message:message];
 }
 

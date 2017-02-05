@@ -48,5 +48,16 @@ extension Practice {
             }
         }
     }
+    
+    func getAttendances() -> [Attendance] {
+        guard let allAttendances = Organization.current?.attendances else { return [] }
+        let myAttendances = allAttendances.filter { (a) -> Bool in
+            if a.practice?.objectId == self.objectId, a.attended?.intValue ?? 0 != AttendedStatus.None.rawValue {
+                return true
+            }
+            return false
+        }
+        return myAttendances
+    }
 }
 

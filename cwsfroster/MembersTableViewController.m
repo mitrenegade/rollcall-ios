@@ -131,7 +131,7 @@
 -(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
     /*
     Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    member.organization = [Organization currentOrganization];
+    member.organization = [Organization current];
     [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
     if (newPhoto) {
         member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);

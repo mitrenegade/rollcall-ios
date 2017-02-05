@@ -220,6 +220,7 @@
  */
 
 -(void)deletePracticeAtIndexPath:(NSIndexPath *)indexPath {
+    /*
     Practice *practice = [self.practiceFetcher objectAtIndexPath:indexPath];
     NSSet *attendances = practice.attendances;
     for (Attendance *at in attendances) {
@@ -234,7 +235,7 @@
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 
     [self notify:@"practice:deleted"]; // no one listens for this now
-
+*/
     [ParseLog logWithTypeString:@"PracticeDeleted" title:nil message:nil params:nil error:nil];
 }
 @end
