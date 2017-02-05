@@ -7,14 +7,14 @@
 //
 
 import UIKit
-
+/*
 @objc protocol MemberDelegate: class {
 
     func close()
     func saveNewMember(name: String, status: MemberStatus, photo: UIImage)
     func updateMember(member: Member)
 }
-
+*/
 
 class MemberInfoViewController: UIViewController {
     

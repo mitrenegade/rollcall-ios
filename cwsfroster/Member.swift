@@ -29,4 +29,25 @@ extension Member {
     var isInactive: Bool {
         return status?.intValue == MemberStatus.Inactive.rawValue
     }
+    
+    class func queryMembers(org: Organization, completion: @escaping ((_ members: [Member]?, _ error: NSError?) -> Void)) {
+        guard let query = Member.query() else {
+            completion(nil, nil)
+            return
+        }
+        
+        // because organization is a pointer, we have to use matchesQuery
+        let orgQuery = PFQuery(className: "Organization")
+        orgQuery.whereKey("objectId", equalTo: org.parseID)
+        
+        query.whereKey("organization", matchesQuery: orgQuery)
+        query.findObjectsInBackground { (results, error) in
+            if let members = results as? [Member] {
+                completion(members, nil)
+            }
+            else {
+                completion(nil, error as? NSError)
+            }
+        }
+    }
 }

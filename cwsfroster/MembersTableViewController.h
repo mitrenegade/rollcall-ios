@@ -7,11 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <RollCall-Swift.h>
+
+@protocol MemberDelegate <NSObject>
+
+-(void)close;
+-(void)saveNewMember:(NSString *)name status:(int)status photo:(UIImage *)newPhoto;
+-(void)updateMember:(id)member;
+
+@end
+
 
 @interface MembersTableViewController : UITableViewController <MemberDelegate>
 {
     NSFetchedResultsController *memberFetcher;
 }
 
+-(void)reloadMembers;
 @end
