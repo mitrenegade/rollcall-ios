@@ -34,7 +34,7 @@ extension Attendance {
         
         // because organization is a pointer, we have to use matchesQuery
         let orgQuery = PFQuery(className: "Organization")
-        orgQuery.whereKey("objectId", equalTo: org.parseID)
+        orgQuery.whereKey("objectId", equalTo: org.objectId!)
         
         query.whereKey("organization", matchesQuery: orgQuery)
         query.findObjectsInBackground { (results, error) in

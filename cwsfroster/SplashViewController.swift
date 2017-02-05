@@ -107,48 +107,48 @@ extension SplashViewController {
                 })
             }
             
-            labelInfo.text = "Loading..."
+            self.labelInfo.text = "Loading..."
             var classNames = ["members", "practices", "attendances"]
             Member.queryMembers(org: org, completion: { (results, error) in
-                classNames.remove("members")
-                labelInfo.text = "Loaded members"
+                classNames.remove(at: classNames.index(of: "members")!)
+                self.labelInfo.text = "Loaded members"
                 if let members = results {
                     org.members = members
                     if classNames.count == 0 {
                         self.activityIndicator.stopAnimating()
                         self.labelInfo.isHidden = true
                         self.labelInfo.text = nil
-                        goHome()
+                        self.goHome()
                         return
                     }
                 }
             })
             
             Practice.queryPractices(org: org, completion: { (results, error) in
-                classNames.remove("practices")
-                labelInfo.text = "Loaded practices"
+                classNames.remove(at: classNames.index(of: "practices")!)
+                self.labelInfo.text = "Loaded practices"
                 if let practices = results {
                     org.practices = practices
                     if classNames.count == 0 {
                         self.activityIndicator.stopAnimating()
                         self.labelInfo.isHidden = true
                         self.labelInfo.text = nil
-                        goHome()
+                        self.goHome()
                         return
                     }
                 }
             })
             
             Attendance.queryAttendances(org: org, completion: { (results, error) in
-                classNames.remove("attendances")
-                labelInfo.text = "Loaded attendances"
+                classNames.remove(at: classNames.index(of: "attendances")!)
+                self.labelInfo.text = "Loaded attendances"
                 if let attendances = results {
                     org.attendances = attendances
                     if classNames.count == 0 {
                         self.activityIndicator.stopAnimating()
                         self.labelInfo.isHidden = true
                         self.labelInfo.text = nil
-                        goHome()
+                        self.goHome()
                         return
                     }
                 }

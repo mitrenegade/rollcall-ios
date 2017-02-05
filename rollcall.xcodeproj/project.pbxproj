@@ -28,7 +28,6 @@
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
-		9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E15616D199264BF00A31398 /* Attendance+Info.m */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
@@ -74,7 +73,6 @@
 		9EC0F50A19A4D05F003441AC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50919A4D05F003441AC /* FacebookSDK.framework */; };
 		9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC15481198009EA003F80CA /* AttendancesViewController.m */; };
 		9EC3031B19A0EA9500777F79 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031A19A0EA9500777F79 /* PaymentViewController.m */; };
-		9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC3031D19A1398700777F79 /* Payment+Info.m */; };
 		9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3001936D2410056140F /* UIActionSheet+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3021936D2410056140F /* UIAlertView+MKBlockAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -122,8 +120,6 @@
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
-		9E15616C199264BF00A31398 /* Attendance+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Attendance+Info.h"; sourceTree = "<group>"; };
-		9E15616D199264BF00A31398 /* Attendance+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Attendance+Info.m"; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
@@ -183,8 +179,6 @@
 		9EC15481198009EA003F80CA /* AttendancesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendancesViewController.m; sourceTree = "<group>"; };
 		9EC3031919A0EA9500777F79 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
 		9EC3031A19A0EA9500777F79 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
-		9EC3031C19A1398700777F79 /* Payment+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Payment+Info.h"; sourceTree = "<group>"; };
-		9EC3031D19A1398700777F79 /* Payment+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Payment+Info.m"; sourceTree = "<group>"; };
 		9EC5F2FC1936D2410056140F /* MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKBlockAdditions.h; sourceTree = "<group>"; };
 		9EC5F2FD1936D2410056140F /* NSObject+MKBlockAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MKBlockAdditions.h"; sourceTree = "<group>"; };
 		9EC5F2FE1936D2410056140F /* NSObject+MKBlockAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MKBlockAdditions.m"; sourceTree = "<group>"; };
@@ -405,7 +399,6 @@
 				8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */,
 				8EE005B31E3D955200272DC0 /* Constants.swift */,
 				8E1F63F71E46D852004E8723 /* Models */,
-				9EC5F2E51936CFC00056140F /* Core Data */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				8EE005A41E3D833E00272DC0 /* Storyboards */,
 				8EE005AE1E3D94FE00272DC0 /* Splash */,
@@ -443,17 +436,6 @@
 				8EE005AC1E3D875600272DC0 /* Assets.xcassets */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9EC5F2E51936CFC00056140F /* Core Data */ = {
-			isa = PBXGroup;
-			children = (
-				9EC3031C19A1398700777F79 /* Payment+Info.h */,
-				9EC3031D19A1398700777F79 /* Payment+Info.m */,
-				9E15616C199264BF00A31398 /* Attendance+Info.h */,
-				9E15616D199264BF00A31398 /* Attendance+Info.m */,
-			);
-			name = "Core Data";
 			sourceTree = "<group>";
 		};
 		9EC5F2F61936D2410056140F /* Utils */ = {
@@ -687,13 +669,11 @@
 				9EC15482198009EA003F80CA /* AttendancesViewController.m in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
-				9E15616E199264BF00A31398 /* Attendance+Info.m in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */,
-				9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
 				8E1F63F91E46D8AD004E8723 /* MembersTableViewController+Swift.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,

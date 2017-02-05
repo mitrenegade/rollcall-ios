@@ -7,7 +7,6 @@
 //
 
 #import "PaymentViewController.h"
-#import "Payment+Info.h"
 
 @interface PaymentViewController ()
 

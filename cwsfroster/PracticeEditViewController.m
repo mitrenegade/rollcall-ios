@@ -7,9 +7,6 @@
 //
 
 #import "PracticeEditViewController.h"
-#import "Attendance+Info.h"
-
-#import "Payment+Info.h"
 #import "MBProgressHUD.h"
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
@@ -388,6 +385,7 @@
                 message = [NSString stringWithFormat:@"%@\n%@ %@ ", message, attendance.member.name, attendance.member.email];
                 
                 NSString *paymentStatus = @"<br>";
+                /*
                 Payment *payment = attendance.payment;
                 Member *member = attendance.member;
                 if (!payment) {
@@ -407,6 +405,7 @@
                     paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
                 
                 message = [message stringByAppendingString:paymentStatus];
+                 */
             }
         }
         if ([MFMailComposeViewController canSendMail]){

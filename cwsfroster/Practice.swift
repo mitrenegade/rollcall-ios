@@ -17,6 +17,8 @@ class Practice: PFObject {
     @NSManaged var details: String?
     
     @NSManaged var organization: Organization?
+    
+    var attendances: [Attendance]?
 }
 
 extension Practice: PFSubclassing {
@@ -34,7 +36,7 @@ extension Practice {
         
         // because organization is a pointer, we have to use matchesQuery
         let orgQuery = PFQuery(className: "Organization")
-        orgQuery.whereKey("objectId", equalTo: org.objectId)
+        orgQuery.whereKey("objectId", equalTo: org.objectId!)
         
         query.whereKey("organization", matchesQuery: orgQuery)
         query.findObjectsInBackground { (results, error) in

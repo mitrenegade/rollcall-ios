@@ -82,15 +82,14 @@ class NotesViewController: UIViewController {
     func dismissKeyboard() {
         self.view.endEditing(true)
         
-        if self.practice != nil {
-            self.practice!.notes = self.inputNotes.text
-            self.practice!.saveOrUpdateToParse(completion: nil)
+        if let practice = self.practice {
+            practice.notes = self.inputNotes.text
+            practice.saveEventually()
             ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "practice"], error: nil)
         }
-        if self.member != nil {
-            self.member!.notes = self.inputNotes.text
-            //self.member!.saveOrUpdateToParse(completion: nil)
-            self.member!.saveEventually()
+        if let member = self.member {
+            member.notes = self.inputNotes.text
+            member.saveEventually()
             ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "member"], error: nil)
         }
         

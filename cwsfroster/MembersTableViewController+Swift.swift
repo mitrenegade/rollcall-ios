@@ -15,7 +15,7 @@ extension MembersTableViewController {
         if members != nil {
             return members!
         }
-        Member.queryMembers(org: Organization.current()!) { results, error in
+        Member.queryMembers(org: Organization.current!) { results, error in
             if let mem = results {
                 members = mem
             }

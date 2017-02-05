@@ -8,9 +8,7 @@
 
 #import "AttendancesViewController.h"
 #import "Util.h"
-#import "Attendance+Info.h"
 #import "PracticeEditViewController.h"
-#import "Payment+Info.h"
 
 @interface AttendancesViewController ()
 

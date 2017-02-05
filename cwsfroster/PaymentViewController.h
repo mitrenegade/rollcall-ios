@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Payment+Info.h"
 
 @protocol PaymentViewDelegate <NSObject>
 

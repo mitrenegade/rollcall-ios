@@ -8,7 +8,6 @@
 
 #import "OnsiteSignupViewController.h"
 #import "Practice.h"
-#import "Attendance+Info.h"
 #import "RatingViewController.h"
 
 @interface OnsiteSignupViewController ()
