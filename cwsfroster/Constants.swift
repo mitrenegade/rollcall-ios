@@ -35,7 +35,7 @@ enum NotificationType: String {
 
 @objc enum MemberStatus: Int {
     case Inactive = 0
-    case Beginner = 1 // member can be a beginner and all their attendances will be marked as freebie.
+    case Beginner = 1 // DEPRECATED
     case Active = 2
 }
 

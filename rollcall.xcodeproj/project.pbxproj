@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
+		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
@@ -114,6 +115,7 @@
 /* Begin PBXFileReference section */
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				9EC5F3371936D9080056140F /* MemberViewController.h */,
 				9EC5F3381936D9080056140F /* MemberViewController.m */,
+				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				9EC3031E19A1398700777F79 /* Payment+Info.m in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
+				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,

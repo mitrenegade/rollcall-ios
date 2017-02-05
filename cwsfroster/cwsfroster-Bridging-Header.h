@@ -14,6 +14,8 @@
 #import "AppDelegate.h"
 #import "IntroViewController.h"
 #import "SettingsViewController.h"
+#import "Member+Info.h"
+#import "MemberViewController.h"
 
 // PARSE MODEL FILES TO BE DEPRECATED
 #import "Organization+Info.h"

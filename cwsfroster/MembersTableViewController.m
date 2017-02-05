@@ -158,13 +158,14 @@
 {
     UINavigationController *nav = segue.destinationViewController;
     MemberViewController *controller = (MemberViewController *)(nav.topViewController);
-    if ([segue.identifier isEqualToString:@"MembersToEditMember"]) {
+    if ([segue.identifier isEqualToString:@"toEditMember"]) {
         Member *member = [self.memberFetcher objectAtIndexPath:[self.tableView indexPathForSelectedRow]];
         [controller setDelegate:self];
         [controller setMember:member];
     }
     else if ([segue.identifier isEqualToString:@"toAddMember"]) {
         [controller setDelegate:self];
+        [controller setMember: nil];
     }
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.

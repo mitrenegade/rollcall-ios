@@ -13,7 +13,7 @@
 @protocol MemberDelegate <NSObject>
 
 -(void)close;
--(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto;
+-(void)saveNewMember:(NSString *)name status:(int)status photo:(UIImage *)newPhoto;
 -(void)updateMember:(Member *)member;
 
 @end
@@ -40,7 +40,7 @@
     NSArray *payments;
     NSArray *attendances;
 
-    MemberStatus originalStatus;
+    int originalStatus; // MemberStatus
     BOOL changed;
     
     IBOutlet UIButton *buttonEditNotes;
