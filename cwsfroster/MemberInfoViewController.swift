@@ -67,7 +67,12 @@ class MemberInfoViewController: UIViewController {
     }
     
     func close() {
-        self.navigationController?.popViewController(animated: true)
+        if self.navigationController?.viewControllers[0] == self {
+            self.navigationController?.dismiss(animated: true, completion: nil)
+        }
+        else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {
