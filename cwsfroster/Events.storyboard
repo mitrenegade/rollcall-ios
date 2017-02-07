@@ -200,10 +200,10 @@
             </objects>
             <point key="canvasLocation" x="1818" y="1361"/>
         </scene>
-        <!--Attendances View Controller-->
+        <!--Attendance Table View Controller-->
         <scene sceneID="TPB-cP-2ly">
             <objects>
-                <tableViewController id="z2Z-nI-mGK" customClass="AttendancesViewController" sceneMemberID="viewController">
+                <tableViewController id="z2Z-nI-mGK" customClass="AttendanceTableViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dp6-cI-afC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -241,6 +241,11 @@
                         <barButtonItem key="leftBarButtonItem" title="Close" id="x2l-ZM-2Ur">
                             <connections>
                                 <action selector="didClickClose:" destination="z2Z-nI-mGK" id="hdD-Z9-WHX"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="wq2-SD-dkz">
+                            <connections>
+                                <action selector="didClickSave:" destination="z2Z-nI-mGK" id="Uln-ly-FsB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

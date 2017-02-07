@@ -70,7 +70,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="UwJ-89-nQa" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="M2C-Ad-wBZ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AFJ-gh-fYE">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AFJ-gh-fYE">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

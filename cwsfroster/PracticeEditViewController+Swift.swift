@@ -36,6 +36,7 @@ extension PracticeEditViewController {
             self.practice = Practice()
             self.inputDate.text = self.title(for: Date())
             practice.title = self.inputDate.text
+            practice.organization = Organization.current
             
             self.viewEmail.isHidden = true
             self.buttonDrawing.isHidden = true
@@ -73,6 +74,7 @@ extension PracticeEditViewController {
     }
     
     @IBAction func didClickNext(_ sender: AnyObject?) {
+        self.view.endEditing(true)
         self.goToAttendees()
         /*
         -(IBAction)didClickSave:(id)sender {
@@ -164,6 +166,9 @@ extension PracticeEditViewController: UITextFieldDelegate {
         }
         else if textField == inputDate {
             self.practice.title = textField.text
+            if let text = inputDate.text, let date = dateForDateString[text] as? Date {
+                self.practice.date = date
+            }
         }
         else if textField == inputDetails {
             self.practice.details = textField.text

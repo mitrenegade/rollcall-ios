@@ -52,6 +52,7 @@
 }
 
 @property (nonatomic, assign) BOOL isNewPractice;
+@property (nonatomic) NSMutableDictionary *dateForDateString;
 
 
 @property (nonatomic) Practice *practice;

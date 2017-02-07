@@ -52,20 +52,17 @@
     if (IS_ABOVE_IOS6) {
         [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
     }
+    self.inputDate.inputView = pickerView;
+    self.inputDate.inputAccessoryView = keyboardDoneButtonView;
     
     [self setupTextView];
     [self configureForPractice];
     
     currentRow = -1;
 
-    [inputDate setInputView:pickerView];
-
-    inputDate.inputAccessoryView = keyboardDoneButtonView;
-    inputDate.text = [self titleForDate:[NSDate date]];
-
     emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
     if (emailTo) {
-        inputTo.text = [NSString stringWithFormat:@"To: %@", emailTo];
+        self.inputTo.text = [NSString stringWithFormat:@"To: %@", emailTo];
     }
 
     /*
@@ -88,70 +85,6 @@
     // don't need
 }
 
--(void)saveWithCompletion:(void(^)(BOOL success))completion {
-    NSLog(@"Saving");
-    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    [self.navigationItem.leftBarButtonItem setEnabled:NO];
-
-    if (self.practice) {
-        progress.labelText = @"Saving event date";
-        if (dateForDateString[inputDate.text]) {
-            self.practice.date = dateForDateString[inputDate.text];
-            self.practice.title = [Util simpleDateFormat:self.practice.date];
-        }
-        self.practice.details = inputDetails.text;
-        [self.delegate didEditPractice];
-        [self.practice saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-            [self.navigationItem.leftBarButtonItem setEnabled:YES];
-            if (!succeeded) {
-                progress.mode = MBProgressHUDModeText;
-                progress.labelText = @"Save error";
-                progress.detailsLabelText = @"Could not save event!";
-                [progress hide:YES afterDelay:1.5];
-                completion(NO);
-            }
-            else {
-                [progress hide:YES];
-                completion(YES);
-            }
-        }];
-    }
-    else {
-        progress.labelText = @"Creating new event";
-        if (!dateForDateString[inputDate.text]) {
-            // invalid date, or date not selected. shouldn't go here if we disable save
-            progress.mode = MBProgressHUDModeText;
-            progress.labelText = @"Please enter a date";
-            [progress hide:YES afterDelay:1];
-            completion(NO);
-            return;
-        }
-        Practice *practice = [[Practice alloc] init];
-        practice.organization = [Organization current];
-        practice.date = dateForDateString[inputDate.text];
-        practice.title = [Util simpleDateFormat:practice.date];
-        practice.details = inputDetails.text;
-        
-        [practice saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-            [self.navigationItem.leftBarButtonItem setEnabled:YES];
-            if (!succeeded) {
-                progress.mode = MBProgressHUDModeText;
-                progress.labelText = @"Save error";
-                progress.detailsLabelText = @"Could not save event!";
-                [progress hide:YES afterDelay:1.5];
-            }
-            else {
-                self.practice = practice;
-                [progress hide:YES];
-                [self.delegate didEditPractice];
-                completion(YES);
-            }
-        }];
-    }
-}
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -160,8 +93,10 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     if ([segue.identifier isEqualToString:@"ToEditAttendees"]) {
-        AttendancesViewController *controller = (AttendancesViewController *)segue.destinationViewController;
+        AttendanceTableViewController *controller = (AttendanceTableViewController *)segue.destinationViewController;
         [controller setPractice:self.practice];
+        [controller setIsNewPractice: self.isNewPractice];
+        controller.delegate = self.delegate;
     }
     else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
         OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
@@ -177,7 +112,7 @@
 -(void)generatePickerDates {
     if (!datesForPicker) {
         datesForPicker = [NSMutableArray array];
-        dateForDateString = [NSMutableDictionary dictionary];
+        self.dateForDateString = [NSMutableDictionary dictionary];
         
         int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
         for (int row = 31 + futureDays; row > 0; row--) {
@@ -185,7 +120,7 @@
             NSString *title = [self titleForDate:date];
             if (title) {
                 [datesForPicker addObject:title];
-                dateForDateString[title] = date;
+                self.dateForDateString[title] = date;
             }
         }
     }
@@ -228,26 +163,26 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
-    [inputDate setText:title];
+    [self.inputDate setText:title];
     currentRow = row;
 }
 
 -(void)selectDate:(id)sender {
-    [inputDate resignFirstResponder];
+    [self.inputDate resignFirstResponder];
 }
 
 -(void)cancelSelectDate:(id)sender {
     // revert to old date
-    inputDate.text = lastInputDate;
-    [inputDate resignFirstResponder];
+    self.inputDate.text = lastInputDate;
+    [self.inputDate resignFirstResponder];
 }
 
 #pragma mark emailing
 -(IBAction)didClickEmail:(id)sender {
-    [inputTo resignFirstResponder];
+    [self.inputTo resignFirstResponder];
 //    [inputFrom resignFirstResponder];
     
-    if (inputTo.text.length == 0) {
+    if (self.inputTo.text.length == 0) {
         MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         progress.labelText = @"Please enter an email recipient";
         [progress hide:YES afterDelay:1.5];
@@ -263,6 +198,7 @@
     */
 
     // save any changes. at least sets new details to practice before sending email
+    /*
     [self saveWithCompletion:^(BOOL success) {
         [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
         [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
@@ -274,27 +210,6 @@
                 message = [NSString stringWithFormat:@"%@\n%@ %@ ", message, attendance.member.name, attendance.member.email];
                 
                 NSString *paymentStatus = @"<br>";
-                /*
-                Payment *payment = attendance.payment;
-                Member *member = attendance.member;
-                if (!payment) {
-                    if ([member.status intValue] == MemberStatusBeginner) {
-                        paymentStatus = @" (guest)<br>";
-                    }
-                    else if ([member.status intValue] == MemberStatusInactive) {
-                        paymentStatus = @" (inactive status)<br>";
-                    }
-                    else {
-                        paymentStatus = @" (unpaid)<br>";
-                    }
-                }
-                else if (payment.isMonthly)
-                    paymentStatus = @" (monthly)<br>";
-                else if (payment.isDaily)
-                    paymentStatus = [NSString stringWithFormat:@" (daily - %d left)<br>", payment.daysLeft];
-                
-                message = [message stringByAppendingString:paymentStatus];
-                 */
             }
         }
         if ([MFMailComposeViewController canSendMail]){
@@ -312,6 +227,7 @@
             [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
         }
     }];
+     */
 }
 
 #pragma mark MessageController delegate
@@ -392,15 +308,6 @@
     if (self.practice) {
         [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
     }
-    else {
-        NSLog(@"No practice exists, creating one");
-        [self saveWithCompletion:^(BOOL success) {
-            if (success) {
-                self.navigationItem.leftBarButtonItem.title = @"Close";
-                [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
-            }
-        }];
-    }
 }
 
 #pragma mark Onsite signup
@@ -410,28 +317,15 @@
     }
     else {
         NSLog(@"No practice exists, creating one");
+        /*
         [self saveWithCompletion:^(BOOL success) {
             if (success) {
                 self.navigationItem.leftBarButtonItem.title = @"Close";
                 [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
             }
         }];
+         */
     }
 }
 
-#pragma mark Event info
--(IBAction)didClickEventNotes:(id)sender {
-    if (self.practice) {
-        [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
-    }
-    else {
-        NSLog(@"No practice exists, creating one");
-        [self saveWithCompletion:^(BOOL success) {
-            if (success) {
-                self.navigationItem.leftBarButtonItem.title = @"Close";
-                [self performSegueWithIdentifier:@"ToEventNotes" sender:nil];
-            }
-        }];
-    }
-}
 @end
