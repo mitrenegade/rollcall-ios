@@ -104,7 +104,7 @@ class MemberInfoViewController: UIViewController {
     }
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
-        
+        self.takePhoto()
     }
 
     @IBAction func didClickSwitch(_ sender: AnyObject?) {
@@ -193,3 +193,37 @@ extension MemberInfoViewController: UITextViewDelegate {
     }
 }
 
+// MARK: Camera
+extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func takePhoto() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        }
+        else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            picker.sourceType = .photoLibrary
+        }
+        else {
+            picker.sourceType = .savedPhotosAlbum
+        }
+        
+        self.present(picker, animated: true, completion: nil)
+        //ParseLog.logWithTypeString()
+//        [ParseLog logWithTypeString:@"EditOnsiteSignupPhoto" title:nil message:nil params:nil error:nil];
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let img = info[UIImagePickerControllerEditedImage] ?? info[UIImagePickerControllerOriginalImage]
+        guard let photo = img as? UIImage else { return }
+        self.buttonPhoto.setImage(photo, for: .normal)
+        picker.dismiss(animated: true, completion: nil)
+        buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
+        self.newPhoto = photo
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
