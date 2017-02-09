@@ -124,37 +124,8 @@
 }
 
 #pragma mark Delegate
--(void)saveNewMember:(NSString *)name status:(MemberStatus)status photo:(UIImage *)newPhoto {
-    /*
-    Member *member = (Member *)[Member createEntityInContext:_appDelegate.managedObjectContext];
-    member.organization = [Organization current];
-    [member updateEntityWithParams:@{@"name":name, @"status":@(status)}];
-    if (newPhoto) {
-        member.photo = UIImageJPEGRepresentation(newPhoto, 0.8);
-    }
-    [self notify:@"member:updated"];
-
+-(void)didUpdateMember:(Member *)member {
     [self reloadMembers];
-
-    [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-
-            NSError *error;
-            if ([_appDelegate.managedObjectContext save:&error]) {
-                [self reloadMembers];
-            }
-            [self close];
-        }
-        else {
-            NSLog(@"Could not save member!");
-            [UIAlertView alertViewWithTitle:@"Save error" message:@"Your last member edit was not saved"];
-        }
-    }];
-    [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
-     */
-}
-
--(void)updateMember:(Member *)member {
     /*
     [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
         if (success) {

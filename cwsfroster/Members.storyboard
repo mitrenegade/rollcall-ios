@@ -220,6 +220,11 @@
                                 <action selector="didClickClose:" destination="Lnu-I3-xE9" id="3Tf-TR-0Mq"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Cqu-lR-VsL">
+                            <connections>
+                                <action selector="didClickSave:" destination="Lnu-I3-xE9" id="8Kj-AY-l5H"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="buttonPayment" destination="4Pc-uO-yF4" id="odU-Sd-WdC"/>
