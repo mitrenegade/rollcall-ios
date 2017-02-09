@@ -209,7 +209,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" id="mix-5X-epe" userLabel="AttendanceCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" id="mix-5X-epe" userLabel="AttendanceCell" customClass="AttendanceCell" customModule="RollCall" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mix-5X-epe" id="eMw-Sd-tDn">
@@ -217,19 +217,37 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jSm-oz-7MA">
-                                            <rect key="frame" x="17" y="8" width="350" height="29"/>
+                                            <rect key="frame" x="46" y="8" width="321" height="29"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AEf-Br-p2l">
+                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="HwO-eO-l9Q"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="jSm-oz-7MA" firstAttribute="leading" secondItem="AEf-Br-p2l" secondAttribute="trailing" constant="8" id="0f3-ZJ-JmA"/>
+                                        <constraint firstItem="AEf-Br-p2l" firstAttribute="top" secondItem="eMw-Sd-tDn" secondAttribute="top" constant="7" id="5td-Gm-tJF"/>
                                         <constraint firstAttribute="trailing" secondItem="jSm-oz-7MA" secondAttribute="trailing" constant="8" id="Ab8-7Q-1Ti"/>
                                         <constraint firstItem="jSm-oz-7MA" firstAttribute="top" secondItem="eMw-Sd-tDn" secondAttribute="top" constant="8" id="C8p-JE-sB5"/>
                                         <constraint firstAttribute="bottom" secondItem="jSm-oz-7MA" secondAttribute="bottom" constant="6.5" id="Vjk-DO-Qcp"/>
-                                        <constraint firstItem="jSm-oz-7MA" firstAttribute="leading" secondItem="eMw-Sd-tDn" secondAttribute="leading" constant="17" id="ke8-UX-4MA"/>
+                                        <constraint firstItem="AEf-Br-p2l" firstAttribute="leading" secondItem="eMw-Sd-tDn" secondAttribute="leading" constant="8" id="heJ-A1-tQI"/>
+                                        <constraint firstAttribute="bottom" secondItem="AEf-Br-p2l" secondAttribute="bottom" constant="6" id="qPS-5i-4qE"/>
                                     </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                            <integer key="value" value="15"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameLabel" destination="jSm-oz-7MA" id="TAq-qW-Y4T"/>
+                                    <outlet property="photoView" destination="AEf-Br-p2l" id="CPd-3n-Io5"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
