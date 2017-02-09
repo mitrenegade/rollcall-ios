@@ -88,6 +88,13 @@
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
     label.text = member.name;
+    
+    if ([member isInactive]) {
+        label.alpha = 0.5;
+    }
+    else {
+        label.alpha = 1;
+    }
 
     return cell;
 }
