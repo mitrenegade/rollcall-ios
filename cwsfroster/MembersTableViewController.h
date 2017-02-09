@@ -10,9 +10,7 @@
 
 @protocol MemberDelegate <NSObject>
 
--(void)close;
--(void)saveNewMember:(NSString *)name status:(int)status photo:(UIImage *)newPhoto;
--(void)updateMember:(id)member;
+-(void)didUpdateMember:(id)member;
 
 @end
 
