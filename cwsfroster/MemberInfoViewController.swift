@@ -35,9 +35,13 @@ class MemberInfoViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = nil
             
             if let photo = member.photo {
-                //            let image = UIImage.init(data: photo)
-                //            buttonPhoto.setImage(image, for: .normal)
-                //            buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
+                photo.getDataInBackground(block: { (data, error) in
+                    if let data = data {
+                        let image = UIImage(data: data)
+                        self.buttonPhoto.setImage(image, for: .normal)
+                        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+                    }
+                })
             }
             self.switchInactive.isOn = member.isInactive
         } else {
