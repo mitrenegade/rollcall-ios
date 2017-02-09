@@ -25,17 +25,19 @@ class MemberInfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if let member = member, let photo = member.photo {
-//            let image = UIImage.init(data: photo)
-//            buttonPhoto.setImage(image, for: .normal)
-//            buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
-        }
         newPhoto = nil
         inputNotes.text = nil
         
         if let member = member {
             self.title = "Edit member"
             self.navigationItem.rightBarButtonItem = nil
+            
+            if let photo = member.photo {
+                //            let image = UIImage.init(data: photo)
+                //            buttonPhoto.setImage(image, for: .normal)
+                //            buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
+            }
+            self.switchInactive.isOn = member.isInactive
         } else {
             self.title = "New member"
         }
@@ -106,7 +108,10 @@ class MemberInfoViewController: UIViewController {
     }
 
     @IBAction func didClickSwitch(_ sender: AnyObject?) {
-        
+        if let member = self.member {
+            member.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
+            member.saveInBackground()
+        }
     }
     
     @IBAction func didClickSave(_ sender: AnyObject?) {
@@ -136,6 +141,8 @@ class MemberInfoViewController: UIViewController {
         if let photo = self.newPhoto {
             // TODO: set photo
         }
+        member?.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
+
         self.close()
     }
 }
