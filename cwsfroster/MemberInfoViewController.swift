@@ -105,6 +105,10 @@ class MemberInfoViewController: UIViewController {
     @IBAction func didClickSave(_ sender: AnyObject?) {
         if member == nil {
             member = Member()
+            member?.organization = Organization.current
+            
+            // without reloading from the web, make sure org knows of new member
+            Organization.current?.members?.insert(member!, at: 0)
         }
         if let text = self.inputName.text, text.characters.count > 0 {
             self.member?.name = text
