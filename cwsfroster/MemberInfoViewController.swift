@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 class MemberInfoViewController: UIViewController {
     
     @IBOutlet var buttonPhoto: UIButton!
@@ -100,6 +102,10 @@ class MemberInfoViewController: UIViewController {
             }
         }
 
+        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+            member?.photo = PFFile(data:data)
+        }
+
         self.close()
     }
     
@@ -138,8 +144,8 @@ class MemberInfoViewController: UIViewController {
         if let text = inputNotes.text, text.characters.count > 0 {
             member?.notes = text
         }
-        if let photo = self.newPhoto {
-            // TODO: set photo
+        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+            member?.photo = PFFile(data:data)
         }
         member?.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
 
