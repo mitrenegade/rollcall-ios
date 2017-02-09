@@ -91,6 +91,13 @@ class MemberInfoViewController: UIViewController {
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {
+        if let text = self.inputEmail.text, text.characters.count > 0 {
+            if !text.isValidEmail() {
+                self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
+                return
+            }
+        }
+
         self.close()
     }
     
@@ -103,6 +110,13 @@ class MemberInfoViewController: UIViewController {
     }
     
     @IBAction func didClickSave(_ sender: AnyObject?) {
+        if let text = self.inputEmail.text, text.characters.count > 0 {
+            if !text.isValidEmail() {
+                self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
+                return
+            }
+        }
+        
         if member == nil {
             member = Member()
             member?.organization = Organization.current
@@ -114,9 +128,7 @@ class MemberInfoViewController: UIViewController {
             self.member?.name = text
         }
         if let text = self.inputEmail.text, text.characters.count > 0 {
-            if text.isValidEmail() {
-                self.member?.email = text
-            }
+            self.member?.email = text
         }
         if let text = inputNotes.text, text.characters.count > 0 {
             member?.notes = text
