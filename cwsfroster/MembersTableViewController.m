@@ -89,11 +89,19 @@
     label.textColor = [UIColor darkGrayColor];
     label.text = member.name;
     
-    if ([member isInactive]) {
-        label.alpha = 0.5;
+    UIImageView *imageView = [cell viewWithTag:3];
+    if ([member photo]) {
+        imageView.image = [UIImage imageNamed:@"user1"];
     }
     else {
-        label.alpha = 1;
+        imageView.image = [UIImage imageNamed:@"user1"];
+    }
+    
+    if ([member isInactive]) {
+        cell.contentView.alpha = 0.5;
+    }
+    else {
+        cell.contentView.alpha = 1;
     }
 
     return cell;
