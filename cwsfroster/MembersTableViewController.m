@@ -79,31 +79,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
-
+    MemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MemberCell" forIndexPath:indexPath];
+    
     // Configure the cell...
 
     Member *member = [[Organization current] members][indexPath.row];
-    UILabel *label = [cell viewWithTag:2];
-    label.font = [UIFont systemFontOfSize:16];
-    label.textColor = [UIColor darkGrayColor];
-    label.text = member.name;
+    [cell configureWithMember: member row:indexPath.row];
     
-    UIImageView *imageView = [cell viewWithTag:3];
-    if ([member photo]) {
-        imageView.image = [UIImage imageNamed:@"user1"];
-    }
-    else {
-        imageView.image = [UIImage imageNamed:@"user1"];
-    }
-    
-    if ([member isInactive]) {
-        cell.contentView.alpha = 0.5;
-    }
-    else {
-        cell.contentView.alpha = 1;
-    }
-
     return cell;
 }
 

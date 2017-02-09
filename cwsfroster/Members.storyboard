@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" id="OVn-ba-i2m" userLabel="MemberCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" id="OVn-ba-i2m" userLabel="MemberCell" customClass="MemberCell" customModule="RollCall" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVn-ba-i2m" id="PBu-nq-OJK">
@@ -55,6 +55,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="labelName" destination="FU2-h2-tnm" id="70h-gJ-NqW"/>
+                                    <outlet property="photoView" destination="vfe-wv-Yvk" id="eTd-pe-TLa"/>
                                     <segue destination="UwJ-89-nQa" kind="modal" identifier="toEditMember" id="nGA-pw-8RZ"/>
                                 </connections>
                             </tableViewCell>
