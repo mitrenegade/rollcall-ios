@@ -88,6 +88,13 @@
     label.font = [UIFont systemFontOfSize:16];
     label.textColor = [UIColor darkGrayColor];
     label.text = member.name;
+    
+    if ([member isInactive]) {
+        label.alpha = 0.5;
+    }
+    else {
+        label.alpha = 1;
+    }
 
     return cell;
 }
@@ -126,25 +133,8 @@
 #pragma mark Delegate
 -(void)didUpdateMember:(Member *)member {
     [self reloadMembers];
-    /*
-    [member saveOrUpdateToParseWithCompletion:^(BOOL success) {
-        if (success) {
-
-            NSError *error;
-            if ([_appDelegate.managedObjectContext save:&error]) {
-                [self reloadMembers];
-                [self notify:@"member:updated"];
-                
-                [self close];
-            }
-        }
-        else {
-            NSLog(@"Could not update member!");
-        }
-    }];
-    
+    [self notify:@"member:updated"];
     [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
-     */
 }
 
 -(void)close {
