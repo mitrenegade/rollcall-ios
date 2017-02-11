@@ -198,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EkF-XD-Dzy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1818" y="1361"/>
+            <point key="canvasLocation" x="3158" y="1336"/>
         </scene>
         <!--Attendance Table View Controller-->
         <scene sceneID="TPB-cP-2ly">
@@ -209,8 +209,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" id="mix-5X-epe" userLabel="AttendanceCell" customClass="AttendanceCell" customModule="RollCall" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="OnSiteSignupCell" textLabel="2fS-UJ-EHB" style="IBUITableViewCellStyleDefault" id="HVu-fe-BSj">
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HVu-fe-BSj" id="wqN-vx-qd1">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Sign up new members" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2fS-UJ-EHB">
+                                            <rect key="frame" x="15" y="0.0" width="325" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AttendanceCell" id="mix-5X-epe" userLabel="AttendanceCell" customClass="AttendanceCell" customModule="RollCall" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="66" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mix-5X-epe" id="eMw-Sd-tDn">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
@@ -267,10 +284,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="c3o-bq-UFD" kind="show" identifier="ToOnSiteSignup" id="3d7-Ce-mcW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MAl-0i-qBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2604" y="1360.569715142429"/>
+            <point key="canvasLocation" x="2212" y="1337"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="paW-UW-pYe">
@@ -492,7 +512,6 @@
                         <outlet property="labelTitle" destination="iXR-Vb-XZ3" id="Pgj-oW-11b"/>
                         <outlet property="viewEmail" destination="t6U-nj-7c4" id="aD4-QB-AXX"/>
                         <outlet property="viewInfo" destination="suy-d0-Vvj" id="YGQ-Dg-k3t"/>
-                        <segue destination="c3o-bq-UFD" kind="push" identifier="ToOnsiteSignup" id="sMn-oC-3fr"/>
                         <segue destination="z2Z-nI-mGK" kind="push" identifier="ToEditAttendees" id="Xra-19-qJM"/>
                     </connections>
                 </viewController>
