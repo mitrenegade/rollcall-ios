@@ -86,13 +86,8 @@
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     [textField resignFirstResponder];
-    if (textField == self.inputName) {
-        [self.inputEmail becomeFirstResponder];
-    }
-    else if (textField == self.inputEmail) {
-        [self.inputAbout becomeFirstResponder];
-    }
-    else if (textField == self.inputAbout) {
+
+    if (textField == self.inputAbout) {
         self.constraintTopOffset.constant = 0;
     }
     return YES;
@@ -156,47 +151,5 @@
     [self dismissViewControllerAnimated:YES completion:^{
     }];
 }
-
-#pragma mark Photo
--(IBAction)didClickAddPhoto:(id)sender {
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    }
-    else {
-        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    }
-    
-    [self presentViewController:picker animated:YES completion:nil];
-
-    [ParseLog logWithTypeString:@"EditOnsiteSignupPhoto" title:nil message:nil params:nil error:nil];
-}
-
-#pragma mark UIImagePickerControllerDelegate
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    UIImage *img = [info objectForKey:UIImagePickerControllerEditedImage];
-    if(!img) img = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [self.buttonPhoto setImage:img forState:UIControlStateNormal];
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2;
-    
-    self.addedPhoto = img;
-}
-
--(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

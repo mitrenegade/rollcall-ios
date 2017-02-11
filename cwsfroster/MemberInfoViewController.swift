@@ -114,6 +114,7 @@ class MemberInfoViewController: UIViewController {
     }
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
+        self.view.endEditing(true)
         self.takePhoto()
     }
 
@@ -206,6 +207,8 @@ extension MemberInfoViewController: UITextViewDelegate {
 // MARK: Camera
 extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func takePhoto() {
+        self.view.endEditing(true)
+
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
@@ -220,8 +223,7 @@ extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         self.present(picker, animated: true, completion: nil)
-        //ParseLog.logWithTypeString()
-//        [ParseLog logWithTypeString:@"EditOnsiteSignupPhoto" title:nil message:nil params:nil error:nil];
+        ParseLog.log(typeString: "EditMemberPhoto", title: nil, message: nil, params: nil, error: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
