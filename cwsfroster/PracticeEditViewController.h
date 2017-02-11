@@ -23,28 +23,6 @@
 @class RatingViewController;
 @interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, RatingDelegate>
 {
-    IBOutlet UITextField *inputDate;
-    IBOutlet UITextField *inputDetails;
-    IBOutlet UITextView *inputNotes;
-
-    NSMutableDictionary *dateForDateString;
-    NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
-    NSString *lastInputDate;
-    NSString *originalDescription;
-    
-    IBOutlet UIView *viewInfo;
-
-    IBOutlet UIButton *buttonDrawing;
-
-    NSMutableArray *drawn;
-
-    NSString *emailFrom;
-    NSString *emailTo;
-    
-    RatingViewController *rater;
-    BOOL didShowRater;
-    
-    int currentRow;
 }
 
 @property (nonatomic, assign) BOOL isNewPractice;
@@ -65,16 +43,34 @@
 
 @property (nonatomic) NSString *originalDescription;
 
+@property (nonatomic) IBOutlet UIView *viewEmail;
+@property (nonatomic) IBOutlet UITextField *inputTo;
 @property (nonatomic) IBOutlet UIButton *buttonEmail;
 @property (nonatomic) IBOutlet UIButton *buttonDrawing;
 
 @property (assign) int currentRow;
 @property (nonatomic) NSString *lastInputDate;
+@property (nonatomic) NSString *emailFrom;
 @property (nonatomic) NSString *emailTo;
 
 @property (nonatomic) IBOutlet UIView *activityOverlay;
 
+@property (nonatomic) NSMutableArray *datesForPicker; // at most 14, but not before the user's creation date
+    
+@property (nonatomic) IBOutlet UIView *viewInfo;
+    
+@property (nonatomic) NSMutableArray *drawn;
+    
+@property (nonatomic) RatingViewController *rater;
+@property (nonatomic) BOOL didShowRater;
+    
+    
 -(NSString *)titleForDate:(NSDate *)date;
 
+-(IBAction)didClickEmail:(id)sender;
+-(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;
+    
+-(void)generatePickerDates;
+
 @end
