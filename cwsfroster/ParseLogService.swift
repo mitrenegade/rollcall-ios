@@ -20,7 +20,10 @@ class ParseLog: NSObject {
 
     // compatible with ObjC
     class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
-
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+            return
+        #endif
+        
         let object = PFObject(className: "TestLog")
         object.setValue(PFUser.current()?.objectId, forKey: "userId")
         if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
@@ -57,12 +60,11 @@ extension UIViewController {
             paramsDict = NSDictionary(dictionary: params)
         }
         let err: NSError? = error as? NSError
+        
         ParseLog.log(type: type, title: title, message: message, params: paramsDict, error: err)
         
-        guard TEST else {
-            return
+        if TEST == true {
+            self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: err, completion: completion)
         }
-        
-        self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: err, completion: completion)
     }
 }

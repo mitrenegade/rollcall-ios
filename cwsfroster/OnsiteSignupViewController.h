@@ -11,31 +11,31 @@
 
 @class Practice;
 @class RatingViewController;
-@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 {
-    IBOutlet UITextField *inputName;
-    IBOutlet UITextField *inputEmail;
-    IBOutlet UITextField *inputAbout;
-    
-    IBOutlet UILabel *labelAttendanceCount;
-    NSMutableArray *newAttendees;
-    
-    UITextField *currentInput;
-    
-    IBOutlet NSLayoutConstraint *constraintTopOffset;
-    
-    IBOutlet UILabel *labelWelcome;
-    
-    RatingViewController *rater;
-    BOOL didShowRater;
-
-    IBOutlet UIButton *buttonPhoto;
-    UIImage *newPhoto;
 }
 
 @property (nonatomic) Practice *practice;
 
--(IBAction)didClickSignup:(id)sender;
-- (IBAction)didClickAddPhoto:(id)sender;
+    @property (nonatomic) IBOutlet UITextField *inputName;
+    @property (nonatomic) IBOutlet UITextField *inputEmail;
+    @property (nonatomic) IBOutlet UITextField *inputAbout;
+    
+    @property (nonatomic) IBOutlet UILabel *labelAttendanceCount;
+    
+    @property (nonatomic) UITextField *currentInput;
+    
+    @property (nonatomic) IBOutlet NSLayoutConstraint *constraintTopOffset;
+    
+    @property (nonatomic) IBOutlet UILabel *labelWelcome;
+    
+    @property (nonatomic) RatingViewController *rater;
+    @property (nonatomic) BOOL didShowRater;
+    
+    @property (nonatomic) IBOutlet UIButton *buttonPhoto;
+    @property (nonatomic) UIImage *addedPhoto;
+    @property (nonatomic) NSMutableArray *addedAttendees;
+    
+    @property (nonatomic) IBOutlet UIButton *buttonSave;
 
 @end
