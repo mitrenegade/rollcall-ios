@@ -23,6 +23,8 @@ class AttendanceTableViewController: UITableViewController {
             // all changes to attendances are automatically saved
             self.navigationItem.rightBarButtonItem = nil
         }
+        
+        self.listenFor("member:updated", action: #selector(reloadData), object: nil)
     }
     
     @IBAction func didClickClose(_ sender: AnyObject?) {
@@ -49,6 +51,10 @@ class AttendanceTableViewController: UITableViewController {
             self.navigationController?.dismiss(animated: true, completion: {
             })
         }
+    }
+    
+    func reloadData() {
+        self.tableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
