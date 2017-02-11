@@ -15,5 +15,6 @@
 #import "MembersTableViewController.h"
 #import "PracticeEditViewController.h"
 #import "PracticesTableViewController.h"
+#import "OnsiteSignupViewController.h"
 
 #endif /* cwsfroster_Bridging_Header_h */

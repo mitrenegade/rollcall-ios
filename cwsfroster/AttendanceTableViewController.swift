@@ -50,6 +50,14 @@ class AttendanceTableViewController: UITableViewController {
             })
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ToOnSiteSignup" {
+            if let controller = segue.destination as? OnsiteSignupViewController {
+                controller.practice = self.practice
+            }
+        }
+    }
 }
 
 // MARK: - Table view data source

@@ -20,6 +20,7 @@
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */; };
 		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
+		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
@@ -113,6 +114,7 @@
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
+		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OnsiteSignupViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
@@ -307,6 +309,9 @@
 				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
+				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
+				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
+				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -414,8 +419,6 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
-				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
-				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
 				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
 				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
@@ -666,6 +669,7 @@
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
+				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
