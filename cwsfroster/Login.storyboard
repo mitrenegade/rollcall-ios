@@ -26,9 +26,6 @@
                                 <rect key="frame" x="0.0" y="272" width="375" height="267"/>
                                 <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="inm-tS-E1k">
-                                <rect key="frame" x="0.0" y="272" width="375" height="267"/>
-                            </imageView>
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osw-4I-ylC" userLabel="View - name">
                                 <rect key="frame" x="-2" y="49" width="379" height="40"/>
                                 <subviews>
@@ -142,10 +139,8 @@ for your awesome event</string>
                             <constraint firstItem="SlV-fn-YsY" firstAttribute="top" secondItem="EFw-un-Kez" secondAttribute="bottom" constant="3" id="2Bf-OY-san"/>
                             <constraint firstAttribute="trailing" secondItem="pVS-wZ-mWP" secondAttribute="trailing" id="2SD-RK-Bfc"/>
                             <constraint firstItem="gmp-C9-0up" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" id="2VC-S6-yzj"/>
-                            <constraint firstItem="pVS-wZ-mWP" firstAttribute="leading" secondItem="inm-tS-E1k" secondAttribute="leading" id="6aC-uW-c3i"/>
                             <constraint firstItem="SlV-fn-YsY" firstAttribute="top" secondItem="EFw-un-Kez" secondAttribute="bottom" constant="3" id="8jm-03-Ew9"/>
                             <constraint firstItem="osw-4I-ylC" firstAttribute="top" secondItem="J8a-vC-Bgj" secondAttribute="bottom" constant="29" id="GGe-gz-gej"/>
-                            <constraint firstItem="pVS-wZ-mWP" firstAttribute="bottom" secondItem="inm-tS-E1k" secondAttribute="bottom" id="H2c-5c-lQ8"/>
                             <constraint firstItem="8CC-c8-FeH" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" constant="-2" id="I4x-Wn-NMf"/>
                             <constraint firstAttribute="bottom" secondItem="gmp-C9-0up" secondAttribute="bottom" constant="-4" id="IWm-U8-3HC"/>
                             <constraint firstItem="pVS-wZ-mWP" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" id="Ifg-w7-Zgh"/>
@@ -163,14 +158,12 @@ for your awesome event</string>
                             <constraint firstAttribute="trailing" secondItem="EFw-un-Kez" secondAttribute="trailing" id="eYc-eo-Re3"/>
                             <constraint firstAttribute="trailing" secondItem="osw-4I-ylC" secondAttribute="trailing" constant="-2" id="fKg-bt-5M0"/>
                             <constraint firstItem="SlV-fn-YsY" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" id="kBM-O1-VAu"/>
-                            <constraint firstItem="pVS-wZ-mWP" firstAttribute="top" secondItem="inm-tS-E1k" secondAttribute="top" id="kJf-t6-p3Z"/>
                             <constraint firstItem="8CC-c8-FeH" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" constant="-2" id="kQc-QZ-h7Z"/>
                             <constraint firstAttribute="trailing" secondItem="1jE-Qu-S1U" secondAttribute="trailing" constant="8" id="lll-QN-Mlw"/>
                             <constraint firstItem="1jE-Qu-S1U" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" constant="8" id="m7E-1E-XgF"/>
                             <constraint firstItem="gmp-C9-0up" firstAttribute="width" secondItem="gmp-C9-0up" secondAttribute="height" multiplier="1:1" id="my9-9I-FZZ"/>
                             <constraint firstItem="bh4-Ff-dBX" firstAttribute="top" secondItem="J8a-vC-Bgj" secondAttribute="bottom" constant="68" id="n2s-1w-O55"/>
                             <constraint firstItem="bh4-Ff-dBX" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" constant="-2" id="rVW-KK-xVC"/>
-                            <constraint firstItem="pVS-wZ-mWP" firstAttribute="trailing" secondItem="inm-tS-E1k" secondAttribute="trailing" id="sAo-rs-Hwn"/>
                             <constraint firstItem="SlV-fn-YsY" firstAttribute="leading" secondItem="4bH-1C-WF5" secondAttribute="leading" id="vA6-9i-8sP"/>
                             <constraint firstAttribute="trailing" secondItem="bh4-Ff-dBX" secondAttribute="trailing" constant="-2" id="vTh-2P-tTa"/>
                             <constraint firstItem="MN6-Za-kn4" firstAttribute="top" secondItem="1jE-Qu-S1U" secondAttribute="bottom" id="vhu-tH-Rhs"/>
@@ -185,7 +178,6 @@ for your awesome event</string>
                         <outlet property="inputConfirmation" destination="Ihc-T7-JxB" id="o4k-rW-zEf"/>
                         <outlet property="inputLogin" destination="AaE-em-p36" id="8wn-A7-8he"/>
                         <outlet property="inputPassword" destination="UhD-LC-do0" id="J2y-pS-Zlk"/>
-                        <outlet property="logo" destination="inm-tS-E1k" id="zbE-Si-aQj"/>
                         <outlet property="tutorialView" destination="pVS-wZ-mWP" id="NZz-Kk-UkY"/>
                     </connections>
                 </viewController>

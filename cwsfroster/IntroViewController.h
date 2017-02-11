@@ -13,8 +13,6 @@
 
 @interface IntroViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 {
-    IBOutlet UIImageView *logo;
-
     IBOutlet UITextField *inputLogin;
     IBOutlet UITextField *inputPassword;
     IBOutlet UITextField *inputConfirmation;

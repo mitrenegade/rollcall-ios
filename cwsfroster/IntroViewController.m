@@ -35,8 +35,6 @@
     constraintConfirmationHeight.constant = 0;
 
     [UIView animateWithDuration:.25 animations:^{
-        if (showLogin)
-            [logo setAlpha:showLogin?0:1];
         [inputLogin.superview setAlpha:showLogin?1:0];
         [inputPassword.superview setAlpha:showLogin?1:0];
         [buttonLogin setAlpha:showLogin?1:0];
@@ -197,7 +195,6 @@
 -(void)goToPractices {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
-    [logo setAlpha:1];
     
     [self notifyForLogInSuccess];
 }

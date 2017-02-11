@@ -13,6 +13,7 @@ class SplashViewController: UIViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var labelInfo: UILabel!
+    @IBOutlet weak var logo: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,8 +74,10 @@ class SplashViewController: UIViewController {
 }
 
 // MARK: Models - ensure that parse models are updated into core data when automatically logging in
+var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeWithParse() {
+        classNames = ["members", "practices", "attendances"]
         self.activityIndicator.startAnimating()
         self.labelInfo.isHidden = false
         
@@ -88,40 +91,39 @@ extension SplashViewController {
             self.synchronizeWithParse()
             return
         }
-
+        
         orgPointer.fetchInBackground { (object, error) in
             guard let org = object as? Organization else { return }
             Organization.current = org
+            
+
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                imageFile.getDataInBackground(block: { (data, error) in
-                    // TODO: Load org image
-                    /*
-                     logo.alpha = 0;
-                     UIImage *image = [UIImage imageWithData:data];
-                     [logo setImage:image];
-                     [UIView animateWithDuration:1 animations:^{
-                     logo.alpha = 1;
-                     } completion:^(BOOL finished) {
-                     }];
-                     */
-                })
+                self.logo.alpha = 0;
+                do {
+                    let data = try imageFile.getData()
+                    if let image = UIImage(data: data) {
+                        self.logo.image = image
+                        UIView.animate(withDuration: 0.25, animations: {
+                            self.logo.alpha = 1
+                        })
+                    }
+                    else {
+                        print("no image")
+                    }
+                }
+                catch {
+                    print("some error")
+                }
             }
             
             self.labelInfo.text = "Loading..."
-            var classNames = ["members", "practices", "attendances"]
             Organization.queryForMembers(completion: { (results, error) in
                 classNames.remove(at: classNames.index(of: "members")!)
                 self.labelInfo.text = "Loaded members"
                 if let members = results {
                     org.members = members
-                    if classNames.count == 0 {
-                        self.activityIndicator.stopAnimating()
-                        self.labelInfo.isHidden = true
-                        self.labelInfo.text = nil
-                        self.goHome()
-                        return
-                    }
                 }
+                self.checkSyncComplete()
             })
             
             Organization.queryForPractices(completion: { (results, error) in
@@ -129,14 +131,8 @@ extension SplashViewController {
                 self.labelInfo.text = "Loaded practices"
                 if let practices = results {
                     org.practices = practices
-                    if classNames.count == 0 {
-                        self.activityIndicator.stopAnimating()
-                        self.labelInfo.isHidden = true
-                        self.labelInfo.text = nil
-                        self.goHome()
-                        return
-                    }
                 }
+                self.checkSyncComplete()
             })
             
             Organization.queryForAttendances(completion: { (results, error) in
@@ -144,15 +140,19 @@ extension SplashViewController {
                 self.labelInfo.text = "Loaded attendances"
                 if let attendances = results {
                     org.attendances = attendances
-                    if classNames.count == 0 {
-                        self.activityIndicator.stopAnimating()
-                        self.labelInfo.isHidden = true
-                        self.labelInfo.text = nil
-                        self.goHome()
-                        return
-                    }
                 }
+                self.checkSyncComplete()
             })
+        }
+    }
+    
+    func checkSyncComplete() {
+        if classNames.count == 0 {
+            self.activityIndicator.stopAnimating()
+            self.labelInfo.isHidden = true
+            self.labelInfo.text = nil
+            self.goHome()
+            return
         }
     }
 }
