@@ -93,16 +93,6 @@
     return YES;
 }
 
--(void)reset {
-    [self.view endEditing:YES];
-    self.inputEmail.text = nil;
-    self.inputName.text = nil;
-    self.inputAbout.text = nil;
-    [self.buttonPhoto setImage:[UIImage imageNamed:@"add_user"] forState:UIControlStateNormal];
-    self.buttonPhoto.layer.cornerRadius = 0;
-    self.constraintTopOffset.constant = 0;
-}
-
 -(void)goToFeedback {
     if ([MFMailComposeViewController canSendMail]){
         NSString *title = @"RollCall feedback";

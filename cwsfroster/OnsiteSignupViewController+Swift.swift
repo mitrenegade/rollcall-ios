@@ -21,6 +21,8 @@ extension OnsiteSignupViewController {
             return
         }
         
+        self.buttonSave.isEnabled = false
+        
         let member = Member()
         member.organization = Organization.current
         member.name = name
@@ -38,6 +40,7 @@ extension OnsiteSignupViewController {
         }
         
         self.saveNewAttendanceFor(member: member, practice: self.practice) { (attendance, error) in
+            self.buttonSave.isEnabled = true
             if let error = error {
                 self.simpleAlert("Could not sign up user", message: "There was an error adding \(member.name) to this event. Please add them manually by editing event attendees")
                 return
@@ -52,6 +55,8 @@ extension OnsiteSignupViewController {
             UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
                 self.labelWelcome.alpha = 0
             }, completion: nil)
+            
+            self.reset()
         }
     }
 
@@ -72,6 +77,17 @@ extension OnsiteSignupViewController {
         }
     }
     
+    func reset(){
+        self.view.endEditing(true)
+        self.inputEmail.text = nil;
+        self.inputName.text = nil;
+        self.inputAbout.text = nil;
+
+        self.buttonPhoto.setImage(UIImage.init(named: "add_user"), for: .normal)
+        self.buttonPhoto.layer.cornerRadius = 0
+        self.constraintTopOffset.constant = 0
+        self.buttonSave.isEnabled = true
+    }
 }
 
 extension OnsiteSignupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

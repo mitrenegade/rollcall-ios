@@ -188,6 +188,7 @@
                     <navigationItem key="navigationItem" id="VhY-lg-u5k"/>
                     <connections>
                         <outlet property="buttonPhoto" destination="M0l-fq-B3g" id="qxV-2Q-hQ1"/>
+                        <outlet property="buttonSave" destination="kNz-dM-1Vd" id="i7f-Nl-vbn"/>
                         <outlet property="constraintTopOffset" destination="PVh-5a-QGE" id="FYs-7N-ely"/>
                         <outlet property="inputAbout" destination="AFT-OL-Z0N" id="Oif-9y-Viv"/>
                         <outlet property="inputEmail" destination="9OL-VS-Y4e" id="UK8-hw-drg"/>

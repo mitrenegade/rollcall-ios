@@ -35,5 +35,7 @@
     @property (nonatomic) IBOutlet UIButton *buttonPhoto;
     @property (nonatomic) UIImage *addedPhoto;
     @property (nonatomic) NSMutableArray *addedAttendees;
+    
+    @property (nonatomic) IBOutlet UIButton *buttonSave;
 
 @end
