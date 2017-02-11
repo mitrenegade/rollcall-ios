@@ -46,6 +46,31 @@ extension Attendance {
             }
         }
     }
+    
+    class func saveNewAttendanceFor(member: Member, practice: Practice, saveToParse: Bool, completion: @escaping ((Attendance?, NSError?)->Void)) {
+        let attendance = Attendance()
+        attendance.organization = Organization.current
+        attendance.practice = practice
+        attendance.member = member
+        attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+        if saveToParse {
+            attendance.saveInBackground { (success, error) in
+                DispatchQueue.main.async {
+                    if let error = error as? NSError {
+                        completion(nil, error)
+                    }
+                    else {
+                        Organization.current?.attendances?.insert(attendance, at: 0)
+                        completion(attendance, nil)
+                    }
+                }
+            }
+        }
+        else {
+            completion(attendance, nil)
+        }
+    }
+    
 }
 
 // MARK: Offline
