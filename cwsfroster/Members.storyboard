@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" id="OVn-ba-i2m" userLabel="MemberCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberCell" id="OVn-ba-i2m" userLabel="MemberCell" customClass="MemberCell" customModule="RollCall" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVn-ba-i2m" id="PBu-nq-OJK">
@@ -27,20 +27,36 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FU2-h2-tnm">
-                                            <rect key="frame" x="20" y="8" width="347" height="29"/>
+                                            <rect key="frame" x="46" y="8" width="321" height="29"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="3" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vfe-wv-Yvk">
+                                            <rect key="frame" x="8" y="6" width="30" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="30" id="YJu-Wi-xbU"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="15"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="vfe-wv-Yvk" secondAttribute="bottom" constant="7" id="7u5-QG-lej"/>
                                         <constraint firstAttribute="bottom" secondItem="FU2-h2-tnm" secondAttribute="bottom" constant="6.5" id="EOi-Oz-vjo"/>
                                         <constraint firstAttribute="trailing" secondItem="FU2-h2-tnm" secondAttribute="trailing" constant="8" id="Fef-7s-lSX"/>
                                         <constraint firstItem="FU2-h2-tnm" firstAttribute="top" secondItem="PBu-nq-OJK" secondAttribute="top" constant="8" id="Mng-3r-H18"/>
-                                        <constraint firstItem="FU2-h2-tnm" firstAttribute="leading" secondItem="PBu-nq-OJK" secondAttribute="leading" constant="20" id="Ske-3b-89q"/>
+                                        <constraint firstItem="vfe-wv-Yvk" firstAttribute="leading" secondItem="PBu-nq-OJK" secondAttribute="leading" constant="8" id="VNH-g2-YNL"/>
+                                        <constraint firstItem="vfe-wv-Yvk" firstAttribute="top" secondItem="PBu-nq-OJK" secondAttribute="top" constant="6" id="dWq-ZE-5vE"/>
+                                        <constraint firstItem="FU2-h2-tnm" firstAttribute="leading" secondItem="vfe-wv-Yvk" secondAttribute="trailing" constant="8" id="h5a-6w-XnS"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="labelName" destination="FU2-h2-tnm" id="70h-gJ-NqW"/>
+                                    <outlet property="photoView" destination="vfe-wv-Yvk" id="eTd-pe-TLa"/>
                                     <segue destination="UwJ-89-nQa" kind="modal" identifier="toEditMember" id="nGA-pw-8RZ"/>
                                 </connections>
                             </tableViewCell>

@@ -68,26 +68,11 @@ extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
 
+        guard let attendanceCell = cell as? AttendanceCell else { return cell }
         // Configure the cell...
         guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
         let member = members[indexPath.row]
-        let nameLabel = cell.viewWithTag(2) as! UILabel
-        nameLabel.text = member.name
-
-        let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        unchecked.image = UIImage(named: "unchecked")
-        cell.accessoryView = unchecked
-        if let practice = self.practice, let attendance = practice.attendanceFor(member: member), let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
-            let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            checked.image = UIImage(named: "checked")
-            cell.accessoryView = checked
-        }
-        else if let attendance = newAttendances[member], let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
-            let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            checked.image = UIImage(named: "checked")
-            cell.accessoryView = checked
-        }
-        
+        attendanceCell.configure(member: member, practice: self.practice, newAttendance: newAttendances[member], row: indexPath.row)
         return cell
     }
 }

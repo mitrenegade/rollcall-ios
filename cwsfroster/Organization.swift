@@ -78,4 +78,18 @@ extension Organization {
             completion(results, error)
         })
     }
+    
+    // test
+    class func withId(objectId: String, completion: @escaping ((_ result: PFObject?, _ error: NSError?) -> Void)) {
+        let query = PFQuery(className: "Organization")
+        query.whereKey("objectId", equalTo: objectId)
+        query.findObjectsInBackground { (results, error) in
+            if let objects = results, let org = objects.first {
+                completion(org, nil)
+            }
+            else {
+                completion(nil, error as? NSError)
+            }
+        }
+    }
 }

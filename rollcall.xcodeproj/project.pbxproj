@@ -18,6 +18,8 @@
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
+		8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */; };
+		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
@@ -109,6 +111,8 @@
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
+		8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
+		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
@@ -285,6 +289,7 @@
 				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
+				8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 				9EC15480198009EA003F80CA /* AttendancesViewController.h */,
 				9EC15481198009EA003F80CA /* AttendancesViewController.m */,
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
+				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -398,9 +404,9 @@
 				9E80085816196883003E9B16 /* Supporting Files */,
 				8EE005A41E3D833E00272DC0 /* Storyboards */,
 				8EE005AE1E3D94FE00272DC0 /* Splash */,
-				9E156174199266A700A31398 /* IntroViewController.h */,
 				8EE5514F1E3E6117001FB0C4 /* Members */,
 				8EE551501E3E611D001FB0C4 /* Events */,
+				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
 				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
@@ -659,6 +665,7 @@
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
+				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
@@ -679,6 +686,7 @@
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
+				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */,
 			);

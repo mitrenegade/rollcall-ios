@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 class MemberInfoViewController: UIViewController {
     
     @IBOutlet var buttonPhoto: UIButton!
@@ -33,9 +35,13 @@ class MemberInfoViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = nil
             
             if let photo = member.photo {
-                //            let image = UIImage.init(data: photo)
-                //            buttonPhoto.setImage(image, for: .normal)
-                //            buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
+                photo.getDataInBackground(block: { (data, error) in
+                    if let data = data {
+                        let image = UIImage(data: data)
+                        self.buttonPhoto.setImage(image, for: .normal)
+                        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+                    }
+                })
             }
             self.switchInactive.isOn = member.isInactive
         } else {
@@ -100,6 +106,10 @@ class MemberInfoViewController: UIViewController {
             }
         }
 
+        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+            member?.photo = PFFile(data:data)
+        }
+
         self.close()
     }
     
@@ -138,8 +148,8 @@ class MemberInfoViewController: UIViewController {
         if let text = inputNotes.text, text.characters.count > 0 {
             member?.notes = text
         }
-        if let photo = self.newPhoto {
-            // TODO: set photo
+        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+            member?.photo = PFFile(data:data)
         }
         member?.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
 
