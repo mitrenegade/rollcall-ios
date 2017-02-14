@@ -61,19 +61,8 @@
 
     emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
     if (emailTo) {
-        self.inputTo.text = [NSString stringWithFormat:@"To: %@", emailTo];
+        self.inputTo.text = [NSString stringWithFormat:@"%@", emailTo];
     }
-
-    /*
-    emailFrom = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:from"];
-    if (emailFrom) {
-        inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
-    }
-    else if (_currentUser.email) {
-        emailFrom = _currentUser.email;
-        inputFrom.text = [NSString stringWithFormat:@"From: %@", emailFrom];
-    }
-    */
 
     rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;
@@ -174,59 +163,6 @@
     // revert to old date
     self.inputDate.text = lastInputDate;
     [self.inputDate resignFirstResponder];
-}
-
-#pragma mark emailing
--(IBAction)didClickEmail:(id)sender {
-    [self.inputTo resignFirstResponder];
-//    [inputFrom resignFirstResponder];
-    
-    if (self.inputTo.text.length == 0) {
-        MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        progress.labelText = @"Please enter an email recipient";
-        [progress hide:YES afterDelay:1.5];
-        return;
-    }
-    /*
-    if (inputFrom.text.length == 0) {
-        MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        progress.labelText = @"Please enter your email";
-        [progress hide:YES afterDelay:1.5];
-        return;
-    }
-    */
-
-    // save any changes. at least sets new details to practice before sending email
-    /*
-    [self saveWithCompletion:^(BOOL success) {
-        [[NSUserDefaults standardUserDefaults] setObject:emailTo forKey:@"email:to"];
-        [[NSUserDefaults standardUserDefaults] setObject:emailFrom forKey:@"email:from"];
-        
-        NSString *title = [NSString stringWithFormat:@"Event %@ attendance", [Util simpleDateFormat:self.practice.date]];
-        NSString *message = [NSString stringWithFormat:@"%@ %@<br>%@<br><br>", [Util weekdayStringFromDate:self.practice.date localTimeZone:YES], [Util simpleDateFormat:self.practice.date], self.practice.details?self.practice.details:@""];
-        for (Attendance *attendance in self.practice.attendances) {
-            if ([attendance.attended boolValue]) {
-                message = [NSString stringWithFormat:@"%@\n%@ %@ ", message, attendance.member.name, attendance.member.email];
-                
-                NSString *paymentStatus = @"<br>";
-            }
-        }
-        if ([MFMailComposeViewController canSendMail]){
-            MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
-            composer.mailComposeDelegate = self;
-            [composer setSubject:title];
-            [composer setMessageBody:message isHTML:YES];
-            [composer setToRecipients:@[emailTo]];
-            
-            [self.navigationController presentViewController:composer animated:YES completion:nil];
-            
-            [ParseLog logWithTypeString:@"EmailEventDetails" title:nil message:nil params:nil error:nil];
-        }
-        else {
-            [UIAlertView alertViewWithTitle:@"Currently unable to send email" message:@"Please make sure email is available"];
-        }
-    }];
-     */
 }
 
 #pragma mark MessageController delegate

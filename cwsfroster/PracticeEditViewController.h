@@ -21,7 +21,7 @@
 
 @class Practice;
 @class RatingViewController;
-@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
+@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -82,7 +82,6 @@
 
 -(NSString *)titleForDate:(NSDate *)date;
 
--(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;
 @end
