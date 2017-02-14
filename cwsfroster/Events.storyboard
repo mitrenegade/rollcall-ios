@@ -402,7 +402,7 @@
                                     <action selector="didClickAttendees:" destination="ol8-CI-xXO" eventType="touchUpInside" id="JLb-HB-M9M"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYu-Ye-OJ4">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYu-Ye-OJ4">
                                 <rect key="frame" x="25" y="483" width="325" height="30"/>
                                 <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -488,6 +488,7 @@
                         <outlet property="buttonDrawing" destination="u0K-I0-4VP" id="rim-ay-jCT"/>
                         <outlet property="buttonEmail" destination="ZYu-Ye-OJ4" id="OOX-ck-Ko4"/>
                         <outlet property="constraintButtonAttendeesHeight" destination="r8r-xH-8G6" id="xF8-cZ-XIM"/>
+                        <outlet property="constraintButtonEmailHeight" destination="KdC-jp-wDr" id="u3q-A5-IwS"/>
                         <outlet property="inputDate" destination="2qW-tF-W4p" id="Z9I-Bp-RoM"/>
                         <outlet property="inputDetails" destination="xgO-To-O34" id="meB-Eg-50D"/>
                         <outlet property="inputNotes" destination="enr-5c-egg" id="o32-oU-cJ4"/>
