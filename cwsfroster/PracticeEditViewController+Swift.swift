@@ -148,7 +148,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
                     self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
                 }
             }
-        }            
+        }
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
@@ -196,51 +196,56 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
             return
         }
-        
-        do {
-            try self.practice.save()
-        }
-        catch let error as NSError {
-            self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
-        }
-        catch {
-            self.simpleAlert("Event could not be saved", message: "Could not update event before emailing out the attendance: unknown error")
-        }
-        
-        UserDefaults.standard.set(emailTo, forKey: "email:to")
-        
-        let eventName = self.practice.title ?? "practice"
-        let title = "Event attendance for \(eventName)"
-        let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
-        var message = "Date: \(dateString)\n"
-        for attendance in self.practice.attendances ?? [] {
-            if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
-                do {
-                    try member.fetchIfNeeded()
-                }
-                catch {
-                    // do nothing
-                    continue
-                }
-                if let name = member.name {
-                    message = "\(message)\n\(name) "
-                }
-                if let email = member.email {
-                    message = "\(message)\(email)"
+        self.activityOverlay.isHidden = false
+
+        self.practice.saveInBackground { (success, error) in
+            if let error = error as? NSError {
+                self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
+                self.activityOverlay.isHidden = true
+                return
+            }
+            else {
+                UserDefaults.standard.set(emailTo, forKey: "email:to")
+                
+                let eventName = self.practice.title ?? "practice"
+                let title = "Event attendance for \(eventName)"
+                let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
+                var message = "Date: \(dateString)\n"
+                let attendances = self.practice.attendances ?? []
+                var count = attendances.count
+                for attendance in attendances {
+                    if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
+                        member.fetchIfNeededInBackground(block: { (object, error) in
+                            DispatchQueue.main.async {
+                                if let member = object as? Member {
+                                    if let name = member.name {
+                                        message = "\(message)\n\(name) "
+                                    }
+                                    if let email = member.email {
+                                        message = "\(message)\(email)"
+                                    }
+                                }
+                                count -= 1
+                                if count == 0 {
+                                    self.sendEmail(title: title, message: message)
+                                }
+                            }
+                        })
+                    }
                 }
             }
         }
-        
-        self.sendEmail(title: title, message: message)
     }
     
     func sendEmail(title: String, message: String) {
         guard MFMailComposeViewController.canSendMail() else {
             self.simpleAlert("Cannot send email", message: "Your device is unable to send email.")
+            self.activityOverlay.isHidden = true
             return
         }
         guard let emailTo = self.inputTo.text, !emailTo.isEmpty else {
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+            self.activityOverlay.isHidden = true
             return
         }
         
@@ -252,6 +257,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         
         self.present(composer, animated: true, completion: nil)
         
+        self.activityOverlay.isHidden = true
         ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.objectId ?? "unknown", "subject": title, "body": message], error: nil)
     }
     

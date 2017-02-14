@@ -65,6 +65,8 @@
 
 @property (nonatomic) IBOutlet UIButton *buttonAttendees;
 @property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonAttendeesHeight;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintBottomOffset;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintTopOffset;
 
 @property (nonatomic) NSString *originalDescription;
 
@@ -79,6 +81,7 @@
 @property (nonatomic) NSString *emailFrom;
 @property (nonatomic) NSString *emailTo;
 
+@property (nonatomic) IBOutlet UIView *activityOverlay;
 
 -(NSString *)titleForDate:(NSDate *)date;
 
