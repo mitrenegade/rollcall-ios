@@ -59,10 +59,7 @@
     
     currentRow = -1;
 
-    emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
-    if (emailTo) {
-        self.inputTo.text = [NSString stringWithFormat:@"%@", emailTo];
-    }
+    self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
 
     rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     rater.delegate = self;

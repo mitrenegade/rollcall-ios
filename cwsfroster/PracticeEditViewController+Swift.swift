@@ -17,6 +17,7 @@ extension PracticeEditViewController {
         
         if self.practice == nil {
             constraintButtonAttendeesHeight.constant = 0
+            constraintButtonEmailHeight.constant = 0
         }
     }
     
@@ -38,7 +39,7 @@ extension PracticeEditViewController {
             practice.title = self.inputDate.text
             practice.organization = Organization.current
             
-            self.viewEmail.isHidden = true
+            self.constraintButtonEmailHeight.constant = 0
             self.buttonDrawing.isHidden = true
             self.buttonAttendees.isHidden = true
             self.inputNotes.text = nil
@@ -152,19 +153,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == inputTo {
-            if let string = textField.text, string.characters.count > 0 {
-                buttonEmail.isEnabled = true
-                buttonEmail.alpha = 1
-            }
-            else {
-                buttonEmail.isEnabled = false
-                buttonEmail.alpha = 0.5
-            }
-            
-            emailTo = textField.text;
-        }
-        else if textField == inputDate {
+        if textField == inputDate {
             self.practice.title = textField.text
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 self.practice.date = date
@@ -191,8 +180,22 @@ extension PracticeEditViewController: UITextFieldDelegate {
 // MARK: Email
 extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
     func didClickEmail(_ sender: AnyObject?) {
-        self.inputTo.resignFirstResponder()
-        guard let emailTo = self.inputTo.text, !emailTo.isEmpty else {
+        let alert = UIAlertController(title: "To:", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.text = self.emailTo
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action) in
+            if let textField = alert.textFields?.first {
+                self.emailTo = textField.text
+                self.composeEmail()
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func composeEmail() {
+        guard !emailTo.isEmpty else {
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
             return
         }
@@ -205,7 +208,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
                 return
             }
             else {
-                UserDefaults.standard.set(emailTo, forKey: "email:to")
+                UserDefaults.standard.set(self.emailTo, forKey: "email:to")
                 
                 let eventName = self.practice.title ?? "practice"
                 let title = "Event attendance for \(eventName)"
@@ -243,7 +246,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
             self.activityOverlay.isHidden = true
             return
         }
-        guard let emailTo = self.inputTo.text, !emailTo.isEmpty else {
+        guard !emailTo.isEmpty else {
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
             self.activityOverlay.isHidden = true
             return

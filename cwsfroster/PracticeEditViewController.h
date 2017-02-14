@@ -34,10 +34,6 @@
     
     IBOutlet UIView *viewInfo;
 
-    IBOutlet UIView *viewEmail;
-    IBOutlet UITextField *inputTo;
-    IBOutlet UIButton *buttonEmail;
-
     IBOutlet UIButton *buttonDrawing;
 
     NSMutableArray *drawn;
@@ -65,20 +61,15 @@
 
 @property (nonatomic) IBOutlet UIButton *buttonAttendees;
 @property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonAttendeesHeight;
-@property (nonatomic) IBOutlet NSLayoutConstraint *constraintBottomOffset;
-@property (nonatomic) IBOutlet NSLayoutConstraint *constraintTopOffset;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonEmailHeight;
 
 @property (nonatomic) NSString *originalDescription;
 
-@property (nonatomic) IBOutlet UIView *viewEmail;
-@property (nonatomic) IBOutlet UITextField *inputTo;
 @property (nonatomic) IBOutlet UIButton *buttonEmail;
-
 @property (nonatomic) IBOutlet UIButton *buttonDrawing;
 
 @property (assign) int currentRow;
 @property (nonatomic) NSString *lastInputDate;
-@property (nonatomic) NSString *emailFrom;
 @property (nonatomic) NSString *emailTo;
 
 @property (nonatomic) IBOutlet UIView *activityOverlay;

@@ -322,7 +322,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="suy-d0-Vvj">
-                                <rect key="frame" x="9" y="0.0" width="357" height="347"/>
+                                <rect key="frame" x="9" y="0.0" width="357" height="437"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xgO-To-O34">
                                         <rect key="frame" x="20" y="58" width="317" height="30"/>
@@ -347,7 +347,7 @@
                                         </connections>
                                     </textField>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="enr-5c-egg">
-                                        <rect key="frame" x="16" y="130" width="325" height="209"/>
+                                        <rect key="frame" x="16" y="130" width="325" height="299"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -374,7 +374,6 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="2qW-tF-W4p" firstAttribute="leading" secondItem="suy-d0-Vvj" secondAttribute="leading" constant="20" id="93T-Od-BHs"/>
-                                    <constraint firstAttribute="height" constant="347" id="AUU-sb-v23"/>
                                     <constraint firstItem="enr-5c-egg" firstAttribute="top" secondItem="iXR-Vb-XZ3" secondAttribute="bottom" constant="8" id="Cga-QU-vvW"/>
                                     <constraint firstItem="xgO-To-O34" firstAttribute="top" secondItem="2qW-tF-W4p" secondAttribute="bottom" constant="8" id="H7L-6U-7IE"/>
                                     <constraint firstAttribute="trailing" secondItem="xgO-To-O34" secondAttribute="trailing" constant="20" id="MnG-I6-sNl"/>
@@ -389,58 +388,34 @@
                                     <constraint firstAttribute="bottom" secondItem="enr-5c-egg" secondAttribute="bottom" constant="8" id="wYQ-Io-gpI"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t6U-nj-7c4">
-                                <rect key="frame" x="5" y="416" width="365" height="97"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="To: email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R98-gn-kP5">
-                                        <rect key="frame" x="20" y="29" width="325" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="tJC-A0-N19"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                                        <connections>
-                                            <outlet property="delegate" destination="ol8-CI-xXO" id="s1q-QG-APc"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email a summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zto-H0-Eg9">
-                                        <rect key="frame" x="20" y="0.0" width="325" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="s1H-B4-yYn"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYu-Ye-OJ4">
-                                        <rect key="frame" x="20" y="67" width="325" height="30"/>
-                                        <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="KdC-jp-wDr"/>
-                                        </constraints>
-                                        <state key="normal" title="Send attendance summary">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="didClickEmail:" destination="ol8-CI-xXO" eventType="touchUpInside" id="68t-k6-pus"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n15-op-RYX">
+                                <rect key="frame" x="25" y="445" width="325" height="30"/>
+                                <color key="backgroundColor" red="0.92549019610000005" green="0.4823529412" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ZYu-Ye-OJ4" secondAttribute="trailing" constant="20" id="BhO-lV-sPC"/>
-                                    <constraint firstItem="R98-gn-kP5" firstAttribute="top" secondItem="Zto-H0-Eg9" secondAttribute="bottom" constant="8" id="Ffm-nc-aeN"/>
-                                    <constraint firstAttribute="trailing" secondItem="R98-gn-kP5" secondAttribute="trailing" constant="20" id="FjT-Dv-FyK"/>
-                                    <constraint firstItem="ZYu-Ye-OJ4" firstAttribute="top" secondItem="R98-gn-kP5" secondAttribute="bottom" constant="8" id="HkC-oh-ehV"/>
-                                    <constraint firstItem="R98-gn-kP5" firstAttribute="leading" secondItem="t6U-nj-7c4" secondAttribute="leading" constant="20" id="JeQ-L6-eMa"/>
-                                    <constraint firstItem="Zto-H0-Eg9" firstAttribute="top" secondItem="t6U-nj-7c4" secondAttribute="top" id="ODT-rW-crO"/>
-                                    <constraint firstItem="ZYu-Ye-OJ4" firstAttribute="leading" secondItem="t6U-nj-7c4" secondAttribute="leading" constant="20" id="VM9-8J-NAh"/>
-                                    <constraint firstItem="Zto-H0-Eg9" firstAttribute="leading" secondItem="t6U-nj-7c4" secondAttribute="leading" constant="20" id="rm2-jx-f8F"/>
-                                    <constraint firstAttribute="trailing" secondItem="Zto-H0-Eg9" secondAttribute="trailing" constant="20" id="xLi-es-lZ1"/>
-                                    <constraint firstAttribute="bottom" secondItem="ZYu-Ye-OJ4" secondAttribute="bottom" id="zSc-AO-GWz"/>
+                                    <constraint firstAttribute="height" constant="30" id="r8r-xH-8G6"/>
                                 </constraints>
-                            </view>
+                                <state key="normal" title="View Attendance">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didClickAttendees:" destination="ol8-CI-xXO" eventType="touchUpInside" id="JLb-HB-M9M"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYu-Ye-OJ4">
+                                <rect key="frame" x="25" y="483" width="325" height="30"/>
+                                <color key="backgroundColor" red="0.75765420819999996" green="0.83657525509999997" blue="0.5626762689" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="KdC-jp-wDr"/>
+                                </constraints>
+                                <state key="normal" title="Send attendance summary">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="didClickEmail:" destination="ol8-CI-xXO" eventType="touchUpInside" id="68t-k6-pus"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0K-I0-4VP">
                                 <rect key="frame" x="25" y="521" width="325" height="30"/>
                                 <color key="backgroundColor" red="0.92549019610000005" green="0.4823529412" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -453,20 +428,6 @@
                                 </state>
                                 <connections>
                                     <action selector="didClickDrawing:" destination="ol8-CI-xXO" eventType="touchUpInside" id="hWD-T4-YIS"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n15-op-RYX">
-                                <rect key="frame" x="25" y="355" width="325" height="30"/>
-                                <color key="backgroundColor" red="0.92549019610000005" green="0.4823529412" blue="0.1843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="r8r-xH-8G6"/>
-                                </constraints>
-                                <state key="normal" title="View Attendance">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="didClickAttendees:" destination="ol8-CI-xXO" eventType="touchUpInside" id="JLb-HB-M9M"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="twz-AH-oOg">
@@ -485,15 +446,18 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="u0K-I0-4VP" firstAttribute="top" secondItem="t6U-nj-7c4" secondAttribute="bottom" constant="8" id="47y-xg-aA4"/>
-                            <constraint firstItem="t6U-nj-7c4" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leadingMargin" constant="-11" id="5fY-8d-bIl"/>
+                            <constraint firstItem="u0K-I0-4VP" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leadingMargin" constant="9" id="9BA-Mh-fCQ"/>
+                            <constraint firstItem="ZYu-Ye-OJ4" firstAttribute="top" secondItem="n15-op-RYX" secondAttribute="bottom" constant="8" id="FEE-M3-QMd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u0K-I0-4VP" secondAttribute="trailing" constant="9" id="Fg8-As-WKg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u0K-I0-4VP" secondAttribute="trailing" constant="9" id="Rw9-mA-mmL"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="t6U-nj-7c4" secondAttribute="trailing" constant="-11" id="ac8-pq-YoC"/>
-                            <constraint firstItem="t6U-nj-7c4" firstAttribute="top" secondItem="n15-op-RYX" secondAttribute="bottom" constant="31" id="bR2-Pz-RQ2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ZYu-Ye-OJ4" secondAttribute="trailing" constant="9" id="Wp6-2L-OPA"/>
+                            <constraint firstItem="u0K-I0-4VP" firstAttribute="top" secondItem="ZYu-Ye-OJ4" secondAttribute="bottom" constant="8" id="aDe-i6-7Wa"/>
                             <constraint firstItem="u0K-I0-4VP" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leadingMargin" constant="9" id="c8g-VR-BXg"/>
                             <constraint firstItem="suy-d0-Vvj" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leadingMargin" constant="-7" id="eUt-A4-1JG"/>
                             <constraint firstItem="twz-AH-oOg" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leading" id="fSO-5R-Srn"/>
                             <constraint firstAttribute="bottom" secondItem="twz-AH-oOg" secondAttribute="bottom" id="g8P-AE-gWj"/>
+                            <constraint firstItem="tjG-E0-paZ" firstAttribute="top" secondItem="u0K-I0-4VP" secondAttribute="bottom" constant="8" id="jP5-6i-OD9"/>
+                            <constraint firstItem="ZYu-Ye-OJ4" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leadingMargin" constant="9" id="kHK-7f-oNO"/>
                             <constraint firstItem="n15-op-RYX" firstAttribute="leading" secondItem="Y54-hm-X5K" secondAttribute="leading" constant="25" id="mYy-BV-pNC"/>
                             <constraint firstItem="twz-AH-oOg" firstAttribute="top" secondItem="4bV-X5-Zsj" secondAttribute="bottom" id="njR-ea-nLc"/>
                             <constraint firstItem="n15-op-RYX" firstAttribute="top" secondItem="suy-d0-Vvj" secondAttribute="bottom" constant="8" id="pW8-JI-hjr"/>
@@ -527,9 +491,7 @@
                         <outlet property="inputDate" destination="2qW-tF-W4p" id="Z9I-Bp-RoM"/>
                         <outlet property="inputDetails" destination="xgO-To-O34" id="meB-Eg-50D"/>
                         <outlet property="inputNotes" destination="enr-5c-egg" id="o32-oU-cJ4"/>
-                        <outlet property="inputTo" destination="R98-gn-kP5" id="e8A-Ws-rfp"/>
                         <outlet property="labelTitle" destination="iXR-Vb-XZ3" id="Pgj-oW-11b"/>
-                        <outlet property="viewEmail" destination="t6U-nj-7c4" id="aD4-QB-AXX"/>
                         <outlet property="viewInfo" destination="suy-d0-Vvj" id="YGQ-Dg-k3t"/>
                         <segue destination="z2Z-nI-mGK" kind="push" identifier="ToEditAttendees" id="Xra-19-qJM"/>
                     </connections>
