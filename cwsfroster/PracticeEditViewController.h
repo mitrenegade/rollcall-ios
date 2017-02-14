@@ -21,7 +21,7 @@
 
 @class Practice;
 @class RatingViewController;
-@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, MFMailComposeViewControllerDelegate, RatingDelegate>
+@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, RatingDelegate>
 {
     IBOutlet UITextField *inputDate;
     IBOutlet UITextField *inputDetails;
@@ -33,10 +33,6 @@
     NSString *originalDescription;
     
     IBOutlet UIView *viewInfo;
-
-    IBOutlet UIView *viewEmail;
-    IBOutlet UITextField *inputTo;
-    IBOutlet UIButton *buttonEmail;
 
     IBOutlet UIButton *buttonDrawing;
 
@@ -65,24 +61,21 @@
 
 @property (nonatomic) IBOutlet UIButton *buttonAttendees;
 @property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonAttendeesHeight;
+@property (nonatomic) IBOutlet NSLayoutConstraint *constraintButtonEmailHeight;
 
 @property (nonatomic) NSString *originalDescription;
 
-@property (nonatomic) IBOutlet UIView *viewEmail;
-@property (nonatomic) IBOutlet UITextField *inputTo;
 @property (nonatomic) IBOutlet UIButton *buttonEmail;
-
 @property (nonatomic) IBOutlet UIButton *buttonDrawing;
 
 @property (assign) int currentRow;
 @property (nonatomic) NSString *lastInputDate;
-@property (nonatomic) NSString *emailFrom;
 @property (nonatomic) NSString *emailTo;
 
+@property (nonatomic) IBOutlet UIView *activityOverlay;
 
 -(NSString *)titleForDate:(NSDate *)date;
 
--(IBAction)didClickEmail:(id)sender;
 -(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;
 @end

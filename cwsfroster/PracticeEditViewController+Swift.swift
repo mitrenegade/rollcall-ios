@@ -17,6 +17,7 @@ extension PracticeEditViewController {
         
         if self.practice == nil {
             constraintButtonAttendeesHeight.constant = 0
+            constraintButtonEmailHeight.constant = 0
         }
     }
     
@@ -38,7 +39,7 @@ extension PracticeEditViewController {
             practice.title = self.inputDate.text
             practice.organization = Organization.current
             
-            self.viewEmail.isHidden = true
+            self.constraintButtonEmailHeight.constant = 0
             self.buttonDrawing.isHidden = true
             self.buttonAttendees.isHidden = true
             self.inputNotes.text = nil
@@ -148,23 +149,11 @@ extension PracticeEditViewController: UITextFieldDelegate {
                     self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
                 }
             }
-        }            
+        }
     }
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == inputTo {
-            if let string = textField.text, string.characters.count > 0 {
-                buttonEmail.isEnabled = true
-                buttonEmail.alpha = 1
-            }
-            else {
-                buttonEmail.isEnabled = false
-                buttonEmail.alpha = 0.5
-            }
-            
-            emailTo = textField.text;
-        }
-        else if textField == inputDate {
+        if textField == inputDate {
             self.practice.title = textField.text
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 self.practice.date = date
@@ -185,5 +174,104 @@ extension PracticeEditViewController: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: Email
+extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
+    func didClickEmail(_ sender: AnyObject?) {
+        let alert = UIAlertController(title: "To:", message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField) in
+            textField.text = self.emailTo
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action) in
+            if let textField = alert.textFields?.first {
+                self.emailTo = textField.text
+                self.composeEmail()
+            }
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func composeEmail() {
+        guard !emailTo.isEmpty else {
+            self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+            return
+        }
+        self.activityOverlay.isHidden = false
+
+        self.practice.saveInBackground { (success, error) in
+            if let error = error as? NSError {
+                self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
+                self.activityOverlay.isHidden = true
+                return
+            }
+            else {
+                UserDefaults.standard.set(self.emailTo, forKey: "email:to")
+                
+                let eventName = self.practice.title ?? "practice"
+                let title = "Event attendance for \(eventName)"
+                let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
+                var message = "Date: \(dateString)\n"
+                let attendances = self.practice.attendances ?? []
+                var count = attendances.count
+                for attendance in attendances {
+                    if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
+                        member.fetchIfNeededInBackground(block: { (object, error) in
+                            DispatchQueue.main.async {
+                                if let member = object as? Member {
+                                    if let name = member.name {
+                                        message = "\(message)\n\(name) "
+                                    }
+                                    if let email = member.email {
+                                        message = "\(message)\(email)"
+                                    }
+                                }
+                                count -= 1
+                                if count == 0 {
+                                    self.sendEmail(title: title, message: message)
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+        }
+    }
+    
+    func sendEmail(title: String, message: String) {
+        guard MFMailComposeViewController.canSendMail() else {
+            self.simpleAlert("Cannot send email", message: "Your device is unable to send email.")
+            self.activityOverlay.isHidden = true
+            return
+        }
+        guard !emailTo.isEmpty else {
+            self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+            self.activityOverlay.isHidden = true
+            return
+        }
+        
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setSubject(title)
+        composer.setMessageBody(message, isHTML: false)
+        composer.setToRecipients([emailTo])
+        
+        self.present(composer, animated: true, completion: nil)
+        
+        self.activityOverlay.isHidden = true
+        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.objectId ?? "unknown", "subject": title, "body": message], error: nil)
+    }
+    
+    public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        self.dismiss(animated: true) { 
+            if result == .cancelled || result == .failed {
+                self.simpleAlert("Attendance record cancelled", defaultMessage: "The event summary was not sent", error: error as? NSError)
+            }
+            else if result == .sent {
+                self.simpleAlert("Attendance record sent", message: nil)
+            }
+        }
     }
 }
