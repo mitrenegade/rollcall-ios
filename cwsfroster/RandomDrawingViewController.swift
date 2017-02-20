@@ -29,6 +29,7 @@ class RandomDrawingViewController: UIViewController {
             self.members = mem
         }
     }
+    var drawingResults: [Member]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,8 +69,11 @@ class RandomDrawingViewController: UIViewController {
         
         var pool = [Member]()
         pool.append(contentsOf: members)
-        self.doDrawingFromRemaining(remaining: self.totalCount, remainingMembers: pool, selected: nil) { (results) in
+        self.drawingResults = nil
+        self.doDrawingFromRemaining(remaining: self.totalCount, pool: pool, selected: nil) { (results) in
             print("results \(results)")
+            self.drawingResults = results
+            self.tableView.reloadData()
         }
     }
     
@@ -111,25 +115,29 @@ extension RandomDrawingViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return self.drawingResults?.count ?? 0
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
         
-        guard let attendanceCell = cell as? AttendanceCell else { return cell }
+        guard let memberCell = cell as? MemberCell else { return cell }
         // Configure the cell...
-//        guard let members = self.members, indexPath.row < members.count else { return cell }
-//        let member = members[indexPath.row]
-//        attendanceCell.configure(member: member, practice: self.practice, newAttendance: newAttendances[member], row: indexPath.row)
-        return attendanceCell
+        guard let members = self.drawingResults, indexPath.row < members.count else { return cell }
+        let member = members[indexPath.row]
+        memberCell.configure(member: member, row: indexPath.row)
+        
+        if let label = memberCell.labelCount {
+            label.text = "\(indexPath.row + 1)"
+        }
+        return memberCell
     }
 }
 
 // MARK: Drawing
 extension RandomDrawingViewController {
     
-    func doDrawingFromRemaining(remaining: Int, remainingMembers: [Member], selected: [Member]?,completion: (([Member]?)->Void)) {
-        var remainingMembers = remainingMembers
+    func doDrawingFromRemaining(remaining: Int, pool: [Member], selected: [Member]?,completion: (([Member]?)->Void)) {
+        var pool = pool
         var selected = selected
         if selected == nil {
             selected = [Member]()
@@ -140,20 +148,20 @@ extension RandomDrawingViewController {
             return
         }
         
-        if remainingMembers.isEmpty {
+        if pool.isEmpty {
             completion(selected)
             return
         }
         
-        let index = Int(arc4random() % UInt32(remainingMembers.count))
-        let member = remainingMembers[index]
+        let index = Int(arc4random() % UInt32(pool.count))
+        let member = pool[index]
         selected?.append(member)
         
         if !self.repeats {
-            remainingMembers.remove(at: index)
+            pool.remove(at: index)
         }
         
-        self.doDrawingFromRemaining(remaining: remaining - 1, remainingMembers: remainingMembers, selected: selected, completion: completion)
+        self.doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
     }
     /*
  #pragma mark Drawing
