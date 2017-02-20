@@ -22,7 +22,7 @@ class RandomDrawingViewController: UIViewController {
             // TODO: eventually allow members to have multiple entries
             var mem: [Member] = []
             for attendance in attendances {
-                if let member = attendance.member {
+                if let member = attendance.member, Int(attendance.attended ?? 0) == AttendedStatus.Present.rawValue {
                     mem.append(member)
                 }
             }
@@ -43,6 +43,8 @@ class RandomDrawingViewController: UIViewController {
         let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputNumber.inputAccessoryView = keyboardDoneButtonView
+        
+        self.inputNumber.text = "\(self.members?.count ?? 0)"
     }
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
@@ -54,9 +56,21 @@ class RandomDrawingViewController: UIViewController {
     }
     
     @IBAction func didClickDoDrawing(_ sender: UIButton?) {
-        self.view.endEditing(true)
+        self.dismissKeyboard()
+        
         let repeats = self.repeats ? "on": "off"
         print("drawing \(self.totalCount) times, repeat is \(repeats)")
+        
+        guard let members = self.members else {
+            self.simpleAlert("Cannot do drawing", message: "There are currently no attendees at this event")
+            return
+        }
+        
+        var pool = [Member]()
+        pool.append(contentsOf: members)
+        self.doDrawingFromRemaining(remaining: self.totalCount, remainingMembers: pool, selected: nil) { (results) in
+            print("results \(results)")
+        }
     }
     
     var repeats: Bool {
@@ -69,19 +83,6 @@ class RandomDrawingViewController: UIViewController {
         }
         return count
     }
-    
-    /*
-     -(void)didClickDrawing:(id)sender {
-     NSString *title = @"Random drawing";
-     NSString *message = @"Click to select one attendee at random";
-     NSMutableArray *attendees = [[[[Organization current] attendances] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"practice = %@", self.practice.objectId]]; //[[Practice where:@{@"title":dateString}] all];
-     for (Attendance *a in attendees) {
-     NSLog(@"Attendance %@, attended %@", a, a.attended);
-     }
-     
-     [self doDrawingFromAttendees:attendees title:title message:message];
-     }
-     */
 }
 
 extension RandomDrawingViewController {
@@ -124,6 +125,64 @@ extension RandomDrawingViewController: UITableViewDataSource {
     }
 }
 
-extension RandomDrawingViewController: UITableViewDelegate {
+// MARK: Drawing
+extension RandomDrawingViewController {
     
+    func doDrawingFromRemaining(remaining: Int, remainingMembers: [Member], selected: [Member]?,completion: (([Member]?)->Void)) {
+        var remainingMembers = remainingMembers
+        var selected = selected
+        if selected == nil {
+            selected = [Member]()
+        }
+        
+        if remaining == 0 {
+            completion(selected)
+            return
+        }
+        
+        if remainingMembers.isEmpty {
+            completion(selected)
+            return
+        }
+        
+        let index = Int(arc4random() % UInt32(remainingMembers.count))
+        let member = remainingMembers[index]
+        selected?.append(member)
+        
+        if !self.repeats {
+            remainingMembers.remove(at: index)
+        }
+        
+        self.doDrawingFromRemaining(remaining: remaining - 1, remainingMembers: remainingMembers, selected: selected, completion: completion)
+    }
+    /*
+ #pragma mark Drawing
+ -(void)doDrawingFromAttendees:(NSMutableArray *)attendees title:(NSString *)title message:(NSString *)message {
+ NSArray *buttons = nil;
+ if ([attendees count] > 0) {
+ buttons = @[@"Pick a name and replace it", @"Pick a name without replacing it"];
+ }
+ else {
+ message = @"No more attendees left to select from.";
+ }
+ [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Close" otherButtonTitles:buttons onDismiss:^(int buttonIndex) {
+ NSLog(@"Index %d", buttonIndex);
+ int index = arc4random() % [attendees count];
+ Attendance *attendance = (Attendance *)(attendees[index]);
+ NSString *title = attendance.member.name;
+ NSString *newMessage = message;
+ if (buttonIndex == 0) {
+ [self doDrawingFromAttendees:attendees title:title message:newMessage];
+ }
+ else if (buttonIndex == 1) {
+ [attendees removeObject:attendance];
+ if ([attendees count] == 0) {
+ newMessage = @"No more attendees left to select from.";
+ }
+ [self doDrawingFromAttendees:attendees title:title message:newMessage];
+ }
+ 
+ } onCancel:nil];
+ }
+*/
 }
