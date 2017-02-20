@@ -76,6 +76,5 @@
 
 -(NSString *)titleForDate:(NSDate *)date;
 
--(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;
 @end

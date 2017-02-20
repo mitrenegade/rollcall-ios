@@ -195,18 +195,6 @@
 
 
 #pragma mark Drawing
-
--(void)didClickDrawing:(id)sender {
-    NSString *title = @"Random drawing";
-    NSString *message = @"Click to select one attendee at random";
-    NSMutableArray *attendees = [[[[Organization current] attendances] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"practice = %@", self.practice.objectId]]; //[[Practice where:@{@"title":dateString}] all];
-    for (Attendance *a in attendees) {
-        NSLog(@"Attendance %@, attended %@", a, a.attended);
-    }
-
-    [self doDrawingFromAttendees:attendees title:title message:message];
-}
-
 -(void)doDrawingFromAttendees:(NSMutableArray *)attendees title:(NSString *)title message:(NSString *)message {
     NSArray *buttons = nil;
     if ([attendees count] > 0) {

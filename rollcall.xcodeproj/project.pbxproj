@@ -96,6 +96,7 @@
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
 		ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */ = {isa = PBXBuildFile; fileRef = ACF58F8E1C266A0B0087EE70 /* add_user.png */; };
 		ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */; };
+		C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -214,6 +215,7 @@
 		ACF58F8E1C266A0B0087EE70 /* add_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_user.png; sourceTree = "<group>"; };
 		ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnsiteSignupViewController.h; sourceTree = "<group>"; };
 		ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnsiteSignupViewController.m; sourceTree = "<group>"; };
+		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -406,6 +408,7 @@
 				8EE005AE1E3D94FE00272DC0 /* Splash */,
 				8EE5514F1E3E6117001FB0C4 /* Members */,
 				8EE551501E3E611D001FB0C4 /* Events */,
+				C645B8FC1E5A7CE50001A119 /* Random Drawing */,
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
@@ -483,6 +486,14 @@
 				069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C645B8FC1E5A7CE50001A119 /* Random Drawing */ = {
+			isa = PBXGroup;
+			children = (
+				C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */,
+			);
+			name = "Random Drawing";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -655,6 +666,7 @@
 				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
+				C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
