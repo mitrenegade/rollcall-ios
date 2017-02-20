@@ -139,15 +139,14 @@ extension PracticeEditViewController: UITextViewDelegate {
 // MARK: UITextFieldDelegate
 extension PracticeEditViewController: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
-        
         if textField == inputDate {
             lastInputDate = textField.text
             if currentRow == -1 {
                 currentRow = FUTURE_DAYS - 1
-                if let pickerView = textField.inputView as? UIPickerView {
-                    pickerView.selectRow(Int(currentRow), inComponent: 0, animated: true)
-                    self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
-                }
+            }
+            if let pickerView = textField.inputView as? UIPickerView {
+                pickerView.selectRow(Int(currentRow), inComponent: 0, animated: true)
+                self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
             }
         }
     }

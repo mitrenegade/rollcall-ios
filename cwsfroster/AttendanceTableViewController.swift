@@ -104,15 +104,26 @@ extension AttendanceTableViewController {
 extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        guard let practice = self.practice else { return }
+
         if indexPath.section == 0 {
-            self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+            practice.saveInBackground(block: { (success, error) in
+                DispatchQueue.main.async {
+                    if success {
+                        Organization.current?.practices?.insert(practice, at: 0)
+                        self.delegate?.didEditPractice()
+                        self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+                    }
+                    else {
+                        self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
+                    }
+                }
+            })
             return
         }
         
         guard let members = Organization.current?.members, indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        guard let practice = self.practice else { return }
         
         if let attendance = practice.attendanceFor(member: member) {
             self.toggleAttendance(attendance: attendance)
@@ -128,7 +139,17 @@ extension AttendanceTableViewController {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         else {
-            self.saveNewAttendanceFor(member: member, indexPath: indexPath)
+            if self.isNewPractice {
+                Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: false, completion: { (attendance, error) in
+                    self.newAttendances[member] = attendance
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                })
+            }
+            else {
+                Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: true, completion: { (attendance, error) in
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                })
+            }
         }
     }
     
@@ -141,24 +162,4 @@ extension AttendanceTableViewController {
         }
     }
     
-    func saveNewAttendanceFor(member: Member, indexPath: IndexPath) {
-        let attendance = Attendance()
-        attendance.organization = Organization.current
-        attendance.practice = self.practice
-        attendance.member = member
-        attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
-        attendance.date = self.practice?.date
-        if self.isNewPractice {
-            newAttendances[member] = attendance
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-        else {
-            attendance.saveInBackground { (success, error) in
-                DispatchQueue.main.async {
-                    Organization.current?.attendances?.append(attendance)
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
-            }
-        }
-    }
 }

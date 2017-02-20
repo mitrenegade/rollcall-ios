@@ -39,7 +39,7 @@ extension OnsiteSignupViewController {
             Organization.current?.members?.insert(member, at: 0)
         }
         
-        self.saveNewAttendanceFor(member: member, practice: self.practice) { (attendance, error) in
+        Attendance.saveNewAttendanceFor(member: member, practice: self.practice, saveToParse: true) { (attendance, error) in
             self.buttonSave.isEnabled = true
             if let error = error {
                 self.simpleAlert("Could not sign up user", message: "There was an error adding \(member.name) to this event. Please add them manually by editing event attendees")
@@ -60,23 +60,6 @@ extension OnsiteSignupViewController {
         }
     }
 
-    func saveNewAttendanceFor(member: Member, practice: Practice, completion: @escaping ((Attendance?, NSError?)->Void)) {
-        let attendance = Attendance()
-        attendance.organization = Organization.current
-        attendance.practice = practice
-        attendance.member = member
-        attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
-        attendance.saveInBackground { (success, error) in
-            if let error = error as? NSError {
-                completion(nil, error)
-            }
-            else {
-                Organization.current?.attendances?.insert(attendance, at: 0)
-                completion(attendance, nil)
-            }
-        }
-    }
-    
     func reset(){
         self.view.endEditing(true)
         self.inputEmail.text = nil;

@@ -57,12 +57,20 @@
     [self setupTextView];
     [self configureForPractice];
     
-    currentRow = -1;
+    self.currentRow = -1;
+    [self generatePickerDates];
+    
+    NSString *defaultTitle = self.practice.title ? : [self titleForDate:[NSDate date]];
+    for (int i=0; i<[self.datesForPicker count]; i++) {
+        if ([defaultTitle isEqualToString:self.datesForPicker[i]]) {
+            self.currentRow = i;
+        }
+    }
 
     self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
 
-    rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
-    rater.delegate = self;
+    self.rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
+    self.rater.delegate = self;
 }
 
 
@@ -99,8 +107,8 @@
 
 #pragma mark Picker DataSource/Delegate
 -(void)generatePickerDates {
-    if (!datesForPicker) {
-        datesForPicker = [NSMutableArray array];
+    if (!self.datesForPicker) {
+        self.datesForPicker = [NSMutableArray array];
         self.dateForDateString = [NSMutableDictionary dictionary];
         
         int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
@@ -108,7 +116,7 @@
             NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*(row-futureDays)];
             NSString *title = [self titleForDate:date];
             if (title) {
-                [datesForPicker addObject:title];
+                [self.datesForPicker addObject:title];
                 self.dateForDateString[title] = date;
             }
         }
@@ -139,21 +147,21 @@
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (!datesForPicker)
+    if (!self.datesForPicker)
         [self generatePickerDates];
-    return datesForPicker.count;
+    return self.datesForPicker.count;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (!datesForPicker)
+    if (!self.datesForPicker)
         [self generatePickerDates];
-    return datesForPicker[row];
+    return self.datesForPicker[row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
     [self.inputDate setText:title];
-    currentRow = row;
+    self.currentRow = row;
 }
 
 -(void)selectDate:(id)sender {
@@ -162,7 +170,7 @@
 
 -(void)cancelSelectDate:(id)sender {
     // revert to old date
-    self.inputDate.text = lastInputDate;
+    self.inputDate.text = self.lastInputDate;
     [self.inputDate resignFirstResponder];
 }
 
