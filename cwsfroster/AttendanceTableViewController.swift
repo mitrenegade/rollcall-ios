@@ -109,8 +109,14 @@ extension AttendanceTableViewController {
         if indexPath.section == 0 {
             practice.saveInBackground(block: { (success, error) in
                 DispatchQueue.main.async {
-                    self.delegate?.didEditPractice()
-                    self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+                    if success {
+                        Organization.current?.practices?.insert(practice, at: 0)
+                        self.delegate?.didEditPractice()
+                        self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+                    }
+                    else {
+                        self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
+                    }
                 }
             })
             return
