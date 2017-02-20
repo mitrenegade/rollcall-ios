@@ -47,3 +47,28 @@ extension Attendance {
         }
     }
 }
+
+// MARK: Offline
+extension Attendance {
+    class func offlineAttendances() -> [Attendance] {
+        guard let practice = Organization.current?.practices?.first else {
+            print("Offline attendances failed")
+            return []
+        }
+        guard let members = Organization.current?.members else {
+            print("Offline attendances failed")
+            return []
+        }
+        var attendances: [Attendance] = []
+        for member in members {
+            let attendance = Attendance()
+            attendance.organization = Organization.current
+            attendance.practice = practice
+            attendance.member = member
+            attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+            attendance.date = practice.date
+            attendances.append(attendance)
+        }
+        return attendances
+    }
+}

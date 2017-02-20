@@ -64,7 +64,7 @@
 }
 
 #pragma login
--(IBAction)didClickLogin:(id)sender {
+-(void) login {
     inputConfirmation.superview.alpha = 0;
     inputConfirmation.superview.hidden = YES;
     constraintConfirmationHeight.constant = 0;

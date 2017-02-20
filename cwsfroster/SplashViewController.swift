@@ -77,6 +77,11 @@ class SplashViewController: UIViewController {
 var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeWithParse() {
+        guard !OFFLINE_MODE else {
+            self.generateOfflineModels()
+            return
+        }
+        
         classNames = ["members", "practices", "attendances"]
         self.activityIndicator.startAnimating()
         self.labelInfo.isHidden = false
@@ -154,5 +159,21 @@ extension SplashViewController {
             self.goHome()
             return
         }
+    }
+    
+    // MARK: Offline mode
+    func generateOfflineModels() {
+        let orgParams = ["name": "Skymall Club"]
+        let org = Organization(className: "Organization", dictionary: orgParams)
+        
+        org.practices = Practice.offlinePractices()
+        org.members = Member.offlineMembers()
+        org.attendances = Attendance.offlineAttendances()
+        
+        Organization.current = org
+        PFUser.current()?.setObject(org, forKey: "organization")
+        
+        classNames.removeAll()
+        self.checkSyncComplete()
     }
 }
