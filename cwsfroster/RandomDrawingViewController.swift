@@ -13,7 +13,23 @@ class RandomDrawingViewController: UIViewController {
     @IBOutlet var inputNumber: UITextField!
     @IBOutlet var switchRepeats: UISwitch!
     @IBOutlet var tableView: UITableView!
-
+    
+    internal var members: [Member]?
+    var practice: Practice? {
+        didSet {
+            guard let attendances = practice?.attendances else { return }
+            
+            // TODO: eventually allow members to have multiple entries
+            var mem: [Member] = []
+            for attendance in attendances {
+                if let member = attendance.member {
+                    mem.append(member)
+                }
+            }
+            self.members = mem
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +46,7 @@ class RandomDrawingViewController: UIViewController {
     }
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
-        print("nothing")
+        self.dismissKeyboard()
     }
     
     @IBAction func didClickInfo(_ sender: UIButton?) {
@@ -68,19 +84,23 @@ class RandomDrawingViewController: UIViewController {
      */
 }
 
-extension RandomDrawingViewController: UITextFieldDelegate {
+extension RandomDrawingViewController {
     func dismissKeyboard() {
         self.view.endEditing(true)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let text = textField.text, let count = Int(text), count > 0 else {
-            textField.text = "0"
+        
+        guard let text = self.inputNumber.text, let count = Int(text) else {
+            self.inputNumber.text = "0"
             return
         }
         
-        if !self.repeats {
-            // TODO
+        guard let members = self.members else {
+            self.simpleAlert("Cannot do drawing", message: "There are currently no attendees at this event")
+            return
+        }
+        
+        if self.totalCount > members.count, !self.repeats {
+            self.simpleAlert("Too many drawings", message: "Without repeats, you can only pick \(members.count) times")
+            self.inputNumber.text = "\(members.count)"
         }
     }
 }
@@ -97,7 +117,7 @@ extension RandomDrawingViewController: UITableViewDataSource {
         
         guard let attendanceCell = cell as? AttendanceCell else { return cell }
         // Configure the cell...
-//        guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
+//        guard let members = self.members, indexPath.row < members.count else { return cell }
 //        let member = members[indexPath.row]
 //        attendanceCell.configure(member: member, practice: self.practice, newAttendance: newAttendances[member], row: indexPath.row)
         return attendanceCell

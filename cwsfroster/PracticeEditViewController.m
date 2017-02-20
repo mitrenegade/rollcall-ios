@@ -91,6 +91,10 @@
         NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
         [controller setPractice:self.practice];
     }
+    else if ([segue.identifier isEqualToString:@"ToRandomDrawing"]) {
+        RandomDrawingViewController *controller = (RandomDrawingViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
 }
 
 #pragma mark Picker DataSource/Delegate
