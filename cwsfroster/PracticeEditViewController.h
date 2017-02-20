@@ -67,8 +67,6 @@
     
 -(NSString *)titleForDate:(NSDate *)date;
 
--(IBAction)didClickEmail:(id)sender;
--(IBAction)didClickDrawing:(id)sender;
 -(IBAction)didClickAttendees:(id)sender;
     
 -(void)generatePickerDates;
