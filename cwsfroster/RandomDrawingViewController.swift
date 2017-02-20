@@ -46,14 +46,18 @@ class RandomDrawingViewController: UIViewController {
         self.inputNumber.inputAccessoryView = keyboardDoneButtonView
         
         self.inputNumber.text = "\(self.members?.count ?? 0)"
+        
+        ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
     }
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
         self.dismissKeyboard()
+        ParseLog.log(typeString: "RandomDrawingRepeatsSet", title: nil, message: nil, params: ["repeats": self.repeats], error: nil)
     }
     
     @IBAction func didClickInfo(_ sender: UIButton?) {
         self.simpleAlert("What does Repeat mean?", message: "If Repeat is selected, the same person can be picked multiple times. Otherwise, the pool of names gets smaller each time, and you can only draw the same number of times as attendees.")
+        ParseLog.log(typeString: "RepeatInfoButtonClicked", title: nil, message: nil, params: nil, error: nil)
     }
     
     @IBAction func didClickDoDrawing(_ sender: UIButton?) {
@@ -63,9 +67,11 @@ class RandomDrawingViewController: UIViewController {
         print("drawing \(self.totalCount) times, repeat is \(repeats)")
         
         guard let members = self.members else {
-            self.simpleAlert("Cannot do drawing", message: "There are currently no attendees at this event")
+            self.warnForDrawing()
             return
         }
+        
+        ParseLog.log(typeString: "RandomDrawingDone", title: nil, message: nil, params: ["repeats": self.repeats, "totalCount": self.totalCount], error: nil)
         
         var pool = [Member]()
         pool.append(contentsOf: members)
@@ -87,6 +93,13 @@ class RandomDrawingViewController: UIViewController {
         }
         return count
     }
+    
+    func warnForDrawing() {
+        let title = "Cannot do drawing"
+        let message = "There are currently no attendees at this event"
+        self.simpleAlert(title, message: message)
+        ParseLog.log(typeString: "RandomDrawingFailed", title: nil, message: nil, params: nil, error: nil)
+    }
 }
 
 extension RandomDrawingViewController {
@@ -99,7 +112,7 @@ extension RandomDrawingViewController {
         }
         
         guard let members = self.members else {
-            self.simpleAlert("Cannot do drawing", message: "There are currently no attendees at this event")
+            self.warnForDrawing()
             return
         }
         
@@ -163,34 +176,4 @@ extension RandomDrawingViewController {
         
         self.doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
     }
-    /*
- #pragma mark Drawing
- -(void)doDrawingFromAttendees:(NSMutableArray *)attendees title:(NSString *)title message:(NSString *)message {
- NSArray *buttons = nil;
- if ([attendees count] > 0) {
- buttons = @[@"Pick a name and replace it", @"Pick a name without replacing it"];
- }
- else {
- message = @"No more attendees left to select from.";
- }
- [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Close" otherButtonTitles:buttons onDismiss:^(int buttonIndex) {
- NSLog(@"Index %d", buttonIndex);
- int index = arc4random() % [attendees count];
- Attendance *attendance = (Attendance *)(attendees[index]);
- NSString *title = attendance.member.name;
- NSString *newMessage = message;
- if (buttonIndex == 0) {
- [self doDrawingFromAttendees:attendees title:title message:newMessage];
- }
- else if (buttonIndex == 1) {
- [attendees removeObject:attendance];
- if ([attendees count] == 0) {
- newMessage = @"No more attendees left to select from.";
- }
- [self doDrawingFromAttendees:attendees title:title message:newMessage];
- }
- 
- } onCancel:nil];
- }
-*/
 }
