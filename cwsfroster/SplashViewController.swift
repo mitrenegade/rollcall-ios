@@ -168,6 +168,7 @@ extension SplashViewController {
         
         org.practices = Practice.offlinePractices()
         org.members = Member.offlineMembers()
+        org.attendances = Attendance.offlineAttendances()
         
         Organization.current = org
         PFUser.current()?.setObject(org, forKey: "organization")
