@@ -7,10 +7,25 @@
 //
 
 import Foundation
+import Parse
 
 // MARK: Swift notifications
 extension IntroViewController {
     func notifyForLogInSuccess() {
         self.notify(.LoginSuccess, object: nil, userInfo: nil)
+    }
+    
+    @IBAction func didClickLogin(_ sender: AnyObject?) {
+        if OFFLINE_MODE {
+            self.offlineLogin()
+        }
+        else {
+            self.login()
+        }
+    }
+    
+    func offlineLogin() {
+        PFUser.enableAutomaticUser()
+        self.goToPractices()
     }
 }

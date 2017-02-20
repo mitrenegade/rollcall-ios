@@ -31,10 +31,12 @@
     IBOutlet TutorialScrollView *tutorialView;
 }
 
--(IBAction)didClickLogin:(id)sender;
 -(IBAction)didClickSignup:(id)sender;
 -(IBAction)didClickPasswordReset:(id)sender;
 -(void)reset:(BOOL)showLogin;
 -(void)enableButtons:(BOOL)enabled;
+
+-(void)login;
+-(void)goToPractices;
 @end
 
