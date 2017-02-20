@@ -91,6 +91,10 @@
         NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
         [controller setPractice:self.practice];
     }
+    else if ([segue.identifier isEqualToString:@"ToRandomDrawing"]) {
+        RandomDrawingViewController *controller = (RandomDrawingViewController *) segue.destinationViewController;
+        [controller setPractice:self.practice];
+    }
 }
 
 #pragma mark Picker DataSource/Delegate
@@ -191,48 +195,6 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
-}
-
-
-#pragma mark Drawing
-
--(void)didClickDrawing:(id)sender {
-    NSString *title = @"Random drawing";
-    NSString *message = @"Click to select one attendee at random";
-    NSMutableArray *attendees = [[[[Organization current] attendances] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K != 0", @"attended"]] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"practice = %@", self.practice.objectId]]; //[[Practice where:@{@"title":dateString}] all];
-    for (Attendance *a in attendees) {
-        NSLog(@"Attendance %@, attended %@", a, a.attended);
-    }
-
-    [self doDrawingFromAttendees:attendees title:title message:message];
-}
-
--(void)doDrawingFromAttendees:(NSMutableArray *)attendees title:(NSString *)title message:(NSString *)message {
-    NSArray *buttons = nil;
-    if ([attendees count] > 0) {
-        buttons = @[@"Pick a name and replace it", @"Pick a name without replacing it"];
-    }
-    else {
-        message = @"No more attendees left to select from.";
-    }
-    [UIAlertView alertViewWithTitle:title message:message cancelButtonTitle:@"Close" otherButtonTitles:buttons onDismiss:^(int buttonIndex) {
-        NSLog(@"Index %d", buttonIndex);
-        int index = arc4random() % [attendees count];
-        Attendance *attendance = (Attendance *)(attendees[index]);
-        NSString *title = attendance.member.name;
-        NSString *newMessage = message;
-        if (buttonIndex == 0) {
-            [self doDrawingFromAttendees:attendees title:title message:newMessage];
-        }
-        else if (buttonIndex == 1) {
-            [attendees removeObject:attendance];
-            if ([attendees count] == 0) {
-                newMessage = @"No more attendees left to select from.";
-            }
-            [self doDrawingFromAttendees:attendees title:title message:newMessage];
-        }
-
-    } onCancel:nil];
 }
 
 #pragma mark attendees

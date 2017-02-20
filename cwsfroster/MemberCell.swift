@@ -13,6 +13,8 @@ class MemberCell: UITableViewCell {
     @IBOutlet var photoView: UIImageView!
     @IBOutlet var labelName: UILabel!
     
+    @IBOutlet var labelCount: UILabel?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
