@@ -27,6 +27,11 @@ extension Practice: PFSubclassing {
 
 extension Practice {
     class func queryPractices(org: Organization, completion: @escaping ((_ results: [Practice]?, _ error: NSError?) -> Void)) {
+        guard !OFFLINE_MODE else {
+            completion(self.offlinePractices(), nil)
+            return
+        }
+        
         guard let query = Practice.query() else {
             completion(nil, nil)
             return
@@ -68,6 +73,15 @@ extension Practice {
             return false
         }
         return myAttendances.first
+    }
+}
+
+// MARK: Offline
+extension Practice {
+    class func offlinePractices() -> [Practice] {
+        let eventParams = ["title": "Flight school", "date": Date(), "notes": "Being in the air", "details": ""] as [String : Any]
+        let event = Practice(className: "Practice", dictionary: eventParams)
+        return [event]
     }
 }
 

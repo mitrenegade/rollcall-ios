@@ -166,14 +166,8 @@ extension SplashViewController {
         let orgParams = ["name": "Skymall Club"]
         let org = Organization(className: "Organization", dictionary: orgParams)
         
-        let eventParams = ["title": "Flight school", "date": Date(), "notes": "Being in the air", "details": ""] as [String : Any]
-        let event = Practice(className: "Practice", dictionary: eventParams)
-        org.practices = [event]
-        
-        let member1 = Member(className: "Member", dictionary: ["name": "Chris", "email": "chris@gmail.com", "status": NSNumber(value: MemberStatus.Active.rawValue)])
-        let member2 = Member(className: "Member", dictionary: ["name": "Bob", "email": "bob@gmail.com", "status": NSNumber(value: MemberStatus.Active.rawValue)])
-        let member3 = Member(className: "Member", dictionary: ["name": "Kyle", "email": "kyle@gmail.com", "status": NSNumber(value: MemberStatus.Active.rawValue)])
-        org.members = [member1, member2, member3]
+        org.practices = Practice.offlinePractices()
+        org.members = Member.offlineMembers()
         
         Organization.current = org
         PFUser.current()?.setObject(org, forKey: "organization")
