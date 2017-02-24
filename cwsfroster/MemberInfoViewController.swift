@@ -95,7 +95,10 @@ class MemberInfoViewController: UIViewController {
     
     func saveMember() {
         member?.saveInBackground()
-        //        [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
+        var params = [String:Any]()
+        if let name = member?.name { params["name"] = name }
+        if let email = member?.email { params["email"] = email }
+        ParseLog.log(typeString: "MemberCreated", title: member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {
@@ -223,7 +226,7 @@ extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         self.present(picker, animated: true, completion: nil)
-        ParseLog.log(typeString: "EditMemberPhoto", title: nil, message: nil, params: nil, error: nil)
+        ParseLog.log(typeString: "EditMemberPhoto", title: member?.objectId, message: nil, params: nil, error: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

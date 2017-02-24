@@ -124,7 +124,7 @@
 -(void)didUpdateMember:(Member *)member {
     [self reloadMembers];
     [self notify:@"member:updated"];
-    [ParseLog logWithTypeString:@"MemberUpdated" title:nil message:nil params:nil error:nil];
+    [ParseLog logWithTypeString:@"MemberUpdated" title:[member objectId] message:nil params:nil error:nil];
 }
 
 -(void)close {
@@ -132,23 +132,15 @@
 }
 
 -(void)deleteMemberAtIndexPath:(NSIndexPath *)indexPath {
-    /*
-    Member *member = [self.memberFetcher objectAtIndexPath:indexPath];
-    NSSet *attendances = member.attendances;
-    NSSet *payments = member.payments;
-    for (Attendance *at in attendances) {
-        // manually cascade deletion on parse
-        [at.pfObject deleteInBackgroundWithBlock:nil];
-    }
-    for (Payment *p in payments) {
-        [p.pfObject deleteInBackgroundWithBlock:nil];
-    }
-    [member.pfObject deleteInBackgroundWithBlock:nil];
-    [_appDelegate.managedObjectContext deleteObject:member];
-     */
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self notify:@"member:deleted"];
-    
-    [ParseLog logWithTypeString:@"MemberDeleted" title:nil message:nil params:nil error:nil];
+    Member *member = [[Organization current] members][indexPath.row];
+    [member deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            [Organization queryForMembersWithCompletion:^(NSArray<Member *> * _Nullable members, NSError * _Nullable error) {
+                [self.tableView reloadData];
+                [self notify:@"member:deleted"];
+                [ParseLog logWithTypeString:@"MemberDeleted" title:[member objectId] message:nil params:nil error:nil];
+            }];
+        }
+    }];
 }
 @end
