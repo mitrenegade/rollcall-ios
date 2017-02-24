@@ -136,10 +136,18 @@
     [member deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
             [Organization queryForMembersWithCompletion:^(NSArray<Member *> * _Nullable members, NSError * _Nullable error) {
-                [self.tableView reloadData];
-                [self notify:@"member:deleted"];
-                [ParseLog logWithTypeString:@"MemberDeleted" title:[member objectId] message:nil params:nil error:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                    [self notify:@"member:deleted"];
+                    [ParseLog logWithTypeString:@"MemberDeleted" title:[member objectId] message:nil params:nil error:nil];
+                });
             }];
+        }
+        else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+                [ParseLog logWithTypeString:@"MemberDeletionFailed" title:[member objectId] message:nil params:nil error:error];
+            });
         }
     }];
 }
