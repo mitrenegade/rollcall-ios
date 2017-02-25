@@ -64,8 +64,18 @@
     for (int i=0; i<[self.datesForPicker count]; i++) {
         if ([defaultTitle isEqualToString:self.datesForPicker[i]]) {
             self.currentRow = i;
+            break;
+        }
+        NSDate *selectedDate = [self dateOnly:self.dateForDateString[self.datesForPicker[i]]];
+        NSDate *practiceDate = [self.practice dateOnly];
+        //NSLog(@"Date: %@ %@", selectedDate, practiceDate);
+        
+        if (selectedDate == practiceDate) {
+            self.currentRow = i;
+            break;
         }
     }
+    
 
     self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
 
@@ -230,4 +240,16 @@
     }
 }
 
+#pragma mark date utils
+-(NSDate*)dateOnly:(NSDate *)date {
+    NSCalendar *cal = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comps = [cal components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    
+    comps.hour = 0;
+    comps.minute = 0;
+    comps.second = 0;
+    
+    NSDate *newDate = [cal dateFromComponents:comps ];
+    return newDate;
+}
 @end

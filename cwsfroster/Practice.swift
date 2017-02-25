@@ -42,7 +42,7 @@ extension Practice {
         orgQuery.whereKey("objectId", equalTo: org.objectId!)
         
         query.whereKey("organization", matchesQuery: orgQuery)
-        query.addDescendingOrder("title")
+        query.addDescendingOrder("date")
         query.findObjectsInBackground { (results, error) in
             if let objects = results as? [Practice] {
                 completion(objects, nil)
@@ -82,6 +82,19 @@ extension Practice {
         let eventParams = ["title": "Flight school", "date": Date(), "notes": "Being in the air", "details": ""] as [String : Any]
         let event = Practice(className: "Practice", dictionary: eventParams)
         return [event]
+    }
+}
+
+// MARK: Date utils
+extension Practice {
+    func dateOnly() -> Date? {
+        var calendar = Calendar(identifier: .gregorian)
+        guard let date = self.date else { return nil }
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        if let componentsBasedDate = calendar.date(from: dateComponents) {
+            return componentsBasedDate
+        }
+        return nil
     }
 }
 
