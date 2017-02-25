@@ -118,6 +118,8 @@ extension AttendanceTableViewController {
                         Organization.current?.practices?.insert(practice, at: 0)
                         self.delegate?.didEditPractice()
                         self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+                        
+                        ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
                     }
                     else {
                         self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
