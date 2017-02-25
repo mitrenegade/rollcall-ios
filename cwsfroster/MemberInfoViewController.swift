@@ -22,6 +22,7 @@ class MemberInfoViewController: UIViewController {
     var member: Member?
     var delegate: MemberDelegate?
     var newPhoto: UIImage?
+    var isCreatingMember = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,7 @@ class MemberInfoViewController: UIViewController {
             self.switchInactive.isOn = member.isInactive
         } else {
             self.title = "New member"
+            self.isCreatingMember = true
         }
         self.setupTextView()
         self.refresh()
@@ -83,7 +85,7 @@ class MemberInfoViewController: UIViewController {
         }
         if self.navigationController?.viewControllers[0] == self {
             self.navigationController?.dismiss(animated: true, completion: { 
-                if let member = self.member {
+                if let member = self.member, !self.isCreatingMember {
                     self.delegate?.didUpdateMember(member)
                 }
             })
