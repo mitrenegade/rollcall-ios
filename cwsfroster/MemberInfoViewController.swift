@@ -85,7 +85,13 @@ class MemberInfoViewController: UIViewController {
         }
         if self.navigationController?.viewControllers[0] == self {
             self.navigationController?.dismiss(animated: true, completion: { 
-                if let member = self.member, !self.isCreatingMember {
+                if let member = self.member {
+                    if !self.isCreatingMember {
+                        var params = [String:Any]()
+                        if let name = self.member?.name { params["name"] = name }
+                        if let email = self.member?.email { params["email"] = email }
+                        ParseLog.log(typeString: "MemberUpdated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+                    }
                     self.delegate?.didUpdateMember(member)
                 }
             })
@@ -102,6 +108,11 @@ class MemberInfoViewController: UIViewController {
                 if let name = self.member?.name { params["name"] = name }
                 if let email = self.member?.email { params["email"] = email }
                 ParseLog.log(typeString: "MemberCreated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+                
+                self.delegate?.didUpdateMember(self.member)
+            }
+            else {
+                self.simpleAlert("Could not create member", defaultMessage: "There was an error adding the member", error: error as? NSError)
             }
         })
     }

@@ -124,14 +124,6 @@
 -(void)didUpdateMember:(Member *)member {
     [self reloadMembers];
     [self notify:@"member:updated"];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    if (member.name) {
-        params[@"name"] = member.name;
-    }
-    if (member.email) {
-        params[@"email"] = member.email;
-    }
-    [ParseLog logWithTypeString:@"MemberUpdated" title:[member objectId] message:nil params:params error:nil];
 }
 
 -(void)close {
