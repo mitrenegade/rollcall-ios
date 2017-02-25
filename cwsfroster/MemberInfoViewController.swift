@@ -94,11 +94,14 @@ class MemberInfoViewController: UIViewController {
     }
     
     func saveMember() {
-        member?.saveInBackground()
-        var params = [String:Any]()
-        if let name = member?.name { params["name"] = name }
-        if let email = member?.email { params["email"] = email }
-        ParseLog.log(typeString: "MemberCreated", title: member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+        member?.saveInBackground(block: { (success, error) in
+            if success {
+                var params = [String:Any]()
+                if let name = self.member?.name { params["name"] = name }
+                if let email = self.member?.email { params["email"] = email }
+                ParseLog.log(typeString: "MemberCreated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+            }
+        })
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {

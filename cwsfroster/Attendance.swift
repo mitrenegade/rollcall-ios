@@ -53,6 +53,7 @@ extension Attendance {
         attendance.practice = practice
         attendance.member = member
         attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
+        attendance.date = practice.date
         if saveToParse {
             attendance.saveInBackground { (success, error) in
                 DispatchQueue.main.async {

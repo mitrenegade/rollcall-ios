@@ -37,18 +37,14 @@ extension PracticesTableViewController: PracticeEditDelegate {
         practice.deleteInBackground { (success, error) in
             if success {
                 Organization.queryForPractices(completion: { (practices, error) in
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        self.notify("practice:deleted", object: nil, userInfo: nil)
-                        ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
-                    }
+                    self.tableView.reloadData()
+                    self.notify("practice:deleted", object: nil, userInfo: nil)
+                    ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
                 })
             }
             else {
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                    ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
-                }
+                self.tableView.reloadData()
+                ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
             }
         }
     }
