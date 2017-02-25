@@ -85,3 +85,16 @@ extension Practice {
     }
 }
 
+// MARK: Date utils
+extension Practice {
+    func dateOnly() -> Date? {
+        var calendar = Calendar(identifier: .gregorian)
+        guard let date = self.date else { return nil }
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        if let componentsBasedDate = calendar.date(from: dateComponents) {
+            return componentsBasedDate
+        }
+        return nil
+    }
+}
+
