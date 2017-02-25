@@ -35,13 +35,20 @@ class AttendanceTableViewController: UITableViewController {
         if isNewPractice {
             for (_, attendance) in newAttendances {
                 attendance.organization?.attendances?.append(attendance)
-                attendance.saveInBackground()
+                attendance.saveInBackground(block: { (success, error) in
+                    if success {
+                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
+                    }
+                })
             }
             // because didCreatePractice does not reload attendances
-            Organization.current?.saveInBackground()
+            //Organization.current?.saveInBackground()
             
             practice?.saveInBackground(block: { (success, error) in
-                self.delegate?.didCreatePractice()
+                if success {
+                    ParseLog.log(typeString: "PracticeCreated", title: self.practice?.objectId, message: nil, params: nil, error: nil)
+                    self.delegate?.didCreatePractice()
+                }
                 self.navigationController?.dismiss(animated: true, completion: {
                 })
             })
@@ -73,8 +80,6 @@ extension AttendanceTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        guard let practice = self.practice else { return 0 }
-//        return practice.attendances?.count ?? 0
         if section == 0 {
             return 1
         }
@@ -113,6 +118,8 @@ extension AttendanceTableViewController {
                         Organization.current?.practices?.insert(practice, at: 0)
                         self.delegate?.didEditPractice()
                         self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+                        
+                        ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
                     }
                     else {
                         self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
@@ -128,9 +135,8 @@ extension AttendanceTableViewController {
         if let attendance = practice.attendanceFor(member: member) {
             self.toggleAttendance(attendance: attendance)
             attendance.saveInBackground { (success, error) in
-                DispatchQueue.main.async {
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                ParseLog.log(typeString: "AttendanceSaved", title: attendance.objectId, message: nil, params: nil, error: nil)
             }
         }
         else if let attendance = newAttendances[member] {
@@ -141,12 +147,14 @@ extension AttendanceTableViewController {
         else {
             if self.isNewPractice {
                 Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: false, completion: { (attendance, error) in
+                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
                     self.newAttendances[member] = attendance
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
             }
             else {
                 Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: true, completion: { (attendance, error) in
+                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
             }

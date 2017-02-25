@@ -32,11 +32,11 @@ extension OnsiteSignupViewController {
             member.photo = PFFile(data:data)
         }
         
-        ParseLog.log(typeString: "OnsiteSignup", title: nil, message: nil, params: ["photo": self.addedPhoto != nil], error: nil)
         self.notify("member:updated", object: nil, userInfo: nil)
         
         member.saveInBackground { (result, error) in
             Organization.current?.members?.insert(member, at: 0)
+            ParseLog.log(typeString: "OnsiteSignup", title: member.objectId, message: nil, params: ["photo": self.addedPhoto != nil], error: nil)
         }
         
         Attendance.saveNewAttendanceFor(member: member, practice: self.practice, saveToParse: true) { (attendance, error) in

@@ -142,7 +142,7 @@
     alert.tag = 1;
     [alert show];
 
-    [ParseLog logWithTypeString:@"UpdateOrganizationName" title:nil message:nil params:nil error:nil];
+    [ParseLog logWithTypeString:@"UpdateOrganizationName" title:[[Organization current] objectId] message:nil params:nil error:nil];
 }
 
 -(void)goToUpdateUsername {
@@ -153,7 +153,7 @@
     alert.tag = 2;
     [alert show];
 
-    [ParseLog logWithTypeString:@"UpdateOrganizationLogin" title:nil message:nil params:nil error:nil];
+    [ParseLog logWithTypeString:@"UpdateOrganizationLogin" title:[[Organization current] objectId] message:nil params:nil error:nil];
 }
 
 -(void)goToUpdateUserEmail {
@@ -166,7 +166,7 @@
     alert.tag = 3;
     [alert show];
 
-    [ParseLog logWithTypeString:@"UpdateOrganizationEmail" title:nil message:nil params:nil error:nil];
+    [ParseLog logWithTypeString:@"UpdateOrganizationEmail" title:[[Organization current] objectId] message:nil params:nil error:nil];
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -261,7 +261,7 @@
 
     [self presentViewController:_picker animated:YES completion:nil];
 
-    [ParseLog logWithTypeString:@"UpdateOrganizationLogo" title:nil message:nil params:nil error:nil];
+    [ParseLog logWithTypeString:@"UpdateOrganizationLogo" title:[[Organization current] objectId] message:nil params:nil error:nil];
 }
 
 #pragma mark ImagePickerController delegate

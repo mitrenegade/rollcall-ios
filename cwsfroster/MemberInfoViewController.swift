@@ -22,6 +22,7 @@ class MemberInfoViewController: UIViewController {
     var member: Member?
     var delegate: MemberDelegate?
     var newPhoto: UIImage?
+    var isCreatingMember = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,7 @@ class MemberInfoViewController: UIViewController {
             self.switchInactive.isOn = member.isInactive
         } else {
             self.title = "New member"
+            self.isCreatingMember = true
         }
         self.setupTextView()
         self.refresh()
@@ -84,6 +86,12 @@ class MemberInfoViewController: UIViewController {
         if self.navigationController?.viewControllers[0] == self {
             self.navigationController?.dismiss(animated: true, completion: { 
                 if let member = self.member {
+                    if !self.isCreatingMember {
+                        var params = [String:Any]()
+                        if let name = self.member?.name { params["name"] = name }
+                        if let email = self.member?.email { params["email"] = email }
+                        ParseLog.log(typeString: "MemberUpdated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+                    }
                     self.delegate?.didUpdateMember(member)
                 }
             })
@@ -94,8 +102,19 @@ class MemberInfoViewController: UIViewController {
     }
     
     func saveMember() {
-        member?.saveInBackground()
-        //        [ParseLog logWithTypeString:@"MemberCreated" title:nil message:nil params:nil error:nil];
+        member?.saveInBackground(block: { (success, error) in
+            if success {
+                var params = [String:Any]()
+                if let name = self.member?.name { params["name"] = name }
+                if let email = self.member?.email { params["email"] = email }
+                ParseLog.log(typeString: "MemberCreated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
+                
+                self.delegate?.didUpdateMember(self.member)
+            }
+            else {
+                self.simpleAlert("Could not create member", defaultMessage: "There was an error adding the member", error: error as? NSError)
+            }
+        })
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {
@@ -223,7 +242,7 @@ extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
         self.present(picker, animated: true, completion: nil)
-        ParseLog.log(typeString: "EditMemberPhoto", title: nil, message: nil, params: nil, error: nil)
+        ParseLog.log(typeString: "EditMemberPhoto", title: member?.objectId, message: nil, params: nil, error: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

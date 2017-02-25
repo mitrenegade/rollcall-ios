@@ -28,4 +28,25 @@ extension PracticesTableViewController: PracticeEditDelegate {
         self.tableView.reloadData()
     }
 
+    func deletePracticeAt(indexPath: NSIndexPath) {
+        guard let practices = Organization.current?.practices else {
+            self.tableView.reloadData()
+            return
+        }
+        let practice = practices[indexPath.row]
+        practice.deleteInBackground { (success, error) in
+            if success {
+                Organization.queryForPractices(completion: { (practices, error) in
+                    self.tableView.reloadData()
+                    self.notify("practice:deleted", object: nil, userInfo: nil)
+                    ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
+                })
+            }
+            else {
+                self.tableView.reloadData()
+                ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
+            }
+        }
+    }
+
 }

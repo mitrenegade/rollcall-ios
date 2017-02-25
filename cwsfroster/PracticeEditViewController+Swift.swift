@@ -35,7 +35,9 @@ extension PracticeEditViewController {
         if self.isNewPractice {
             self.title = "New event";
             self.practice = Practice()
-            self.inputDate.text = self.title(for: Date())
+            let date = Date()
+            practice.date = date
+            self.inputDate.text = self.title(for: date)
             practice.title = self.inputDate.text
             practice.organization = Organization.current
             
@@ -114,7 +116,7 @@ extension PracticeEditViewController: UITextViewDelegate {
         if !self.isNewPractice {
             self.practice.saveEventually()
         }
-        ParseLog.log(typeString: "NotesEntered", title: nil, message: nil, params: ["for": "practice"], error: nil)
+        ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text, params: ["for": "practice"], error: nil)
     }
     
     // MARK: - keyboard notifications
@@ -156,6 +158,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
             self.practice.title = textField.text
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 self.practice.date = date
+                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.objectId, message: nil, params: ["date": date], error: nil)
             }
         }
         else if textField == inputDetails {
