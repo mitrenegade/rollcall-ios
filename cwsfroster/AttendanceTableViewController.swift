@@ -115,7 +115,10 @@ extension AttendanceTableViewController {
             practice.saveInBackground(block: { (success, error) in
                 DispatchQueue.main.async {
                     if success {
-                        Organization.current?.practices?.insert(practice, at: 0)
+                        if self.isNewPractice {
+                            Organization.current?.practices?.insert(practice, at: 0)
+                            self.isNewPractice = false
+                        }
                         self.delegate?.didEditPractice()
                         self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
                         
