@@ -103,7 +103,6 @@ extension SplashViewController {
             
 
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                self.logo.alpha = 0;
                 do {
                     let data = try imageFile.getData()
                     if let image = UIImage(data: data) {
@@ -111,44 +110,54 @@ extension SplashViewController {
                         UIView.animate(withDuration: 0.25, animations: {
                             self.logo.alpha = 1
                         })
+                        self.syncParseObjects()
                     }
                     else {
                         print("no image")
+                        self.syncParseObjects()
                     }
                 }
                 catch {
                     print("some error")
+                    self.syncParseObjects()
                 }
             }
-            
-            self.labelInfo.text = "Loading..."
-            Organization.queryForMembers(completion: { (results, error) in
-                classNames.remove(at: classNames.index(of: "members")!)
-                self.labelInfo.text = "Loaded members"
-                if let members = results {
-                    org.members = members
-                }
-                self.checkSyncComplete()
-            })
-            
-            Organization.queryForPractices(completion: { (results, error) in
-                classNames.remove(at: classNames.index(of: "practices")!)
-                self.labelInfo.text = "Loaded practices"
-                if let practices = results {
-                    org.practices = practices
-                }
-                self.checkSyncComplete()
-            })
-            
-            Organization.queryForAttendances(completion: { (results, error) in
-                classNames.remove(at: classNames.index(of: "attendances")!)
-                self.labelInfo.text = "Loaded attendances"
-                if let attendances = results {
-                    org.attendances = attendances
-                }
-                self.checkSyncComplete()
-            })
+            else {
+                self.syncParseObjects()
+                self.logo.alpha = 0;
+                self.logo.image = nil
+            }
         }
+    }
+    
+    func syncParseObjects() {
+        self.labelInfo.text = "Loading..."
+        Organization.queryForMembers(completion: { (results, error) in
+            classNames.remove(at: classNames.index(of: "members")!)
+            self.labelInfo.text = "Loaded members"
+            if let members = results {
+                Organization.current?.members = members
+            }
+            self.checkSyncComplete()
+        })
+        
+        Organization.queryForPractices(completion: { (results, error) in
+            classNames.remove(at: classNames.index(of: "practices")!)
+            self.labelInfo.text = "Loaded practices"
+            if let practices = results {
+                Organization.current?.practices = practices
+            }
+            self.checkSyncComplete()
+        })
+        
+        Organization.queryForAttendances(completion: { (results, error) in
+            classNames.remove(at: classNames.index(of: "attendances")!)
+            self.labelInfo.text = "Loaded attendances"
+            if let attendances = results {
+                Organization.current?.attendances = attendances
+            }
+            self.checkSyncComplete()
+        })
     }
     
     func checkSyncComplete() {

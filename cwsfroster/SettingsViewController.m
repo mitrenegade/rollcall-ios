@@ -9,6 +9,7 @@
 #import "SettingsViewController.h"
 #import "MBProgressHUD.h"
 #import "UIImage+Resize.h"
+#import "Parse/Parse.h"
 
 #define SECTION_TITLES @[@"About", @"My organization", @"My account", @"Feedback", @"Logout"]
 @interface SettingsViewController ()
@@ -284,25 +285,22 @@
             [progress hide:YES];
 
             // Create a PFObject around a PFFile and associate it with the current user
-            /*
-            PFObject *organization = [Organization current].pfObject;
-            [organization setObject:imageFile forKey:@"logoData"];
-            [organization saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (!error) {
-                    
-                }
-                else{
-                    // Log details of the failure
-                    NSLog(@"Error: %@ %@", error, [error userInfo]);
-                }
-            }];
-             */
+            Organization *org = [Organization current];
+            if (org) {
+                org.logoData = imageFile;
+                [org saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                    if (succeeded) {
+                        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[org objectId] message:nil params:nil error:nil];
+                    }
+                }];
+            }
         }
         else{
             progress.labelText = @"Upload failed";
             progress.mode = MBProgressHUDModeText;
             // Log details of the failure
             NSLog(@"Error: %@ %@", error, [error userInfo]);
+            [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[[Organization current] objectId] message:nil params:nil error:error];
         }
     } progressBlock:^(int percentDone) {
         // Update your progress spinner here. percentDone will be between 0 and 100.
