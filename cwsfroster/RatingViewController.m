@@ -62,6 +62,7 @@
 }
 
 -(IBAction)didClickClose:(id)sender {
+    [ParseLog logWithTypeString:@"ClickedOnCloseRating" title:nil message:nil params: nil error: nil];
     [self close];
 }
 
@@ -82,8 +83,16 @@
                     reviewURL = [templateReviewURLiOS7 stringByReplacingOccurrencesOfString:@"APP_ID" withString:Constants.APP_ID];
                 }
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+                
+                [ParseLog logWithTypeString:@"RaterAppRated" title:nil message:nil params:nil error:nil];
+            }
+            else if (buttonIndex == 1) {
+                [ParseLog logWithTypeString:@"RaterRateLater" title:nil message:nil params:nil error:nil];
+                [_defaults setObject:[NSDate date] forKey:kRatingLastDate];
+                [_defaults synchronize];
             }
             else {
+                [ParseLog logWithTypeString:@"RaterNeverRate" title:nil message:nil params:nil error:nil];
                 [_defaults setObject:@NO forKey:kRatingNeverRate]; // cancels never rate
             }
             [self close];
@@ -96,8 +105,10 @@
         [UIAlertView alertViewWithTitle:@"Sorry to hear that" message:@"Would you like to send us some direct feedback? It would help a lot!" cancelButtonTitle:@"No thanks" otherButtonTitles:@[@"Email us"] onDismiss:^(int buttonIndex) {
             [self close];
             [self.delegate goToFeedback];
+            [ParseLog logWithTypeString:@"RaterEmailFeedback" title:nil message:nil params:nil error:nil];
         } onCancel:^{
             // do nothing
+            [ParseLog logWithTypeString:@"RaterNoFeedback" title:nil message:nil params:nil error:nil];
             [self close];
         }];
     }
@@ -112,6 +123,7 @@
     [pfObject saveEventually];
 
     [_defaults setObject:[NSDate date] forKey:kRatingLastDate];
+    [_defaults synchronize];
 }
 
 -(void)close {

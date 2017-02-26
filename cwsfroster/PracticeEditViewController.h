@@ -62,7 +62,6 @@
 @property (nonatomic) NSMutableArray *drawn;
     
 @property (nonatomic) RatingViewController *rater;
-@property (nonatomic) BOOL didShowRater;
     
     
 -(NSString *)titleForDate:(NSDate *)date;

@@ -213,7 +213,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="Dqb-8s-VNG" customClass="ConfigurableNavigationController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Events" image="icon-calendar.png" id="HEm-wM-E2I"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qyz-ks-QZt">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyz-ks-QZt">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -230,7 +230,7 @@
             <objects>
                 <navigationController definesPresentationContext="YES" id="92w-rq-feN" customClass="ConfigurableNavigationController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Members" image="icon-users.png" id="7Lb-EF-RQd"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="PVL-Bl-XK0">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PVL-Bl-XK0">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

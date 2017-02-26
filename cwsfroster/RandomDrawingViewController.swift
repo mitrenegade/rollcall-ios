@@ -14,6 +14,16 @@ class RandomDrawingViewController: UIViewController {
     @IBOutlet var switchRepeats: UISwitch!
     @IBOutlet var tableView: UITableView!
     
+    @IBOutlet var ratingsCanvas: UIView! // hack: for showing ratings at the right positiion
+    
+    lazy var rater: RatingViewController = {
+        let rater = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RatingViewController") as! RatingViewController
+        rater.delegate = self
+        return rater
+    }()
+    
+    var didShowRater: Bool = false
+    
     internal var members: [Member]?
     var practice: Practice? {
         didSet {
@@ -22,8 +32,16 @@ class RandomDrawingViewController: UIViewController {
             // TODO: eventually allow members to have multiple entries
             var mem: [Member] = []
             for attendance in attendances {
-                if let member = attendance.member, Int(attendance.attended ?? 0) == AttendedStatus.Present.rawValue {
-                    mem.append(member)
+                if let member = attendance.member, Int(attendance.attended ?? 0) == AttendedStatus.Present.rawValue, let org = Organization.current, let orgMembers = org.members {
+                    let filtered = orgMembers.filter({ (m) -> Bool in
+                        if m.objectId == member.objectId {
+                            return true
+                        }
+                        return false
+                    })
+                    if let m = filtered.first {
+                        mem.append(m)
+                    }
                 }
             }
             self.members = mem
@@ -48,6 +66,7 @@ class RandomDrawingViewController: UIViewController {
         self.inputNumber.text = "\(self.members?.count ?? 0)"
         
         ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
+        self.ratingsCanvas.isUserInteractionEnabled = false
     }
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
@@ -80,6 +99,12 @@ class RandomDrawingViewController: UIViewController {
             print("results \(results)")
             self.drawingResults = results
             self.tableView.reloadData()
+        }
+        
+        if !didShowRater {
+            if self.rater.showRatingsIfConditionsMet(from: self.ratingsCanvas, forced: false) {
+                self.ratingsCanvas.isUserInteractionEnabled = true
+            }
         }
     }
     
@@ -175,5 +200,16 @@ extension RandomDrawingViewController {
         }
         
         self.doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
+    }
+}
+
+// MARK: Rater
+extension RandomDrawingViewController: RatingDelegate {
+    func didCloseRating() {
+        self.ratingsCanvas.isUserInteractionEnabled = false
+    }
+    
+    func goToFeedback() {
+        
     }
 }

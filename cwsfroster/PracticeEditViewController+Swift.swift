@@ -79,24 +79,6 @@ extension PracticeEditViewController {
     @IBAction func didClickNext(_ sender: AnyObject?) {
         self.view.endEditing(true)
         self.goToAttendees()
-        /*
-        -(IBAction)didClickSave:(id)sender {
-            [self saveWithCompletion:^(BOOL success) {
-                if (success) {
-                self.navigationItem.leftBarButtonItem.title = @"Close";
-                if (!didShowRater) {
-                if (![rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
-                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-                }
-                didShowRater = YES;
-                }
-                else {
-                [self.navigationController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-                }
-                }
-                }];
-        }
-        */
     }
     
     func goToAttendees() {

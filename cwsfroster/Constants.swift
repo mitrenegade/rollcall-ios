@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-let TEST = true
+let TEST = false
 let OFFLINE_MODE = false
 let PARSE_APP_ID = "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 let PARSE_CLIENT_KEY = "Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"

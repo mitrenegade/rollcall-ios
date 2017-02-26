@@ -21,7 +21,7 @@ class ParseLog: NSObject {
     // compatible with ObjC
     class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
-//            return
+            return
         #endif
         
         let object = PFObject(className: "TestLog")
