@@ -13,7 +13,7 @@ var _currentOrganization: Organization?
 
 class Organization: PFObject {
     @NSManaged var name: String?
-    @NSManaged var logoData: Data?
+    @NSManaged var logoData: PFFile?
     
     var members: [Member]?
     var practices: [Practice]?
