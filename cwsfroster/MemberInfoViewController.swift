@@ -118,6 +118,7 @@ class MemberInfoViewController: UIViewController {
     }
 
     @IBAction func didClickClose(_ sender: AnyObject?) {
+        self.view.endEditing(true)
         if let text = self.inputEmail.text, text.characters.count > 0 {
             if !text.isValidEmail() {
                 self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
