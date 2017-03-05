@@ -85,12 +85,12 @@ class NotesViewController: UIViewController {
         if let practice = self.practice {
             practice.notes = self.inputNotes.text
             practice.saveEventually()
-            ParseLog.log(typeString: "NotesEntered", title: nil, message: practice.notes, params: ["for": "practice"], error: nil)
+            ParseLog.log(typeString: "NotesEntered", title: nil, message: practice.notes ?? "", params: ["for": "practice"], error: nil)
         }
         if let member = self.member {
             member.notes = self.inputNotes.text
             member.saveEventually()
-            ParseLog.log(typeString: "NotesEntered", title: nil, message: member.notes, params: ["for": "member"], error: nil)
+            ParseLog.log(typeString: "NotesEntered", title: nil, message: member.notes ?? "", params: ["for": "member"], error: nil)
         }
         
     }

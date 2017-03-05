@@ -98,7 +98,7 @@ extension PracticeEditViewController: UITextViewDelegate {
         if !self.isNewPractice {
             self.practice.saveEventually()
         }
-        ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text, params: ["for": "practice"], error: nil)
+        ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text ?? "", params: ["for": "practice"], error: nil)
     }
     
     // MARK: - keyboard notifications

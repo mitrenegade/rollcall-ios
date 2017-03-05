@@ -25,7 +25,9 @@ class ParseLog: NSObject {
         #endif
         
         let object = PFObject(className: "TestLog")
-        object.setValue(PFUser.current()?.objectId, forKey: "userId")
+        if let userId = PFUser.current()?.objectId {
+            object.setValue(userId, forKey: "userId")
+        }
         if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"]
         {
             object.setValue(version, forKey: "version")
@@ -44,8 +46,8 @@ class ParseLog: NSObject {
         if let params = params {
             object.setValue(params, forKey:"params")
         }
-        if let error = error {
-            object.setValue(error.localizedDescription, forKey: "error")
+        if let error = error, let message = error.localizedDescription as? String {
+            object.setValue(message, forKey: "error")
         }
         object.saveInBackground()
     }
