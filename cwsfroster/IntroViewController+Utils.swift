@@ -15,12 +15,23 @@ extension IntroViewController {
         self.notify(.LoginSuccess, object: nil, userInfo: nil)
     }
     
-    @IBAction func didClickLogin(_ sender: AnyObject?) {
-        if OFFLINE_MODE {
-            self.offlineLogin()
+    @IBAction func didClickButton(_ sender: AnyObject?) {
+        if sender as? UIButton == self.buttonLoginSignup {
+            if self.isSignup {
+                self.signup()
+            }
+            else {
+                if OFFLINE_MODE {
+                    self.offlineLogin()
+                }
+                else {
+                    self.login()
+                }
+            }
         }
         else {
-            self.login()
+            self.isSignup = !isSignup
+            self.refresh()
         }
     }
     

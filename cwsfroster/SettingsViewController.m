@@ -138,7 +138,8 @@
 
 -(void)goToUpdateName {
     NSLog(@"Change name");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter your organization name" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
+    NSString *title = [NSString stringWithFormat:@"Organization: %@.", [[Organization current] name]];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title message:@"Please enter new organization name" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Update", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 1;
     [alert show];

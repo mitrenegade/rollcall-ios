@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="272" width="375" height="267"/>
                                 <color key="backgroundColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osw-4I-ylC" userLabel="View - name">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osw-4I-ylC" userLabel="View - name">
                                 <rect key="frame" x="-2" y="49" width="379" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Login, email, or organization" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AaE-em-p36">
@@ -47,7 +47,7 @@
                                     <constraint firstItem="AaE-em-p36" firstAttribute="top" secondItem="osw-4I-ylC" secondAttribute="top" constant="5" id="dHl-9b-8ME"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bh4-Ff-dBX" userLabel="View - password">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bh4-Ff-dBX" userLabel="View - password">
                                 <rect key="frame" x="-2" y="88" width="379" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UhD-LC-do0">
@@ -68,7 +68,7 @@
                                     <constraint firstItem="UhD-LC-do0" firstAttribute="leading" secondItem="bh4-Ff-dBX" secondAttribute="leading" constant="20" id="ozt-Qv-BQD"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-c8-FeH" userLabel="View - confirmation">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8CC-c8-FeH" userLabel="View - confirmation">
                                 <rect key="frame" x="-2" y="127" width="379" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password confirmation" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ihc-T7-JxB">
@@ -105,7 +105,7 @@ for your awesome event</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFw-un-Kez">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EFw-un-Kez">
                                 <rect key="frame" x="0.0" y="175" width="375" height="30"/>
                                 <color key="backgroundColor" red="0.35686275360000003" green="0.76862746479999999" blue="0.73725491759999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -116,21 +116,21 @@ for your awesome event</string>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickLogin:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="Ohl-cD-1fA"/>
+                                    <action selector="didClickButton:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="a3a-Ye-Rur"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlV-fn-YsY">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SlV-fn-YsY">
                                 <rect key="frame" x="0.0" y="208" width="375" height="30"/>
-                                <color key="backgroundColor" red="0.35686275360000003" green="0.76862746479999999" blue="0.73725491759999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="y89-Xp-DGV"/>
                                 </constraints>
                                 <state key="normal" title="Signup">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickSignup:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="e7Z-hM-cXY"/>
+                                    <action selector="didClickButton:" destination="9uJ-lQ-vUW" eventType="touchUpInside" id="jeS-3Q-cap"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -172,8 +172,8 @@ for your awesome event</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="buttonLogin" destination="EFw-un-Kez" id="vN6-2W-J0T"/>
-                        <outlet property="buttonSignup" destination="SlV-fn-YsY" id="AMm-5x-urf"/>
+                        <outlet property="buttonLoginSignup" destination="EFw-un-Kez" id="XMK-2N-nnL"/>
+                        <outlet property="buttonSwitchMode" destination="SlV-fn-YsY" id="oZf-6E-iCX"/>
                         <outlet property="constraintConfirmationHeight" destination="l76-nd-IBb" id="sHQ-Ir-JXk"/>
                         <outlet property="inputConfirmation" destination="Ihc-T7-JxB" id="o4k-rW-zEf"/>
                         <outlet property="inputLogin" destination="AaE-em-p36" id="8wn-A7-8he"/>

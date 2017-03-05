@@ -57,7 +57,7 @@ class SplashViewController: UIViewController {
     
     func didLogin() {
         print("logged in")
-        if PFUser.current() != nil {
+        if PFUser.current() != nil {    
             self.synchronizeWithParse()
         }
     }
@@ -92,13 +92,29 @@ extension SplashViewController {
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
             labelInfo.text = "Creating organization"
             let org = Organization()
-            user.setObject(org, forKey: "organization")
-            self.synchronizeWithParse()
+            org.name = user.username
+            org.saveInBackground(block: { (success, error) in
+                if success {
+                    user.setObject(org, forKey: "organization")
+                    user.saveEventually()
+                    self.synchronizeWithParse()
+                }
+                else {
+                    self.synchronizeWithParse()
+                }
+            })
             return
         }
         
         orgPointer.fetchInBackground { (object, error) in
-            guard let org = object as? Organization else { return }
+            guard let org = object as? Organization else {
+                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: { 
+                    PFUser.logOut()
+                    Organization.reset()
+                    self.didLogout()
+                })
+                return
+            }
             Organization.current = org
             
 

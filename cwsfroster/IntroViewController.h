@@ -17,10 +17,6 @@
     IBOutlet UITextField *inputPassword;
     IBOutlet UITextField *inputConfirmation;
 
-    IBOutlet UIButton *buttonLogin;
-    IBOutlet UIButton *buttonSignup;
-    IBOutlet UIButton *buttonReset;
-
     IBOutlet NSLayoutConstraint *constraintConfirmationHeight;
     
     NSMutableDictionary *ready;
@@ -31,12 +27,16 @@
     IBOutlet TutorialScrollView *tutorialView;
 }
 
--(IBAction)didClickSignup:(id)sender;
--(IBAction)didClickPasswordReset:(id)sender;
--(void)reset:(BOOL)showLogin;
+@property (nonatomic) BOOL isSignup;
+@property (weak, nonatomic) IBOutlet UIButton *buttonLoginSignup;
+@property (weak, nonatomic) IBOutlet UIButton *buttonSwitchMode;
+
+
+-(void)refresh;
 -(void)enableButtons:(BOOL)enabled;
 
 -(void)login;
+-(void)signup;
 -(void)goToPractices;
 @end
 
