@@ -92,8 +92,16 @@ extension SplashViewController {
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
             labelInfo.text = "Creating organization"
             let org = Organization()
-            user.setObject(org, forKey: "organization")
-            self.synchronizeWithParse()
+            org.saveInBackground(block: { (success, error) in
+                if success {
+                    user.setObject(org, forKey: "organization")
+                    user.saveEventually()
+                    self.synchronizeWithParse()
+                }
+                else {
+                    self.synchronizeWithParse()
+                }
+            })
             return
         }
         
