@@ -146,10 +146,25 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             Organization *org = [[Organization alloc] init];
-            [user setObject:org forKey:@"organization"];
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            [self goToPractices];
+            org.name = user.username;
+            [org saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    [user setObject:org forKey:@"organization"];
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        [self goToPractices];
+                    }];
+                }
+                else {
+                    NSString *message = @"Error creating your organization. Please try again.";
+                    [self enableButtons:YES];
+                    progress.mode = MBProgressHUDModeText;
+                    progress.labelText = @"Signup failed";
+                    progress.detailsLabelText = message;
+                    [progress hide:YES afterDelay:1.5];
+                }
+            }];
         }
         else {
             NSString *message = nil;
