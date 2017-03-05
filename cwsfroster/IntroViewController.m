@@ -19,11 +19,19 @@
     [super viewDidLoad];
 
     [self enableButtons:YES];
-    [self reset:YES];
+    [self refresh];
+    
+    self.isSignup = NO;
 }
 
--(void)reset:(BOOL)showLogin {
-    [inputConfirmation.superview setHidden:YES];
+-(void)refresh {
+    if (self.isSignup) {
+        constraintConfirmationHeight.constant = 40;
+    }
+    else {
+        constraintConfirmationHeight.constant = 0;
+    }
+    
     inputPassword.text = nil;
     inputConfirmation.text = nil;
     inputLogin.superview.layer.borderWidth = 1;
@@ -32,15 +40,19 @@
     inputPassword.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
     inputConfirmation.superview.layer.borderWidth = 1;
     inputConfirmation.superview.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    constraintConfirmationHeight.constant = 0;
 
+    inputLogin.alpha = 1;
+    inputPassword.alpha = 1;
+    
+    [self.view setNeedsUpdateConstraints];
     [UIView animateWithDuration:.25 animations:^{
-        [inputLogin.superview setAlpha:showLogin?1:0];
-        [inputPassword.superview setAlpha:showLogin?1:0];
-        [buttonLogin setAlpha:showLogin?1:0];
-        [buttonSignup setAlpha:showLogin?1:0];
-        [tutorialView setAlpha:showLogin?1:0];
-        [buttonReset setAlpha:showLogin?1:0];
+        NSString *title = self.isSignup ? @"Sign up" : @"Log in";
+        [self.buttonLoginSignup setTitle:title forState:UIControlStateNormal];
+        NSString *title2 = self.isSignup ? @"Back to login" : @"Not registered?";
+        [self.buttonSwitchMode setTitle:title2 forState:UIControlStateNormal];
+        //[tutorialView setAlpha:self.isSignup ? 0 : 1];
+        
+        [self.view layoutIfNeeded];
     } completion:^(BOOL finished) {
     }];
 }
@@ -57,18 +69,14 @@
 }
 
 -(void)enableButtons:(BOOL)enabled {
-    [buttonLogin setAlpha:enabled?1:.5];
-    [buttonSignup setAlpha:enabled?1:.5];
-    [buttonLogin setEnabled:enabled];
-    [buttonSignup setEnabled:enabled];
+    [self.buttonLoginSignup setAlpha:enabled?1:.5];
+    [self.buttonSwitchMode setAlpha:enabled?1:.5];
+    [self.buttonLoginSignup setEnabled:enabled];
+    [self.buttonSwitchMode setEnabled:enabled];
 }
 
 #pragma login
 -(void) login {
-    inputConfirmation.superview.alpha = 0;
-    inputConfirmation.superview.hidden = YES;
-    constraintConfirmationHeight.constant = 0;
-
     if (inputLogin.text.length == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
         return;
@@ -104,15 +112,7 @@
     }];
 }
 
--(IBAction)didClickSignup:(id)sender {
-    if (inputConfirmation.superview.hidden) {
-        inputConfirmation.superview.alpha = 1;
-        [inputConfirmation.superview setHidden:NO];
-        inputConfirmation.alpha = 1;
-        constraintConfirmationHeight.constant = 40;
-        return;
-    }
-
+-(void)signup {
     if (inputLogin.text.length == 0) {
         [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
         return;
