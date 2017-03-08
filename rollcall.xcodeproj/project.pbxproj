@@ -56,7 +56,6 @@
 		9E80085E16196883003E9B16 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80085D16196883003E9B16 /* main.m */; };
 		9E80086216196883003E9B16 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E80086116196883003E9B16 /* AppDelegate.m */; };
 		9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */; };
-		9E828A5B16196B8D009A6C44 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5616196B75009A6C44 /* StoreKit.framework */; };
 		9E828A5D16196B8D009A6C44 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5216196B6F009A6C44 /* Security.framework */; };
 		9E828A5E16196B8D009A6C44 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A5016196B6B009A6C44 /* QuartzCore.framework */; };
 		9E828A5F16196B8D009A6C44 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A4E16196B67009A6C44 /* MobileCoreServices.framework */; };
@@ -164,7 +163,6 @@
 		9E828A4E16196B67009A6C44 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9E828A5016196B6B009A6C44 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9E828A5216196B6F009A6C44 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		9E828A5616196B75009A6C44 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar@2x.png"; sourceTree = "<group>"; };
 		9E98DB4719B2E421006D81FC /* icon-users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-users@2x.png"; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 				9E80085416196883003E9B16 /* Foundation.framework in Frameworks */,
 				9E80085616196883003E9B16 /* CoreGraphics.framework in Frameworks */,
 				9E828A5A16196B8D009A6C44 /* SystemConfiguration.framework in Frameworks */,
-				9E828A5B16196B8D009A6C44 /* StoreKit.framework in Frameworks */,
 				AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */,
 				9E828A5D16196B8D009A6C44 /* Security.framework in Frameworks */,
 				9E828A5E16196B8D009A6C44 /* QuartzCore.framework in Frameworks */,
@@ -376,7 +373,6 @@
 				9EC5F33C1936DD000056140F /* CoreLocation.framework */,
 				9EC5F33A1936DCA50056140F /* CoreData.framework */,
 				9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */,
-				9E828A5616196B75009A6C44 /* StoreKit.framework */,
 				9E828A5216196B6F009A6C44 /* Security.framework */,
 				9E828A5016196B6B009A6C44 /* QuartzCore.framework */,
 				9E828A4E16196B67009A6C44 /* MobileCoreServices.framework */,
@@ -534,6 +530,11 @@
 						DevelopmentTeam = H799H8B8DD;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
