@@ -126,7 +126,7 @@
         MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
         composer.mailComposeDelegate = self;
         [composer setSubject:title];
-        [composer setToRecipients:@[@"bobbyren+rollcall@gmail.com"]];
+        [composer setToRecipients:@[@"bobby+rollcall@renderapps.io"]];
         [composer setMessageBody:message isHTML:NO];
 
         [self presentViewController:composer animated:YES completion:nil];
