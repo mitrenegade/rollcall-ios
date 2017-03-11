@@ -553,13 +553,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9mf-7s-aIN">
-                                <rect key="frame" x="317" y="91" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9mf-7s-aIN">
+                                <rect key="frame" x="318" y="91" width="51" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="cJ6-Ri-Xii"/>
                                     <constraint firstAttribute="width" constant="49" id="rQV-bh-CEw"/>
                                 </constraints>
-                                <color key="tintColor" red="0.1828859001" green="0.76179742809999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="onTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="switchChanged:" destination="Z0G-8Z-fPg" eventType="valueChanged" id="njV-9n-kcq"/>
                                 </connections>
