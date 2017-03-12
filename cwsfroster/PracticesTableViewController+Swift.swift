@@ -50,3 +50,33 @@ extension PracticesTableViewController: PracticeEditDelegate {
     }
 
 }
+
+// MARK: - Power user feedback
+extension PracticesTableViewController {
+    func promptForPowerUserFeedback() {
+        let alert = UIAlertController(title: "Congratulations, Power User", message: "Thanks for using RollCall! You have created at least 5 events. As a Power User, your feedback is really important to us. How can we improve?", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+        }
+        alert.addAction(UIAlertAction(title: "Send Feedback", style: .cancel, handler: { (action) in
+            if let textField = alert.textFields?.first, let text = textField.text {
+                ParseLog.log(typeString: "PowerUserFeedback", title: nil, message: text, params: nil, error: nil)
+                Organization.current?.leftPowerUserFeedback = NSNumber(booleanLiteral: true)
+                Organization.current?.saveInBackground(block: { (success, error) in
+                    print("saved feedback \(success) \(error)")
+                })
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { (action) in
+            let deferDate = Date(timeIntervalSinceNow: 3600*24*7)
+            UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
+            UserDefaults.standard.synchronize()
+        }))
+        alert.addAction(UIAlertAction(title: "No Thanks", style: .default, handler: { (action) in
+            let deferDate = Date(timeIntervalSinceNow: 3600*24*7*52)
+            UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
+            UserDefaults.standard.synchronize()
+        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+}

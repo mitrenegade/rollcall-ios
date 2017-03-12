@@ -15,6 +15,8 @@ let PARSE_APP_ID = "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 let PARSE_CLIENT_KEY = "Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"
 let PARSE_SERVER = "https://rollcall-server.herokuapp.com/parse"
 
+let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
+
 @objc class Constants: NSObject {
     static let APP_ID = "916600723"
 }
