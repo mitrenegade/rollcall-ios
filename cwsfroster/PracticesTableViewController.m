@@ -52,7 +52,7 @@
     [self listenFor:@"practice:info:updated" action:@selector(reloadPractices)];
     
     if ([[Organization current] shouldPromptForPowerUserFeedback]) {
-        [[Organization current] promptForPowerUserFeedbackFrom:self];
+        [self promptForPowerUserFeedback];
     }
 }
 
