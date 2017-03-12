@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#define RATING_DEBUG 0
+#define RATING_DEBUG 1
 #define EVENTS_UNTIL_PROMPT 3
 #define DAYS_AFTER_OPEN 0
 #define DAYS_BEFORE_REPROMPT 14
