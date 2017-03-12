@@ -15,7 +15,7 @@ class RandomDrawingViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     @IBOutlet var ratingsCanvas: UIView! // hack: for showing ratings at the right positiion
-    
+    @IBOutlet weak var constraintRatingsHeight: NSLayoutConstraint!
     lazy var rater: RatingViewController = {
         let rater = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RatingViewController") as! RatingViewController
         rater.delegate = self
@@ -67,6 +67,7 @@ class RandomDrawingViewController: UIViewController {
         
         ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
         self.ratingsCanvas.isUserInteractionEnabled = false
+        self.constraintRatingsHeight.constant = 0
     }
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
@@ -102,7 +103,10 @@ class RandomDrawingViewController: UIViewController {
         }
         
         if !didShowRater {
-            if self.rater.showRatingsIfConditionsMet(from: self.ratingsCanvas, forced: false) {
+            let forced = TEST
+            if self.rater.showRatingsIfConditionsMet(from: self.ratingsCanvas, forced: forced) {
+                self.constraintRatingsHeight.constant = 40
+
                 self.ratingsCanvas.isUserInteractionEnabled = true
             }
         }
@@ -207,6 +211,7 @@ extension RandomDrawingViewController {
 extension RandomDrawingViewController: RatingDelegate {
     func didCloseRating() {
         self.ratingsCanvas.isUserInteractionEnabled = false
+        self.constraintRatingsHeight.constant = 0
     }
     
     func goToFeedback() {

@@ -77,7 +77,7 @@
     int row = indexPath.row;
     if (row == 0) {
         // about
-        NSString *message = [NSString stringWithFormat:@"Version %@\nCopyright Bobby Ren 2014\n", VERSION];
+        NSString *message = [NSString stringWithFormat:@"Version %@\nCopyright RenderApps, LLC 2017\n", VERSION];
         [UIAlertView alertViewWithTitle:@"About RollCall" message:message];
     }
     else if (row == 1) {
@@ -126,7 +126,7 @@
         MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
         composer.mailComposeDelegate = self;
         [composer setSubject:title];
-        [composer setToRecipients:@[@"bobbyren+rollcall@gmail.com"]];
+        [composer setToRecipients:@[@"bobby+rollcall@renderapps.io"]];
         [composer setMessageBody:message isHTML:NO];
 
         [self presentViewController:composer animated:YES completion:nil];
