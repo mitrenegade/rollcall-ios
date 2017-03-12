@@ -70,11 +70,13 @@ extension PracticesTableViewController {
             let deferDate = Date(timeIntervalSinceNow: 3600*24*7)
             UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
             UserDefaults.standard.synchronize()
+            ParseLog.log(typeString: "PowerUserFeedbackLater", title: nil, message: nil, params: nil, error: nil)
         }))
         alert.addAction(UIAlertAction(title: "No Thanks", style: .default, handler: { (action) in
             let deferDate = Date(timeIntervalSinceNow: 3600*24*7*52)
             UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
             UserDefaults.standard.synchronize()
+            ParseLog.log(typeString: "PowerUserFeedbackNever", title: nil, message: nil, params: nil, error: nil)
         }))
         self.present(alert, animated: true, completion: nil)
     }
