@@ -249,6 +249,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E0D882F1E74C65200DDFD7C /* Ratings */ = {
+			isa = PBXGroup;
+			children = (
+				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
+				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
+			);
+			name = Ratings;
+			sourceTree = "<group>";
+		};
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,8 +422,7 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
-				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
-				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
+				8E0D882F1E74C65200DDFD7C /* Ratings */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);

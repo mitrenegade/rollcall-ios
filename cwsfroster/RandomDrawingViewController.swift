@@ -103,7 +103,7 @@ class RandomDrawingViewController: UIViewController {
         }
         
         if !didShowRater {
-            let forced = TEST
+            let forced = RATING_DEBUG == 1
             if self.rater.showRatingsIfConditionsMet(from: self.ratingsCanvas, forced: forced) {
                 self.constraintRatingsHeight.constant = 40
 

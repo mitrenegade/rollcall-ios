@@ -18,6 +18,9 @@ class Organization: PFObject {
     var members: [Member]?
     var practices: [Practice]?
     var attendances: [Attendance]?
+    
+    // poweruser
+    @NSManaged var leftPowerUserFeedback: NSNumber?
 }
 
 extension Organization: PFSubclassing {
@@ -38,6 +41,19 @@ extension Organization {
     
     class func reset() {
         _currentOrganization = nil
+        
+//        let kRatingLastDate = "kRatingLastDate"
+//        let kRatingFirstOpenDate = "kRatingFirstOpenDate"
+//        let kRatingCurrentVersion = "kRatingCurrentVersion"
+//        let kRatingNeverRate = "kRatingNeverRate"
+//        
+//        let kRatingEventCount = "kRatingEventCount"
+
+        UserDefaults.standard.removeObject(forKey: powerUserPromptDeferDate)
+        UserDefaults.standard.removeObject(forKey: kRatingLastDate)
+        UserDefaults.standard.removeObject(forKey: kRatingEventCount)
+        UserDefaults.standard.synchronize()
+        
     }
     
     
@@ -91,5 +107,47 @@ extension Organization {
                 completion(nil, error as? NSError)
             }
         }
+    }
+}
+
+// MARK: Poweruser
+fileprivate var powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
+
+extension Organization {
+    var shouldPromptForPowerUserFeedback: Bool {
+        guard let practices = self.practices, practices.count >= 5 else { return false }
+        
+        if let deferDate = UserDefaults.standard.value(forKey: powerUserPromptDeferDate) as? Date, deferDate.timeIntervalSinceNow > 0 {
+            return false
+        }
+        
+        guard let leftFeedback = self.leftPowerUserFeedback else { return true }
+        return !leftFeedback.boolValue
+    }
+    
+    func promptForPowerUserFeedback(from controller: UIViewController) {
+        let alert = UIAlertController(title: "Congratulations, Power User", message: "Thanks for using RollCall! You have created at least 5 events. As a Power User, your feedback is really important to us. How can we improve?", preferredStyle: .alert)
+        alert.addTextField { (textField) in
+        }
+        alert.addAction(UIAlertAction(title: "Send Feedback", style: .cancel, handler: { (action) in
+            if let textField = alert.textFields?.first, let text = textField.text {
+                ParseLog.log(typeString: "PowerUserFeedback", title: nil, message: text, params: nil, error: nil)
+                self.leftPowerUserFeedback = NSNumber(booleanLiteral: true)
+                self.saveInBackground(block: { (success, error) in
+                    print("saved feedback \(success) \(error)")
+                })
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { (action) in
+            let deferDate = Date(timeIntervalSinceNow: 3600*24*7)
+            UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
+            UserDefaults.standard.synchronize()
+        }))
+        alert.addAction(UIAlertAction(title: "No Thanks", style: .default, handler: { (action) in
+            let deferDate = Date(timeIntervalSinceNow: 3600*24*7*52)
+            UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
+            UserDefaults.standard.synchronize()
+        }))
+        controller.present(alert, animated: true, completion: nil)
     }
 }
