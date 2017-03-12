@@ -41,6 +41,19 @@ extension Organization {
     
     class func reset() {
         _currentOrganization = nil
+        
+//        let kRatingLastDate = "kRatingLastDate"
+//        let kRatingFirstOpenDate = "kRatingFirstOpenDate"
+//        let kRatingCurrentVersion = "kRatingCurrentVersion"
+//        let kRatingNeverRate = "kRatingNeverRate"
+//        
+//        let kRatingEventCount = "kRatingEventCount"
+
+        UserDefaults.standard.removeObject(forKey: powerUserPromptDeferDate)
+        UserDefaults.standard.removeObject(forKey: kRatingLastDate)
+        UserDefaults.standard.removeObject(forKey: kRatingEventCount)
+        UserDefaults.standard.synchronize()
+        
     }
     
     

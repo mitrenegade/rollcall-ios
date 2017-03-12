@@ -12,6 +12,4 @@
 @interface PracticesTableViewController : UITableViewController
 {
 }
-
--(IBAction)didClickNew:(id)sender;
 @end
