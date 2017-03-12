@@ -233,7 +233,7 @@ extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.delegate = self
         picker.allowsEditing = true
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera
+            picker.sourceType = .camera // use rear camera because the organizer is taking photos
         }
         else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             picker.sourceType = .photoLibrary

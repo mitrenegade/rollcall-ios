@@ -86,6 +86,7 @@ extension OnsiteSignupViewController: UIImagePickerControllerDelegate, UINavigat
         picker.allowsEditing = true
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             picker.sourceType = .camera
+            picker.cameraDevice = .front // use front camera because member is probably entering own information
         }
         else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             picker.sourceType = .photoLibrary
