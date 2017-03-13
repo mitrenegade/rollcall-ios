@@ -39,9 +39,13 @@ class CameraOverlayViewController: UIViewController, UIImagePickerControllerDele
         picker.delegate = self
         picker.allowsEditing = true
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera // use rear camera because the organizer is taking photos
+            picker.sourceType = .camera
             picker.cameraCaptureMode = .photo
             picker.showsCameraControls = false
+            
+            if let onsiteController = controller as? OnsiteSignupViewController {
+                picker.cameraDevice = .front // onsite: user is signing self up
+            }
         }
         else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             picker.sourceType = .photoLibrary
