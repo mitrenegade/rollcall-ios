@@ -72,15 +72,18 @@ class CameraOverlayViewController: UIViewController, UIImagePickerControllerDele
         let img = info[UIImagePickerControllerEditedImage] ?? info[UIImagePickerControllerOriginalImage]
         guard let photo = img as? UIImage else { return }
         delegate?.didTakePhoto(image: photo)
-        
-        // TODO: edit photo does not click through; library button still exists when editing
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         delegate?.dismissCamera()
     }
     
-
+    func goToLibrary() {
+        let library = UIImagePickerController()
+        library.sourceType = .photoLibrary
+        library.delegate = self
+        self.picker?.present(library, animated: true, completion: nil)
+    }
 }
 
 class CameraOverlayView: UIView {
@@ -107,6 +110,7 @@ class CameraOverlayView: UIView {
         }
         else if sender == controller?.buttonLibrary {
             print("library")
+            controller?.goToLibrary()
         }
     }
 }
