@@ -87,7 +87,7 @@ extension OnsiteSignupViewController: CameraControlsDelegate {
             bundle: nil
         )
         controller.delegate = self
-        controller.view.frame = self.view.frame
+        controller.view.frame = UIScreen.main.bounds
         controller.takePhoto(from: self)
         
         ParseLog.log(typeString: "EditOnsiteSignupPhoto", title: nil, message: nil, params: nil, error: nil)
@@ -95,7 +95,6 @@ extension OnsiteSignupViewController: CameraControlsDelegate {
     
     func didTakePhoto(image: UIImage) {
         self.buttonPhoto.setImage(image, for: .normal)
-        self.dismiss(animated: true, completion: nil)
         buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
         self.addedPhoto = image
         self.dismissCamera()
