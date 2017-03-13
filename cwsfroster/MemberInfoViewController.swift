@@ -41,7 +41,7 @@ class MemberInfoViewController: UIViewController {
                     if let data = data {
                         let image = UIImage(data: data)
                         self.photoView.image = image
-                        self.photoView.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
                     }
                 })
             }
@@ -243,8 +243,8 @@ extension MemberInfoViewController: CameraControlsDelegate {
     }
 
     func didTakePhoto(image: UIImage) {
-        self.buttonPhoto.setImage(image, for: .normal)
-        buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
+        self.photoView.image = image
+        self.photoView.layer.cornerRadius = photoView.frame.size.width / 2
         self.newPhoto = image
         self.dismissCamera()
     }
