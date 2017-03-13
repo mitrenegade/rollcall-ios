@@ -34,6 +34,8 @@
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
+		8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */; };
+		8EF3D9671E764B3F003BFB61 /* CameraOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
@@ -127,6 +129,8 @@
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
+		8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayViewController.swift; sourceTree = "<group>"; };
+		8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayViewController.xib; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
@@ -319,6 +323,15 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		8EF3D96A1E765A2E003BFB61 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */,
+				8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */,
+			);
+			name = Camera;
+			sourceTree = "<group>";
+		};
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -424,6 +437,7 @@
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
 				8E0D882F1E74C65200DDFD7C /* Ratings */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
+				8EF3D96A1E765A2E003BFB61 /* Camera */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);
 			path = cwsfroster;
@@ -570,6 +584,7 @@
 			files = (
 				9E649FED19B609C400334B34 /* IntroTutorial1.xib in Resources */,
 				9E649FE419B6040A00334B34 /* icon114.png in Resources */,
+				8EF3D9671E764B3F003BFB61 /* CameraOverlayViewController.xib in Resources */,
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
@@ -702,6 +717,7 @@
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
+				8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,

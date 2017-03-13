@@ -11,6 +11,7 @@ import Parse
 
 class MemberInfoViewController: UIViewController {
     
+    @IBOutlet var photoView: UIImageView!
     @IBOutlet var buttonPhoto: UIButton!
     @IBOutlet var inputName: UITextField!
     @IBOutlet var inputEmail: UITextField!
@@ -39,8 +40,8 @@ class MemberInfoViewController: UIViewController {
                 photo.getDataInBackground(block: { (data, error) in
                     if let data = data {
                         let image = UIImage(data: data)
-                        self.buttonPhoto.setImage(image, for: .normal)
-                        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+                        self.photoView.image = image
+                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
                     }
                 })
             }
@@ -225,37 +226,30 @@ extension MemberInfoViewController: UITextViewDelegate {
 }
 
 // MARK: Camera
-extension MemberInfoViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MemberInfoViewController: CameraControlsDelegate {
     func takePhoto() {
         self.view.endEditing(true)
 
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera
-        }
-        else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            picker.sourceType = .photoLibrary
-        }
-        else {
-            picker.sourceType = .savedPhotosAlbum
-        }
+        let controller = CameraOverlayViewController(
+            nibName:"CameraOverlayViewController",
+            bundle: nil
+            )
+        controller.delegate = self
+        controller.view.frame = self.view.frame
+        controller.takePhoto(from: self)
         
-        self.present(picker, animated: true, completion: nil)
+        // add overlayview
         ParseLog.log(typeString: "EditMemberPhoto", title: member?.objectId, message: nil, params: nil, error: nil)
     }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let img = info[UIImagePickerControllerEditedImage] ?? info[UIImagePickerControllerOriginalImage]
-        guard let photo = img as? UIImage else { return }
-        self.buttonPhoto.setImage(photo, for: .normal)
-        picker.dismiss(animated: true, completion: nil)
-        buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
-        self.newPhoto = photo
+
+    func didTakePhoto(image: UIImage) {
+        self.photoView.image = image
+        self.photoView.layer.cornerRadius = photoView.frame.size.width / 2
+        self.newPhoto = image
+        self.dismissCamera()
     }
 
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+    func dismissCamera() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -73,41 +73,34 @@ extension OnsiteSignupViewController {
     }
 }
 
-extension OnsiteSignupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension OnsiteSignupViewController: CameraControlsDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
         self.takePhoto()
     }
     
     func takePhoto() {
-    
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera
-        }
-        else if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            picker.sourceType = .photoLibrary
-        }
-        else {
-            picker.sourceType = .savedPhotosAlbum
-        }
+        self.view.endEditing(true)
         
-        self.present(picker, animated: true, completion: nil)
+        let controller = CameraOverlayViewController(
+            nibName:"CameraOverlayViewController",
+            bundle: nil
+        )
+        controller.delegate = self
+        controller.view.frame = UIScreen.main.bounds
+        controller.takePhoto(from: self)
+        
         ParseLog.log(typeString: "EditOnsiteSignupPhoto", title: nil, message: nil, params: nil, error: nil)
     }
     
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let img = info[UIImagePickerControllerEditedImage] ?? info[UIImagePickerControllerOriginalImage]
-        guard let photo = img as? UIImage else { return }
-        self.buttonPhoto.setImage(photo, for: .normal)
-        picker.dismiss(animated: true, completion: nil)
+    func didTakePhoto(image: UIImage) {
+        self.buttonPhoto.setImage(image, for: .normal)
         buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
-        self.addedPhoto = photo
+        self.addedPhoto = image
+        self.dismissCamera()
     }
     
-    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+    func dismissCamera() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
