@@ -53,7 +53,6 @@
 
 -(void)close {
     if (!self.didShowRater) {
-        self.navigationItem.leftBarButtonItem.enabled = NO;
         if (![self.rater showRatingsIfConditionsMetFromView:self.view forced:NO]) {
             [self.navigationController popViewControllerAnimated:YES];
         }
