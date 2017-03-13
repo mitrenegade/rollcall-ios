@@ -11,6 +11,7 @@ import Parse
 
 class MemberInfoViewController: UIViewController {
     
+    @IBOutlet var photoView: UIImageView!
     @IBOutlet var buttonPhoto: UIButton!
     @IBOutlet var inputName: UITextField!
     @IBOutlet var inputEmail: UITextField!
@@ -39,8 +40,8 @@ class MemberInfoViewController: UIViewController {
                 photo.getDataInBackground(block: { (data, error) in
                     if let data = data {
                         let image = UIImage(data: data)
-                        self.buttonPhoto.setImage(image, for: .normal)
-                        self.buttonPhoto.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
+                        self.photoView.image = image
+                        self.photoView.layer.cornerRadius = self.buttonPhoto.frame.size.width / 2
                     }
                 })
             }

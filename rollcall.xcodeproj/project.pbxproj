@@ -301,8 +301,6 @@
 				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 				8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */,
-				8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */,
-				8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -323,6 +321,15 @@
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */,
 			);
 			name = Events;
+			sourceTree = "<group>";
+		};
+		8EF3D96A1E765A2E003BFB61 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */,
+				8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */,
+			);
+			name = Camera;
 			sourceTree = "<group>";
 		};
 		9E15616F1992661200A31398 /* Images */ = {
@@ -430,6 +437,7 @@
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
 				8E0D882F1E74C65200DDFD7C /* Ratings */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
+				8EF3D96A1E765A2E003BFB61 /* Camera */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);
 			path = cwsfroster;

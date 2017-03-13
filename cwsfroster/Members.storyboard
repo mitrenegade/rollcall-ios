@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVn-ba-i2m" id="PBu-nq-OJK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FU2-h2-tnm">
@@ -129,6 +129,9 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add_user.png" translatesAutoresizingMaskIntoConstraints="NO" id="8n3-ag-yM0">
+                                <rect key="frame" x="147" y="72" width="80" height="80"/>
+                            </imageView>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHK-x9-8Ac">
                                 <rect key="frame" x="147" y="72" width="80" height="80"/>
                                 <constraints>
@@ -136,7 +139,6 @@
                                     <constraint firstAttribute="width" constant="80" id="GpX-cj-ed0"/>
                                     <constraint firstAttribute="height" constant="80" id="YQZ-hX-UMo"/>
                                 </constraints>
-                                <state key="normal" title="Add Photo" image="add_user.png"/>
                                 <connections>
                                     <action selector="didClickAddPhoto:" destination="Lnu-I3-xE9" eventType="touchUpInside" id="c0x-kf-lP7"/>
                                 </connections>
@@ -221,6 +223,8 @@
                             <constraint firstItem="vW4-J9-m2j" firstAttribute="leading" secondItem="tbW-Ge-CFg" secondAttribute="leading" constant="16" id="RCp-wF-z9G"/>
                             <constraint firstItem="4Pc-uO-yF4" firstAttribute="leading" secondItem="tbW-Ge-CFg" secondAttribute="leading" constant="16" id="T2q-BW-WYP"/>
                             <constraint firstItem="TAf-1E-7Io" firstAttribute="leading" secondItem="tbW-Ge-CFg" secondAttribute="leading" constant="16" id="W8K-9q-p9n"/>
+                            <constraint firstItem="PHK-x9-8Ac" firstAttribute="trailing" secondItem="8n3-ag-yM0" secondAttribute="trailing" id="gfb-KT-kZ6"/>
+                            <constraint firstItem="PHK-x9-8Ac" firstAttribute="bottom" secondItem="8n3-ag-yM0" secondAttribute="bottom" id="io6-QL-NEj"/>
                             <constraint firstItem="vW4-J9-m2j" firstAttribute="trailing" secondItem="tbW-Ge-CFg" secondAttribute="trailingMargin" id="lBx-8C-dD9"/>
                             <constraint firstAttribute="trailing" secondItem="rGS-A0-jPK" secondAttribute="trailing" constant="16" id="nol-kJ-pRZ"/>
                             <constraint firstItem="NEI-3z-7Yf" firstAttribute="top" secondItem="TAf-1E-7Io" secondAttribute="bottom" constant="13" id="p5j-Ih-paP"/>
@@ -228,6 +232,8 @@
                             <constraint firstItem="PHK-x9-8Ac" firstAttribute="centerX" secondItem="tbW-Ge-CFg" secondAttribute="centerX" id="plD-Tt-vvi"/>
                             <constraint firstAttribute="trailing" secondItem="4Pc-uO-yF4" secondAttribute="trailing" constant="16" id="rpl-wt-089"/>
                             <constraint firstItem="rGS-A0-jPK" firstAttribute="leading" secondItem="tbW-Ge-CFg" secondAttribute="leading" constant="16" id="sc6-ey-Obi"/>
+                            <constraint firstItem="PHK-x9-8Ac" firstAttribute="top" secondItem="8n3-ag-yM0" secondAttribute="top" id="whv-m0-tJV"/>
+                            <constraint firstItem="PHK-x9-8Ac" firstAttribute="leading" secondItem="8n3-ag-yM0" secondAttribute="leading" id="xVr-Zn-KZh"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Fmp-cg-Zls">
@@ -249,6 +255,7 @@
                         <outlet property="inputName" destination="vW4-J9-m2j" id="pFU-gL-R9S"/>
                         <outlet property="inputNotes" destination="TAf-1E-7Io" id="mVS-IZ-ojk"/>
                         <outlet property="labelPaymentWarning" destination="XE6-Le-aI4" id="Guo-xJ-tje"/>
+                        <outlet property="photoView" destination="8n3-ag-yM0" id="Q1m-Dl-hNn"/>
                         <outlet property="switchInactive" destination="vQ4-dL-0TQ" id="bNI-ef-b4j"/>
                     </connections>
                 </viewController>
