@@ -100,6 +100,11 @@
 		C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */; };
 		C68338F120A3FFE500080BCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F020A3FFE500080BCE /* GoogleService-Info.plist */; };
 		C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */; };
+		C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */; };
+		C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F520A42AEC00080BCE /* FirebaseMember.swift */; };
+		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
+		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
+		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -222,6 +227,11 @@
 		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		C68338F020A3FFE500080BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
+		C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseBaseModel.swift; sourceTree = "<group>"; };
+		C68338F520A42AEC00080BCE /* FirebaseMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMember.swift; sourceTree = "<group>"; };
+		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
+		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
+		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,10 +279,12 @@
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				8E1F63FA1E46E06A004E8723 /* Organization.swift */,
-				8E1F63F11E46D330004E8723 /* Member.swift */,
-				8E1F63FC1E46E072004E8723 /* Practice.swift */,
-				8E1F63FE1E46E079004E8723 /* Attendance.swift */,
+				C68338FC20A42AF700080BCE /* Parse */,
+				C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */,
+				C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */,
+				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
+				C68338F720A42AEC00080BCE /* FirebaseEvent.swift */,
+				C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -520,6 +532,17 @@
 			name = "Random Drawing";
 			sourceTree = "<group>";
 		};
+		C68338FC20A42AF700080BCE /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				8E1F63FA1E46E06A004E8723 /* Organization.swift */,
+				8E1F63F11E46D330004E8723 /* Member.swift */,
+				8E1F63FC1E46E072004E8723 /* Practice.swift */,
+				8E1F63FE1E46E079004E8723 /* Attendance.swift */,
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -688,6 +711,7 @@
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
+				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
 				8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */,
 				8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
@@ -700,6 +724,7 @@
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
 				8E1F63F21E46D330004E8723 /* Member.swift in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
+				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
@@ -714,13 +739,16 @@
 				ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */,
+				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */,
 				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
+				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
+				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
