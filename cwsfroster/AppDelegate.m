@@ -21,6 +21,8 @@
     [Fabric with:@[[Crashlytics class]]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
+    [self registerFirebase];
+    
     return YES;
 }
 
