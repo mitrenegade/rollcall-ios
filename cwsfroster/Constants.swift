@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 let TEST = false // test options
-let TESTING = false // dev/prod server
+let TESTING = true // dev/prod server
 let OFFLINE_MODE = false
 let PARSE_APP_ID = "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 let PARSE_CLIENT_KEY = "Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"

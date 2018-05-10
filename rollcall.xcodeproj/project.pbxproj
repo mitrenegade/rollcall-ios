@@ -99,6 +99,7 @@
 		ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */; };
 		C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */; };
 		C68338F120A3FFE500080BCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F020A3FFE500080BCE /* GoogleService-Info.plist */; };
+		C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -220,6 +221,7 @@
 		ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnsiteSignupViewController.m; sourceTree = "<group>"; };
 		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		C68338F020A3FFE500080BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -423,6 +425,7 @@
 				8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */,
 				8EE005B31E3D955200272DC0 /* Constants.swift */,
 				C68338F020A3FFE500080BCE /* GoogleService-Info.plist */,
+				C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */,
 				8E1F63F71E46D852004E8723 /* Models */,
 				9E80085816196883003E9B16 /* Supporting Files */,
 				8EE005A41E3D833E00272DC0 /* Storyboards */,
@@ -590,6 +593,7 @@
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
+				C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */,
 				9E649FEF19B60EEC00334B34 /* IntroTutorial2.xib in Resources */,
 				9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */,
 				8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */,
