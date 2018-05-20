@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
+		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
 		8E1F63F21E46D330004E8723 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F11E46D330004E8723 /* Member.swift */; };
 		8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FA1E46E06A004E8723 /* Organization.swift */; };
@@ -110,6 +111,7 @@
 /* Begin PBXFileReference section */
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
 		8E1F63F11E46D330004E8723 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		8E1F63FA1E46E06A004E8723 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
@@ -478,6 +480,7 @@
 		9EC5F2F61936D2410056140F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8E1D992F20B1A84B005E4186 /* Date+Utils.swift */,
 				9EA0994A19B0F160007BC1FD /* AsyncImageView.h */,
 				9EA0994B19B0F160007BC1FD /* AsyncImageView.m */,
 				9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */,
@@ -686,6 +689,7 @@
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -693,6 +697,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -752,6 +757,7 @@
 				8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
+				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
