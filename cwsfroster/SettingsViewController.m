@@ -113,8 +113,7 @@
     }
     else if (row == 4) {
         // logout
-        [PFUser logOut];
-        [Organization reset];
+        [AuthService logout];
         [self notifyForLogoutInSuccess];
     }
 }

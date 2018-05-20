@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
+		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
 		8E1F63F21E46D330004E8723 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F11E46D330004E8723 /* Member.swift */; };
 		8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FA1E46E06A004E8723 /* Organization.swift */; };
@@ -112,6 +113,7 @@
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
 		8E1F63F11E46D330004E8723 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		8E1F63FA1E46E06A004E8723 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
@@ -278,6 +280,14 @@
 			name = Ratings;
 			sourceTree = "<group>";
 		};
+		8E1D993520B20C86005E4186 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8E1D993320B20C78005E4186 /* AuthService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,6 +443,7 @@
 		9E80085716196883003E9B16 /* cwsfroster */ = {
 			isa = PBXGroup;
 			children = (
+				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
 				9E80086116196883003E9B16 /* AppDelegate.m */,
@@ -762,6 +773,7 @@
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
+				8E1D993420B20C78005E4186 /* AuthService.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */,
 			);

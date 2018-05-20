@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         self.activityIndicator.stopAnimating()
         self.labelInfo.isHidden = true
         self.labelInfo.text = nil
-        if PFUser.current() != nil {
+        if AuthService.isLoggedIn {
             self.synchronizeWithParse()
         }
         else {
@@ -47,17 +47,16 @@ class SplashViewController: UIViewController {
     }
     
     fileprivate func homeViewController() -> UIViewController? {
-        switch PFUser.current() {
-        case .none:
-            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
-        default:
+        if AuthService.isLoggedIn {
             return UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        } else {
+            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
         }
     }
     
     func didLogin() {
         print("logged in")
-        if PFUser.current() != nil {    
+        if AuthService.isLoggedIn {
             self.synchronizeWithParse()
         }
     }
@@ -86,7 +85,13 @@ extension SplashViewController {
         self.activityIndicator.startAnimating()
         self.labelInfo.isHidden = false
         
-        guard let user = PFUser.current() else { return }
+        guard let user = PFUser.current() else {
+            if AuthService.isLoggedIn {
+                activityIndicator.stopAnimating()
+                goHome()
+            }
+            return
+        }
 
         // make sure org exists
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
@@ -108,9 +113,8 @@ extension SplashViewController {
         
         orgPointer.fetchInBackground { (object, error) in
             guard let org = object as? Organization else {
-                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: { 
-                    PFUser.logOut()
-                    Organization.reset()
+                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: {
+                    AuthService.logout()
                     self.didLogout()
                 })
                 return

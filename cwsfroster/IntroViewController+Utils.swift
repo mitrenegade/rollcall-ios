@@ -150,6 +150,7 @@ extension IntroViewController {
             if let error = error as NSError? {
                 print("Error: \(error)")
                 self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                self.enableButtons(true)
             }
             else {
                 print("createUser results: \(String(describing: user))")
@@ -169,10 +170,13 @@ extension IntroViewController {
             } else {
                 print("Invalid email")
                 PFUser.logOut()
+                self.enableButtons(true)
+                return
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             PFUser.logOut()
+            self.enableButtons(true)
             return
         }))
         present(alert, animated: true, completion: nil)
