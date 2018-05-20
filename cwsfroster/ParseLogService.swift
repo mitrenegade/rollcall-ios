@@ -65,7 +65,7 @@ extension UIViewController {
         
         ParseLog.log(type: type, title: title, message: message, params: paramsDict, error: err)
         
-        if TEST == true {
+        if TESTING == true {
             self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: err, completion: completion)
         }
     }

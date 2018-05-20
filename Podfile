@@ -5,4 +5,6 @@ target 'rollcall' do
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Parse'
+pod 'Firebase/Core'
+pod 'Firebase/Database'
 end

@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "IntroViewController.h"
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
 
@@ -18,9 +16,10 @@
 {
     [self registerParse];
 
-    [Fabric with:@[[Crashlytics class]]];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 
+    [self registerFirebase];
+    
     return YES;
 }
 
