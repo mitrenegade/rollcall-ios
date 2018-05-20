@@ -30,12 +30,14 @@
 @property (nonatomic) BOOL isSignup;
 @property (weak, nonatomic) IBOutlet UIButton *buttonLoginSignup;
 @property (weak, nonatomic) IBOutlet UIButton *buttonSwitchMode;
-
+@property (weak, nonatomic) IBOutlet UITextField *inputLogin;
+@property (weak, nonatomic) IBOutlet UITextField *inputPassword;
+@property (weak, nonatomic) IBOutlet UITextField *inputConfirmation;
 
 -(void)refresh;
 -(void)enableButtons:(BOOL)enabled;
 
--(void)login;
+-(void)loginToParse;
 -(void)signup;
 -(void)goToPractices;
 @end

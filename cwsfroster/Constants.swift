@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import Firebase
 
 let TESTING = true
 let OFFLINE_MODE = false
@@ -41,4 +42,8 @@ enum NotificationType: String {
     case Beginner = 1 // DEPRECATED
     case Active = 2
 }
+
+// Firebase
+var firRef = Database.database().reference()
+let firAuth = Auth.auth()
 

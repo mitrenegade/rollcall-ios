@@ -8,6 +8,7 @@
 
 import Foundation
 import Parse
+import Firebase
 
 // MARK: Swift notifications
 extension IntroViewController {
@@ -25,7 +26,7 @@ extension IntroViewController {
                     self.offlineLogin()
                 }
                 else {
-                    self.login()
+                    self.tryFirebaseLogin()
                 }
             }
         }
@@ -38,5 +39,142 @@ extension IntroViewController {
     func offlineLogin() {
         PFUser.enableAutomaticUser()
         self.goToPractices()
+    }
+    
+}
+
+// Firebase migration
+extension IntroViewController {
+    func tryFirebaseLogin() {
+        guard let email = inputLogin.text, !email.isEmpty else {
+            print("Invalid email")
+            return
+        }
+        
+        guard let password = inputPassword.text, !password.isEmpty else {
+            print("Invalid password")
+            return
+        }
+        // tries firebase login.
+        // 0) if firebase fails because username is not an email, try parse login then prompt for an email
+        // 1) if firebase fails because of invalid password, retries
+        // 2) if firebase fails because of user, tries parse login.
+        // 3) if parse login is successful, creates firebase user
+        // 4) if parse login is unsuccessful because of invalid password, retries
+        // 5) if parse login is unsuccessful because of invalid user, creates firebase user
+        enableButtons(false)
+        
+        loginToFirebase(email: email, password: password) { (success, error) in
+            if let error = error as? NSError {
+                print("Error: \(error)")
+                if error.code == 17008 {
+                    // 0) not an email login. try parse
+                    self.loginToParse(email: email, password: password, completion: { (success, error) in
+                        if success {
+                            self.promptForNewEmail()
+                        } else {
+                            self.simpleAlert("Could not log in", message: "Please try again")
+                            self.enableButtons(true)
+                            return
+                        }
+                    })
+                }
+                else if error.code == 17009 { // 1) invalid firebase password
+                    self.simpleAlert("Invalid password", message: "Please try again")
+                    self.enableButtons(true)
+                    return
+                }
+                else if error.code == 17011 { // 2) invalid firebase user
+                    // invalid user. firebase error message is too wordy
+                    self.loginToParse(email: email, password: password, completion: { (success, error) in
+                        if let error = error as? NSError {
+                            print("Error \(error)")
+                            if error.code == 100 {
+                                // 4) invalid parse login. user exists
+                            } else {
+                                // 5) no user.
+                            }
+                        } else {
+                            // 3) parse login is successful; signup in firebase
+                            self.createEmailUser(email: email, wasParseUser: true)
+                            return
+                        }
+                    })
+                }
+                else { // unknown error
+                    self.simpleAlert("Could not login", message: "Unknown error: \(error)")
+                    self.enableButtons(true)
+                }
+            } else {
+                self.goToPractices()
+            }
+        }
+    }
+    
+    func loginToFirebase(email: String, password: String, completion:((_ success: Bool, _ error: Error?) -> Void)?) {
+        firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (user, error) in
+            if let error = error {
+                completion?(false, error)
+            }
+            else {
+                print("LoginLogout: LoginSuccess from email")
+                completion?(true, nil)
+            }
+        })
+    }
+    
+    func loginToParse(email: String, password: String, completion:((_ success: Bool, _ error: Error?) -> Void)?) {
+        PFUser.logInWithUsername(inBackground: email, password: password) { (user, error) in
+            if let error = error {
+                completion?(false, error)
+            } else {
+                completion?(true, nil)
+            }
+        }
+    }
+    
+    func createEmailUser(email: String, wasParseUser: Bool) {
+        guard let password = self.inputPassword.text, !password.isEmpty else {
+            self.simpleAlert("Please enter your password", message: nil)
+            return
+        }
+        if !wasParseUser {
+            // a parse user has already logged into parse and confirmed their password, so we do not need/have a confirmation field
+            guard let confirmation = self.inputConfirmation.text, confirmation == password else {
+                self.simpleAlert("Password and confirmation must match", message: nil)
+                return
+            }
+        }
+
+        firAuth.createUser(withEmail: email, password: password, completion: { (user, error) in
+            if let error = error as NSError? {
+                print("Error: \(error)")
+                self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+            }
+            else {
+                print("createUser results: \(String(describing: user))")
+                self.goToPractices()
+            }
+        })
+    }
+
+    func promptForNewEmail() {
+        let alert = UIAlertController(title: "Please add an email", message: "Your account must be associated with an email. Please enter your email for logging in.", preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Email"
+        }
+        alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
+            if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty {
+                self.createEmailUser(email: email, wasParseUser: true)
+            } else {
+                print("Invalid email")
+                PFUser.logOut()
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            PFUser.logOut()
+            return
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
