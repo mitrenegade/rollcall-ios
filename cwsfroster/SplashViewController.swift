@@ -169,32 +169,77 @@ extension SplashViewController {
     
     func syncParseObjects() {
         self.labelInfo.text = "Loading..."
+        let group = DispatchGroup()
+        
+        group.enter()
         Organization.queryForMembers(completion: { (results, error) in
             classNames.remove(at: classNames.index(of: "members")!)
             self.labelInfo.text = "Loaded members"
             if let members = results {
                 Organization.current?.members = members
+                
+                for member: Member in members {
+                    guard let id = member.objectId else { continue }
+                    let ref = firRef.child("members").child(id)
+                    var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+                    if let name = member.name {
+                        params["name"] = name
+                    }
+                    if let email = member.email {
+                        params["email"] = email
+                    }
+                    if let notes = member.notes {
+                        params["notes"] = notes
+                    }
+                    if let photo = member.photo {
+//                        params["photoUrl"] = TODO
+                    }
+                    ref.updateChildValues(params)
+                    
+                    if let orgId = Organization.current?.objectId {
+                        let orgMemberRef = firRef.child("organizationMembers").child(orgId)
+                        var params: [String: Any] = [:]
+                        if let status = member.status {
+                            switch status.intValue {
+                            case MemberStatus.Active.rawValue:
+                                params[id] = "active"
+                            case MemberStatus.Inactive.rawValue:
+                                params[id] = "inactive"
+                            default:
+                                params[id] = "active"
+                            }
+                        }
+                        orgMemberRef.updateChildValues(params)
+                    }
+                }
             }
-            self.checkSyncComplete()
+            group.leave()
         })
-        
+
+        group.enter()
         Organization.queryForPractices(completion: { (results, error) in
             classNames.remove(at: classNames.index(of: "practices")!)
             self.labelInfo.text = "Loaded practices"
             if let practices = results {
                 Organization.current?.practices = practices
             }
-            self.checkSyncComplete()
+            group.leave()
         })
-        
+
+        group.enter()
         Organization.queryForAttendances(completion: { (results, error) in
             classNames.remove(at: classNames.index(of: "attendances")!)
             self.labelInfo.text = "Loaded attendances"
             if let attendances = results {
                 Organization.current?.attendances = attendances
             }
-            self.checkSyncComplete()
+            group.leave()
         })
+        
+        let workItem = DispatchWorkItem {
+            self.checkSyncComplete()
+        }
+        group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
     func checkSyncComplete() {
