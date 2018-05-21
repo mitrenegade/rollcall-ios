@@ -64,14 +64,14 @@ extension IntroViewController {
         // 5) if parse login is unsuccessful because of invalid user, creates firebase user
         enableButtons(false)
         
-        loginToFirebase(email: email, password: password) { (success, error) in
+        loginToFirebase(email: email, password: password) { (user, error) in
             if let error = error as? NSError {
                 print("Error: \(error)")
                 if error.code == 17008 {
                     // 0) not an email login. try parse
                     self.loginToParse(email: email, password: password, completion: { (success, error) in
                         if success {
-                            self.promptForNewEmail()
+                            self.promptForNewEmail(parseUsername: email)
                         } else {
                             self.simpleAlert("Could not log in", message: "Please try again")
                             self.enableButtons(true)
@@ -96,7 +96,7 @@ extension IntroViewController {
                             }
                         } else {
                             // 3) parse login is successful; signup in firebase
-                            self.createEmailUser(email: email, wasParseUser: true)
+                            self.createEmailUser(email: email, parseUsername: email)
                             return
                         }
                     })
@@ -107,18 +107,21 @@ extension IntroViewController {
                 }
             } else {
                 self.goToPractices()
+                if let user = user {
+                    self.createFirebaseUser(id: user.uid, username: email)
+                }
             }
         }
     }
     
-    func loginToFirebase(email: String, password: String, completion:((_ success: Bool, _ error: Error?) -> Void)?) {
+    func loginToFirebase(email: String, password: String, completion:((_ user: User?, _ error: Error?) -> Void)?) {
         firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (user, error) in
             if let error = error {
-                completion?(false, error)
+                completion?(nil, error)
             }
             else {
                 print("LoginLogout: LoginSuccess from email")
-                completion?(true, nil)
+                completion?(user, nil)
             }
         })
     }
@@ -133,12 +136,12 @@ extension IntroViewController {
         }
     }
     
-    func createEmailUser(email: String, wasParseUser: Bool) {
+    func createEmailUser(email: String, parseUsername: String?) {
         guard let password = self.inputPassword.text, !password.isEmpty else {
             self.simpleAlert("Please enter your password", message: nil)
             return
         }
-        if !wasParseUser {
+        if parseUsername == nil {
             // a parse user has already logged into parse and confirmed their password, so we do not need/have a confirmation field
             guard let confirmation = self.inputConfirmation.text, confirmation == password else {
                 self.simpleAlert("Password and confirmation must match", message: nil)
@@ -149,24 +152,41 @@ extension IntroViewController {
         firAuth.createUser(withEmail: email, password: password, completion: { (user, error) in
             if let error = error as NSError? {
                 print("Error: \(error)")
-                self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                if error.code == 17007, let parseUsername = parseUsername {
+                    // try logging in
+                    self.loginToFirebase(email: email, password: password, completion: { (user, error) in
+                        if let error = error as NSError? {
+                            self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                        } else {
+                            self.goToPractices()
+                            if let user = user {
+                                self.createFirebaseUser(id: user.uid, username: parseUsername)
+                            }
+                        }
+                    })
+                } else {
+                    self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                }
                 self.enableButtons(true)
             }
             else {
                 print("createUser results: \(String(describing: user))")
                 self.goToPractices()
+                if let user = user {
+                    self.createFirebaseUser(id: user.uid, username: email)
+                }
             }
         })
     }
 
-    func promptForNewEmail() {
+    func promptForNewEmail(parseUsername: String) {
         let alert = UIAlertController(title: "Please add an email", message: "Your account must be associated with an email. Please enter your email for logging in.", preferredStyle: .alert)
         alert.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Email"
         }
         alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty {
-                self.createEmailUser(email: email, wasParseUser: true)
+                self.createEmailUser(email: email, parseUsername: parseUsername)
             } else {
                 print("Invalid email")
                 PFUser.logOut()
@@ -180,5 +200,10 @@ extension IntroViewController {
             return
         }))
         present(alert, animated: true, completion: nil)
+    }
+    
+    func createFirebaseUser(id: String, username: String) {
+        let ref = firRef.child("users").child(id)
+        ref.updateChildValues(["username": username])
     }
 }

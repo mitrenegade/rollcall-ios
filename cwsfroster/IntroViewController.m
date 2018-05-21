@@ -77,7 +77,7 @@
 
 #pragma login
 -(void)signup {
-    [self createEmailUserWithEmail:inputLogin.text wasParseUser:false];
+    [self createEmailUserWithEmail:inputLogin.text parseUsername: nil];
 }
 
 -(void)showProgress {
