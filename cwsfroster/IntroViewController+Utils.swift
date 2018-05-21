@@ -203,6 +203,7 @@ extension IntroViewController {
     }
     
     func createFirebaseUser(id: String, username: String?) {
+        // TODO: does this need to be a user? can it be in the organization?
         let ref = firRef.child("users").child(id)
         var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
         if let username = username {

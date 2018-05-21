@@ -222,6 +222,28 @@ extension SplashViewController {
             self.labelInfo.text = "Loaded practices"
             if let practices = results {
                 Organization.current?.practices = practices
+                
+                for practice: Practice in practices {
+                    guard let id = practice.objectId else { continue }
+                    let ref = firRef.child("events").child(id)
+                    var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+                    if let title = practice.title {
+                        params["title"] = title
+                    }
+                    if let date = practice.date {
+                        params["date"] = date.timeIntervalSince1970
+                    }
+                    if let notes = practice.notes {
+                        params["notes"] = notes
+                    }
+                    if let details = practice.details {
+                        params["details"] = details
+                    }
+                    if let orgId = Organization.current?.objectId {
+                        params["organization"] = orgId
+                    }
+                    ref.updateChildValues(params)
+                }
             }
             group.leave()
         })
