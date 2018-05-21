@@ -120,7 +120,6 @@ extension SplashViewController {
                 return
             }
             Organization.current = org
-            
 
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
                 do {
@@ -131,6 +130,12 @@ extension SplashViewController {
                             self.logo.alpha = 1
                         })
                         self.syncParseObjects()
+                        
+                        // save image to firebase
+//
+//                        guard let id = org.objectId else { return }
+//                        let ref = firRef.child("organizations").child(id)
+
                     }
                     else {
                         print("no image")
@@ -147,6 +152,18 @@ extension SplashViewController {
                 self.logo.alpha = 0;
                 self.logo.image = nil
             }
+            
+            // update firebase object
+            guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+            let ref = firRef.child("organizations").child(id)
+            var params: [String: Any] = ["owner": userId]
+            if let name = org.name {
+                params["name"] = name
+            }
+            if let number = org.leftPowerUserFeedback {
+                params["leftPowerUserFeedback"] = number.boolValue
+            }
+            ref.updateChildValues(params)
         }
     }
     
