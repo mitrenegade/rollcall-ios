@@ -108,7 +108,7 @@ extension IntroViewController {
             } else {
                 self.goToPractices()
                 if let user = user {
-                    self.createFirebaseUser(id: user.uid, username: email)
+                    self.createFirebaseUser(id: user.uid, username: nil)
                 }
             }
         }
@@ -173,7 +173,7 @@ extension IntroViewController {
                 print("createUser results: \(String(describing: user))")
                 self.goToPractices()
                 if let user = user {
-                    self.createFirebaseUser(id: user.uid, username: email)
+                    self.createFirebaseUser(id: user.uid, username: nil)
                 }
             }
         })
@@ -202,8 +202,12 @@ extension IntroViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    func createFirebaseUser(id: String, username: String) {
+    func createFirebaseUser(id: String, username: String?) {
         let ref = firRef.child("users").child(id)
-        ref.updateChildValues(["username": username])
+        var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+        if let username = username {
+            params["parseUsername"] = username
+        }
+        ref.updateChildValues(params)
     }
 }
