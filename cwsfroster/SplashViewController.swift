@@ -254,6 +254,14 @@ extension SplashViewController {
             self.labelInfo.text = "Loaded attendances"
             if let attendances = results {
                 Organization.current?.attendances = attendances
+                for attendance: Attendance in attendances {
+                    guard let eventId = attendance.practice?.objectId else { continue }
+                    guard let memberId = attendance.member?.objectId else { continue }
+                    guard let attended = attendance.attended?.boolValue else { continue }
+
+                    let ref = firRef.child("events").child(eventId).child("attendees")
+                    ref.updateChildValues([memberId: attended])
+                }
             }
             group.leave()
         })
