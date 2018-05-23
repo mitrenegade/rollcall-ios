@@ -104,7 +104,7 @@
     return YES;
 }
 
--(void)goToPractices {
+-(void)goToPracticesHelper {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     

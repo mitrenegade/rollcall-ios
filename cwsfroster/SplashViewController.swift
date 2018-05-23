@@ -173,7 +173,6 @@ extension SplashViewController {
         
         group.enter()
         Organization.queryForMembers(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "members")!)
             self.labelInfo.text = "Loaded members"
             if let members = results {
                 Organization.current?.members = members
@@ -212,13 +211,13 @@ extension SplashViewController {
                         orgMemberRef.updateChildValues(params)
                     }
                 }
+                classNames.remove(at: classNames.index(of: "members")!)
             }
             group.leave()
         })
 
         group.enter()
         Organization.queryForPractices(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "practices")!)
             self.labelInfo.text = "Loaded practices"
             if let practices = results {
                 Organization.current?.practices = practices
@@ -244,13 +243,13 @@ extension SplashViewController {
                     }
                     ref.updateChildValues(params)
                 }
+                classNames.remove(at: classNames.index(of: "practices")!)
             }
             group.leave()
         })
 
         group.enter()
         Organization.queryForAttendances(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "attendances")!)
             self.labelInfo.text = "Loaded attendances"
             if let attendances = results {
                 Organization.current?.attendances = attendances
@@ -262,6 +261,7 @@ extension SplashViewController {
                     let ref = firRef.child("events").child(eventId).child("attendees")
                     ref.updateChildValues([memberId: attended])
                 }
+                classNames.remove(at: classNames.index(of: "attendances")!)
             }
             group.leave()
         })
@@ -273,12 +273,16 @@ extension SplashViewController {
     }
     
     func checkSyncComplete() {
+        self.activityIndicator.stopAnimating()
+        self.labelInfo.isHidden = true
+        self.labelInfo.text = nil
+        self.goHome()
+
         if classNames.count == 0 {
-            self.activityIndicator.stopAnimating()
-            self.labelInfo.isHidden = true
-            self.labelInfo.text = nil
-            self.goHome()
-            return
+            if let orgId = Organization.current?.objectId {
+                let ref = firRef.child("organizations").child(orgId)
+                ref.updateChildValues(["migratedFromParse": true])
+            }
         }
     }
     

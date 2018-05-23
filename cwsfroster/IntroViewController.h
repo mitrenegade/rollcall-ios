@@ -39,6 +39,6 @@
 
 -(void)loginToParse;
 -(void)signup;
--(void)goToPractices;
+-(void)goToPracticesHelper;
 @end
 

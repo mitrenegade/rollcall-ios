@@ -41,6 +41,10 @@ extension IntroViewController {
         self.goToPractices()
     }
     
+    func goToPractices() {
+        self.goToPracticesHelper()
+    }
+    
 }
 
 // Firebase migration
@@ -153,7 +157,7 @@ extension IntroViewController {
             if let error = error as NSError? {
                 print("Error: \(error)")
                 if error.code == 17007, let parseUsername = parseUsername {
-                    // try logging in
+                    // email already taken; try logging in
                     self.loginToFirebase(email: email, password: password, completion: { (user, error) in
                         if let error = error as NSError? {
                             self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
