@@ -42,7 +42,21 @@ extension IntroViewController {
     }
     
     func goToPractices() {
-        self.goToPracticesHelper()
+        defer {
+            self.goToPracticesHelper()
+        }
+        if let userId = firAuth.currentUser?.uid {
+            let ref = firRef.child("users").child(userId)
+            ref.observeSingleEvent(of: .value) { (snapshot: DataSnapshot) in
+                guard snapshot.exists(), let dict = snapshot.value as? [String: Any] else { return }
+                print("snapshot \(snapshot)")
+                if let username = dict["parseUsername"] as? String, let password = self.inputPassword.text, !password.isEmpty  {
+                    self.loginToParse(email: username, password: password, completion: { (success, error) in
+                        print("Log in to parse: \(success) \(error)")
+                    })
+                }
+            }
+        }
     }
     
 }
