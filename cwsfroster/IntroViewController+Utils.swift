@@ -42,20 +42,26 @@ extension IntroViewController {
     }
     
     func goToPractices() {
-        defer {
-            self.goToPracticesHelper()
-        }
+        showProgress("Loading...")
         if let userId = firAuth.currentUser?.uid {
             let ref = firRef.child("users").child(userId)
             ref.observeSingleEvent(of: .value) { (snapshot: DataSnapshot) in
-                guard snapshot.exists(), let dict = snapshot.value as? [String: Any] else { return }
+                guard snapshot.exists(), let dict = snapshot.value as? [String: Any] else {
+                    self.goToPracticesHelper()
+                    return
+                }
                 print("snapshot \(snapshot)")
                 if let username = dict["parseUsername"] as? String, let password = self.inputPassword.text, !password.isEmpty  {
                     self.loginToParse(email: username, password: password, completion: { (success, error) in
                         print("Log in to parse: \(success) \(error)")
+                        self.goToPracticesHelper()
                     })
+                } else {
+                    self.goToPracticesHelper()
                 }
             }
+        } else {
+            self.goToPracticesHelper()
         }
     }
     
@@ -81,6 +87,7 @@ extension IntroViewController {
         // 4) if parse login is unsuccessful because of invalid password, retries
         // 5) if parse login is unsuccessful because of invalid user, creates firebase user
         enableButtons(false)
+        showProgress("Logging in...")
         
         loginToFirebase(email: email, password: password) { (user, error) in
             if let error = error as? NSError {
@@ -92,6 +99,7 @@ extension IntroViewController {
                             self.promptForNewEmail(parseUsername: email)
                         } else {
                             self.simpleAlert("Could not log in", message: "Please try again")
+                            self.hideProgress()
                             self.enableButtons(true)
                             return
                         }
@@ -99,6 +107,7 @@ extension IntroViewController {
                 }
                 else if error.code == 17009 { // 1) invalid firebase password
                     self.simpleAlert("Invalid password", message: "Please try again")
+                    self.hideProgress()
                     self.enableButtons(true)
                     return
                 }
@@ -121,6 +130,7 @@ extension IntroViewController {
                 }
                 else { // unknown error
                     self.simpleAlert("Could not login", message: "Unknown error: \(error)")
+                    self.hideProgress()
                     self.enableButtons(true)
                 }
             } else {
@@ -157,6 +167,7 @@ extension IntroViewController {
     func createEmailUser(email: String, parseUsername: String?) {
         guard let password = self.inputPassword.text, !password.isEmpty else {
             self.simpleAlert("Please enter your password", message: nil)
+            self.hideProgress()
             return
         }
         if parseUsername == nil {
@@ -175,6 +186,7 @@ extension IntroViewController {
                     self.loginToFirebase(email: email, password: password, completion: { (user, error) in
                         if let error = error as NSError? {
                             self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                            self.hideProgress()
                         } else {
                             self.goToPractices()
                             if let user = user {
@@ -184,6 +196,7 @@ extension IntroViewController {
                     })
                 } else {
                     self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                    self.hideProgress()
                 }
                 self.enableButtons(true)
             }
@@ -205,15 +218,18 @@ extension IntroViewController {
         alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty {
                 self.createEmailUser(email: email, parseUsername: parseUsername)
+                self.showProgress("Migrating account...")
             } else {
                 print("Invalid email")
                 PFUser.logOut()
                 self.enableButtons(true)
+                self.hideProgress()
                 return
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             PFUser.logOut()
+            self.hideProgress()
             self.enableButtons(true)
             return
         }))

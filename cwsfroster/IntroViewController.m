@@ -80,13 +80,17 @@
     [self createEmailUserWithEmail:inputLogin.text parseUsername: nil];
 }
 
--(void)showProgress {
+-(void)showProgress: (NSString *)title {
     if (!progress || !progress.taskInProgress) {
         progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     progress.taskInProgress = YES;
     progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"Synchronizing data";
+    if (title == nil) {
+        progress.labelText = @"Synchronizing data";
+    } else {
+        progress.labelText = title;
+    }
 }
 
 -(void)hideProgress {

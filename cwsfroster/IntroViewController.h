@@ -40,5 +40,7 @@
 -(void)loginToParse;
 -(void)signup;
 -(void)goToPracticesHelper;
+-(void)showProgress: (NSString *)title;
+-(void)hideProgress;
 @end
 
