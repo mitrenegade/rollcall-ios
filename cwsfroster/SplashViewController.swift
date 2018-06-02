@@ -84,6 +84,7 @@ extension SplashViewController {
             return
         }
         
+        print("Calling synchronize with parse")
         classNames = ["members", "practices", "attendances"]
         activityIndicator.startAnimating()
         labelInfo.isHidden = false
