@@ -17,5 +17,6 @@
 #import "PracticesTableViewController.h"
 #import "OnsiteSignupViewController.h"
 #import "Util.h"
+#import "ShellViewController.h"
 
 #endif /* cwsfroster_Bridging_Header_h */

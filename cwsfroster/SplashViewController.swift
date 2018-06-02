@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         self.activityIndicator.stopAnimating()
         self.labelInfo.isHidden = true
         self.labelInfo.text = nil
-        if PFUser.current() != nil {
+        if AuthService.isLoggedIn {
             self.synchronizeWithParse()
         }
         else {
@@ -47,17 +47,16 @@ class SplashViewController: UIViewController {
     }
     
     fileprivate func homeViewController() -> UIViewController? {
-        switch PFUser.current() {
-        case .none:
-            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
-        default:
+        if AuthService.isLoggedIn {
             return UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+        } else {
+            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
         }
     }
     
     func didLogin() {
         print("logged in")
-        if PFUser.current() != nil {    
+        if AuthService.isLoggedIn {
             self.synchronizeWithParse()
         }
     }
@@ -86,7 +85,13 @@ extension SplashViewController {
         self.activityIndicator.startAnimating()
         self.labelInfo.isHidden = false
         
-        guard let user = PFUser.current() else { return }
+        guard let user = PFUser.current() else {
+            if AuthService.isLoggedIn {
+                activityIndicator.stopAnimating()
+                goHome()
+            }
+            return
+        }
 
         // make sure org exists
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
@@ -108,15 +113,13 @@ extension SplashViewController {
         
         orgPointer.fetchInBackground { (object, error) in
             guard let org = object as? Organization else {
-                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: { 
-                    PFUser.logOut()
-                    Organization.reset()
+                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: {
+                    AuthService.logout()
                     self.didLogout()
                 })
                 return
             }
             Organization.current = org
-            
 
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
                 do {
@@ -127,6 +130,12 @@ extension SplashViewController {
                             self.logo.alpha = 1
                         })
                         self.syncParseObjects()
+                        
+                        // save image to firebase
+//
+//                        guard let id = org.objectId else { return }
+//                        let ref = firRef.child("organizations").child(id)
+
                     }
                     else {
                         print("no image")
@@ -143,46 +152,137 @@ extension SplashViewController {
                 self.logo.alpha = 0;
                 self.logo.image = nil
             }
+            
+            // update firebase object
+            guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+            let ref = firRef.child("organizations").child(id)
+            var params: [String: Any] = ["owner": userId]
+            if let name = org.name {
+                params["name"] = name
+            }
+            if let number = org.leftPowerUserFeedback {
+                params["leftPowerUserFeedback"] = number.boolValue
+            }
+            ref.updateChildValues(params)
         }
     }
     
     func syncParseObjects() {
         self.labelInfo.text = "Loading..."
+        let group = DispatchGroup()
+        
+        group.enter()
         Organization.queryForMembers(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "members")!)
             self.labelInfo.text = "Loaded members"
             if let members = results {
                 Organization.current?.members = members
+                
+                for member: Member in members {
+                    guard let id = member.objectId else { continue }
+                    let ref = firRef.child("members").child(id)
+                    var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+                    if let name = member.name {
+                        params["name"] = name
+                    }
+                    if let email = member.email {
+                        params["email"] = email
+                    }
+                    if let notes = member.notes {
+                        params["notes"] = notes
+                    }
+                    if let photo = member.photo {
+//                        params["photoUrl"] = TODO
+                    }
+                    ref.updateChildValues(params)
+                    
+                    if let orgId = Organization.current?.objectId {
+                        let orgMemberRef = firRef.child("organizationMembers").child(orgId)
+                        var params: [String: Any] = [:]
+                        if let status = member.status {
+                            switch status.intValue {
+                            case MemberStatus.Active.rawValue:
+                                params[id] = "active"
+                            case MemberStatus.Inactive.rawValue:
+                                params[id] = "inactive"
+                            default:
+                                params[id] = "active"
+                            }
+                        }
+                        orgMemberRef.updateChildValues(params)
+                    }
+                }
+                classNames.remove(at: classNames.index(of: "members")!)
             }
-            self.checkSyncComplete()
+            group.leave()
         })
-        
+
+        group.enter()
         Organization.queryForPractices(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "practices")!)
             self.labelInfo.text = "Loaded practices"
             if let practices = results {
                 Organization.current?.practices = practices
+                
+                for practice: Practice in practices {
+                    guard let id = practice.objectId else { continue }
+                    let ref = firRef.child("events").child(id)
+                    var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+                    if let title = practice.title {
+                        params["title"] = title
+                    }
+                    if let date = practice.date {
+                        params["date"] = date.timeIntervalSince1970
+                    }
+                    if let notes = practice.notes {
+                        params["notes"] = notes
+                    }
+                    if let details = practice.details {
+                        params["details"] = details
+                    }
+                    if let orgId = Organization.current?.objectId {
+                        params["organization"] = orgId
+                    }
+                    ref.updateChildValues(params)
+                }
+                classNames.remove(at: classNames.index(of: "practices")!)
             }
-            self.checkSyncComplete()
+            group.leave()
         })
-        
+
+        group.enter()
         Organization.queryForAttendances(completion: { (results, error) in
-            classNames.remove(at: classNames.index(of: "attendances")!)
             self.labelInfo.text = "Loaded attendances"
             if let attendances = results {
                 Organization.current?.attendances = attendances
+                for attendance: Attendance in attendances {
+                    guard let eventId = attendance.practice?.objectId else { continue }
+                    guard let memberId = attendance.member?.objectId else { continue }
+                    guard let attended = attendance.attended?.boolValue else { continue }
+
+                    let ref = firRef.child("events").child(eventId).child("attendees")
+                    ref.updateChildValues([memberId: attended])
+                }
+                classNames.remove(at: classNames.index(of: "attendances")!)
             }
-            self.checkSyncComplete()
+            group.leave()
         })
+        
+        let workItem = DispatchWorkItem {
+            self.checkSyncComplete()
+        }
+        group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
     func checkSyncComplete() {
+        self.activityIndicator.stopAnimating()
+        self.labelInfo.isHidden = true
+        self.labelInfo.text = nil
+        self.goHome()
+
         if classNames.count == 0 {
-            self.activityIndicator.stopAnimating()
-            self.labelInfo.isHidden = true
-            self.labelInfo.text = nil
-            self.goHome()
-            return
+            if let orgId = Organization.current?.objectId {
+                let ref = firRef.child("organizations").child(orgId)
+                ref.updateChildValues(["migratedFromParse": true])
+            }
         }
     }
     

@@ -30,13 +30,16 @@
 @property (nonatomic) BOOL isSignup;
 @property (weak, nonatomic) IBOutlet UIButton *buttonLoginSignup;
 @property (weak, nonatomic) IBOutlet UIButton *buttonSwitchMode;
-
+@property (weak, nonatomic) IBOutlet UITextField *inputLogin;
+@property (weak, nonatomic) IBOutlet UITextField *inputPassword;
+@property (weak, nonatomic) IBOutlet UITextField *inputConfirmation;
 
 -(void)refresh;
 -(void)enableButtons:(BOOL)enabled;
 
--(void)login;
--(void)signup;
--(void)goToPractices;
+-(void)loginToParse;
+-(void)goToPracticesHelper;
+-(void)showProgress: (NSString *)title;
+-(void)hideProgress;
 @end
 

@@ -48,7 +48,7 @@
     [UIView animateWithDuration:.25 animations:^{
         NSString *title = self.isSignup ? @"Sign up" : @"Log in";
         [self.buttonLoginSignup setTitle:title forState:UIControlStateNormal];
-        NSString *title2 = self.isSignup ? @"Back to login" : @"Not registered?";
+        NSString *title2 = self.isSignup ? @"Back to login" : @"New user?";
         [self.buttonSwitchMode setTitle:title2 forState:UIControlStateNormal];
         //[tutorialView setAlpha:self.isSignup ? 0 : 1];
         
@@ -76,120 +76,17 @@
 }
 
 #pragma login
--(void) login {
-    if (inputLogin.text.length == 0) {
-        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
-        return;
-    }
-    if (inputPassword.text.length == 0) {
-        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
-        return;
-    }
-
-    [self enableButtons:NO];
-    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    progress.taskInProgress = YES;
-    [PFUser logInWithUsernameInBackground:inputLogin.text password:inputPassword.text block:^(PFUser *user, NSError *error) {
-        if (user) {
-            //[self loggedIn];
-            [self goToPractices];
-        }
-        else {
-            NSString *message = nil;
-            if (error.code == 100) {
-                message = @"Please make sure you are connected to the internet.";
-            }
-            if (error.code == 101) {
-                message = @"Invalid username or password";
-            }
-            progress.mode = MBProgressHUDModeText;
-            progress.labelText = @"Login failed";
-            progress.detailsLabelText = message;
-            [progress hide:YES afterDelay:1.5];
-            [self enableButtons:YES];
-        }
-    }];
-}
-
--(void)signup {
-    if (inputLogin.text.length == 0) {
-        [UIAlertView alertViewWithTitle:@"Please enter a login name" message:nil];
-        return;
-    }
-    if (inputPassword.text.length == 0) {
-        [UIAlertView alertViewWithTitle:@"Please enter your password" message:nil];
-        return;
-    }
-    if (inputConfirmation.text.length == 0) {
-        [UIAlertView alertViewWithTitle:@"Please enter your password confirmation" message:nil];
-        return;
-    }
-    if (![inputConfirmation.text isEqualToString:inputConfirmation.text]) {
-        [UIAlertView alertViewWithTitle:@"Invalid password" message:@"Password and confirmation do not match"];
-        return;
-    }
-
-    [self enableButtons:NO];
-
-    PFUser *user = [PFUser user];
-    user.username = inputLogin.text;
-    user.password = inputPassword.text;
-    if ([self isValidEmail:inputLogin.text]) {
-        user.email = inputLogin.text;
-    }
-
-    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    progress.mode = MBProgressHUDModeIndeterminate;
-    progress.taskInProgress = YES;
-
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            Organization *org = [[Organization alloc] init];
-            org.name = user.username;
-            [org saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                if (succeeded) {
-                    [user setObject:org forKey:@"organization"];
-                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"organization:is:new"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                        [self goToPractices];
-                    }];
-                }
-                else {
-                    NSString *message = @"Error creating your organization. Please try again.";
-                    [self enableButtons:YES];
-                    progress.mode = MBProgressHUDModeText;
-                    progress.labelText = @"Signup failed";
-                    progress.detailsLabelText = message;
-                    [progress hide:YES afterDelay:1.5];
-                }
-            }];
-        }
-        else {
-            NSString *message = nil;
-            if (error.code == 100) {
-                message = @"Please make sure you are connected to the internet.";
-            }
-            if (error.code == 202) {
-                message = @"Username already taken";
-            }
-            [self enableButtons:YES];
-            progress.mode = MBProgressHUDModeText;
-            progress.labelText = @"Signup failed";
-            progress.detailsLabelText = message;
-            [progress hide:YES afterDelay:1.5];
-        }
-    }];
-}
-
--(void)showProgress {
+-(void)showProgress: (NSString *)title {
     if (!progress || !progress.taskInProgress) {
         progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
     progress.taskInProgress = YES;
     progress.mode = MBProgressHUDModeIndeterminate;
-    progress.labelText = @"Synchronizing data";
+    if (title == nil) {
+        progress.labelText = @"Synchronizing data";
+    } else {
+        progress.labelText = title;
+    }
 }
 
 -(void)hideProgress {
@@ -207,7 +104,7 @@
     return YES;
 }
 
--(void)goToPractices {
+-(void)goToPracticesHelper {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
     
