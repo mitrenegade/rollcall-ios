@@ -17,11 +17,15 @@ class OrganizationService: NSObject {
     fileprivate var disposeBag: DisposeBag!
     let current: Variable<FirebaseOrganization?> = Variable(nil)
     
+    var organizerRef: DatabaseReference?
+    var organizerRefHandle: UInt?
     func startObservingOrganization() {
+        print("Start observing organization")
         disposeBag = DisposeBag() // clear previous listeners
         
         guard let userId = firAuth.currentUser?.uid else { return }
-        firRef.child("organizations").queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
+        let ref = firRef.child("organizations")
+        organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             guard snapshot.exists() else {
                 self?.current.value = nil
                 return
@@ -31,6 +35,18 @@ class OrganizationService: NSObject {
                 OrganizationService.shared.current.value = org
             }
         })
+        organizerRef = ref
+    }
+    
+    func onLogout() {
+        // stop observing organizer ref
+        if let handle = organizerRefHandle {
+            print("Start observing organization ended")
+            organizerRef?.removeObserver(withHandle: handle)
+        }
+        organizerRef = nil
+        organizerRefHandle = nil
+        current.value = nil
     }
     
     func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool) {

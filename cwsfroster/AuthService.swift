@@ -15,6 +15,8 @@ class AuthService: NSObject {
         try! firAuth.signOut()
         PFUser.logOut()
         Organization.reset()
+        
+        OrganizationService.shared.onLogout()
     }
     
     // TODO: use loginState
