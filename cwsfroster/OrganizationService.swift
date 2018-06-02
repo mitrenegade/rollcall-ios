@@ -26,8 +26,10 @@ class OrganizationService: NSObject {
                 self?.current.value = nil
                 return
             }
-            let org = FirebaseOrganization(snapshot: snapshot)
-            OrganizationService.shared.current.value = org
+            if let data =  snapshot.children.allObjects.first as? DataSnapshot {
+                let org = FirebaseOrganization(snapshot: data)
+                OrganizationService.shared.current.value = org
+            }
         })
     }
 }
