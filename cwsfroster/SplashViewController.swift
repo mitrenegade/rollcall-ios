@@ -31,19 +31,25 @@ class SplashViewController: UIViewController {
         activityIndicator.stopAnimating()
         labelInfo.isHidden = true
         labelInfo.text = nil
-        if AuthService.isLoggedIn {
-            synchronizeWithParse()
-        }
-        else {
-            goHome()
-        }
+        
+        let _ = goHomeOnStartup
     }
     
+    fileprivate lazy var goHomeOnStartup = {
+        if AuthService.isLoggedIn {
+            self.didLogin()
+        } else {
+            self.goHome()
+        }
+    }()
+
     func goHome() {
         guard let homeViewController = homeViewController() else { return }
         if let presented = presentedViewController {
             guard homeViewController != presented else { return }
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true, completion: {
+                self.present(homeViewController, animated: true, completion: nil)
+            })
         } else {
             present(homeViewController, animated: true, completion: nil)
         }
@@ -59,7 +65,7 @@ class SplashViewController: UIViewController {
     
     func didLogin() {
         print("logged in")
-        goHome()
+        synchronizeWithParse()
     }
     
     func didLogout() {
