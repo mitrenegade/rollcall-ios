@@ -2,15 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "hamburger4-square.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "hamburger4-square@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "hamburger4-square@3x.png",
       "scale" : "3x"
     }
   ],

@@ -70,7 +70,6 @@
 		9E828A6516196B8D009A6C44 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E828A4216196B47009A6C44 /* AudioToolbox.framework */; };
 		9E98DB4819B2E421006D81FC /* icon-calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */; };
 		9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4719B2E421006D81FC /* icon-users@2x.png */; };
-		9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E98DB4B19B2E63D006D81FC /* ShellViewController.m */; };
 		9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4D19B2EA5B006D81FC /* checked@2x.png */; };
 		9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */; };
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
@@ -107,6 +106,8 @@
 		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
 		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
 		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
+		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
+		C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* ShellViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,8 +182,6 @@
 		9E828A5816196B7C009A6C44 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9E98DB4619B2E421006D81FC /* icon-calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-calendar@2x.png"; sourceTree = "<group>"; };
 		9E98DB4719B2E421006D81FC /* icon-users@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-users@2x.png"; sourceTree = "<group>"; };
-		9E98DB4A19B2E63D006D81FC /* ShellViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellViewController.h; sourceTree = "<group>"; };
-		9E98DB4B19B2E63D006D81FC /* ShellViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellViewController.m; sourceTree = "<group>"; };
 		9E98DB4D19B2EA5B006D81FC /* checked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checked@2x.png"; sourceTree = "<group>"; };
 		9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticesTableViewController.h; sourceTree = "<group>"; };
@@ -236,6 +235,8 @@
 		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
 		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
+		C6D9631120C2181900317C0C /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
+		C6D9631320C21CA700317C0C /* ShellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellViewController.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				8E1D993320B20C78005E4186 /* AuthService.swift */,
+				C6D9631120C2181900317C0C /* OrganizationService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -461,8 +463,7 @@
 				9E156174199266A700A31398 /* IntroViewController.h */,
 				9E156175199266A700A31398 /* IntroViewController.m */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController+Utils.swift */,
-				9E98DB4A19B2E63D006D81FC /* ShellViewController.h */,
-				9E98DB4B19B2E63D006D81FC /* ShellViewController.m */,
+				C6D9631320C21CA700317C0C /* ShellViewController.swift */,
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
@@ -701,6 +702,9 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -710,6 +714,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -738,6 +745,7 @@
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
+				C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
 				8E1F63F21E46D330004E8723 /* Member.swift in Sources */,
@@ -749,7 +757,6 @@
 				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
-				9E98DB4C19B2E63D006D81FC /* ShellViewController.m in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
 				8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
@@ -771,6 +778,7 @@
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
+				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				8E1D993420B20C78005E4186 /* AuthService.swift in Sources */,

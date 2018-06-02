@@ -8,6 +8,9 @@
 
 import UIKit
 import Parse
+import RxSwift
+import RxOptional
+import Firebase
 
 class SplashViewController: UIViewController {
 
@@ -88,6 +91,7 @@ extension SplashViewController {
         guard let user = PFUser.current() else {
             if AuthService.isLoggedIn {
                 activityIndicator.stopAnimating()
+                OrganizationService.shared.startObservingOrganization()
                 goHome()
             }
             return
@@ -154,16 +158,9 @@ extension SplashViewController {
             }
             
             // update firebase object
+            OrganizationService.shared.startObservingOrganization()
             guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
-            let ref = firRef.child("organizations").child(id)
-            var params: [String: Any] = ["owner": userId]
-            if let name = org.name {
-                params["name"] = name
-            }
-            if let number = org.leftPowerUserFeedback {
-                params["leftPowerUserFeedback"] = number.boolValue
-            }
-            ref.updateChildValues(params)
+            OrganizationService.shared.createOrUpdateOrganization(orgId: id, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
         }
     }
     
