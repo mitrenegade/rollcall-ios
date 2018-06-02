@@ -91,6 +91,7 @@ extension SplashViewController {
         guard let user = PFUser.current() else {
             if AuthService.isLoggedIn {
                 activityIndicator.stopAnimating()
+                OrganizationService.shared.startObservingOrganization()
                 goHome()
             }
             return
@@ -167,14 +168,7 @@ extension SplashViewController {
                 params["leftPowerUserFeedback"] = number.boolValue
             }
             ref.updateChildValues(params)
-            ref.observe(.value, with: { (snapshot) in
-                guard snapshot.exists() else {
-                    OrganizationService.shared.current.value = nil
-                    return
-                }
-                let org = FirebaseOrganization(snapshot: snapshot)
-                OrganizationService.shared.current.value = org
-            })
+            OrganizationService.shared.startObservingOrganization()
         }
     }
     
