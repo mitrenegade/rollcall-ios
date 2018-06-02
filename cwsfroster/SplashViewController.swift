@@ -18,6 +18,8 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: UIImageView!
     
+    var first: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,40 +30,35 @@ class SplashViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.activityIndicator.stopAnimating()
-        self.labelInfo.isHidden = true
-        self.labelInfo.text = nil
-        if AuthService.isLoggedIn {
-            self.synchronizeWithParse()
+        activityIndicator.stopAnimating()
+        labelInfo.isHidden = true
+        labelInfo.text = nil
+        
+        if first && AuthService.isLoggedIn {
+            self.didLogin()
+        } else {
+            goHome()
         }
-        else {
-            self.goHome()
-        }
+        first = false
     }
     
     func goHome() {
-        guard let homeViewController = homeViewController() else { return }
-        if let presented = presentedViewController {
-            guard homeViewController != presented else { return }
+        if presentedViewController != nil {
             dismiss(animated: true, completion: nil)
         } else {
-            present(homeViewController, animated: true, completion: nil)
-        }
-    }
-    
-    fileprivate func homeViewController() -> UIViewController? {
-        if AuthService.isLoggedIn {
-            return UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-        } else {
-            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+            let segue: String
+            if AuthService.isLoggedIn {
+                segue = "toMain"
+            } else {
+                segue = "toLogin"
+            }
+            performSegue(withIdentifier: segue, sender: nil)
         }
     }
     
     func didLogin() {
         print("logged in")
-        if AuthService.isLoggedIn {
-            self.synchronizeWithParse()
-        }
+        synchronizeWithParse()
     }
     
     func didLogout() {
@@ -80,13 +77,14 @@ var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeWithParse() {
         guard !OFFLINE_MODE else {
-            self.generateOfflineModels()
+            generateOfflineModels()
             return
         }
         
+        print("Calling synchronize with parse")
         classNames = ["members", "practices", "attendances"]
-        self.activityIndicator.startAnimating()
-        self.labelInfo.isHidden = false
+        activityIndicator.startAnimating()
+        labelInfo.isHidden = false
         
         guard let user = PFUser.current() else {
             if AuthService.isLoggedIn {
@@ -102,24 +100,24 @@ extension SplashViewController {
             labelInfo.text = "Creating organization"
             let org = Organization()
             org.name = user.username
-            org.saveInBackground(block: { (success, error) in
+            org.saveInBackground(block: { [weak self] (success, error) in
                 if success {
                     user.setObject(org, forKey: "organization")
                     user.saveEventually()
-                    self.synchronizeWithParse()
+                    self?.synchronizeWithParse()
                 }
                 else {
-                    self.synchronizeWithParse()
+                    self?.synchronizeWithParse()
                 }
             })
             return
         }
         
-        orgPointer.fetchInBackground { (object, error) in
+        orgPointer.fetchInBackground { [weak self] (object, error) in
             guard let org = object as? Organization else {
-                self.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: {
+                self?.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: {
                     AuthService.logout()
-                    self.didLogout()
+                    self?.didLogout()
                 })
                 return
             }
@@ -129,11 +127,11 @@ extension SplashViewController {
                 do {
                     let data = try imageFile.getData()
                     if let image = UIImage(data: data) {
-                        self.logo.image = image
+                        self?.logo.image = image
                         UIView.animate(withDuration: 0.25, animations: {
-                            self.logo.alpha = 1
+                            self?.logo.alpha = 1
                         })
-                        self.syncParseObjects()
+                        self?.syncParseObjects()
                         
                         // save image to firebase
 //
@@ -143,18 +141,18 @@ extension SplashViewController {
                     }
                     else {
                         print("no image")
-                        self.syncParseObjects()
+                        self?.syncParseObjects()
                     }
                 }
                 catch {
                     print("some error")
-                    self.syncParseObjects()
+                    self?.syncParseObjects()
                 }
             }
             else {
-                self.syncParseObjects()
-                self.logo.alpha = 0;
-                self.logo.image = nil
+                self?.syncParseObjects()
+                self?.logo.alpha = 0;
+                self?.logo.image = nil
             }
             
             // update firebase object
@@ -165,12 +163,12 @@ extension SplashViewController {
     }
     
     func syncParseObjects() {
-        self.labelInfo.text = "Loading..."
+        labelInfo.text = "Loading..."
         let group = DispatchGroup()
         
         group.enter()
-        Organization.queryForMembers(completion: { (results, error) in
-            self.labelInfo.text = "Loaded members"
+        Organization.queryForMembers(completion: { [weak self] (results, error) in
+            self?.labelInfo.text = "Loaded members"
             if let members = results {
                 Organization.current?.members = members
                 
@@ -214,8 +212,8 @@ extension SplashViewController {
         })
 
         group.enter()
-        Organization.queryForPractices(completion: { (results, error) in
-            self.labelInfo.text = "Loaded practices"
+        Organization.queryForPractices(completion: { [weak self] (results, error) in
+            self?.labelInfo.text = "Loaded practices"
             if let practices = results {
                 Organization.current?.practices = practices
                 
@@ -246,8 +244,8 @@ extension SplashViewController {
         })
 
         group.enter()
-        Organization.queryForAttendances(completion: { (results, error) in
-            self.labelInfo.text = "Loaded attendances"
+        Organization.queryForAttendances(completion: { [weak self] (results, error) in
+            self?.labelInfo.text = "Loaded attendances"
             if let attendances = results {
                 Organization.current?.attendances = attendances
                 for attendance: Attendance in attendances {
@@ -263,17 +261,17 @@ extension SplashViewController {
             group.leave()
         })
         
-        let workItem = DispatchWorkItem {
-            self.checkSyncComplete()
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.checkSyncComplete()
         }
         group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
     func checkSyncComplete() {
-        self.activityIndicator.stopAnimating()
-        self.labelInfo.isHidden = true
-        self.labelInfo.text = nil
-        self.goHome()
+        activityIndicator.stopAnimating()
+        labelInfo.isHidden = true
+        labelInfo.text = nil
+        goHome()
 
         if classNames.count == 0 {
             if let orgId = Organization.current?.objectId {
@@ -296,6 +294,6 @@ extension SplashViewController {
         PFUser.current()?.setObject(org, forKey: "organization")
         
         classNames.removeAll()
-        self.checkSyncComplete()
+        checkSyncComplete()
     }
 }

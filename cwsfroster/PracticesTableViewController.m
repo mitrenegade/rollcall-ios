@@ -124,8 +124,6 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    UINavigationController *nav = [segue destinationViewController];
-
     if ([segue.identifier isEqualToString:@"toNewEvent"]) {
         // create new practice
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;

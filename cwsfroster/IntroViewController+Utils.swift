@@ -227,6 +227,7 @@ extension IntroViewController {
                     self.promptForNewOrgName(completion: { (name) in
                         let userId = user.uid
                         let orgName = name ?? user.email ?? "unnamed"
+                        self.createFirebaseUser(id: user.uid, username: parseUsername)
                         OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                         
                         self.goToPractices()
