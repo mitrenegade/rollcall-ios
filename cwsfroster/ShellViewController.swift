@@ -11,21 +11,26 @@ import RxSwift
 import Firebase
 
 class ShellViewController: UITabBarController {
-    let disposeBag: DisposeBag = DisposeBag()
+    var disposeBag: DisposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.listenFor("organization:name:changed", action: #selector(updateTabBarIcons), object: nil)
-        self.listenFor("goToSettings", action: #selector(goToSettings), object: nil)
+        listenFor("organization:name:changed", action: #selector(updateTabBarIcons), object: nil)
+        listenFor("goToSettings", action: #selector(goToSettings), object: nil)
         
         if UserDefaults.standard.bool(forKey: "organization:is:new") {
-            self.selectedIndex = 1
+            selectedIndex = 1
         }
         
-        self.updateTabBarIcons()
+        updateTabBarIcons()
         
-        self.listenForOrganization()
+        listenForOrganization()
+    }
+    
+    deinit {
+        disposeBag = DisposeBag()
+        print("here")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,8 +48,9 @@ class ShellViewController: UITabBarController {
     }
     
     func listenForOrganization() {
+        print("Listening for organization")
         OrganizationService.shared.current.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (org) in
-            print("Org title: \(org?.name)")
+            print("Listening for organization -> title: \(org?.name)")
         }).disposed(by: disposeBag)
     }
     
@@ -60,7 +66,7 @@ class ShellViewController: UITabBarController {
     }
 
     func setIcon(iconName: String, for index: Int) {
-        guard let controller = self.viewControllers?[index] else { return }
+        guard let controller = viewControllers?[index] else { return }
         let image = UIImage(named: iconName)
         controller.tabBarItem.image = image
         controller.tabBarItem.selectedImage = image
