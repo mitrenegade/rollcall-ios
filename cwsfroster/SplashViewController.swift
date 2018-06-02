@@ -43,20 +43,16 @@ class SplashViewController: UIViewController {
     }
     
     func goHome() {
-        guard let homeViewController = homeViewController() else { return }
-        if let presented = presentedViewController {
-            guard homeViewController != presented else { return }
+        if presentedViewController != nil {
             dismiss(animated: true, completion: nil)
         } else {
-            present(homeViewController, animated: true, completion: nil)
-        }
-    }
-    
-    fileprivate func homeViewController() -> UIViewController? {
-        if AuthService.isLoggedIn {
-            return UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-        } else {
-            return UIStoryboard(name: "Login", bundle: nil).instantiateInitialViewController()
+            let segue: String
+            if AuthService.isLoggedIn {
+                segue = "toMain"
+            } else {
+                segue = "toLogin"
+            }
+            performSegue(withIdentifier: segue, sender: nil)
         }
     }
     
