@@ -18,6 +18,8 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: UIImageView!
     
+    var first: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,24 +34,19 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
         
-        let _ = goHomeOnStartup
-    }
-    
-    fileprivate lazy var goHomeOnStartup = {
-        if AuthService.isLoggedIn {
+        if first && AuthService.isLoggedIn {
             self.didLogin()
         } else {
-            self.goHome()
+            goHome()
         }
-    }()
-
+        first = false
+    }
+    
     func goHome() {
         guard let homeViewController = homeViewController() else { return }
         if let presented = presentedViewController {
             guard homeViewController != presented else { return }
-            dismiss(animated: true, completion: {
-                self.present(homeViewController, animated: true, completion: nil)
-            })
+            dismiss(animated: true, completion: nil)
         } else {
             present(homeViewController, animated: true, completion: nil)
         }
