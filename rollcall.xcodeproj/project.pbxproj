@@ -107,6 +107,7 @@
 		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
 		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
 		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
+		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +237,7 @@
 		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
 		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
+		C6D9631120C2181900317C0C /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				8E1D993320B20C78005E4186 /* AuthService.swift */,
+				C6D9631120C2181900317C0C /* OrganizationService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -701,6 +704,9 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -710,6 +716,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -771,6 +780,7 @@
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
+				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				8E1D993420B20C78005E4186 /* AuthService.swift in Sources */,

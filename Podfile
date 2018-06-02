@@ -8,4 +8,7 @@ pod 'Parse'
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
+pod 'RxSwift'
+pod 'RxCocoa'
+pod 'RxOptional'
 end

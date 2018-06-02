@@ -8,6 +8,9 @@
 
 import UIKit
 import Parse
+import RxSwift
+import RxOptional
+import Firebase
 
 class SplashViewController: UIViewController {
 
@@ -164,6 +167,14 @@ extension SplashViewController {
                 params["leftPowerUserFeedback"] = number.boolValue
             }
             ref.updateChildValues(params)
+            ref.observe(.value, with: { (snapshot) in
+                guard snapshot.exists() else {
+                    OrganizationService.shared.current.value = nil
+                    return
+                }
+                let org = FirebaseOrganization(snapshot: snapshot)
+                OrganizationService.shared.current.value = org
+            })
         }
     }
     
