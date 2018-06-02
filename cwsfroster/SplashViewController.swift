@@ -114,7 +114,7 @@ extension SplashViewController {
         }
         
         orgPointer.fetchInBackground { [weak self] (object, error) in
-            guard let org = object as? Organization else {
+            guard let org = object as? Organization, let orgId = org.objectId else {
                 self?.simpleAlert("Invalid organization", message: "We could not log you in or load your organization. Please try again.", completion: {
                     AuthService.logout()
                     self?.didLogout()
@@ -123,6 +123,7 @@ extension SplashViewController {
             }
             Organization.current = org
 
+            var firebaseOrgPhotoUrl: String?
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
                 do {
                     let data = try imageFile.getData()
@@ -134,10 +135,14 @@ extension SplashViewController {
                         self?.syncParseObjects()
                         
                         // save image to firebase
-//
-//                        guard let id = org.objectId else { return }
-//                        let ref = firRef.child("organizations").child(id)
-
+                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
+                            if let url = url {
+                                firebaseOrgPhotoUrl = url
+                                if let currentOrg = OrganizationService.shared.current.value {
+                                    currentOrg.photoUrl = url
+                                }
+                            }
+                        })
                     }
                     else {
                         print("no image")
@@ -157,8 +162,11 @@ extension SplashViewController {
             
             // update firebase object
             OrganizationService.shared.startObservingOrganization()
-            guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
-            OrganizationService.shared.createOrUpdateOrganization(orgId: id, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
+            guard let userId = firAuth.currentUser?.uid else { return }
+            OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
+            if let currentOrg = OrganizationService.shared.current.value, let url = firebaseOrgPhotoUrl {
+                currentOrg.photoUrl = url
+            }
         }
     }
     
