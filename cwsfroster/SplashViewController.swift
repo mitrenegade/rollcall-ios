@@ -158,17 +158,9 @@ extension SplashViewController {
             }
             
             // update firebase object
-            guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
-            let ref = firRef.child("organizations").child(id)
-            var params: [String: Any] = ["owner": userId]
-            if let name = org.name {
-                params["name"] = name
-            }
-            if let number = org.leftPowerUserFeedback {
-                params["leftPowerUserFeedback"] = number.boolValue
-            }
-            ref.updateChildValues(params)
             OrganizationService.shared.startObservingOrganization()
+            guard let id = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+            OrganizationService.shared.createOrUpdateOrganization(orgId: id, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
         }
     }
     

@@ -221,8 +221,18 @@ extension IntroViewController {
             }
             else {
                 print("createUser results: \(String(describing: user))")
-                self.goToPractices()
-                if let user = user {
+                guard let user = user else { return }
+                if self.isSignup {
+                    // create org
+                    self.promptForNewOrgName(completion: { (name) in
+                        let userId = user.uid
+                        let orgName = name ?? user.email ?? "unnamed"
+                        OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+                        
+                        self.goToPractices()
+                    })
+                } else {
+                    self.goToPractices()
                     self.createFirebaseUser(id: user.uid, username: nil)
                 }
             }
@@ -263,5 +273,23 @@ extension IntroViewController {
             params["parseUsername"] = username
         }
         ref.updateChildValues(params)
+    }
+    
+    func promptForNewOrgName(completion: ((String?)->Void)?) {
+        let alert = UIAlertController(title: "What is your organization called?", message: "Please enter the name for your organization.", preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "i.e. Boston Soccer Social Club"
+        }
+        alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
+            if let textField = alert.textFields?[0], let name = textField.text, !name.isEmpty {
+                completion?(name)
+            } else {
+                completion?(nil)
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+            completion?(nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
