@@ -144,7 +144,7 @@
     NSCalendar *cal=[NSCalendar autoupdatingCurrentCalendar];
     [cal setFirstWeekday:2]; // forces monday to be the beginning of the week
     [cal setTimeZone:[NSTimeZone localTimeZone]];
-    BOOL success= [cal rangeOfUnit:NSWeekCalendarUnit startDate:&start
+    [cal rangeOfUnit:NSWeekCalendarUnit startDate:&start
                           interval: &extends forDate:targetDate];
     NSTimeInterval dateInSecs = [date timeIntervalSinceReferenceDate];
     NSTimeInterval dayStartInSecs= [start timeIntervalSinceReferenceDate];

@@ -59,9 +59,7 @@ class SplashViewController: UIViewController {
     
     func didLogin() {
         print("logged in")
-        if AuthService.isLoggedIn {
-            synchronizeWithParse()
-        }
+        goHome()
     }
     
     func didLogout() {
