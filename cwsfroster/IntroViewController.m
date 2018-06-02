@@ -48,7 +48,7 @@
     [UIView animateWithDuration:.25 animations:^{
         NSString *title = self.isSignup ? @"Sign up" : @"Log in";
         [self.buttonLoginSignup setTitle:title forState:UIControlStateNormal];
-        NSString *title2 = self.isSignup ? @"Back to login" : @"Not registered?";
+        NSString *title2 = self.isSignup ? @"Back to login" : @"New user?";
         [self.buttonSwitchMode setTitle:title2 forState:UIControlStateNormal];
         //[tutorialView setAlpha:self.isSignup ? 0 : 1];
         
@@ -76,10 +76,6 @@
 }
 
 #pragma login
--(void)signup {
-    [self createEmailUserWithEmail:inputLogin.text parseUsername: nil];
-}
-
 -(void)showProgress: (NSString *)title {
     if (!progress || !progress.taskInProgress) {
         progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

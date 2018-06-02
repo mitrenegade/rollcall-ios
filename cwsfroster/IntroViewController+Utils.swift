@@ -69,6 +69,25 @@ extension IntroViewController {
 
 // Firebase migration
 extension IntroViewController {
+    func signup() {
+        guard let email = inputLogin.text, !email.isEmpty else {
+            self.simpleAlert("Please enter an email", message: nil)
+            return
+        }
+        guard let password = inputPassword.text, !password.isEmpty else {
+            print("Invalid password")
+            self.simpleAlert("Please enter a password", message: nil)
+            return
+        }
+        guard let confirmation = inputConfirmation.text, !confirmation.isEmpty, confirmation == inputPassword.text else {
+            self.simpleAlert("Password does not match", message: nil)
+            print("Invalid password")
+            return
+        }
+        showProgress("Creating account...")
+        createEmailUser(email: email, parseUsername: nil)
+    }
+    
     func tryFirebaseLogin() {
         guard let email = inputLogin.text, !email.isEmpty else {
             print("Invalid email")
