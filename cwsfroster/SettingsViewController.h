@@ -10,11 +10,18 @@
 #import <MessageUI/MFMailComposeViewController.h>
 
 @class MBProgressHUD;
+@class CameraHelper;
 @interface SettingsViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    UIImagePickerController *_picker;
     MBProgressHUD *progress;
+    CameraHelper *cameraHelper;
 }
 -(IBAction)didClickClose:(id)sender;
+
+@property (nonatomic) CameraHelper *cameraHelper;
+
+-(void)showProgress: (NSString *)title;
+-(void)updateProgress:(float)percent;
+-(void)hideProgress;
 
 @end
