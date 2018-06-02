@@ -11,14 +11,15 @@ import RxSwift
 import Firebase
 
 class ShellViewController: UITabBarController {
-    var disposeBag: DisposeBag = DisposeBag()
+    var disposeBag: DisposeBag? = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         listenFor("organization:name:changed", action: #selector(updateTabBarIcons), object: nil)
         listenFor("goToSettings", action: #selector(goToSettings), object: nil)
-        
+        listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
+
         if UserDefaults.standard.bool(forKey: "organization:is:new") {
             selectedIndex = 1
         }
@@ -29,8 +30,17 @@ class ShellViewController: UITabBarController {
     }
     
     deinit {
-        disposeBag = DisposeBag()
-        print("here")
+        // FIXME: for some reason, presenting ShellViewController on SplashViewController causes ShellViewController to never deallocate. maybe it's because of the mix of objc and swift classes? As a result, disposeBag is never deallocated, and listeners and observers never stop observing. We have to force that to happen on logout
+        print("deinit succeess")
+    }
+    
+    func didLogout() {
+        // this causes listenForOrganization to be successfully cleared even if ShellViewController is not actually correctly deallocated on logout (corner case)
+        disposeBag = nil
+        print("here didlogout")
+        stopListeningFor("organization:name:changed")
+        stopListeningFor("goToSettings")
+        stopListeningFor(.LogoutSuccess)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,6 +59,7 @@ class ShellViewController: UITabBarController {
     
     func listenForOrganization() {
         print("Listening for organization")
+        guard let disposeBag = disposeBag else { return }
         OrganizationService.shared.current.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (org) in
             print("Listening for organization -> title: \(org?.name)")
         }).disposed(by: disposeBag)
