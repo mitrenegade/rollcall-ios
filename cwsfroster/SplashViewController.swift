@@ -11,12 +11,13 @@ import Parse
 import RxSwift
 import RxOptional
 import Firebase
+import AsyncImageView
 
 class SplashViewController: UIViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var labelInfo: UILabel!
-    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logo: AsyncImageView!
     
     var first: Bool = true
     
@@ -123,7 +124,6 @@ extension SplashViewController {
             }
             Organization.current = org
 
-            var firebaseOrgPhotoUrl: String?
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
                 do {
                     let data = try imageFile.getData()
@@ -137,9 +137,13 @@ extension SplashViewController {
                         // save image to firebase
                         FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
                             if let url = url {
-                                firebaseOrgPhotoUrl = url
                                 if let currentOrg = OrganizationService.shared.current.value {
-                                    currentOrg.photoUrl = url
+                                    if let url = currentOrg.photoUrl {
+                                        self?.logo.alpha = 1
+                                        self?.logo.imageURL = URL(string: url)
+                                    } else {
+                                        currentOrg.photoUrl = url
+                                    }
                                 }
                             }
                         })
@@ -164,9 +168,6 @@ extension SplashViewController {
             OrganizationService.shared.startObservingOrganization()
             guard let userId = firAuth.currentUser?.uid else { return }
             OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
-            if let currentOrg = OrganizationService.shared.current.value, let url = firebaseOrgPhotoUrl {
-                currentOrg.photoUrl = url
-            }
         }
     }
     

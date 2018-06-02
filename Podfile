@@ -12,4 +12,5 @@ pod 'Firebase/Storage'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxOptional'
+pod 'AsyncImageView'
 end
