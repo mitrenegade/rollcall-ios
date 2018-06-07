@@ -56,7 +56,16 @@ class FirebaseEvent: FirebaseBaseModel {
             self.dict["details"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
-        
+    }
+
+    var organization: String? {
+        get {
+            return self.dict["organization"] as? String
+        }
+        set {
+            self.dict["organization"] = newValue
+            self.firebaseRef?.updateChildValues(self.dict)
+        }
     }
 }
 
@@ -75,6 +84,16 @@ extension FirebaseEvent {
         return "\(time)"
         */
         return date.timeStringForPicker()
+    }
+    
+    func dateOnly() -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        guard let date = self.date else { return nil }
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        if let componentsBasedDate = calendar.date(from: dateComponents) {
+            return componentsBasedDate
+        }
+        return nil
     }
 }
 
