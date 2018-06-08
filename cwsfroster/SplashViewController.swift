@@ -59,7 +59,15 @@ class SplashViewController: UIViewController {
     
     func didLogin() {
         print("logged in")
-        synchronizeWithParse()
+        // update firebase object
+        OrganizationService.shared.startObservingOrganization()
+        OrganizationService.shared.current.asObservable().subscribe(onNext: { (org) in
+            print("org \(org)")
+            self.goHome()
+        }, onError: { (error) in
+            print("error")
+            self.synchronizeParseOrganization()
+        })
     }
     
     func didLogout() {
@@ -76,7 +84,7 @@ class SplashViewController: UIViewController {
 // MARK: Models - ensure that parse models are updated into core data when automatically logging in
 var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
-    func synchronizeWithParse() {
+    func synchronizeParseOrganization() {
         guard !OFFLINE_MODE else {
             generateOfflineModels()
             return
@@ -91,7 +99,6 @@ extension SplashViewController {
             if AuthService.isLoggedIn {
                 activityIndicator.stopAnimating()
                 OrganizationService.shared.startObservingOrganization()
-                goHome()
             }
             return
         }
@@ -105,10 +112,10 @@ extension SplashViewController {
                 if success {
                     user.setObject(org, forKey: "organization")
                     user.saveEventually()
-                    self?.synchronizeWithParse()
+                    self?.synchronizeParseOrganization()
                 }
                 else {
-                    self?.synchronizeWithParse()
+                    self?.synchronizeParseOrganization()
                 }
             })
             return
@@ -133,20 +140,6 @@ extension SplashViewController {
                             self?.logo.alpha = 1
                         })
                         self?.syncParseObjects()
-                        
-                        // save image to firebase
-                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
-                            if let url = url {
-                                if let currentOrg = OrganizationService.shared.current.value {
-                                    if let url = currentOrg.photoUrl {
-                                        self?.logo.alpha = 1
-                                        self?.logo.imageURL = URL(string: url)
-                                    } else {
-                                        currentOrg.photoUrl = url
-                                    }
-                                }
-                            }
-                        })
                     }
                     else {
                         print("no image")
@@ -163,11 +156,6 @@ extension SplashViewController {
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
             }
-            
-            // update firebase object
-            OrganizationService.shared.startObservingOrganization()
-            guard let userId = firAuth.currentUser?.uid else { return }
-            OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
         }
     }
     
@@ -271,21 +259,38 @@ extension SplashViewController {
         })
         
         let workItem = DispatchWorkItem { [weak self] in
-            self?.checkSyncComplete()
+            self?.syncComplete()
         }
         group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
-    func checkSyncComplete() {
+    func syncComplete() {
         activityIndicator.stopAnimating()
         labelInfo.isHidden = true
         labelInfo.text = nil
         goHome()
 
-        if classNames.count == 0 {
-            if let orgId = Organization.current?.objectId {
-                let ref = firRef.child("organizations").child(orgId)
-                ref.updateChildValues(["migratedFromParse": true])
+        // only create organization for a migration after all other objects have been migrated
+        guard let org = Organization.current, let orgId = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+        
+        // make sure Firebase Organization exists
+        OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
+
+        // save image to firebase
+        DispatchQueue.global().async {
+            if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
+                do {
+                    let data = try imageFile.getData()
+                    if let image = UIImage(data: data) {
+                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
+                            if let url = url, let currentOrg = OrganizationService.shared.current.value {
+                                currentOrg.photoUrl = url
+                            }
+                        })
+                    }
+                } catch let error {
+                    print("oops")
+                }
             }
         }
     }
@@ -303,6 +308,6 @@ extension SplashViewController {
         PFUser.current()?.setObject(org, forKey: "organization")
         
         classNames.removeAll()
-        checkSyncComplete()
+        syncComplete()
     }
 }
