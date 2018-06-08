@@ -60,7 +60,7 @@
     self.currentRow = -1;
     [self generatePickerDates];
     
-    NSString *defaultTitle = self.practice.title ? : [self titleForDate:[NSDate date]];
+    NSString *defaultTitle = self.practice.name ? : [self titleForDate:[NSDate date]];
     for (int i=0; i<[self.datesForPicker count]; i++) {
         if ([defaultTitle isEqualToString:self.datesForPicker[i]]) {
             self.currentRow = i;
