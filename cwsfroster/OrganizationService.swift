@@ -62,7 +62,12 @@ class OrganizationService: NSObject {
         ref.updateChildValues(params)
     }
     
-    func events(for org: FirebaseOrganization, completion: (([FirebaseEvent]?, Error?) -> Void)?) {
+    func events(completion: (([FirebaseEvent]?, Error?) -> Void)?) {
+        guard let org = current.value else {
+            completion?(nil, nil)
+            return
+        }
+        
         let ref = firRef.child("organizations").child(org.id)
         ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
             guard snapshot.exists() else {
