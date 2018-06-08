@@ -10,10 +10,11 @@ import UIKit
 
 class AttendanceTableViewController: UITableViewController {
 
-    var isNewPractice: Bool = false
-    var practice: Practice?
+    var currentPractice: FirebaseEvent?
     var newAttendances: [Member: Attendance] = [Member: Attendance]()
+    var newPracticeDict: [String: Any] = [:]
 
+    fileprivate var isNewPractice: Bool { return currentPractice == nil }
     var delegate: PracticeEditDelegate?
     
     override func viewDidLoad() {
@@ -44,14 +45,19 @@ class AttendanceTableViewController: UITableViewController {
             // because didCreatePractice does not reload attendances
             //Organization.current?.saveInBackground()
             
-            practice?.saveInBackground(block: { (success, error) in
-                if success {
-                    ParseLog.log(typeString: "PracticeCreated", title: self.practice?.objectId, message: nil, params: nil, error: nil)
+            let name = newPracticeDict["name"] as? String ?? "New event"
+            let date = newPracticeDict["date"] as? Date ?? Date()
+            let organizationId = OrganizationService.shared.current.value?.id ?? "0"
+            let notes = newPracticeDict["notes"] as? String
+            let details = newPracticeDict["details"] as? String
+            EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: organizationId) { (event, error) in
+                if let event = event {
+                    ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
                     self.delegate?.didCreatePractice()
                 }
                 self.navigationController?.dismiss(animated: true, completion: {
                 })
-            })
+            }
         }
         else {
             self.delegate?.didEditPractice()
@@ -67,7 +73,7 @@ class AttendanceTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToOnSiteSignup" {
             if let controller = segue.destination as? OnsiteSignupViewController {
-                controller.practice = self.practice
+                controller.practice = currentPractice
             }
         }
     }
@@ -99,7 +105,7 @@ extension AttendanceTableViewController {
             // Configure the cell...
             guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
             let member = members[indexPath.row]
-            attendanceCell.configure(member: member, practice: self.practice, newAttendance: newAttendances[member], row: indexPath.row)
+            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
             return cell
         }
     }
@@ -109,7 +115,7 @@ extension AttendanceTableViewController {
 extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let practice = self.practice else { return }
+        guard let practice = self.currentPractice else { return }
 
         if indexPath.section == 0 {
             practice.saveInBackground(block: { (success, error) in
@@ -135,7 +141,7 @@ extension AttendanceTableViewController {
         guard let members = Organization.current?.members, indexPath.row < members.count else { return }
         let member = members[indexPath.row]
         
-        if let attendance = practice.attendanceFor(member: member) {
+        if let attendance = currentPractice.attendanceFor(member: member) {
             self.toggleAttendance(attendance: attendance)
             attendance.saveInBackground { (success, error) in
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -149,14 +155,14 @@ extension AttendanceTableViewController {
         }
         else {
             if self.isNewPractice {
-                Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: false, completion: { (attendance, error) in
+                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: false, completion: { (attendance, error) in
                     ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
                     self.newAttendances[member] = attendance
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
             }
             else {
-                Attendance.saveNewAttendanceFor(member: member, practice: practice, saveToParse: true, completion: { (attendance, error) in
+                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: true, completion: { (attendance, error) in
                     ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })

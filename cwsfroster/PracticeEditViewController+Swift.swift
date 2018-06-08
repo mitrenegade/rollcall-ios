@@ -75,6 +75,35 @@ extension PracticeEditViewController {
     func goToAttendees() {
         self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
     }
+    
+    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "ToEditAttendees", let controller = segue.destination as? AttendanceTableViewController {
+            controller.delegate = delegate
+            if let practice = practice {
+                controller.currentPractice = practice
+            } else {
+                // BOBBY TODO: fill out new practice info
+                controller.newPracticeDict = [:]
+            }
+        } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
+            if let practice = practice {
+                // BOBBY TODO
+//                controller.currentPractice = practice
+            }
+        } else if segue.identifier == "ToEventNotes", let controller = segue.destination as? NotesViewController {
+            if let practice = practice {
+                // BOBBY TODO
+                //                controller.currentPractice = practice
+            }
+        } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
+            if let practice = practice {
+                // BOBBY TODO
+                //                controller.currentPractice = practice
+            }
+        }
+    }
 }
 
 // Notes

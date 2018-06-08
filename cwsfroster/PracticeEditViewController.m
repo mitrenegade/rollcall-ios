@@ -88,33 +88,6 @@
     // don't need
 }
 
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    if ([segue.identifier isEqualToString:@"ToEditAttendees"]) {
-        AttendanceTableViewController *controller = (AttendanceTableViewController *)segue.destinationViewController;
-        [controller setPractice:self.practice];
-        [controller setIsNewPractice: self.isNewPractice];
-        controller.delegate = self.delegate;
-    }
-    else if ([segue.identifier isEqualToString:@"ToOnsiteSignup"]) {
-        OnsiteSignupViewController *controller = (OnsiteSignupViewController *) segue.destinationViewController;
-        [controller setPractice:self.practice];
-    }
-    else if ([segue.identifier isEqualToString:@"ToEventNotes"]) {
-        NotesViewController *controller = (NotesViewController *) segue.destinationViewController;
-        [controller setPractice:self.practice];
-    }
-    else if ([segue.identifier isEqualToString:@"ToRandomDrawing"]) {
-        RandomDrawingViewController *controller = (RandomDrawingViewController *) segue.destinationViewController;
-        [controller setPractice:self.practice];
-    }
-}
-
 #pragma mark Picker DataSource/Delegate
 -(void)generatePickerDates {
     if (!self.datesForPicker) {
