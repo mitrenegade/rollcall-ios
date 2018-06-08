@@ -67,6 +67,15 @@ class FirebaseEvent: FirebaseBaseModel {
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
+    
+    // BOBBY TODO: return the value from events/id/attendees
+    var attendees: [String]? {
+        return []
+    }
+    
+    func attendance(for userId: String) -> AttendedStatus {
+        return AttendedStatus.Present
+    }
 }
 
 // Utils

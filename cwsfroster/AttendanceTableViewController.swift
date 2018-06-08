@@ -73,7 +73,8 @@ class AttendanceTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToOnSiteSignup" {
             if let controller = segue.destination as? OnsiteSignupViewController {
-                controller.practice = currentPractice
+                // BOBBY TODO
+//                controller.practice = currentPractice
             }
         }
     }
@@ -105,7 +106,8 @@ extension AttendanceTableViewController {
             // Configure the cell...
             guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
             let member = members[indexPath.row]
-            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
+            // BOBBY TODO
+//            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
             return cell
         }
     }
@@ -118,56 +120,58 @@ extension AttendanceTableViewController {
         guard let practice = self.currentPractice else { return }
 
         if indexPath.section == 0 {
-            practice.saveInBackground(block: { (success, error) in
-                DispatchQueue.main.async {
-                    if success {
-                        if self.isNewPractice {
-                            Organization.current?.practices?.insert(practice, at: 0)
-                            self.isNewPractice = false
-                        }
-                        self.delegate?.didEditPractice()
-                        self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
-                        
-                        ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
-                    }
-                    else {
-                        self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
-                    }
-                }
-            })
+            // BOBBY TODO
+//            practice.saveInBackground(block: { (success, error) in
+//                DispatchQueue.main.async {
+//                    if success {
+//                        if self.isNewPractice {
+//                            Organization.current?.practices?.insert(practice, at: 0)
+//                            self.isNewPractice = false
+//                        }
+//                        self.delegate?.didEditPractice()
+//                        self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+//
+//                        ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
+//                    }
+//                    else {
+//                        self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
+//                    }
+//                }
+//            })
             return
         }
         
         guard let members = Organization.current?.members, indexPath.row < members.count else { return }
         let member = members[indexPath.row]
         
-        if let attendance = currentPractice.attendanceFor(member: member) {
-            self.toggleAttendance(attendance: attendance)
-            attendance.saveInBackground { (success, error) in
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                ParseLog.log(typeString: "AttendanceSaved", title: attendance.objectId, message: nil, params: nil, error: nil)
-            }
-        }
-        else if let attendance = newAttendances[member] {
-            self.toggleAttendance(attendance: attendance)
-            newAttendances[member] = attendance
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
-        else {
-            if self.isNewPractice {
-                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: false, completion: { (attendance, error) in
-                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
-                    self.newAttendances[member] = attendance
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                })
-            }
-            else {
-                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: true, completion: { (attendance, error) in
-                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                })
-            }
-        }
+        // BOBBY TODO
+//        if let attendance = currentPractice.attendanceFor(member: member) {
+//            self.toggleAttendance(attendance: attendance)
+//            attendance.saveInBackground { (success, error) in
+//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//                ParseLog.log(typeString: "AttendanceSaved", title: attendance.objectId, message: nil, params: nil, error: nil)
+//            }
+//        }
+//        else if let attendance = newAttendances[member] {
+//            self.toggleAttendance(attendance: attendance)
+//            newAttendances[member] = attendance
+//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+//        else {
+//            if self.isNewPractice {
+//                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: false, completion: { (attendance, error) in
+//                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
+//                    self.newAttendances[member] = attendance
+//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//                })
+//            }
+//            else {
+//                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: true, completion: { (attendance, error) in
+//                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
+//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+//                })
+//            }
+//        }
     }
     
     func toggleAttendance(attendance: Attendance) {
