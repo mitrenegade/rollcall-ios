@@ -60,6 +60,10 @@ class SplashViewController: UIViewController {
     }
     
     func didLogin(_ notification: NSNotification?) {
+        guard !OFFLINE_MODE else {
+            FirebaseOfflineParser.loadData()
+            return
+        }
         print("BOBBYTEST logged in, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
         // update firebase object
         if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
@@ -91,7 +95,8 @@ var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeParseOrganization() {
         guard !OFFLINE_MODE else {
-            generateOfflineModels()
+//            generateOfflineModels()
+            FirebaseOfflineParser.loadData()
             return
         }
         
