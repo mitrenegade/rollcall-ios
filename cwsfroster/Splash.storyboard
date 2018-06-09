@@ -52,7 +52,7 @@ for your awesome event</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IMx-8w-oQ1">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IMx-8w-oQ1" customClass="AsyncImageView" customModule="RollCall" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="510"/>
                             </imageView>
                         </subviews>

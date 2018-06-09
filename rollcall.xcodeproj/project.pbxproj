@@ -26,6 +26,8 @@
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
+		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
+		8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070C120C3469C00EF478F /* CameraHelper.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
 		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
 		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
@@ -131,6 +133,8 @@
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
+		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
+		8EA070C120C3469C00EF478F /* CameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHelper.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 			children = (
 				8E1D993320B20C78005E4186 /* AuthService.swift */,
 				C6D9631120C2181900317C0C /* OrganizationService.swift */,
+				8EA070BE20C342B000EF478F /* FirebaseImageService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -301,6 +306,14 @@
 				C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		8EA070C020C3469C00EF478F /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				8EA070C120C3469C00EF478F /* CameraHelper.swift */,
+			);
+			path = Photo;
 			sourceTree = "<group>";
 		};
 		8EE005A41E3D833E00272DC0 /* Storyboards */ = {
@@ -467,6 +480,7 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
+				8EA070C020C3469C00EF478F /* Photo */,
 				8E0D882F1E74C65200DDFD7C /* Ratings */,
 				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
 				8EF3D96A1E765A2E003BFB61 /* Camera */,
@@ -698,6 +712,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-rollcall/Pods-rollcall-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AsyncImageView/AsyncImageView.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -710,6 +725,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AsyncImageView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -734,6 +750,7 @@
 			files = (
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
+				8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
@@ -752,6 +769,7 @@
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
+				8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */,
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
 				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */,

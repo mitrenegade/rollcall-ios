@@ -18,32 +18,6 @@
 
 @implementation SettingsViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 -(void)didClickClose:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -90,6 +64,7 @@
             }
             else if (buttonIndex == 1) {
                 NSLog(@"Change logo");
+                [self setupCameraHelper];
                 [self goToUpdateLogo];
             }
         } onCancel:nil];
@@ -250,119 +225,27 @@
     }];
 }
 
-#pragma mark Camera
--(void)goToUpdateLogo {
-    _picker = [[UIImagePickerController alloc] init];
-    _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
-    _picker.toolbarHidden = YES; // hide toolbar of app, if there is one.
-    _picker.allowsEditing = YES;
-    _picker.wantsFullScreenLayout = YES;
-    _picker.delegate = self;
-
-    [self presentViewController:_picker animated:YES completion:nil];
-
-    [ParseLog logWithTypeString:@"UpdateOrganizationLogo" title:[[Organization current] objectId] message:nil params:nil error:nil];
-}
-
-#pragma mark ImagePickerController delegate
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    if (image.size.width > 320 || image.size.height > 320) {
-        image = [image resizedImage:CGSizeMake(320, 320/image.size.width*image.size.height) interpolationQuality:kCGInterpolationDefault];
+-(void)showProgress: (NSString *)title {
+    if (!progress || !progress.taskInProgress) {
+        progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
-    NSData *data = UIImageJPEGRepresentation(image, .8);
-    PFFile *imageFile = [PFFile fileWithData:data];
-
-    progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.taskInProgress = YES;
     progress.mode = MBProgressHUDModeDeterminateHorizontalBar;
-    progress.labelText = @"Saving new logo";
-    // Save PFFile
-    [imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Hide old HUD, show completed HUD (see example for code)
-            [progress hide:YES];
-
-            // Create a PFObject around a PFFile and associate it with the current user
-            Organization *org = [Organization current];
-            if (org) {
-                org.logoData = imageFile;
-                [org saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-                    if (succeeded) {
-                        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[org objectId] message:nil params:nil error:nil];
-                    }
-                }];
-            }
-        }
-        else{
-            progress.labelText = @"Upload failed";
-            progress.mode = MBProgressHUDModeText;
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-            [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[[Organization current] objectId] message:nil params:nil error:error];
-        }
-    } progressBlock:^(int percentDone) {
-        // Update your progress spinner here. percentDone will be between 0 and 100.
-        progress.progress = percentDone/100.0;
-    }];
-
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (title == nil) {
+        progress.labelText = @"Uploading photo";
+    } else {
+        progress.labelText = title;
+    }
 }
 
-//Tells the delegate that the user cancelled the pick operation.
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
+-(void)updateProgress:(float)percent {
+    progress.progress = percent;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void)hideProgress {
+    progress.taskInProgress = NO;
+    [progress hide:YES];
+    progress = nil;
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

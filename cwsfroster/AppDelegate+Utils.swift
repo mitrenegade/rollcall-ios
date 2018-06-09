@@ -38,5 +38,18 @@ extension AppDelegate {
         if let path = filePath, let fileopts = FirebaseOptions.init(contentsOfFile: path) {
             FirebaseApp.configure(options: fileopts)
         }
+        
+        // handle firebase user
+        let userDefaults = UserDefaults.standard
+        if userDefaults.value(forKey: "appFirstTimeOpened") == nil {
+            //if app is first time opened then it will be nil
+            userDefaults.setValue(true, forKey: "appFirstTimeOpened")
+            // signOut from FIRAuth
+            do {
+                try Auth.auth().signOut()
+            }catch {
+                print("signout didn't work")
+            }
+        }
     }
 }

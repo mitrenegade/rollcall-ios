@@ -25,6 +25,8 @@
     BOOL isFailed;
 
     IBOutlet TutorialScrollView *tutorialView;
+    
+    BOOL isParseConversion;
 }
 
 @property (nonatomic) BOOL isSignup;
@@ -33,12 +35,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *inputLogin;
 @property (weak, nonatomic) IBOutlet UITextField *inputPassword;
 @property (weak, nonatomic) IBOutlet UITextField *inputConfirmation;
+@property (nonatomic) BOOL isParseConversion;
 
 -(void)refresh;
 -(void)enableButtons:(BOOL)enabled;
 
 -(void)loginToParse;
--(void)goToPracticesHelper;
+-(void)goToPracticesHelper: (BOOL)convertedFromParse;
 -(void)showProgress: (NSString *)title;
 -(void)hideProgress;
 @end
