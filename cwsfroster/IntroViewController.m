@@ -104,13 +104,6 @@
     return YES;
 }
 
--(void)goToPracticesHelper {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(showProgress) object:nil];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideProgress) object:nil];
-    
-    [self notifyForLogInSuccess];
-}
-
 #pragma mark TextFieldDelegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];

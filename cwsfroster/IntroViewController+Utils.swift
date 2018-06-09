@@ -13,7 +13,7 @@ import Firebase
 // MARK: Swift notifications
 extension IntroViewController {
     func notifyForLogInSuccess() {
-        self.notify(.LoginSuccess, object: nil, userInfo: nil)
+        self.notify(.LoginSuccess, object: nil, userInfo: ["convertedFromParse": isParseConversion])
     }
     
     @IBAction func didClickButton(_ sender: AnyObject?) {
@@ -65,6 +65,12 @@ extension IntroViewController {
         }
     }
     
+    fileprivate func goToPracticesHelper() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showProgress(_:)), object: nil)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideProgress), object: nil)
+        
+        notifyForLogInSuccess()
+    }
 }
 
 // Firebase migration
@@ -116,6 +122,7 @@ extension IntroViewController {
                     self.loginToParse(email: email, password: password, completion: { (success, error) in
                         if success {
                             self.promptForNewEmail(parseUsername: email)
+                            self.isParseConversion = true
                         } else {
                             self.simpleAlert("Could not log in", message: "Please try again")
                             self.hideProgress()

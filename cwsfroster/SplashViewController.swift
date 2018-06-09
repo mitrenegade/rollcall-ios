@@ -21,10 +21,12 @@ class SplashViewController: UIViewController {
     
     var first: Bool = true
     
+    fileprivate var disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listenFor(.LoginSuccess, action: #selector(didLogin), object: nil)
+        listenFor(.LoginSuccess, action: #selector(didLogin(_:)), object: nil)
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
     }
     
@@ -36,7 +38,7 @@ class SplashViewController: UIViewController {
         labelInfo.text = nil
         
         if first && AuthService.isLoggedIn {
-            self.didLogin()
+            self.didLogin(nil)
         } else {
             goHome()
         }
@@ -57,17 +59,20 @@ class SplashViewController: UIViewController {
         }
     }
     
-    func didLogin() {
-        print("logged in")
+    func didLogin(_ notification: NSNotification?) {
+        print("BOBBYTEST logged in, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
         // update firebase object
-        OrganizationService.shared.startObservingOrganization()
-        OrganizationService.shared.current.asObservable().subscribe(onNext: { (org) in
-            print("org \(org)")
-            self.goHome()
-        }, onError: { (error) in
-            print("error")
-            self.synchronizeParseOrganization()
-        })
+        if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
+            synchronizeParseOrganization()
+        } else {
+            activityIndicator.startAnimating()
+            OrganizationService.shared.startObservingOrganization()
+            OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
+                print("org \(org)")
+                self.goHome()
+                self.disposeBag = DisposeBag() // stops listening
+            }).disposed(by: disposeBag)
+        }
     }
     
     func didLogout() {
