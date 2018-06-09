@@ -64,11 +64,11 @@ class OrganizationService: NSObject {
     
     func events(completion: (([FirebaseEvent]?, Error?) -> Void)?) {
         guard let org = current.value else {
-            completion?(nil, nil)
+            completion?(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }
         
-        let ref = firRef.child("organizations").child(org.id)
+        let ref = firRef.child("events")
         ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
             guard snapshot.exists() else {
                 completion?(nil, nil)

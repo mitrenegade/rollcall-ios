@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 var _practices: [FirebaseEvent]?
+var _oldPractices: [Practice]?
 extension PracticesTableViewController: UITableViewDataSource {
     var practices: [FirebaseEvent] {
         return _practices ?? []
@@ -55,13 +56,18 @@ extension PracticesTableViewController: UITableViewDataSource {
 extension PracticesTableViewController {
     func reloadPractices() {
         OrganizationService.shared.events { [weak self] (events, error) in
-            _practices = events
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+            if let error = error as? NSError, let reason = error.userInfo["reason"] as? String, reason == "no org" {
+                // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
+                print("uh oh this shouldn't happen")
+            } else {
+                _practices = events
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
             }
         }
     }
-    
+
     func practice(for row: Int) -> FirebaseEvent? {
         return practices[row]
     }
