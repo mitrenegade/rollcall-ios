@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
+		8E08531C20CC4642002A0CC4 /* rollcall-and-random-dev-export.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E08531B20CC4641002A0CC4 /* rollcall-and-random-dev-export.json */; };
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
@@ -26,10 +27,10 @@
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
-		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
-		8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070C120C3469C00EF478F /* CameraHelper.swift */; };
 		8E9D891F20CB130900AD382F /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D891E20CB130900AD382F /* EventService.swift */; };
 		8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */; };
+		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
+		8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070C120C3469C00EF478F /* CameraHelper.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
 		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
 		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
@@ -117,6 +118,7 @@
 /* Begin PBXFileReference section */
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E08531B20CC4641002A0CC4 /* rollcall-and-random-dev-export.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rollcall-and-random-dev-export.json"; sourceTree = "<group>"; };
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
@@ -135,10 +137,10 @@
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
-		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
-		8EA070C120C3469C00EF478F /* CameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHelper.swift; sourceTree = "<group>"; };
 		8E9D891E20CB130900AD382F /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
+		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
+		8EA070C120C3469C00EF478F /* CameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHelper.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 		9E80085716196883003E9B16 /* cwsfroster */ = {
 			isa = PBXGroup;
 			children = (
+				8E08531B20CC4641002A0CC4 /* rollcall-and-random-dev-export.json */,
 				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
@@ -674,6 +677,7 @@
 				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
 				AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */,
 				8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */,
+				8E08531C20CC4642002A0CC4 /* rollcall-and-random-dev-export.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
