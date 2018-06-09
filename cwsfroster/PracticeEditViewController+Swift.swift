@@ -41,7 +41,7 @@ extension PracticeEditViewController {
         }
         else {
             self.title = "Edit event"
-            self.inputDate.text = self.practice.name
+            self.inputDate.text = self.practice.title
             self.inputDetails.text = self.practice.details
             self.inputNotes.text = self.practice.notes
             
@@ -154,7 +154,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == inputDate {
-            self.practice.name = textField.text
+            self.practice.title = textField.text
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 self.practice.date = date
                 ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
@@ -208,7 +208,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
 //            else {
                 UserDefaults.standard.set(self.emailTo, forKey: "email:to")
 
-                let eventName = self.practice.name ?? "practice"
+                let eventName = self.practice.title ?? "practice"
                 let title = "Event attendance for \(eventName)"
                 let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
                 var message = "Date: \(dateString)\n"

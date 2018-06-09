@@ -29,7 +29,7 @@ extension PracticesTableViewController: UITableViewDataSource {
 
         // Configure the cell...
         let practice = self.practice(for: indexPath.row)
-        cell.textLabel?.text = practice?.name
+        cell.textLabel?.text = practice?.title
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         cell.textLabel?.textColor = .black
         
@@ -60,7 +60,11 @@ extension PracticesTableViewController {
                 // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
                 print("uh oh this shouldn't happen")
             } else {
-                _practices = events
+                _practices = events?.sorted(by: { (p1, p2) -> Bool in
+                    guard let t1 = p1.date else { return false }
+                    guard let t2 = p2.date else { return true }
+                    return t1.compare(t2) == .orderedAscending
+                })
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
                 }

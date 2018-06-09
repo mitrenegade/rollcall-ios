@@ -14,12 +14,12 @@ fileprivate let formatter = DateFormatter()
 class FirebaseEvent: FirebaseBaseModel {
 //    var service = EventService.shared
     
-    var name: String? {
+    var title: String? {
         get {
-            return self.dict["name"] as? String
+            return self.dict["title"] as? String
         }
         set {
-            self.dict["name"] = newValue
+            self.dict["title"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
