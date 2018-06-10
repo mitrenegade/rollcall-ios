@@ -85,7 +85,7 @@ extension MembersTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MemberCell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath) as? MemberCell else { return UITableViewCell() }
 
-        let row = indexPath.count
+        let row = indexPath.row
         guard row < _members.count else { return cell }
         cell.configure(member: _members[row], row: row)
 
