@@ -50,6 +50,8 @@ class MemberInfoViewController: UIViewController {
         } else {
             self.title = "New member"
             self.isCreatingMember = true
+            
+            navigationItem.leftBarButtonItem?.title = "Cancel"
         }
         self.setupTextView()
         self.refresh()
@@ -93,7 +95,11 @@ class MemberInfoViewController: UIViewController {
     
     @IBAction func didClickClose(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        saveMember()
+        if isCreatingMember {
+            close()
+        } else {
+            saveMember()
+        }
     }
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
@@ -101,9 +107,6 @@ class MemberInfoViewController: UIViewController {
         self.takePhoto()
     }
 
-    @IBAction func didClickSwitch(_ sender: AnyObject?) {
-    }
-    
     @IBAction func didClickSave(_ sender: AnyObject?) {
         saveMember()
     }
@@ -130,6 +133,8 @@ class MemberInfoViewController: UIViewController {
                     self?.delegate?.didUpdateMember(member)
                     if let photo = self?.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
                         // BOBBY TODO: upload photo
+                        self?.close()
+                    } else {
                         self?.close()
                     }
                 } else {
