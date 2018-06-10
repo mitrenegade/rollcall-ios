@@ -35,6 +35,12 @@ class FirebaseBaseModel: NSObject {
         }
     }
     
+    init(id: String? = nil, dict: [String: Any]) {
+        self.dict = dict
+        self.firebaseKey = id ?? FirebaseAPIService.uniqueId()
+        self.firebaseRef = nil
+    }
+    
     override convenience init() {
         self.init(snapshot: nil)
     }

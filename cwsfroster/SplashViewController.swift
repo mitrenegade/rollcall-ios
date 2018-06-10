@@ -60,10 +60,6 @@ class SplashViewController: UIViewController {
     }
     
     func didLogin(_ notification: NSNotification?) {
-        guard !OFFLINE_MODE else {
-            FirebaseOfflineParser.loadData()
-            return
-        }
         print("BOBBYTEST logged in, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
         // update firebase object
         if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
@@ -95,8 +91,7 @@ var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeParseOrganization() {
         guard !OFFLINE_MODE else {
-//            generateOfflineModels()
-            FirebaseOfflineParser.loadData()
+            OrganizationService.shared.startObservingOrganization()
             return
         }
         
@@ -307,21 +302,5 @@ extension SplashViewController {
                 }
             }
         }
-    }
-    
-    // MARK: Offline mode
-    func generateOfflineModels() {
-        let orgParams = ["name": "Skymall Club"]
-        let org = Organization(className: "Organization", dictionary: orgParams)
-        
-        org.practices = Practice.offlinePractices()
-        org.members = Member.offlineMembers()
-        org.attendances = Attendance.offlineAttendances()
-        
-        Organization.current = org
-        PFUser.current()?.setObject(org, forKey: "organization")
-        
-        classNames.removeAll()
-        syncComplete()
     }
 }
