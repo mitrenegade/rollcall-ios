@@ -69,26 +69,15 @@ class AttendanceTableViewController: UITableViewController {
     
     func reloadData() {
         guard let practice = currentPractice else { return }
-        let group = DispatchGroup()
-        
-        group.enter()
-        EventService.shared.attendances(for: practice) { [weak self] (attendees, error) in
-            self?.attendees.removeAll()
-            self?.attendees.append(contentsOf: attendees)
-            group.leave()
-        }
-        
-        group.enter()
+        self.attendees = practice.attendees
         OrganizationService.shared.members { [weak self] (members, error) in
-            self?.members.removeAll()
-            self?.members.append(contentsOf: members)
-            group.leave()
-        }
-        
-        let workItem = DispatchWorkItem { [weak self] in
+            self?.members = members.sorted{
+                guard let n1 = $0.name?.uppercased() else { return false }
+                guard let n2 = $1.name?.uppercased() else { return true }
+                return n1 < n2
+            }
             self?.tableView.reloadData()
         }
-        group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

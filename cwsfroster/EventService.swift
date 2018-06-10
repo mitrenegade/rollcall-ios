@@ -58,12 +58,4 @@ class EventService: NSObject {
             }
         }
     }
-    
-    func attendances(for event: FirebaseEvent, completion: (([String], Error?)->Void)?) {
-        guard !OFFLINE_MODE else {
-            let attendances = FirebaseOfflineParser.shared.offlineAttendances(for: event)
-            completion?(attendances, nil)
-            return
-        }
-    }
 }
