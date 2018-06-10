@@ -81,6 +81,10 @@
 
     self.rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
     self.rater.delegate = self;
+    
+    if (self.practice == nil) {
+        self.createPracticeInfo = [[NSDictionary alloc] init];
+    }
 }
 
 
@@ -186,31 +190,6 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
-}
-
-#pragma mark attendees
--(IBAction)didClickAttendees:(id)sender {
-    if (self.practice) {
-        [self performSegueWithIdentifier:@"ToEditAttendees" sender:nil];
-    }
-}
-
-#pragma mark Onsite signup
--(IBAction)didClickOnsiteSignup:(id)sender {
-    if (self.practice) {
-        [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
-    }
-    else {
-        NSLog(@"No practice exists, creating one");
-        /*
-        [self saveWithCompletion:^(BOOL success) {
-            if (success) {
-                self.navigationItem.leftBarButtonItem.title = @"Close";
-                [self performSegueWithIdentifier:@"ToOnsiteSignup" sender:nil];
-            }
-        }];
-         */
-    }
 }
 
 #pragma mark date utils

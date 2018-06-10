@@ -11,7 +11,6 @@ import Parse
 import UIKit
 
 extension PracticeEditViewController {
- 
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -32,7 +31,7 @@ extension PracticeEditViewController {
     }
     
     func configureForPractice() {
-        if self.isNewPractice {
+        if practice == nil {
             self.title = "New event";
             self.constraintButtonEmailHeight.constant = 0
             self.buttonDrawing.isHidden = true
@@ -48,14 +47,29 @@ extension PracticeEditViewController {
             self.navigationItem.rightBarButtonItem = nil
         }
         originalDescription = inputDetails.text;
-
+    }
+    
+    fileprivate func createPractice(_ completion: @escaping (()->Void)) {
+        guard let name = createPracticeInfo?["title"] as? String else { return }
+        guard let date = createPracticeInfo?["date"] as? Date else { return }
+        guard let org = OrganizationService.shared.current.value else { return }
+        let details = createPracticeInfo?["details"] as? String
+        let notes = createPracticeInfo?["notes"] as? String
+        EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: org.id) { [weak self] (event, error) in
+            if let event = event {
+                self?.practice = event
+                completion()
+            } else {
+                print("Create practice error \(error)")
+            }
+        }
     }
 }
 
 // MARK: Navigation
 extension PracticeEditViewController {
     @IBAction func didClickClose(_ sender: AnyObject?) {
-        if !self.isNewPractice {
+        if practice != nil {
             self.view.endEditing(true)
             self.delegate?.didEditPractice()
             self.navigationController?.dismiss(animated: true, completion: {
@@ -72,8 +86,31 @@ extension PracticeEditViewController {
         self.goToAttendees()
     }
     
+    // MARK: - Attendees
+    @IBAction func didClickAttendees(_ sender: Any?) {
+        goToAttendees()
+    }
+    
+    // MARK: - Onsite signup
+    @IBAction func didClickOnsiteSignup(_ sender: Any?) {
+        if practice != nil {
+            performSegue(withIdentifier: "ToOnsiteSignup", sender: nil)
+        } else {
+            createPractice {
+                self.navigationItem.leftBarButtonItem?.title = "Close"
+                self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+            }
+        }
+    }
+    
     func goToAttendees() {
-        self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+        if practice != nil {
+            performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+        } else {
+            createPractice {
+                self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+            }
+        }
     }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -83,9 +120,6 @@ extension PracticeEditViewController {
             controller.delegate = delegate
             if let practice = practice {
                 controller.currentPractice = practice
-            } else {
-                // BOBBY TODO: fill out new practice info
-                controller.newPracticeDict = [:]
             }
         } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
             if let practice = practice {
@@ -109,7 +143,8 @@ extension PracticeEditViewController {
 // Notes
 extension PracticeEditViewController: UITextViewDelegate {
     public func textViewDidEndEditing(_ textView: UITextView) {
-        self.practice.notes = self.inputNotes.text
+        practice?.notes = self.inputNotes.text
+        createPracticeInfo?["notes"] = self.inputNotes.text
     }
     
     func dismissKeyboard() {
@@ -154,18 +189,22 @@ extension PracticeEditViewController: UITextFieldDelegate {
     
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == inputDate {
-            self.practice.title = textField.text
+            practice?.title = textField.text
+            createPracticeInfo?["title"] = textField.text
+            
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
-                self.practice.date = date
-                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
+                practice?.date = date
+                createPracticeInfo?["date"] = date
+                // BOBBY TODO
+//                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
             }
         }
         else if textField == inputDetails {
-            self.practice.details = textField.text
+            practice?.details = textField.text
+            createPracticeInfo?["details"] = textField.text
         }
         
         textField.resignFirstResponder()
-        
     }
     
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -274,4 +313,3 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         }
     }
 }
-

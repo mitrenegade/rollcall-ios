@@ -25,11 +25,11 @@
 {
 }
 
-@property (nonatomic, assign) BOOL isNewPractice;
 @property (nonatomic) NSMutableDictionary *dateForDateString;
 
 
 @property (nonatomic) FirebaseEvent *practice;
+@property (nonatomic) NSDictionary *createPracticeInfo;
 @property (nonatomic) id<PracticeEditDelegate> delegate;
 
 @property (nonatomic) IBOutlet UILabel *labelTitle;
@@ -65,9 +65,6 @@
     
     
 -(NSString *)titleForDate:(NSDate *)date;
-
--(IBAction)didClickAttendees:(id)sender;
-    
 -(void)generatePickerDates;
 
 @end
