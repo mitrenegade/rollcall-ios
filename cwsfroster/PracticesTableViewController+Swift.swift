@@ -60,7 +60,7 @@ extension PracticesTableViewController {
                 // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
                 print("uh oh this shouldn't happen")
             } else {
-                _practices = events?.sorted(by: { (p1, p2) -> Bool in
+                _practices = events.sorted(by: { (p1, p2) -> Bool in
                     guard let t1 = p1.date else { return false }
                     guard let t2 = p2.date else { return true }
                     return t1.compare(t2) == .orderedAscending
