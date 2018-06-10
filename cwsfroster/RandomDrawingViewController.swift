@@ -166,7 +166,8 @@ extension RandomDrawingViewController: UITableViewDataSource {
         // Configure the cell...
         guard let members = self.drawingResults, indexPath.row < members.count else { return cell }
         let member = members[indexPath.row]
-        memberCell.configure(member: member, row: indexPath.row)
+        // BOBBY TODO
+//        memberCell.configure(member: member, row: indexPath.row)
         
         if let label = memberCell.labelCount {
             label.text = "\(indexPath.row + 1)"

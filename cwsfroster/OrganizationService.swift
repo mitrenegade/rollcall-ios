@@ -126,4 +126,59 @@ class OrganizationService: NSObject {
             completion?(results, nil)
         })
     }
+    
+    func createMember(email: String, name: String? = nil, notes: String? = nil, status: MemberStatus, completion:@escaping (FirebaseMember?, NSError?) -> Void) {
+        guard let org = current.value else {
+            completion(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            return
+        }
+
+        print ("Create member")
+        
+        let ref = firRef.child("members").child(FirebaseAPIService.uniqueId())
+        var params: [String: Any] = ["email": email, "name": name, "notes": notes, "createdAt": Date().timeIntervalSince1970, "organization": org.id]
+        switch status {
+        case .Inactive:
+            params["status"] = "inactive"
+        case .Active:
+            params["status"] = "active"
+        default:
+            params["status"] = "unknown"
+        }
+        ref.setValue(params) { (error, ref) in
+            if let error = error as NSError? {
+                print(error)
+                completion(nil, error)
+            } else {
+                ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                    guard snapshot.exists() else {
+                        completion(nil, nil)
+                        return
+                    }
+                    let member = FirebaseMember(snapshot: snapshot)
+
+                    // set organizationMembers
+                    let orgRef = firRef.child("organizationMembers").child(org.id)
+                    orgRef.updateChildValues([member.id: true])
+                    
+                    completion(member, nil)
+                })
+            }
+        }
+    }
+    
+    func deleteMember(_ member: FirebaseMember, completion: ((Bool, Error?) -> Void)?) {
+        guard let org = current.value else {
+            completion?(false, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            return
+        }
+        
+        let memberRef = firRef.child("members")
+        memberRef.setValue(nil, forKey: member.id)
+        
+        let orgRef = firRef.child("organizationMembers").child(org.id)
+        orgRef.setValue(nil, forKey: member.id)
+        
+        completion?(true, nil)
+    }
 }
