@@ -11,7 +11,7 @@ import Foundation
 import Firebase
 
 let TESTING = true
-let OFFLINE_MODE = false
+let OFFLINE_MODE = true
 let PARSE_APP_ID = "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 let PARSE_CLIENT_KEY = "Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"
 let PARSE_SERVER = "https://rollcall-server.herokuapp.com/parse"

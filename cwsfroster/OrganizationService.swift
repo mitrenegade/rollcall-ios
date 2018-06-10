@@ -20,6 +20,11 @@ class OrganizationService: NSObject {
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
     func startObservingOrganization() {
+        guard !OFFLINE_MODE else {
+            let org = FirebaseOfflineParser.shared.loadOrganization()
+            current.value = org
+            return
+        }
         print("Start observing organization")
         disposeBag = DisposeBag() // clear previous listeners
         
@@ -65,6 +70,12 @@ class OrganizationService: NSObject {
     func events(completion: (([FirebaseEvent]?, Error?) -> Void)?) {
         guard let org = current.value else {
             completion?(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            return
+        }
+        
+        guard !OFFLINE_MODE else {
+            let events = FirebaseOfflineParser.shared.eventsForOrganization()
+            completion?(events, nil)
             return
         }
         

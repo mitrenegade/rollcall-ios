@@ -91,7 +91,7 @@ var classNames = ["members", "practices", "attendances"]
 extension SplashViewController {
     func synchronizeParseOrganization() {
         guard !OFFLINE_MODE else {
-            generateOfflineModels()
+            OrganizationService.shared.startObservingOrganization()
             return
         }
         
@@ -302,21 +302,5 @@ extension SplashViewController {
                 }
             }
         }
-    }
-    
-    // MARK: Offline mode
-    func generateOfflineModels() {
-        let orgParams = ["name": "Skymall Club"]
-        let org = Organization(className: "Organization", dictionary: orgParams)
-        
-        org.practices = Practice.offlinePractices()
-        org.members = Member.offlineMembers()
-        org.attendances = Attendance.offlineAttendances()
-        
-        Organization.current = org
-        PFUser.current()?.setObject(org, forKey: "organization")
-        
-        classNames.removeAll()
-        syncComplete()
     }
 }
