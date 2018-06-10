@@ -23,4 +23,8 @@ class AuthService: NSObject {
     class var isLoggedIn: Bool {
         return PFUser.current() != nil || firAuth.currentUser != nil
     }
+    
+    class var currentUser: User? {
+        return firAuth.currentUser
+    }
 }

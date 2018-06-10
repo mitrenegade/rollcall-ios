@@ -15,7 +15,7 @@
 {
 }
 
-@property (nonatomic) Practice *practice;
+@property (nonatomic) FirebaseEvent *practice;
 
     @property (nonatomic) IBOutlet UITextField *inputName;
     @property (nonatomic) IBOutlet UITextField *inputEmail;

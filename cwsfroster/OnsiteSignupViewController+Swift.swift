@@ -39,25 +39,26 @@ extension OnsiteSignupViewController {
             ParseLog.log(typeString: "OnsiteSignup", title: member.objectId, message: nil, params: ["photo": self.addedPhoto != nil], error: nil)
         }
         
-        Attendance.saveNewAttendanceFor(member: member, practice: self.practice, saveToParse: true) { (attendance, error) in
-            self.buttonSave.isEnabled = true
-            if let error = error {
-                self.simpleAlert("Could not sign up user", message: "There was an error adding \(member.name) to this event. Please add them manually by editing event attendees")
-                return
-            }
-
-            self.addedAttendees.insert(member, at: 0)
-            self.labelAttendanceCount.text = "New attendees: \(self.addedAttendees.count)"
-            
-            self.labelWelcome.alpha = 1
-            self.labelWelcome.text = "Welcome \(member.name ?? "")"
-            
-            UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
-                self.labelWelcome.alpha = 0
-            }, completion: nil)
-            
-            self.reset()
-        }
+        // BOBBY TODO
+//        Attendance.saveNewAttendanceFor(member: member, practice: self.practice, saveToParse: true) { (attendance, error) in
+//            self.buttonSave.isEnabled = true
+//            if let error = error {
+//                self.simpleAlert("Could not sign up user", message: "There was an error adding \(member.name) to this event. Please add them manually by editing event attendees")
+//                return
+//            }
+//
+//            self.addedAttendees.insert(member, at: 0)
+//            self.labelAttendanceCount.text = "New attendees: \(self.addedAttendees.count)"
+//
+//            self.labelWelcome.alpha = 1
+//            self.labelWelcome.text = "Welcome \(member.name ?? "")"
+//
+//            UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
+//                self.labelWelcome.alpha = 0
+//            }, completion: nil)
+//
+//            self.reset()
+//        }
     }
 
     func reset(){

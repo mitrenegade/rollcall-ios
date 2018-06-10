@@ -19,7 +19,7 @@
 
 @end
 
-@class Practice;
+@class FirebaseEvent;
 @class RatingViewController;
 @interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, RatingDelegate>
 {
@@ -29,7 +29,7 @@
 @property (nonatomic) NSMutableDictionary *dateForDateString;
 
 
-@property (nonatomic) Practice *practice;
+@property (nonatomic) FirebaseEvent *practice;
 @property (nonatomic) id<PracticeEditDelegate> delegate;
 
 @property (nonatomic) IBOutlet UILabel *labelTitle;

@@ -34,13 +34,6 @@ extension PracticeEditViewController {
     func configureForPractice() {
         if self.isNewPractice {
             self.title = "New event";
-            self.practice = Practice()
-            let date = Date()
-            practice.date = date
-            self.inputDate.text = self.title(for: date)
-            practice.title = self.inputDate.text
-            practice.organization = Organization.current
-            
             self.constraintButtonEmailHeight.constant = 0
             self.buttonDrawing.isHidden = true
             self.buttonAttendees.isHidden = true
@@ -64,10 +57,8 @@ extension PracticeEditViewController {
     @IBAction func didClickClose(_ sender: AnyObject?) {
         if !self.isNewPractice {
             self.view.endEditing(true)
-            self.practice.saveInBackground(block: { (success, error) in
-                self.delegate?.didEditPractice()
-                self.navigationController?.dismiss(animated: true, completion: {
-                })
+            self.delegate?.didEditPractice()
+            self.navigationController?.dismiss(animated: true, completion: {
             })
         }
         else {
@@ -84,6 +75,35 @@ extension PracticeEditViewController {
     func goToAttendees() {
         self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
     }
+    
+    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "ToEditAttendees", let controller = segue.destination as? AttendanceTableViewController {
+            controller.delegate = delegate
+            if let practice = practice {
+                controller.currentPractice = practice
+            } else {
+                // BOBBY TODO: fill out new practice info
+                controller.newPracticeDict = [:]
+            }
+        } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
+            if let practice = practice {
+                // BOBBY TODO
+//                controller.currentPractice = practice
+            }
+        } else if segue.identifier == "ToEventNotes", let controller = segue.destination as? NotesViewController {
+            if let practice = practice {
+                // BOBBY TODO
+                //                controller.currentPractice = practice
+            }
+        } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
+            if let practice = practice {
+                // BOBBY TODO
+                //                controller.currentPractice = practice
+            }
+        }
+    }
 }
 
 // Notes
@@ -95,9 +115,6 @@ extension PracticeEditViewController: UITextViewDelegate {
     func dismissKeyboard() {
         self.view.endEditing(true)
 
-        if !self.isNewPractice {
-            self.practice.saveEventually()
-        }
         ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text ?? "", params: ["for": "practice"], error: nil)
     }
     
@@ -140,15 +157,11 @@ extension PracticeEditViewController: UITextFieldDelegate {
             self.practice.title = textField.text
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 self.practice.date = date
-                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.objectId, message: nil, params: ["date": date], error: nil)
+                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
             }
         }
         else if textField == inputDetails {
             self.practice.details = textField.text
-        }
-        
-        if !self.isNewPractice {
-            self.practice.saveEventually()
         }
         
         textField.resignFirstResponder()
@@ -185,43 +198,45 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         }
         self.activityOverlay.isHidden = false
 
-        self.practice.saveInBackground { (success, error) in
-            if let error = error as? NSError {
-                self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
-                self.activityOverlay.isHidden = true
-                return
-            }
-            else {
+        // BOBBY TODO
+//        self.practice.saveInBackground { (success, error) in
+//            if let error = error as? NSError {
+//                self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
+//                self.activityOverlay.isHidden = true
+//                return
+//            }
+//            else {
                 UserDefaults.standard.set(self.emailTo, forKey: "email:to")
-                
+
                 let eventName = self.practice.title ?? "practice"
                 let title = "Event attendance for \(eventName)"
                 let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
                 var message = "Date: \(dateString)\n"
-                let attendances = self.practice.attendances ?? []
-                var count = attendances.count
-                for attendance in attendances {
-                    if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
-                        member.fetchIfNeededInBackground(block: { (object, error) in
-                            DispatchQueue.main.async {
-                                if let member = object as? Member {
-                                    if let name = member.name {
-                                        message = "\(message)\n\(name) "
-                                    }
-                                    if let email = member.email {
-                                        message = "\(message)\(email)"
-                                    }
-                                }
-                                count -= 1
-                                if count == 0 {
-                                    self.sendEmail(title: title, message: message)
-                                }
-                            }
-                        })
-                    }
-                }
-            }
-        }
+//                let attendances = self.practice.attendances ?? []
+//                var count = attendances.count
+//                for attendance in attendances {
+//                    if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
+//                        member.fetchIfNeededInBackground(block: { (object, error) in
+//                            DispatchQueue.main.async {
+//                                if let member = object as? Member {
+//                                    if let name = member.name {
+//                                        message = "\(message)\n\(name) "
+//                                    }
+//                                    if let email = member.email {
+//                                        message = "\(message)\(email)"
+//                                    }
+//                                }
+//                                count -= 1
+//                                if count == 0 {
+//                                    self.sendEmail(title: title, message: message)
+//                                }
+//                            }
+//                        })
+//                    }
+//                }
+                                            self.sendEmail(title: title, message: message)
+//            }
+//        }
     }
     
     func sendEmail(title: String, message: String) {
@@ -245,7 +260,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.objectId ?? "unknown", "subject": title, "body": message], error: nil)
+        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.id, "subject": title, "body": message], error: nil)
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

@@ -14,12 +14,12 @@ fileprivate let formatter = DateFormatter()
 class FirebaseEvent: FirebaseBaseModel {
 //    var service = EventService.shared
     
-    var name: String? {
+    var title: String? {
         get {
-            return self.dict["name"] as? String
+            return self.dict["title"] as? String
         }
         set {
-            self.dict["name"] = newValue
+            self.dict["title"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
@@ -56,7 +56,25 @@ class FirebaseEvent: FirebaseBaseModel {
             self.dict["details"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
-        
+    }
+
+    var organization: String? {
+        get {
+            return self.dict["organization"] as? String
+        }
+        set {
+            self.dict["organization"] = newValue
+            self.firebaseRef?.updateChildValues(self.dict)
+        }
+    }
+    
+    // BOBBY TODO: return the value from events/id/attendees
+    var attendees: [String]? {
+        return []
+    }
+    
+    func attendance(for userId: String) -> AttendedStatus {
+        return AttendedStatus.Present
     }
 }
 
@@ -75,6 +93,16 @@ extension FirebaseEvent {
         return "\(time)"
         */
         return date.timeStringForPicker()
+    }
+    
+    func dateOnly() -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        guard let date = self.date else { return nil }
+        let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
+        if let componentsBasedDate = calendar.date(from: dateComponents) {
+            return componentsBasedDate
+        }
+        return nil
     }
 }
 

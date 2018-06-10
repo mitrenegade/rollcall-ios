@@ -273,7 +273,6 @@ extension SplashViewController {
         activityIndicator.stopAnimating()
         labelInfo.isHidden = true
         labelInfo.text = nil
-        goHome()
 
         // only create organization for a migration after all other objects have been migrated
         guard let org = Organization.current, let orgId = org.objectId, let userId = firAuth.currentUser?.uid else { return }
@@ -281,6 +280,11 @@ extension SplashViewController {
         // make sure Firebase Organization exists
         OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
 
+        OrganizationService.shared.startObservingOrganization()
+        OrganizationService.shared.current.asObservable().filterNil().take(1).subscribe(onNext: { (org) in
+            self.goHome()
+        }).disposed(by: disposeBag)
+        
         // save image to firebase
         DispatchQueue.global().async {
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {

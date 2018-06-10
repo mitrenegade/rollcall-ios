@@ -9,11 +9,71 @@
 import Foundation
 import UIKit
 
+var _practices: [FirebaseEvent]?
+var _oldPractices: [Practice]?
+extension PracticesTableViewController: UITableViewDataSource {
+    var practices: [FirebaseEvent] {
+        return _practices ?? []
+    }
+    
+    open override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return practices.count
+    }
+    
+    open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PracticeCell", for: indexPath)
+
+        // Configure the cell...
+        let practice = self.practice(for: indexPath.row)
+        cell.textLabel?.text = practice?.title
+        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
+        cell.textLabel?.textColor = .black
+        
+        cell.detailTextLabel?.text = practice?.details
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
+        cell.detailTextLabel?.textColor = UIColor.darkGray
+
+        return cell
+    }
+
+    open override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        self.deletePracticeAt(indexPath: indexPath as NSIndexPath)
+    }
+
+    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "EventListToDetail", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
 extension PracticesTableViewController {
     func reloadPractices() {
-        Organization .queryForPractices { (results, error) in
-            self.tableView.reloadData()
+        OrganizationService.shared.events { [weak self] (events, error) in
+            if let error = error as? NSError, let reason = error.userInfo["reason"] as? String, reason == "no org" {
+                // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
+                print("uh oh this shouldn't happen")
+            } else {
+                _practices = events?.sorted(by: { (p1, p2) -> Bool in
+                    guard let t1 = p1.date else { return false }
+                    guard let t2 = p2.date else { return true }
+                    return t1.compare(t2) == .orderedAscending
+                })
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            }
         }
+    }
+
+    func practice(for row: Int) -> FirebaseEvent? {
+        return practices[row]
     }
 }
 

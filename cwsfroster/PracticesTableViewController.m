@@ -70,53 +70,6 @@
     [self performSegueWithIdentifier:@"toNewEvent" sender:nil];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [[[Organization current] practices] count];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PracticeCell" forIndexPath:indexPath];
-    
-    // Configure the cell...
-    Practice *practice = [[Organization current] practices][indexPath.row];
-    cell.textLabel.text = practice.title;
-    cell.textLabel.font = [UIFont boldSystemFontOfSize:17];
-    cell.textLabel.textColor = [UIColor blackColor];
-
-    cell.detailTextLabel.text = practice.details;
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
-    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
-
-    return cell;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return YES if you want the specified item to be editable.
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //add code here for when you hit delete
-        [self deletePracticeAtIndexPath:indexPath];
-    }
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self performSegueWithIdentifier:@"EventListToDetail" sender:self];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -136,8 +89,8 @@
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        if (indexPath.row < [[[Organization current] practices] count])
-            [controller setPractice:[[Organization current] practices][indexPath.row]];
+        FirebaseEvent *practice = [self practiceFor:indexPath.row];
+        [controller setPractice:practice];
         [controller setDelegate:self];
         controller.isNewPractice = NO;
     }
