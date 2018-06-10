@@ -69,13 +69,23 @@ class FirebaseEvent: FirebaseBaseModel {
     }
     
     var attendees: [String] {
-        guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
-        return attendances.compactMap({ (key, val) -> String? in
-            if val {
-                return key
+        get {
+            guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
+            return attendances.compactMap({ (key, val) -> String? in
+                if val {
+                    return key
+                }
+                return nil
+            })
+        }
+        set {
+            var newAttendees: [String: Bool] = [:]
+            for memberId in newValue {
+                newAttendees[memberId] = true
             }
-            return nil
-        })
+            self.dict["attendees"] = newAttendees
+            self.firebaseRef?.updateChildValues(self.dict)
+        }
     }
     
     func attendance(for userId: String) -> AttendedStatus {
