@@ -21,7 +21,7 @@ class OrganizationService: NSObject {
     var organizerRefHandle: UInt?
     func startObservingOrganization() {
         guard !OFFLINE_MODE else {
-            let org = FirebaseOfflineParser.shared.loadOrganization()
+            let org = FirebaseOfflineParser.shared.offlineOrganization()
             current.value = org
             return
         }
@@ -67,14 +67,14 @@ class OrganizationService: NSObject {
         ref.updateChildValues(params)
     }
     
-    func events(completion: (([FirebaseEvent]?, Error?) -> Void)?) {
+    func events(completion: (([FirebaseEvent], Error?) -> Void)?) {
         guard let org = current.value else {
-            completion?(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }
         
         guard !OFFLINE_MODE else {
-            let events = FirebaseOfflineParser.shared.eventsForOrganization()
+            let events = FirebaseOfflineParser.shared.offlineEvents()
             completion?(events, nil)
             return
         }
@@ -82,7 +82,7 @@ class OrganizationService: NSObject {
         let ref = firRef.child("events")
         ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
             guard snapshot.exists() else {
-                completion?(nil, nil)
+                completion?([], nil)
                 return
             }
 
@@ -90,6 +90,36 @@ class OrganizationService: NSObject {
             if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
                 for eventDict: DataSnapshot in allObjects {
                     let event = FirebaseEvent(snapshot: eventDict)
+                    results.append(event)
+                }
+            }
+            completion?(results, nil)
+        })
+    }
+    
+    func members(completion: (([FirebaseMember], Error?) -> Void)?) {
+        guard let org = current.value else {
+            completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            return
+        }
+
+        guard !OFFLINE_MODE else {
+            let members = FirebaseOfflineParser.shared.offlineMembers()
+            completion?(members, nil)
+            return
+        }
+        
+        let ref = firRef.child("members")
+        ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
+            guard snapshot.exists() else {
+                completion?([], nil)
+                return
+            }
+            
+            var results: [FirebaseMember] = []
+            if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
+                for eventDict: DataSnapshot in allObjects {
+                    let event = FirebaseMember(snapshot: eventDict)
                     results.append(event)
                 }
             }

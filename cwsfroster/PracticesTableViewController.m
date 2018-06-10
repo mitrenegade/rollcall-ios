@@ -82,7 +82,6 @@
         UINavigationController *nav = (UINavigationController *)segue.destinationViewController;
         PracticeEditViewController *controller = (PracticeEditViewController *)nav.viewControllers[0];
         [controller setDelegate:self];
-        controller.isNewPractice = YES;
     }
     else if ([segue.identifier isEqualToString:@"EventListToDetail"]) {
         // Edit practice details
@@ -92,7 +91,6 @@
         FirebaseEvent *practice = [self practiceFor:indexPath.row];
         [controller setPractice:practice];
         [controller setDelegate:self];
-        controller.isNewPractice = NO;
     }
 }
 

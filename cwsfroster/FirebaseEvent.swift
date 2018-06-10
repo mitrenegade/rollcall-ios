@@ -68,13 +68,21 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
     
-    // BOBBY TODO: return the value from events/id/attendees
-    var attendees: [String]? {
-        return []
+    var attendees: [String] {
+        guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
+        return attendances.compactMap({ (key, val) -> String? in
+            if val {
+                return key
+            }
+            return nil
+        })
     }
     
     func attendance(for userId: String) -> AttendedStatus {
-        return AttendedStatus.Present
+        if attendees.contains(userId) {
+            return .Present
+        }
+        return .None
     }
 }
 

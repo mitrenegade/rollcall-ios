@@ -11,7 +11,7 @@ import UIKit
 class FirebaseOfflineParser: NSObject {
     static let shared = FirebaseOfflineParser()
 
-    let offlineDict: [String: Any]
+    fileprivate let offlineDict: [String: Any]
     override init() {
         let filePath = Bundle.main.path(forResource: "rollcall-and-random-dev-export", ofType: "json")
         do {
@@ -26,7 +26,7 @@ class FirebaseOfflineParser: NSObject {
         super.init()
     }
     
-    func loadOrganization() -> FirebaseOrganization? {
+    func offlineOrganization() -> FirebaseOrganization? {
         guard let user = AuthService.currentUser else { return nil }
         guard let organizations = offlineDict["organizations"] as? [String: Any] else { return nil }
         guard let organizationDict = organizations.filter({ (key, value) -> Bool in
@@ -37,9 +37,9 @@ class FirebaseOfflineParser: NSObject {
         return FirebaseOrganization(id: organizationDict.key, dict: dict)
     }
     
-    func eventsForOrganization() -> [FirebaseEvent]? {
-        guard let organization = loadOrganization() else { return nil }
-        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return nil }
+    func offlineEvents() -> [FirebaseEvent] {
+        guard let organization = offlineOrganization() else { return [] }
+        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [] }
         let filtered = eventsDict.filter({ (key, value) -> Bool in
             guard let dict = value as? [String: Any] else { return false }
             return dict["organization"] as? String == organization.id
@@ -50,5 +50,35 @@ class FirebaseOfflineParser: NSObject {
         })
         return mapped
     }
+    
+    fileprivate func allMembers() -> [FirebaseMember] {
+        guard let membersDict = offlineDict["members"] as? [String: Any] else { return [] }
+        return membersDict.compactMap({ (key, val) -> FirebaseMember? in
+            guard let dict = val as? [String: Any] else { return nil }
+            return FirebaseMember(id: key, dict: dict)
+        })
+    }
+    
+    func offlineMembers() -> [FirebaseMember] {
+        guard let organization = offlineOrganization() else { return [] }
+        guard let organizationMembers = offlineDict["organizationMembers"] as? [String: Any], let membersDict = organizationMembers[organization.id] as? [String: Any] else { return [] }
+        return allMembers().filter({ (member) -> Bool in
+            return membersDict[member.id] as? String == "active"
+        })
+    }
+    
+    func offlineAttendances(for event: FirebaseEvent) -> [String] {
+        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [] }
+        guard let eventDict = eventsDict[event.id] as? [String: Any] else { return [] }
+        guard let attendees = eventDict["attendees"] as? [String: Bool] else { return [] }
+        return attendees.compactMap({ (key, val) -> String? in
+            if val == true {
+                return key
+            } else {
+                return nil
+            }
+        })
+    }
+    
 }
 

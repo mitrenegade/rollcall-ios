@@ -176,8 +176,10 @@ extension SplashViewController {
                 
                 for member: Member in members {
                     guard let id = member.objectId else { continue }
+                    guard let orgId = Organization.current?.objectId else { continue }
+
                     let ref = firRef.child("members").child(id)
-                    var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+                    var params: [String: Any] = ["organization": orgId, "createdAt": Date().timeIntervalSince1970]
                     if let name = member.name {
                         params["name"] = name
                     }
@@ -188,25 +190,33 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-//                        params["photoUrl"] = TODO
+//                        params["photoUrl"] = BOBBY TODO
+                    }
+                    if let status = member.status {
+                        switch status.intValue {
+                        case MemberStatus.Active.rawValue:
+                            params["status"] = "active"
+                        case MemberStatus.Inactive.rawValue:
+                            params["status"] = "inactive"
+                        default:
+                            params["status"] = "active"
+                        }
                     }
                     ref.updateChildValues(params)
                     
-                    if let orgId = Organization.current?.objectId {
-                        let orgMemberRef = firRef.child("organizationMembers").child(orgId)
-                        var params: [String: Any] = [:]
-                        if let status = member.status {
-                            switch status.intValue {
-                            case MemberStatus.Active.rawValue:
-                                params[id] = "active"
-                            case MemberStatus.Inactive.rawValue:
-                                params[id] = "inactive"
-                            default:
-                                params[id] = "active"
-                            }
+                    let orgMemberRef = firRef.child("organizationMembers").child(orgId)
+                    var memberParams: [String: Any] = [:]
+                    if let status = member.status {
+                        switch status.intValue {
+                        case MemberStatus.Active.rawValue:
+                            memberParams[id] = "active"
+                        case MemberStatus.Inactive.rawValue:
+                            memberParams[id] = "inactive"
+                        default:
+                            memberParams[id] = "active"
                         }
-                        orgMemberRef.updateChildValues(params)
                     }
+                    orgMemberRef.updateChildValues(memberParams)
                 }
                 classNames.remove(at: classNames.index(of: "members")!)
             }

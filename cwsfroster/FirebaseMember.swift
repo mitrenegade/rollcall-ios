@@ -71,6 +71,20 @@ class FirebaseMember: FirebaseBaseModel {
         }
     }
     
+    var organization: String? {
+        get {
+            guard let dict = self.dict else { return nil }
+            if let val = dict["organization"] as? String {
+                return val
+            }
+            return nil
+        }
+        set {
+            self.dict["organization"] = newValue
+            self.firebaseRef?.updateChildValues(self.dict)
+        }
+    }
+    
     var status: String? {
         get {
             guard let dict = self.dict else { return nil }
@@ -87,6 +101,10 @@ class FirebaseMember: FirebaseBaseModel {
     
     var isInactive: Bool {
         return status != "active"
+    }
+    
+    var displayName: String {
+        return name ?? email ?? "Anon"
     }
 }
 

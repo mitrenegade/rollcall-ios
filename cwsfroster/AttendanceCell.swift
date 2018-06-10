@@ -24,8 +24,8 @@ class AttendanceCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(userId: String, userName: String, attendance: AttendedStatus, row: Int) {
-        nameLabel.text = userName
+    func configure(member: FirebaseMember, attendance: AttendedStatus, row: Int) {
+        nameLabel.text = member.displayName
         
         let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         unchecked.image = UIImage(named: "unchecked")
@@ -53,11 +53,11 @@ class AttendanceCell: UITableViewCell {
 //            })
 //        }
         
-//        if member.isInactive {
-//            nameLabel.alpha = 0.5;
-//        }
-//        else {
-//            nameLabel.alpha = 1;
-//        }
+        if member.isInactive {
+            nameLabel.alpha = 0.5;
+        }
+        else {
+            nameLabel.alpha = 1;
+        }
     }
 }

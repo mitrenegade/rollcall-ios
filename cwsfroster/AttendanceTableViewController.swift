@@ -11,63 +11,45 @@ import UIKit
 class AttendanceTableViewController: UITableViewController {
 
     var currentPractice: FirebaseEvent?
-    var newAttendances: [Member: Attendance] = [Member: Attendance]()
     var newPracticeDict: [String: Any] = [:]
+    fileprivate var attendees: [String] = []
+    fileprivate var members: [FirebaseMember] = []
 
-    fileprivate var isNewPractice: Bool { return currentPractice == nil }
     var delegate: PracticeEditDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !isNewPractice {
-            // all changes to attendances are automatically saved
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
+        reloadData()
     }
     
-    @IBAction func didClickClose(_ sender: AnyObject?) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func didClickSave(_ sender: AnyObject?) {
-        if isNewPractice {
-            for (_, attendance) in newAttendances {
-                attendance.organization?.attendances?.append(attendance)
-                attendance.saveInBackground(block: { (success, error) in
-                    if success {
-                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
-                    }
-                })
-            }
-            // because didCreatePractice does not reload attendances
-            //Organization.current?.saveInBackground()
-            
-            let name = newPracticeDict["name"] as? String ?? "New event"
-            let date = newPracticeDict["date"] as? Date ?? Date()
-            let organizationId = OrganizationService.shared.current.value?.id ?? "0"
-            let notes = newPracticeDict["notes"] as? String
-            let details = newPracticeDict["details"] as? String
-            EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: organizationId) { (event, error) in
-                if let event = event {
-                    ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
-                    self.delegate?.didCreatePractice()
-                }
-                self.navigationController?.dismiss(animated: true, completion: {
-                })
-            }
-        }
-        else {
-            self.delegate?.didEditPractice()
-            self.navigationController?.dismiss(animated: true, completion: {
-            })
-        }
+    @IBAction func didClickDone(_ sender: AnyObject?) {
+        self.delegate?.didEditPractice()
+        self.navigationController?.dismiss(animated: true, completion: {
+        })
+            // BOBBY TODO
+//            for (_, attendance) in newAttendances {
+//                attendance.organization?.attendances?.append(attendance)
+//                attendance.saveInBackground(block: { (success, error) in
+//                    if success {
+//                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
+//                    }
+//                })
+//            }
     }
     
     func reloadData() {
-        self.tableView.reloadData()
+        guard let practice = currentPractice else { return }
+        self.attendees = practice.attendees
+        OrganizationService.shared.members { [weak self] (members, error) in
+            self?.members = members.sorted{
+                guard let n1 = $0.name?.uppercased() else { return false }
+                guard let n2 = $1.name?.uppercased() else { return true }
+                return n1 < n2
+            }
+            self?.tableView.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -90,7 +72,6 @@ extension AttendanceTableViewController {
         if section == 0 {
             return 1
         }
-        guard let members = Organization.current?.members else { return 0 }
         return members.count
     }
 
@@ -104,10 +85,10 @@ extension AttendanceTableViewController {
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
+            guard indexPath.row < members.count else { return cell }
             let member = members[indexPath.row]
-            // BOBBY TODO
-//            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
+            let attendance = attendees.contains(member.id) ? AttendedStatus.Present : AttendedStatus.None
+            attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
             return cell
         }
     }
@@ -141,7 +122,7 @@ extension AttendanceTableViewController {
             return
         }
         
-        guard let members = Organization.current?.members, indexPath.row < members.count else { return }
+        guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
         
         // BOBBY TODO

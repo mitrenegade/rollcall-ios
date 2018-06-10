@@ -29,7 +29,7 @@ class EventService: NSObject {
         let id = FirebaseAPIService.uniqueId()
         let newEventRef = eventRef.child(id) // this generates an autoincremented event endpoint like lotsports.firebase.com/events/<uniqueId>
         
-        var params: [String: Any] = ["name": name, "date": date.timeIntervalSince1970, "organization": organization]
+        var params: [String: Any] = ["title": name, "date": date.timeIntervalSince1970, "organization": organization]
         if let notes = notes {
             params["notes"] = notes
         }
