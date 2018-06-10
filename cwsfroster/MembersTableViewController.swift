@@ -105,8 +105,8 @@ extension MembersTableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
             deleteMember(at: indexPath.row)
+            reloadMembers()
         }
     }
 }

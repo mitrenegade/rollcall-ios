@@ -173,11 +173,11 @@ class OrganizationService: NSObject {
             return
         }
         
-        let memberRef = firRef.child("members")
-        memberRef.setValue(nil, forKey: member.id)
+        let memberRef = firRef.child("members").child(member.id)
+        memberRef.removeValue()
         
-        let orgRef = firRef.child("organizationMembers").child(org.id)
-        orgRef.setValue(nil, forKey: member.id)
+        let orgRef = firRef.child("organizationMembers").child(org.id).child(member.id)
+        orgRef.removeValue()
         
         completion?(true, nil)
     }
