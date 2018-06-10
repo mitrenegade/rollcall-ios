@@ -11,7 +11,6 @@ import UIKit
 class AttendanceTableViewController: UITableViewController {
 
     var currentPractice: FirebaseEvent?
-    var newPracticeDict: [String: Any] = [:]
     fileprivate var attendees: [String] = []
     fileprivate var members: [FirebaseMember] = []
 
@@ -25,18 +24,10 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     @IBAction func didClickDone(_ sender: AnyObject?) {
+        currentPractice?.attendees = attendees
         self.delegate?.didEditPractice()
         self.navigationController?.dismiss(animated: true, completion: {
         })
-            // BOBBY TODO
-//            for (_, attendance) in newAttendances {
-//                attendance.organization?.attendances?.append(attendance)
-//                attendance.saveInBackground(block: { (success, error) in
-//                    if success {
-//                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
-//                    }
-//                })
-//            }
     }
     
     func reloadData() {
@@ -124,44 +115,12 @@ extension AttendanceTableViewController {
         
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        
-        // BOBBY TODO
-//        if let attendance = currentPractice.attendanceFor(member: member) {
-//            self.toggleAttendance(attendance: attendance)
-//            attendance.saveInBackground { (success, error) in
-//                self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                ParseLog.log(typeString: "AttendanceSaved", title: attendance.objectId, message: nil, params: nil, error: nil)
-//            }
-//        }
-//        else if let attendance = newAttendances[member] {
-//            self.toggleAttendance(attendance: attendance)
-//            newAttendances[member] = attendance
-//            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-//        else {
-//            if self.isNewPractice {
-//                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: false, completion: { (attendance, error) in
-//                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
-//                    self.newAttendances[member] = attendance
-//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                })
-//            }
-//            else {
-//                Attendance.saveNewAttendanceFor(member: member, practice: currentPractice, saveToParse: true, completion: { (attendance, error) in
-//                    ParseLog.log(typeString: "AttendanceCreated", title: attendance?.objectId, message: nil, params: nil, error: nil)
-//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                })
-//            }
-//        }
-    }
-    
-    func toggleAttendance(attendance: Attendance) {
-        if let attended = attendance.attended, attended.intValue != AttendedStatus.None.rawValue {
-            attendance.attended = NSNumber(value: AttendedStatus.None.rawValue)
+        if let index = attendees.index(of: member.id) {
+            attendees.remove(at: index)
+        } else {
+            attendees.append(member.id)
         }
-        else {
-            attendance.attended = NSNumber(value: AttendedStatus.Present.rawValue)
-        }
+
+        tableView.reloadData()
     }
-    
 }
