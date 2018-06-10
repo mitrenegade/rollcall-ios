@@ -11,7 +11,6 @@ import UIKit
 class AttendanceTableViewController: UITableViewController {
 
     var currentPractice: FirebaseEvent?
-    var newAttendances: [Member: Attendance] = [Member: Attendance]()
     var newPracticeDict: [String: Any] = [:]
     fileprivate var attendees: [String] = []
     fileprivate var members: [FirebaseMember] = []
@@ -37,16 +36,15 @@ class AttendanceTableViewController: UITableViewController {
     
     @IBAction func didClickSave(_ sender: AnyObject?) {
         if isNewPractice {
-            for (_, attendance) in newAttendances {
-                attendance.organization?.attendances?.append(attendance)
-                attendance.saveInBackground(block: { (success, error) in
-                    if success {
-                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
-                    }
-                })
-            }
-            // because didCreatePractice does not reload attendances
-            //Organization.current?.saveInBackground()
+            // BOBBY TODO
+//            for (_, attendance) in newAttendances {
+//                attendance.organization?.attendances?.append(attendance)
+//                attendance.saveInBackground(block: { (success, error) in
+//                    if success {
+//                        ParseLog.log(typeString: "AttendanceCreated", title: attendance.objectId, message: nil, params: nil, error: nil)
+//                    }
+//                })
+//            }
             
             let name = newPracticeDict["name"] as? String ?? "New event"
             let date = newPracticeDict["date"] as? Date ?? Date()
@@ -79,11 +77,18 @@ class AttendanceTableViewController: UITableViewController {
             self?.attendees.append(contentsOf: attendees)
             group.leave()
         }
+        
+        group.enter()
         OrganizationService.shared.members { [weak self] (members, error) in
             self?.members.removeAll()
             self?.members.append(contentsOf: members)
+            group.leave()
         }
-        self.tableView.reloadData()
+        
+        let workItem = DispatchWorkItem { [weak self] in
+            self?.tableView.reloadData()
+        }
+        group.notify(queue: DispatchQueue.main, work: workItem)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -106,7 +111,6 @@ extension AttendanceTableViewController {
         if section == 0 {
             return 1
         }
-        guard let members = Organization.current?.members else { return 0 }
         return members.count
     }
 
@@ -120,9 +124,10 @@ extension AttendanceTableViewController {
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard indexPath.row < attendees.count else { return cell }
-            // BOBBY TODO
-//            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
+            guard indexPath.row < members.count else { return cell }
+            let member = members[indexPath.row]
+            let attendance = attendees.contains(member.id) ? AttendedStatus.Present : AttendedStatus.None
+            attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
             return cell
         }
     }
@@ -156,7 +161,7 @@ extension AttendanceTableViewController {
             return
         }
         
-        guard let members = Organization.current?.members, indexPath.row < members.count else { return }
+        guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
         
         // BOBBY TODO

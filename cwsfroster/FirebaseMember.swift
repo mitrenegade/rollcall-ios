@@ -88,5 +88,9 @@ class FirebaseMember: FirebaseBaseModel {
     var isInactive: Bool {
         return status != "active"
     }
+    
+    var displayName: String {
+        return name ?? email ?? "Anon"
+    }
 }
 
