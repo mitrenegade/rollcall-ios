@@ -96,4 +96,12 @@ class OrganizationService: NSObject {
             completion?(results, nil)
         })
     }
+    
+    func members(completion: (([FirebaseMember], Error?) -> Void)?) {
+        guard !OFFLINE_MODE else {
+            let members = FirebaseOfflineParser.shared.membersForOrganization()
+            completion?(members, nil)
+            return
+        }
+    }
 }

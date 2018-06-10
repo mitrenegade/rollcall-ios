@@ -13,6 +13,8 @@ class AttendanceTableViewController: UITableViewController {
     var currentPractice: FirebaseEvent?
     var newAttendances: [Member: Attendance] = [Member: Attendance]()
     var newPracticeDict: [String: Any] = [:]
+    fileprivate var attendees: [String] = []
+    fileprivate var members: [FirebaseMember] = []
 
     fileprivate var isNewPractice: Bool { return currentPractice == nil }
     var delegate: PracticeEditDelegate?
@@ -26,6 +28,7 @@ class AttendanceTableViewController: UITableViewController {
         }
         
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
+        reloadData()
     }
     
     @IBAction func didClickClose(_ sender: AnyObject?) {
@@ -67,6 +70,19 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     func reloadData() {
+        guard let practice = currentPractice else { return }
+        let group = DispatchGroup()
+        
+        group.enter()
+        EventService.shared.attendances(for: practice) { [weak self] (attendees, error) in
+            self?.attendees.removeAll()
+            self?.attendees.append(contentsOf: attendees)
+            group.leave()
+        }
+        OrganizationService.shared.members { [weak self] (members, error) in
+            self?.members.removeAll()
+            self?.members.append(contentsOf: members)
+        }
         self.tableView.reloadData()
     }
     
@@ -104,8 +120,7 @@ extension AttendanceTableViewController {
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard let members = Organization.current?.members, indexPath.row < members.count else { return cell }
-            let member = members[indexPath.row]
+            guard indexPath.row < attendees.count else { return cell }
             // BOBBY TODO
 //            attendanceCell.configure(member: member, practice: currentPractice, newAttendance: newAttendances[member], row: indexPath.row)
             return cell

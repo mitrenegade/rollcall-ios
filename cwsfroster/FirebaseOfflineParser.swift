@@ -50,5 +50,35 @@ class FirebaseOfflineParser: NSObject {
         })
         return mapped
     }
+    
+    fileprivate func allMembers() -> [FirebaseMember] {
+        guard let membersDict = offlineDict["members"] as? [String: Any] else { return [] }
+        return membersDict.compactMap({ (key, val) -> FirebaseMember? in
+            guard let dict = val as? [String: Any] else { return nil }
+            return FirebaseMember(id: key, dict: dict)
+        })
+    }
+    
+    func membersForOrganization() -> [FirebaseMember] {
+        guard let organization = loadOrganization() else { return [] }
+        guard let organizationMembers = offlineDict["organizationMembers"] as? [String: Any], let membersDict = organizationMembers[organization.id] as? [String: Any] else { return [] }
+        return allMembers().filter({ (member) -> Bool in
+            return membersDict[member.id] as? String == "active"
+        })
+    }
+    
+    func attendances(for event: FirebaseEvent) -> [String] {
+        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [] }
+        guard let eventDict = eventsDict[event.id] as? [String: Any] else { return [] }
+        guard let attendees = eventDict["attendees"] as? [String: Bool] else { return [] }
+        return attendees.compactMap({ (key, val) -> String? in
+            if val == true {
+                return key
+            } else {
+                return nil
+            }
+        })
+    }
+    
 }
 
