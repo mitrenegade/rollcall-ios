@@ -232,58 +232,59 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action) in
             if let textField = alert.textFields?.first {
                 self.emailTo = textField.text
-                self.composeEmail()
+                guard !self.emailTo.isEmpty else {
+                    self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+                    return
+                }
+                self.activityOverlay.isHidden = false
+                
+                if let practice = self.practice {
+                    self.composeEmail()
+                } else {
+                    self.createPractice { (event) in
+                        self.practice = event
+                        self.composeEmail()
+                    }
+                }
             }
         }))
         self.present(alert, animated: true, completion: nil)
     }
     
     func composeEmail() {
-        guard !emailTo.isEmpty else {
-            self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+        guard let practice = practice else {
+            simpleAlert("Could not compose email", message: "The event was not saved correctly. Please save the event first then try sending a summary again.")
             return
         }
-        self.activityOverlay.isHidden = false
+        self.activityOverlay.isHidden = true
 
-        // BOBBY TODO
-//        self.practice.saveInBackground { (success, error) in
-//            if let error = error as? NSError {
-//                self.simpleAlert("Event could not be saved", defaultMessage: "Could not update event before emailing out the attendance", error: error)
-//                self.activityOverlay.isHidden = true
-//                return
-//            }
-//            else {
-                UserDefaults.standard.set(self.emailTo, forKey: "email:to")
-
-                let eventName = self.practice.title ?? "practice"
-                let title = "Event attendance for \(eventName)"
-                let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
-                var message = "Date: \(dateString)\n"
-//                let attendances = self.practice.attendances ?? []
-//                var count = attendances.count
-//                for attendance in attendances {
-//                    if let attended = attendance.attended, attended.boolValue, let member = attendance.member {
-//                        member.fetchIfNeededInBackground(block: { (object, error) in
-//                            DispatchQueue.main.async {
-//                                if let member = object as? Member {
-//                                    if let name = member.name {
-//                                        message = "\(message)\n\(name) "
-//                                    }
-//                                    if let email = member.email {
-//                                        message = "\(message)\(email)"
-//                                    }
-//                                }
-//                                count -= 1
-//                                if count == 0 {
-//                                    self.sendEmail(title: title, message: message)
-//                                }
-//                            }
-//                        })
-//                    }
-//                }
-                                            self.sendEmail(title: title, message: message)
-//            }
-//        }
+        UserDefaults.standard.set(self.emailTo, forKey: "email:to")
+        
+        let eventName = self.practice.title ?? "practice"
+        let title = "Event attendance for \(eventName)"
+        let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
+        var message = "Date: \(dateString)\n"
+        
+        let attendees = practice.attendees
+        OrganizationService.shared.members { [weak self] (members, error) in
+            let attended = members.filter({ (member) -> Bool in
+                attendees.contains(member.id)
+            }).sorted{
+                guard let n1 = $0.name?.uppercased() else { return false }
+                guard let n2 = $1.name?.uppercased() else { return true }
+                return n1 < n2
+            }
+            
+            for member in attended {
+                if let name = member.name {
+                    message = "\(message)\n\(name) "
+                }
+                if let email = member.email {
+                    message = "\(message)\(email)"
+                }
+            }
+            self?.sendEmail(title: title, message: message)
+        }
     }
     
     func sendEmail(title: String, message: String) {
