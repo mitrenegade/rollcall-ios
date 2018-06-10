@@ -28,12 +28,20 @@ extension PracticesTableViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PracticeCell", for: indexPath)
 
         // Configure the cell...
-        let practice = self.practice(for: indexPath.row)
-        cell.textLabel?.text = practice?.title
+        guard let practice = self.practice(for: indexPath.row) else { return cell }
+        var title: String = practice.title ?? ""
+        if TESTING, let dateString = practice.date?.dateString() {
+            title = "\(title) - \(dateString)"
+        }
+        cell.textLabel?.text = title
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         cell.textLabel?.textColor = .black
         
-        cell.detailTextLabel?.text = practice?.details
+        var details: String = practice.details ?? ""
+        if TESTING {
+            details = "\(details) - \(practice.id)"
+        }
+        cell.detailTextLabel?.text = details
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
         cell.detailTextLabel?.textColor = UIColor.darkGray
 
@@ -63,7 +71,7 @@ extension PracticesTableViewController {
                 _practices = events.sorted(by: { (p1, p2) -> Bool in
                     guard let t1 = p1.date else { return false }
                     guard let t2 = p2.date else { return true }
-                    return t1.compare(t2) == .orderedAscending
+                    return t1.compare(t2) == .orderedDescending
                 })
                 DispatchQueue.main.async {
                     self?.tableView.reloadData()
