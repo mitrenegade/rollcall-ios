@@ -37,6 +37,8 @@ extension PracticeEditViewController {
             self.buttonDrawing.isHidden = true
             self.buttonAttendees.isHidden = true
             self.inputNotes.text = nil
+            self.navigationItem.leftBarButtonItem?.title = "Cancel"
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
         else {
             self.title = "Edit event"
@@ -49,7 +51,7 @@ extension PracticeEditViewController {
         originalDescription = inputDetails.text;
     }
     
-    fileprivate func createPractice(_ completion: @escaping (()->Void)) {
+    fileprivate func createPractice(_ completion: @escaping ((FirebaseEvent)->Void)) {
         guard let name = createPracticeInfo?["title"] as? String else { return }
         guard let date = createPracticeInfo?["date"] as? Date else { return }
         guard let org = OrganizationService.shared.current.value else { return }
@@ -57,8 +59,9 @@ extension PracticeEditViewController {
         let notes = createPracticeInfo?["notes"] as? String
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: org.id) { [weak self] (event, error) in
             if let event = event {
-                self?.practice = event
-                completion()
+                ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
+                self?.delegate.didCreatePractice()
+                completion(event)
             } else {
                 print("Create practice error \(error)")
             }
@@ -96,9 +99,9 @@ extension PracticeEditViewController {
         if practice != nil {
             performSegue(withIdentifier: "ToOnsiteSignup", sender: nil)
         } else {
-            createPractice {
+            createPractice { newPractice in
                 self.navigationItem.leftBarButtonItem?.title = "Close"
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
             }
         }
     }
@@ -107,8 +110,8 @@ extension PracticeEditViewController {
         if practice != nil {
             performSegue(withIdentifier: "ToEditAttendees", sender: nil)
         } else {
-            createPractice {
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+            createPractice { newPractice in
+                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
             }
         }
     }
@@ -120,6 +123,9 @@ extension PracticeEditViewController {
             controller.delegate = delegate
             if let practice = practice {
                 controller.currentPractice = practice
+            } else if let newPractice = sender as? FirebaseEvent {
+                controller.currentPractice = newPractice
+                controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
             }
         } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
             if let practice = practice {
@@ -197,6 +203,8 @@ extension PracticeEditViewController: UITextFieldDelegate {
                 createPracticeInfo?["date"] = date
                 // BOBBY TODO
 //                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
+                
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         }
         else if textField == inputDetails {

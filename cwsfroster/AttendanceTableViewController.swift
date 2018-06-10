@@ -15,27 +15,19 @@ class AttendanceTableViewController: UITableViewController {
     fileprivate var attendees: [String] = []
     fileprivate var members: [FirebaseMember] = []
 
-    fileprivate var isNewPractice: Bool { return currentPractice == nil }
     var delegate: PracticeEditDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if !isNewPractice {
-            // all changes to attendances are automatically saved
-            self.navigationItem.rightBarButtonItem = nil
-        }
-        
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
         reloadData()
     }
     
-    @IBAction func didClickClose(_ sender: AnyObject?) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func didClickSave(_ sender: AnyObject?) {
-        if isNewPractice {
+    @IBAction func didClickDone(_ sender: AnyObject?) {
+        self.delegate?.didEditPractice()
+        self.navigationController?.dismiss(animated: true, completion: {
+        })
             // BOBBY TODO
 //            for (_, attendance) in newAttendances {
 //                attendance.organization?.attendances?.append(attendance)
@@ -45,26 +37,6 @@ class AttendanceTableViewController: UITableViewController {
 //                    }
 //                })
 //            }
-            
-            let name = newPracticeDict["name"] as? String ?? "New event"
-            let date = newPracticeDict["date"] as? Date ?? Date()
-            let organizationId = OrganizationService.shared.current.value?.id ?? "0"
-            let notes = newPracticeDict["notes"] as? String
-            let details = newPracticeDict["details"] as? String
-            EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: organizationId) { (event, error) in
-                if let event = event {
-                    ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
-                    self.delegate?.didCreatePractice()
-                }
-                self.navigationController?.dismiss(animated: true, completion: {
-                })
-            }
-        }
-        else {
-            self.delegate?.didEditPractice()
-            self.navigationController?.dismiss(animated: true, completion: {
-            })
-        }
     }
     
     func reloadData() {
