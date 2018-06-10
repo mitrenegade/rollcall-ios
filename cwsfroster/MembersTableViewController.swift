@@ -19,6 +19,9 @@ class MembersTableViewController: UITableViewController {
         super.viewDidLoad()
 
         listenFor("payment:updated", action: #selector(reloadMembers), object: nil)
+        
+        setupSettingsNavButton()
+        setupPlusNavButton()
         reloadMembers()
     }
     

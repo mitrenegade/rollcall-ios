@@ -14,7 +14,7 @@
         <!--Members-->
         <scene sceneID="UoF-TX-GAG">
             <objects>
-                <tableViewController id="Y4t-OF-Pff" customClass="MembersTableViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Members" id="Y4t-OF-Pff" customClass="MembersTableViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c1h-Dz-bL7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,13 +67,6 @@
                             <outlet property="delegate" destination="Y4t-OF-Pff" id="HRk-Qc-AHf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Members" id="Mg8-rj-ziS">
-                        <barButtonItem key="rightBarButtonItem" title="New" id="G52-bL-MHg">
-                            <connections>
-                                <action selector="didClickNew:" destination="Y4t-OF-Pff" id="tjC-Ui-rch"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <segue destination="UwJ-89-nQa" kind="presentation" identifier="toAddMember" id="oG3-kG-6yv"/>
                     </connections>
@@ -269,6 +262,6 @@
         <image name="add_user.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nGA-pw-8RZ"/>
+        <segue reference="oG3-kG-6yv"/>
     </inferredMetricsTieBreakers>
 </document>
