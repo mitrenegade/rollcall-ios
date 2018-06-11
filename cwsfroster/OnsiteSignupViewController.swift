@@ -1,5 +1,5 @@
 //
-//  OnsiteSignupViewController+Swift.swift
+//  OnsiteSignupViewController.swift
 //  rollcall
 //
 //  Created by Bobby Ren on 2/11/17.
@@ -9,7 +9,40 @@
 import UIKit
 import Parse
 
-extension OnsiteSignupViewController {
+class OnsiteSignupViewController: UIViewController {
+    @IBOutlet weak var inputName: UITextField!
+    @IBOutlet weak var inputEmail: UITextField!
+    @IBOutlet weak var inputAbout: UITextField!
+    weak var currentInput: UITextField?
+
+    @IBOutlet weak var labelAttendanceCount: UILabel!
+    @IBOutlet weak var labelWelcome: UILabel!
+    
+    @IBOutlet weak var buttonPhoto: UIButton!
+    var addedPhoto: UIImage?
+    var addedAttendees: [FirebaseMember] = []
+    @IBOutlet weak var buttonSave: UIButton!
+    
+    var practice: FirebaseEvent?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let button = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(close))
+        navigationItem.leftBarButtonItem = button
+        
+        if let details = practice?.details, !details.isEmpty {
+            title = details
+        }
+        labelWelcome.alpha = 0
+        
+        setupKeyboardDoneButtonView()
+    }
+    
+    func close() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     func setupKeyboardDoneButtonView() {
         let keyboardDoneButtonView: UIToolbar = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
@@ -24,7 +57,7 @@ extension OnsiteSignupViewController {
         inputAbout.inputAccessoryView = keyboardDoneButtonView
     }
     
-    func didClickSignup(_ sender: AnyObject?) {
+    @IBAction func didClickSignup(_ sender: AnyObject?) {
         guard let name = inputName.text, !name.isEmpty else {
             self.simpleAlert("Please enter a name", message: nil)
             return
@@ -49,12 +82,14 @@ extension OnsiteSignupViewController {
                 ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
                 
                 // add attendance
-                self?.practice.addAttendance(for: member)
+                self?.practice?.addAttendance(for: member)
                 
                 // enable button and reset form
                 self?.buttonSave.isEnabled = true
                 self?.addedAttendees.insert(member, at: 0)
-                self?.labelAttendanceCount.text = "New attendees: \(self?.addedAttendees.count)"
+                if let count = self?.addedAttendees.count {
+                    self?.labelAttendanceCount.text = "New attendees: \(count)"
+                }
                 
                 self?.labelWelcome.alpha = 1
                 self?.labelWelcome.text = "Welcome \(member.name ?? "")"
@@ -79,7 +114,6 @@ extension OnsiteSignupViewController {
 
         self.buttonPhoto.setImage(UIImage.init(named: "add_user"), for: .normal)
         self.buttonPhoto.layer.cornerRadius = 0
-        self.constraintTopOffset.constant = 0
         self.buttonSave.isEnabled = true
     }
 }
