@@ -29,7 +29,6 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     func reloadData() {
-        guard let practice = currentPractice else { return }
         OrganizationService.shared.members { [weak self] (members, error) in
             self?.members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }

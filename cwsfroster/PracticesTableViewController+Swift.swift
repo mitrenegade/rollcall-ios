@@ -115,8 +115,8 @@ extension PracticesTableViewController: PracticeEditDelegate {
     }
     
     public func didEditPractice() {
-        // just reload existing practices from data
-        self.tableView.reloadData()
+        // query from web
+        self.reloadPractices()
     }
 
     func deletePracticeAt(indexPath: NSIndexPath) {
