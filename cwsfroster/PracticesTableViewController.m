@@ -33,19 +33,8 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setImage:[UIImage imageNamed:@"hamburger4-square"] forState:UIControlStateNormal];
-    [button setFrame:CGRectMake(0, 0, 30, 30)];
-    [button addTarget:self action:@selector(goToSettings:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = left;
-
-    UIButton *rightbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightbutton setImage:[UIImage imageNamed:@"plus"] forState:UIControlStateNormal];
-    [rightbutton setFrame:CGRectMake(0, 0, 30, 30)];
-    [rightbutton addTarget:self action:@selector(goToAddEvent:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithCustomView:rightbutton];
-    self.navigationItem.rightBarButtonItem = right;
+    [self setupSettingsNavButton];
+    [self setupPlusNavButton];
 
     [self reloadPractices];
 
@@ -55,21 +44,6 @@
         [self promptForPowerUserFeedback];
     }
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
--(void)goToSettings:(id)sender {
-    [self notify:@"goToSettings"];
-}
-
--(void)goToAddEvent:(id)sender {
-    [self performSegueWithIdentifier:@"toNewEvent" sender:nil];
-}
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation

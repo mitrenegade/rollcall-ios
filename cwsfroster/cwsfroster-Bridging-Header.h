@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "IntroViewController.h"
 #import "SettingsViewController.h"
-#import "MembersTableViewController.h"
 #import "PracticeEditViewController.h"
 #import "PracticesTableViewController.h"
 #import "OnsiteSignupViewController.h"

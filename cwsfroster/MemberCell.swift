@@ -26,7 +26,7 @@ class MemberCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(member: Member, row: Int) {
+    func configure(member: FirebaseMember, row: Int) {
         labelName.font = UIFont.systemFont(ofSize: 16)
         labelName.textColor = UIColor.darkGray
         labelName.text = member.name
@@ -34,16 +34,17 @@ class MemberCell: UITableViewCell {
         self.tag = row; // make sure photo loads for correct cell
         photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         
-        if let photo = member.photo {
-            photo.getDataInBackground(block: { (data, error) in
-                if self.tag != row {
-                    return
-                }
-                if let data = data {
-                    let image = UIImage(data: data)
-                    self.photoView.image = image
-                }
-            })
+        if let photoUrl = member.photoUrl {
+            // BOBBY TODO
+//            photo.getDataInBackground(block: { (data, error) in
+//                if self.tag != row {
+//                    return
+//                }
+//                if let data = data {
+//                    let image = UIImage(data: data)
+//                    self.photoView.image = image
+//                }
+//            })
         }
 
         if member.isInactive {

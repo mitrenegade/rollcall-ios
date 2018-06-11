@@ -11,6 +11,29 @@ import UIKit
 
 var _practices: [FirebaseEvent]?
 var _oldPractices: [Practice]?
+extension PracticesTableViewController {
+    func setupSettingsNavButton() {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        button.setImage(UIImage(named: "hamburger4-square"), for: .normal)
+        button.addTarget(self, action: #selector(goToSettings), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    func setupPlusNavButton() {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        button.setImage(UIImage(named: "plus"), for: .normal)
+        button.addTarget(self, action: #selector(goToAddEvent), for: .touchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+    }
+    
+    func goToSettings() {
+        notify("goToSettings", object: nil, userInfo: nil)
+    }
+    
+    func goToAddEvent() {
+        performSegue(withIdentifier: "toNewEvent", sender: nil)
+    }
+}
 extension PracticesTableViewController: UITableViewDataSource {
     var practices: [FirebaseEvent] {
         return _practices ?? []

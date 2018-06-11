@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1108" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y4t-OF-Pff">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Y4t-OF-Pff">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -13,7 +14,7 @@
         <!--Members-->
         <scene sceneID="UoF-TX-GAG">
             <objects>
-                <tableViewController id="Y4t-OF-Pff" customClass="MembersTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Members" id="Y4t-OF-Pff" customClass="MembersTableViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="c1h-Dz-bL7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OVn-ba-i2m" id="PBu-nq-OJK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FU2-h2-tnm">
@@ -66,13 +67,6 @@
                             <outlet property="delegate" destination="Y4t-OF-Pff" id="HRk-Qc-AHf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Members" id="Mg8-rj-ziS">
-                        <barButtonItem key="rightBarButtonItem" title="New" id="G52-bL-MHg">
-                            <connections>
-                                <action selector="didClickNew:" destination="Y4t-OF-Pff" id="tjC-Ui-rch"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <connections>
                         <segue destination="UwJ-89-nQa" kind="presentation" identifier="toAddMember" id="oG3-kG-6yv"/>
                     </connections>
@@ -87,7 +81,7 @@
                 <navigationController definesPresentationContext="YES" id="UwJ-89-nQa" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="M2C-Ad-wBZ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="AFJ-gh-fYE">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -268,6 +262,6 @@
         <image name="add_user.png" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nGA-pw-8RZ"/>
+        <segue reference="oG3-kG-6yv"/>
     </inferredMetricsTieBreakers>
 </document>

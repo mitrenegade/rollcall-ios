@@ -20,7 +20,7 @@ class MemberInfoViewController: UIViewController {
     @IBOutlet var labelPaymentWarning: UILabel!
     @IBOutlet var buttonPayment: UIButton!
 
-    var member: Member?
+    var member: FirebaseMember?
     var delegate: MemberDelegate?
     var newPhoto: UIImage?
     var isCreatingMember = false
@@ -36,19 +36,22 @@ class MemberInfoViewController: UIViewController {
             self.title = "Edit member"
             self.navigationItem.rightBarButtonItem = nil
             
-            if let photo = member.photo {
-                photo.getDataInBackground(block: { (data, error) in
-                    if let data = data {
-                        let image = UIImage(data: data)
-                        self.photoView.image = image
-                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
-                    }
-                })
+            if let photo = member.photoUrl {
+                // BOBBY TODO
+//                photo.getDataInBackground(block: { (data, error) in
+//                    if let data = data {
+//                        let image = UIImage(data: data)
+//                        self.photoView.image = image
+//                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
+//                    }
+//                })
             }
             self.switchInactive.isOn = member.isInactive
         } else {
             self.title = "New member"
             self.isCreatingMember = true
+            
+            navigationItem.leftBarButtonItem?.title = "Cancel"
         }
         self.setupTextView()
         self.refresh()
@@ -81,20 +84,8 @@ class MemberInfoViewController: UIViewController {
     }
     
     func close() {
-        if let member = member {
-            self.saveMember()
-        }
         if self.navigationController?.viewControllers[0] == self {
             self.navigationController?.dismiss(animated: true, completion: { 
-                if let member = self.member {
-                    if !self.isCreatingMember {
-                        var params = [String:Any]()
-                        if let name = self.member?.name { params["name"] = name }
-                        if let email = self.member?.email { params["email"] = email }
-                        ParseLog.log(typeString: "MemberUpdated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
-                    }
-                    self.delegate?.didUpdateMember(member)
-                }
             })
         }
         else {
@@ -102,36 +93,13 @@ class MemberInfoViewController: UIViewController {
         }
     }
     
-    func saveMember() {
-        member?.saveInBackground(block: { (success, error) in
-            if success {
-                var params = [String:Any]()
-                if let name = self.member?.name { params["name"] = name }
-                if let email = self.member?.email { params["email"] = email }
-                ParseLog.log(typeString: "MemberCreated", title: self.member?.objectId, message: nil, params: params as NSDictionary?, error: nil)
-                
-                self.delegate?.didUpdateMember(self.member)
-            }
-            else {
-                self.simpleAlert("Could not create member", defaultMessage: "There was an error adding the member", error: error as? NSError)
-            }
-        })
-    }
-
     @IBAction func didClickClose(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        if let text = self.inputEmail.text, text.characters.count > 0 {
-            if !text.isValidEmail() {
-                self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
-                return
-            }
+        if isCreatingMember {
+            close()
+        } else {
+            saveMember()
         }
-
-        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-            member?.photo = PFFile(data:data)
-        }
-
-        self.close()
     }
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
@@ -139,43 +107,49 @@ class MemberInfoViewController: UIViewController {
         self.takePhoto()
     }
 
-    @IBAction func didClickSwitch(_ sender: AnyObject?) {
-        if let member = self.member {
-            member.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
-            member.saveInBackground()
-        }
+    @IBAction func didClickSave(_ sender: AnyObject?) {
+        saveMember()
     }
     
-    @IBAction func didClickSave(_ sender: AnyObject?) {
-        if let text = self.inputEmail.text, text.characters.count > 0 {
-            if !text.isValidEmail() {
-                self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
-                return
-            }
+    fileprivate func saveMember() {
+        guard let email = self.inputEmail.text, !email.isEmpty, email.isValidEmail() else {
+            self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
+            return
         }
+        let name = self.inputName.text
+        let notes = inputNotes.text
         
-        if member == nil {
-            member = Member()
-            member?.organization = Organization.current
-            
-            // without reloading from the web, make sure org knows of new member
-            Organization.current?.members?.insert(member!, at: 0)
-        }
-        if let text = self.inputName.text, text.characters.count > 0 {
-            self.member?.name = text
-        }
-        if let text = self.inputEmail.text, text.characters.count > 0 {
-            self.member?.email = text
-        }
-        if let text = inputNotes.text, text.characters.count > 0 {
-            member?.notes = text
-        }
-        if let photo = self.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-            member?.photo = PFFile(data:data)
-        }
-        member?.status = self.switchInactive.isOn ? NSNumber(value: MemberStatus.Inactive.rawValue): NSNumber(value: MemberStatus.Active.rawValue)
+        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
+        
+        if isCreatingMember {
+            OrganizationService.shared.createMember(email: email, name: name, notes: notes, status: status) { [weak self] (member, error) in
+                
+                var params = [String:Any]()
+                if let member = member {
+                    if let name = member.name { params["name"] = name }
+                    if let email = member.email { params["email"] = email }
+                    ParseLog.log(typeString: "MemberCreated", title: member.id, message: nil, params: params as NSDictionary?, error: nil)
 
-        self.close()
+                    self?.delegate?.didUpdateMember(member)
+                    if let photo = self?.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+                        // BOBBY TODO: upload photo
+                        self?.close()
+                    } else {
+                        self?.close()
+                    }
+                } else {
+                    self?.simpleAlert("Could not create member", message: "The member info could not be saved.", completion: {
+                        self?.close()
+                    })
+                }
+            }
+        } else if let member = member {
+            self.delegate?.didUpdateMember(member)
+            var params = [String:Any]()
+            if let name = self.member?.name { params["name"] = name }
+            if let email = self.member?.email { params["email"] = email }
+            ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+        }
     }
 }
 
@@ -239,7 +213,7 @@ extension MemberInfoViewController: CameraControlsDelegate {
         controller.takePhoto(from: self)
         
         // add overlayview
-        ParseLog.log(typeString: "EditMemberPhoto", title: member?.objectId, message: nil, params: nil, error: nil)
+        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
     }
 
     func didTakePhoto(image: UIImage) {

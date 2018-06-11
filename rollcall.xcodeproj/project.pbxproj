@@ -25,6 +25,7 @@
 		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
 		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */; };
 		8E4BE96420CCCDD300556771 /* rollcall-and-random-dev-export.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */; };
+		8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BE96520CCE74300556771 /* MembersTableViewController.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
@@ -94,7 +95,6 @@
 		9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */; };
 		9EC5F31F1936D2410056140F /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3121936D2410056140F /* Util.m */; };
 		9EC5F3331936D60D0056140F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Main.storyboard */; };
-		9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3351936D74E0056140F /* MembersTableViewController.m */; };
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
 		9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33C1936DD000056140F /* CoreLocation.framework */; };
 		AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3178CA1B409ADA00668B98 /* star@2x.png */; };
@@ -136,6 +136,7 @@
 		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
 		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OnsiteSignupViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rollcall-and-random-dev-export.json"; sourceTree = "<group>"; };
+		8E4BE96520CCE74300556771 /* MembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
@@ -225,8 +226,6 @@
 		9EC5F3111936D2410056140F /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		9EC5F3121936D2410056140F /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
 		9EC5F3321936D60D0056140F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		9EC5F3341936D74E0056140F /* MembersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersTableViewController.h; sourceTree = "<group>"; };
-		9EC5F3351936D74E0056140F /* MembersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersTableViewController.m; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC3178CA1B409ADA00668B98 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
@@ -350,10 +349,9 @@
 		8EE5514F1E3E6117001FB0C4 /* Members */ = {
 			isa = PBXGroup;
 			children = (
-				9EC5F3341936D74E0056140F /* MembersTableViewController.h */,
-				9EC5F3351936D74E0056140F /* MembersTableViewController.m */,
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 				8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */,
+				8E4BE96520CCE74300556771 /* MembersTableViewController.swift */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -770,7 +768,6 @@
 				8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */,
 				8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
-				9EC5F3361936D74E0056140F /* MembersTableViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */,
@@ -808,6 +805,7 @@
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */,
+				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
