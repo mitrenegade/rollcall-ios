@@ -68,15 +68,20 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
     
+    fileprivate var attendeesReadWriteQueue = DispatchQueue(label: "attendees")
     var attendees: [String] {
         get {
+            var result: [String] = []
             guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
-            return attendances.compactMap({ (key, val) -> String? in
-                if val {
-                    return key
-                }
-                return nil
-            })
+            attendeesReadWriteQueue.sync {
+                result = attendances.compactMap({ (key, val) -> String? in
+                    if val {
+                        return key
+                    }
+                    return nil
+                })
+            }
+            return result
         }
         set {
             var newAttendees: [String: Bool] = [:]
@@ -93,6 +98,26 @@ class FirebaseEvent: FirebaseBaseModel {
             return .Present
         }
         return .None
+    }
+    
+    func addAttendance(for member: FirebaseMember) {
+        var attendances = attendees
+        if !attendances.contains(member.id) {
+            attendeesReadWriteQueue.sync {
+                attendances.append(member.id)
+                attendees = attendances
+            }
+        }
+    }
+
+    func removeAttendance(for member: FirebaseMember) {
+        var attendances = attendees
+        if attendances.contains(member.id), let index = attendees.index(of: member.id) {
+            attendeesReadWriteQueue.sync {
+                attendances.remove(at: index)
+                attendees = attendances
+            }
+        }
     }
 }
 

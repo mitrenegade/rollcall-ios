@@ -136,7 +136,13 @@ class OrganizationService: NSObject {
         print ("Create member")
         
         let ref = firRef.child("members").child(FirebaseAPIService.uniqueId())
-        var params: [String: Any] = ["email": email, "name": name, "notes": notes, "createdAt": Date().timeIntervalSince1970, "organization": org.id]
+        var params: [String: Any] = ["email": email, "createdAt": Date().timeIntervalSince1970, "organization": org.id]
+        if let name = name {
+            params["name"] = name
+        }
+        if let notes = notes {
+            params["notes"] = notes
+        }
         switch status {
         case .Inactive:
             params["status"] = "inactive"

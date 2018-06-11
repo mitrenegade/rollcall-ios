@@ -129,8 +129,7 @@ extension PracticeEditViewController {
             }
         } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
             if let practice = practice {
-                // BOBBY TODO
-//                controller.currentPractice = practice
+                controller.practice = practice
             }
         } else if segue.identifier == "ToEventNotes", let controller = segue.destination as? NotesViewController {
             if let practice = practice {

@@ -62,7 +62,7 @@
         <!--Onsite Signup View Controller-->
         <scene sceneID="5g2-0c-sfE">
             <objects>
-                <viewController id="c3o-bq-UFD" customClass="OnsiteSignupViewController" sceneMemberID="viewController">
+                <viewController id="c3o-bq-UFD" customClass="OnsiteSignupViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MjY-4z-9To"/>
                         <viewControllerLayoutGuide type="bottom" id="7s1-S2-y11"/>
@@ -82,7 +82,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickSignup:" destination="c3o-bq-UFD" eventType="touchUpInside" id="hQ2-xW-QB4"/>
+                                    <action selector="didClickSignup:" destination="c3o-bq-UFD" eventType="touchUpInside" id="wdp-bW-xcI"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fI-Jd-fDW">
@@ -94,7 +94,7 @@
                                             <constraint firstAttribute="height" constant="30" id="Tlt-rt-VIQ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="c3o-bq-UFD" id="zte-ep-DI9"/>
                                         </connections>
@@ -105,7 +105,7 @@
                                             <constraint firstAttribute="height" constant="30" id="sab-ad-3VR"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="c3o-bq-UFD" id="Cnu-3d-Uzy"/>
                                         </connections>
@@ -116,7 +116,7 @@
                                             <constraint firstAttribute="height" constant="30" id="cTF-R8-01L"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="c3o-bq-UFD" id="h0Z-wX-E36"/>
                                         </connections>
@@ -190,7 +190,6 @@
                     <connections>
                         <outlet property="buttonPhoto" destination="M0l-fq-B3g" id="qxV-2Q-hQ1"/>
                         <outlet property="buttonSave" destination="kNz-dM-1Vd" id="i7f-Nl-vbn"/>
-                        <outlet property="constraintTopOffset" destination="PVh-5a-QGE" id="FYs-7N-ely"/>
                         <outlet property="inputAbout" destination="AFT-OL-Z0N" id="Oif-9y-Viv"/>
                         <outlet property="inputEmail" destination="9OL-VS-Y4e" id="UK8-hw-drg"/>
                         <outlet property="inputName" destination="hhT-w7-ngz" id="W7G-Fr-CYy"/>

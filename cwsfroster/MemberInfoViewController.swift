@@ -149,6 +149,7 @@ class MemberInfoViewController: UIViewController {
             if let name = self.member?.name { params["name"] = name }
             if let email = self.member?.email { params["email"] = email }
             ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+            close()
         }
     }
 }

@@ -11,8 +11,6 @@
 #import "Util.h"
 #import "UIAlertView+MKBlockAdditions.h"
 
-#import "OnsiteSignupViewController.h"
-
 @interface PracticeEditViewController ()
 
 @end

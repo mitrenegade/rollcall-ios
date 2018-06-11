@@ -23,7 +23,7 @@
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */; };
 		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
-		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */; };
+		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */; };
 		8E4BE96420CCCDD300556771 /* rollcall-and-random-dev-export.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */; };
 		8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BE96520CCE74300556771 /* MembersTableViewController.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
@@ -103,7 +103,6 @@
 		AC950F171B371EAA005C3998 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F131B371EAA005C3998 /* libc++.dylib */; };
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
 		ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */ = {isa = PBXBuildFile; fileRef = ACF58F8E1C266A0B0087EE70 /* add_user.png */; };
-		ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */; };
 		C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */; };
 		C68338F120A3FFE500080BCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F020A3FFE500080BCE /* GoogleService-Info.plist */; };
 		C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */; };
@@ -134,7 +133,7 @@
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
-		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OnsiteSignupViewController+Swift.swift"; sourceTree = "<group>"; };
+		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnsiteSignupViewController.swift; sourceTree = "<group>"; };
 		8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rollcall-and-random-dev-export.json"; sourceTree = "<group>"; };
 		8E4BE96520CCE74300556771 /* MembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
@@ -236,8 +235,6 @@
 		AC950F131B371EAA005C3998 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		AC950F141B371EAA005C3998 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		ACF58F8E1C266A0B0087EE70 /* add_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_user.png; sourceTree = "<group>"; };
-		ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnsiteSignupViewController.h; sourceTree = "<group>"; };
-		ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnsiteSignupViewController.m; sourceTree = "<group>"; };
 		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		C68338F020A3FFE500080BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
@@ -367,9 +364,7 @@
 				8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */,
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
-				ACF960991B3F7873006AD9F5 /* OnsiteSignupViewController.h */,
-				ACF9609A1B3F7873006AD9F5 /* OnsiteSignupViewController.m */,
-				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift */,
+				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -783,7 +778,7 @@
 				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
-				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController+Swift.swift in Sources */,
+				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
@@ -791,7 +786,6 @@
 				8E9D891F20CB130900AD382F /* EventService.swift in Sources */,
 				9E156176199266A700A31398 /* IntroViewController.m in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
-				ACF9609B1B3F7873006AD9F5 /* OnsiteSignupViewController.m in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */,
 				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
