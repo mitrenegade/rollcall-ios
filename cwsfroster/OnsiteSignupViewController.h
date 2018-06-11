@@ -11,7 +11,7 @@
 
 @class Practice;
 @class RatingViewController;
-@interface OnsiteSignupViewController : UIViewController <UITextFieldDelegate, MFMailComposeViewControllerDelegate>
+@interface OnsiteSignupViewController : UIViewController <MFMailComposeViewControllerDelegate>
 {
 }
 
@@ -24,8 +24,6 @@
     @property (nonatomic) IBOutlet UILabel *labelAttendanceCount;
     
     @property (nonatomic) UITextField *currentInput;
-    
-    @property (nonatomic) IBOutlet NSLayoutConstraint *constraintTopOffset;
     
     @property (nonatomic) IBOutlet UILabel *labelWelcome;
     

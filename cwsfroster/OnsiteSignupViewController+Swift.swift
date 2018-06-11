@@ -10,6 +10,20 @@ import UIKit
 import Parse
 
 extension OnsiteSignupViewController {
+    func setupKeyboardDoneButtonView() {
+        let keyboardDoneButtonView: UIToolbar = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        keyboardDoneButtonView.barStyle = UIBarStyle.black
+        keyboardDoneButtonView.tintColor = UIColor.white
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        keyboardDoneButtonView.setItems([flex, saveButton], animated: true)
+        
+        inputName.inputAccessoryView = keyboardDoneButtonView
+        inputEmail.inputAccessoryView = keyboardDoneButtonView
+        inputAbout.inputAccessoryView = keyboardDoneButtonView
+    }
+    
     func didClickSignup(_ sender: AnyObject?) {
         guard let name = inputName.text, !name.isEmpty else {
             self.simpleAlert("Please enter a name", message: nil)
@@ -70,6 +84,36 @@ extension OnsiteSignupViewController {
     }
 }
 
+extension OnsiteSignupViewController: UITextFieldDelegate {
+    func dismissKeyboard() {
+        currentInput?.resignFirstResponder()
+    }
+
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        currentInput = textField
+    }
+    
+    public func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == inputName {
+            inputEmail.becomeFirstResponder()
+        }
+        else if textField == inputEmail {
+            inputAbout.becomeFirstResponder()
+        }
+        
+        textField.resignFirstResponder()
+    }
+    
+    public func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
 extension OnsiteSignupViewController: CameraControlsDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)

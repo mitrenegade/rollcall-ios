@@ -87,24 +87,8 @@ extension AttendanceTableViewController {
         guard let practice = self.currentPractice else { return }
 
         if indexPath.section == 0 {
-            // BOBBY TODO
-//            practice.saveInBackground(block: { (success, error) in
-//                DispatchQueue.main.async {
-//                    if success {
-//                        if self.isNewPractice {
-//                            Organization.current?.practices?.insert(practice, at: 0)
-//                            self.isNewPractice = false
-//                        }
-//                        self.delegate?.didEditPractice()
-//                        self.performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
-//
-//                        ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
-//                    }
-//                    else {
-//                        self.simpleAlert("Could not go to onsite signup", message: "There was an error creating this event so we could not start onsite signups.")
-//                    }
-//                }
-//            })
+            performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+            ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
             return
         }
         

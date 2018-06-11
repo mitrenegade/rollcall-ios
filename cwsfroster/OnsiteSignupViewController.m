@@ -19,19 +19,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIToolbar *keyboardDoneButtonView = [[UIToolbar alloc] init];
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(nextField:)];
-    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
-    keyboardDoneButtonView.translucent = YES;
-    keyboardDoneButtonView.tintColor = [UIColor whiteColor];
-    [keyboardDoneButtonView sizeToFit];
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    [keyboardDoneButtonView setItems:@[flex, done]];
-    
-    [self.inputName setInputAccessoryView:keyboardDoneButtonView];
-    [self.inputEmail setInputAccessoryView:keyboardDoneButtonView];
-    [self.inputAbout setInputAccessoryView:keyboardDoneButtonView];
-    
     UIBarButtonItem *close = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(close)];
     self.navigationItem.leftBarButtonItem = close;
     
@@ -44,11 +31,8 @@
     self.rater.delegate = self;
     
     self.addedAttendees = [NSMutableArray array];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    [self setupKeyboardDoneButtonView];
 }
 
 -(void)close {
@@ -68,30 +52,6 @@
 }
 
 #pragma mark UITextFieldDelegate
--(void)nextField:(id)sender {
-    [self textFieldShouldEndEditing:self.currentInput];
-}
--(void)textFieldDidBeginEditing:(UITextField *)textField {
-    self.currentInput = textField;
-    if (self.currentInput == self.inputEmail) {
-        self.constraintTopOffset.constant = -40;
-    }
-    else if (self.currentInput == self.inputAbout) {
-        self.constraintTopOffset.constant = -80;
-    }
-    else {
-        self.constraintTopOffset.constant = 0;
-    }
-}
--(BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    [textField resignFirstResponder];
-
-    if (textField == self.inputAbout) {
-        self.constraintTopOffset.constant = 0;
-    }
-    return YES;
-}
-
 -(void)goToFeedback {
     if ([MFMailComposeViewController canSendMail]){
         NSString *title = @"RollCall feedback";
