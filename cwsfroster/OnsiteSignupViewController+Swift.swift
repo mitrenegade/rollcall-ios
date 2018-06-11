@@ -16,49 +16,45 @@ extension OnsiteSignupViewController {
             return
         }
         
-        if let email = inputEmail.text, !email.isEmpty && !email.isValidEmail() {
+        guard let email = inputEmail.text, !email.isEmpty && !email.isValidEmail() else {
             self.simpleAlert("Please enter a valid email", message: nil)
             return
         }
         
         self.buttonSave.isEnabled = false
         
-        let member = Member()
-        member.organization = Organization.current
-        member.name = name
-        member.email = inputEmail.text
-        
-        if let photo = self.addedPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-            member.photo = PFFile(data:data)
-        }
-        
-        self.notify("member:updated", object: nil, userInfo: nil)
-        
-        member.saveInBackground { (result, error) in
-            Organization.current?.members?.insert(member, at: 0)
-            ParseLog.log(typeString: "OnsiteSignup", title: member.objectId, message: nil, params: ["photo": self.addedPhoto != nil], error: nil)
-        }
-        
-        // BOBBY TODO
-//        Attendance.saveNewAttendanceFor(member: member, practice: self.practice, saveToParse: true) { (attendance, error) in
-//            self.buttonSave.isEnabled = true
-//            if let error = error {
-//                self.simpleAlert("Could not sign up user", message: "There was an error adding \(member.name) to this event. Please add them manually by editing event attendees")
-//                return
+        OrganizationService.shared.createMember(email: email, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
+            
+            // BOBBY TODO
+//            if let photo = self.addedPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
+//                member.photo = PFFile(data:data)
 //            }
-//
-//            self.addedAttendees.insert(member, at: 0)
-//            self.labelAttendanceCount.text = "New attendees: \(self.addedAttendees.count)"
-//
-//            self.labelWelcome.alpha = 1
-//            self.labelWelcome.text = "Welcome \(member.name ?? "")"
-//
-//            UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
-//                self.labelWelcome.alpha = 0
-//            }, completion: nil)
-//
-//            self.reset()
-//        }
+            
+            if let member = member {
+                self?.notify("member:updated", object: nil, userInfo: nil)
+                ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
+                
+                // add attendance
+                self?.practice.addAttendance(for: member)
+                
+                // enable button and reset form
+                self?.buttonSave.isEnabled = true
+                self?.addedAttendees.insert(member, at: 0)
+                self?.labelAttendanceCount.text = "New attendees: \(self?.addedAttendees.count)"
+                
+                self?.labelWelcome.alpha = 1
+                self?.labelWelcome.text = "Welcome \(member.name ?? "")"
+                
+                UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
+                    self?.labelWelcome.alpha = 0
+                }, completion: nil)
+                
+                self?.reset()
+            } else if let error = error {
+                print("Error creating member")
+                self?.simpleAlert("Could not sign up user", message: "There was an error adding \(name) to this event. Please add them manually by editing event attendees")
+            }
+        }
     }
 
     func reset(){

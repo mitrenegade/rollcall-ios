@@ -11,7 +11,6 @@ import UIKit
 class AttendanceTableViewController: UITableViewController {
 
     var currentPractice: FirebaseEvent?
-    fileprivate var attendees: [String] = []
     fileprivate var members: [FirebaseMember] = []
 
     var delegate: PracticeEditDelegate?
@@ -24,7 +23,6 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     @IBAction func didClickDone(_ sender: AnyObject?) {
-        currentPractice?.attendees = attendees
         self.delegate?.didEditPractice()
         self.navigationController?.dismiss(animated: true, completion: {
         })
@@ -32,7 +30,6 @@ class AttendanceTableViewController: UITableViewController {
     
     func reloadData() {
         guard let practice = currentPractice else { return }
-        self.attendees = practice.attendees
         OrganizationService.shared.members { [weak self] (members, error) in
             self?.members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }
@@ -46,8 +43,7 @@ class AttendanceTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ToOnSiteSignup" {
             if let controller = segue.destination as? OnsiteSignupViewController {
-                // BOBBY TODO
-//                controller.practice = currentPractice
+                controller.practice = currentPractice
             }
         }
     }
@@ -76,9 +72,9 @@ extension AttendanceTableViewController {
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard indexPath.row < members.count else { return cell }
+            guard indexPath.row < members.count, let practice = currentPractice else { return cell }
             let member = members[indexPath.row]
-            let attendance = attendees.contains(member.id) ? AttendedStatus.Present : AttendedStatus.None
+            let attendance = practice.attendance(for: member.id)
             attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
             return cell
         }
@@ -115,10 +111,10 @@ extension AttendanceTableViewController {
         
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        if let index = attendees.index(of: member.id) {
-            attendees.remove(at: index)
+        if currentPractice?.attendance(for: member.id) == .Present {
+            currentPractice?.removeAttendance(for: member)
         } else {
-            attendees.append(member.id)
+            currentPractice?.addAttendance(for: member)
         }
 
         tableView.reloadData()
