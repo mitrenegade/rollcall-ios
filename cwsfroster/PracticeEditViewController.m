@@ -77,9 +77,6 @@
 
     self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
 
-    self.rater = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"RatingViewController"];
-    self.rater.delegate = self;
-    
     if (self.practice == nil) {
         self.createPracticeInfo = [[NSDictionary alloc] init];
     }
