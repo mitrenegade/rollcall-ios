@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MessageUI/MFMailComposeViewController.h>
-#import "RatingViewController.h"
 
 #define FUTURE_DAYS 14
 
@@ -20,8 +19,7 @@
 @end
 
 @class FirebaseEvent;
-@class RatingViewController;
-@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource, RatingDelegate>
+@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource>
 {
 }
 
@@ -60,9 +58,6 @@
 @property (nonatomic) IBOutlet UIView *viewInfo;
     
 @property (nonatomic) NSMutableArray *drawn;
-    
-@property (nonatomic) RatingViewController *rater;
-    
     
 -(NSString *)titleForDate:(NSDate *)date;
 -(void)generatePickerDates;

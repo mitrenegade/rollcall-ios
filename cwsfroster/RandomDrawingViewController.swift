@@ -39,8 +39,6 @@ class RandomDrawingViewController: UIViewController {
         inputNumber.text = "\(members?.count ?? 0)"
         
         ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
-        ratingsCanvas.isUserInteractionEnabled = false
-        constraintRatingsHeight.constant = 0
     }
     
     fileprivate func reloadData() {

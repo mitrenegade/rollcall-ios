@@ -62,7 +62,7 @@ class MemberInfoViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.done, target: self, action: #selector(NotesViewController.dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
@@ -192,7 +192,7 @@ extension MemberInfoViewController: UITextFieldDelegate {
 
 extension MemberInfoViewController: UITextViewDelegate {
     func dismissKeyboard() {
-        self.view.endEditing(true)
+        view.endEditing(true)
         
         if let member = self.member {
             member.notes = self.inputNotes.text

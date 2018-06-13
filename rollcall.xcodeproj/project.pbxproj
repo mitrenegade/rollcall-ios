@@ -98,8 +98,6 @@
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
 		9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33C1936DD000056140F /* CoreLocation.framework */; };
 		AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3178CA1B409ADA00668B98 /* star@2x.png */; };
-		AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC3178CD1B409B1000668B98 /* RatingViewController.m */; };
-		AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */; };
 		AC950F171B371EAA005C3998 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F131B371EAA005C3998 /* libc++.dylib */; };
 		AC950F181B371EAA005C3998 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AC950F141B371EAA005C3998 /* libz.dylib */; };
 		ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */ = {isa = PBXBuildFile; fileRef = ACF58F8E1C266A0B0087EE70 /* add_user.png */; };
@@ -228,9 +226,6 @@
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC3178CA1B409ADA00668B98 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
-		AC3178CC1B409B1000668B98 /* RatingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RatingViewController.h; sourceTree = "<group>"; };
-		AC3178CD1B409B1000668B98 /* RatingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RatingViewController.m; sourceTree = "<group>"; };
-		AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
 		AC8EF0E51C265A330029EBAE /* cwsfroster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cwsfroster-Bridging-Header.h"; sourceTree = "<group>"; };
 		AC950F131B371EAA005C3998 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		AC950F141B371EAA005C3998 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -280,15 +275,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8E0D882F1E74C65200DDFD7C /* Ratings */ = {
-			isa = PBXGroup;
-			children = (
-				AC3178CC1B409B1000668B98 /* RatingViewController.h */,
-				AC3178CD1B409B1000668B98 /* RatingViewController.m */,
-			);
-			name = Ratings;
-			sourceTree = "<group>";
-		};
 		8E1D993520B20C86005E4186 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -486,8 +472,6 @@
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
 				8EA070C020C3469C00EF478F /* Photo */,
-				8E0D882F1E74C65200DDFD7C /* Ratings */,
-				AC8EF0E31C26581D0029EBAE /* NotesViewController.swift */,
 				8EF3D96A1E765A2E003BFB61 /* Camera */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);
@@ -790,10 +774,8 @@
 				8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */,
 				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
-				AC3178CE1B409B1000668B98 /* RatingViewController.m in Sources */,
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				9EA0994C19B0F160007BC1FD /* AsyncImageView.m in Sources */,
-				AC8EF0E41C26581D0029EBAE /* NotesViewController.swift in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
