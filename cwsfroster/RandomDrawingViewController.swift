@@ -36,7 +36,7 @@ class RandomDrawingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.switchRepeats.setOn(false, animated: false)
+        switchRepeats.setOn(false, animated: false)
         
         let keyboardDoneButtonView: UIToolbar = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
@@ -44,13 +44,13 @@ class RandomDrawingViewController: UIViewController {
         keyboardDoneButtonView.tintColor = UIColor.white
         let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
-        self.inputNumber.inputAccessoryView = keyboardDoneButtonView
+        inputNumber.inputAccessoryView = keyboardDoneButtonView
         
-        self.inputNumber.text = "\(self.members?.count ?? 0)"
+        inputNumber.text = "\(members?.count ?? 0)"
         
         ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
-        self.ratingsCanvas.isUserInteractionEnabled = false
-        self.constraintRatingsHeight.constant = 0
+        ratingsCanvas.isUserInteractionEnabled = false
+        constraintRatingsHeight.constant = 0
     }
     
     fileprivate func reloadData() {
@@ -70,12 +70,12 @@ class RandomDrawingViewController: UIViewController {
 
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
-        self.dismissKeyboard()
-        ParseLog.log(typeString: "RandomDrawingRepeatsSet", title: nil, message: nil, params: ["repeats": self.repeats], error: nil)
+        dismissKeyboard()
+        ParseLog.log(typeString: "RandomDrawingRepeatsSet", title: nil, message: nil, params: ["repeats": repeats], error: nil)
     }
     
     @IBAction func didClickInfo(_ sender: UIButton?) {
-        self.simpleAlert("What does Repeat mean?", message: "If Repeat is selected, the same person can be picked multiple times. Otherwise, the pool of names gets smaller each time, and you can only draw the same number of times as attendees.")
+        simpleAlert("What does Repeat mean?", message: "If Repeat is selected, the same person can be picked multiple times. Otherwise, the pool of names gets smaller each time, and you can only draw the same number of times as attendees.")
         ParseLog.log(typeString: "RepeatInfoButtonClicked", title: nil, message: nil, params: nil, error: nil)
     }
     
@@ -83,18 +83,18 @@ class RandomDrawingViewController: UIViewController {
         dismissKeyboard()
         
         let repeats = self.repeats ? "on": "off"
-        print("drawing \(self.totalCount) times, repeat is \(repeats)")
+        print("drawing \(totalCount) times, repeat is \(repeats)")
         
-        guard let members = self.members else {
+        guard let members = members else {
             warnForDrawing()
             return
         }
         
-        ParseLog.log(typeString: "RandomDrawingDone", title: nil, message: nil, params: ["repeats": self.repeats, "totalCount": self.totalCount], error: nil)
+        ParseLog.log(typeString: "RandomDrawingDone", title: nil, message: nil, params: ["repeats": repeats, "totalCount": totalCount], error: nil)
         
-        var pool = members[0..<members.count]
+        let pool = members[0..<members.count]
         drawingResults = nil
-        doDrawingFromRemaining(remaining: self.totalCount, pool: pool, selected: nil) { (results) in
+        doDrawingFromRemaining(remaining: totalCount, pool: pool, selected: nil) { (results) in
             print("results \(results)")
             self.drawingResults = results
             self.tableView.reloadData()
@@ -102,20 +102,20 @@ class RandomDrawingViewController: UIViewController {
         
         if !didShowRater {
             let forced = RATING_DEBUG == 1
-            if self.rater.showRatingsIfConditionsMet(from: self.ratingsCanvas, forced: forced) {
-                self.constraintRatingsHeight.constant = 40
+            if rater.showRatingsIfConditionsMet(from: ratingsCanvas, forced: forced) {
+                constraintRatingsHeight.constant = 40
 
-                self.ratingsCanvas.isUserInteractionEnabled = true
+                ratingsCanvas.isUserInteractionEnabled = true
             }
         }
     }
     
     var repeats: Bool {
-        return self.switchRepeats.isOn
+        return switchRepeats.isOn
     }
     
     var totalCount: Int {
-        guard let text = self.inputNumber.text, let count = Int(text) else {
+        guard let text = inputNumber.text, let count = Int(text) else {
             return 0
         }
         return count
@@ -124,28 +124,28 @@ class RandomDrawingViewController: UIViewController {
     func warnForDrawing() {
         let title = "Cannot do drawing"
         let message = "There are currently no attendees at this event"
-        self.simpleAlert(title, message: message)
+        simpleAlert(title, message: message)
         ParseLog.log(typeString: "RandomDrawingFailed", title: nil, message: nil, params: nil, error: nil)
     }
 }
 
 extension RandomDrawingViewController {
     func dismissKeyboard() {
-        self.view.endEditing(true)
+        view.endEditing(true)
         
-        guard let text = self.inputNumber.text, let count = Int(text) else {
-            self.inputNumber.text = "0"
+        guard let text = inputNumber.text, let count = Int(text) else {
+            inputNumber.text = "0"
             return
         }
         
-        guard let members = self.members else {
-            self.warnForDrawing()
+        guard let members = members else {
+            warnForDrawing()
             return
         }
         
-        if self.totalCount > members.count, !self.repeats {
-            self.simpleAlert("Too many drawings", message: "Without repeats, you can only pick \(members.count) times")
-            self.inputNumber.text = "\(members.count)"
+        if totalCount > members.count, !repeats {
+            simpleAlert("Too many drawings", message: "Without repeats, you can only pick \(members.count) times")
+            inputNumber.text = "\(members.count)"
         }
     }
 }
@@ -155,7 +155,7 @@ extension RandomDrawingViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.drawingResults?.count ?? 0
+        return drawingResults?.count ?? 0
     }
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MemberCell", for: indexPath)
@@ -198,7 +198,7 @@ extension RandomDrawingViewController {
         let member = pool[index]
         selected?.append(member)
         
-        if !self.repeats {
+        if !repeats {
             pool.remove(at: index)
         }
         
@@ -209,8 +209,8 @@ extension RandomDrawingViewController {
 // MARK: Rater
 extension RandomDrawingViewController: RatingDelegate {
     func didCloseRating() {
-        self.ratingsCanvas.isUserInteractionEnabled = false
-        self.constraintRatingsHeight.constant = 0
+        ratingsCanvas.isUserInteractionEnabled = false
+        constraintRatingsHeight.constant = 0
     }
     
     func goToFeedback() {
