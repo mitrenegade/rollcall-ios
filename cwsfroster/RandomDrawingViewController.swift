@@ -14,16 +14,6 @@ class RandomDrawingViewController: UIViewController {
     @IBOutlet var switchRepeats: UISwitch!
     @IBOutlet var tableView: UITableView!
     
-    @IBOutlet var ratingsCanvas: UIView! // hack: for showing ratings at the right positiion
-    @IBOutlet weak var constraintRatingsHeight: NSLayoutConstraint!
-    lazy var rater: RatingViewController = {
-        let rater = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RatingViewController") as! RatingViewController
-        rater.delegate = self
-        return rater
-    }()
-    
-    var didShowRater: Bool = false
-    
     internal var members: [FirebaseMember]?
     var practice: FirebaseEvent? {
         didSet {
@@ -99,15 +89,6 @@ class RandomDrawingViewController: UIViewController {
             self.drawingResults = results
             self.tableView.reloadData()
         }
-        
-        if !didShowRater {
-            let forced = RATING_DEBUG == 1
-            if rater.showRatingsIfConditionsMet(from: ratingsCanvas, forced: forced) {
-                constraintRatingsHeight.constant = 40
-
-                ratingsCanvas.isUserInteractionEnabled = true
-            }
-        }
     }
     
     var repeats: Bool {
@@ -164,7 +145,6 @@ extension RandomDrawingViewController: UITableViewDataSource {
         // Configure the cell...
         guard let members = drawingResults, indexPath.row < members.count else { return cell }
         let member = members[indexPath.row]
-        // BOBBY TODO
         memberCell.configure(member: member, row: indexPath.row)
         
         if let label = memberCell.labelCount {
@@ -203,17 +183,5 @@ extension RandomDrawingViewController {
         }
         
         doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
-    }
-}
-
-// MARK: Rater
-extension RandomDrawingViewController: RatingDelegate {
-    func didCloseRating() {
-        ratingsCanvas.isUserInteractionEnabled = false
-        constraintRatingsHeight.constant = 0
-    }
-    
-    func goToFeedback() {
-        
     }
 }
