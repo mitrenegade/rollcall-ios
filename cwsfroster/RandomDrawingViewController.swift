@@ -24,30 +24,13 @@ class RandomDrawingViewController: UIViewController {
     
     var didShowRater: Bool = false
     
-    internal var members: [Member]?
-    var practice: Practice? {
+    internal var members: [FirebaseMember]?
+    var practice: FirebaseEvent? {
         didSet {
-            guard let attendances = practice?.attendances else { return }
-            
-            // TODO: eventually allow members to have multiple entries
-            var mem: [Member] = []
-            for attendance in attendances {
-                if let member = attendance.member, Int(attendance.attended ?? 0) == AttendedStatus.Present.rawValue, let org = Organization.current, let orgMembers = org.members {
-                    let filtered = orgMembers.filter({ (m) -> Bool in
-                        if m.objectId == member.objectId {
-                            return true
-                        }
-                        return false
-                    })
-                    if let m = filtered.first {
-                        mem.append(m)
-                    }
-                }
-            }
-            self.members = mem
+            reloadData()
         }
     }
-    var drawingResults: [Member]?
+    var drawingResults: [FirebaseMember]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +53,22 @@ class RandomDrawingViewController: UIViewController {
         self.constraintRatingsHeight.constant = 0
     }
     
+    fileprivate func reloadData() {
+        guard let practice = practice else { return }
+        let attendees = practice.attendees
+        OrganizationService.shared.members { [weak self] (members, error) in
+            self?.members = members.filter({ member in
+                attendees.contains(member.id)
+            }).sorted{
+                guard let n1 = $0.name?.uppercased() else { return false }
+                guard let n2 = $1.name?.uppercased() else { return true }
+                return n1 < n2
+            }
+            self?.tableView.reloadData()
+        }
+    }
+
+    
     @IBAction func switchChanged(_ sender: UISwitch?) {
         self.dismissKeyboard()
         ParseLog.log(typeString: "RandomDrawingRepeatsSet", title: nil, message: nil, params: ["repeats": self.repeats], error: nil)
@@ -81,22 +80,21 @@ class RandomDrawingViewController: UIViewController {
     }
     
     @IBAction func didClickDoDrawing(_ sender: UIButton?) {
-        self.dismissKeyboard()
+        dismissKeyboard()
         
         let repeats = self.repeats ? "on": "off"
         print("drawing \(self.totalCount) times, repeat is \(repeats)")
         
         guard let members = self.members else {
-            self.warnForDrawing()
+            warnForDrawing()
             return
         }
         
         ParseLog.log(typeString: "RandomDrawingDone", title: nil, message: nil, params: ["repeats": self.repeats, "totalCount": self.totalCount], error: nil)
         
-        var pool = [Member]()
-        pool.append(contentsOf: members)
-        self.drawingResults = nil
-        self.doDrawingFromRemaining(remaining: self.totalCount, pool: pool, selected: nil) { (results) in
+        var pool = members[0..<members.count]
+        drawingResults = nil
+        doDrawingFromRemaining(remaining: self.totalCount, pool: pool, selected: nil) { (results) in
             print("results \(results)")
             self.drawingResults = results
             self.tableView.reloadData()
@@ -164,10 +162,10 @@ extension RandomDrawingViewController: UITableViewDataSource {
         
         guard let memberCell = cell as? MemberCell else { return cell }
         // Configure the cell...
-        guard let members = self.drawingResults, indexPath.row < members.count else { return cell }
+        guard let members = drawingResults, indexPath.row < members.count else { return cell }
         let member = members[indexPath.row]
         // BOBBY TODO
-//        memberCell.configure(member: member, row: indexPath.row)
+        memberCell.configure(member: member, row: indexPath.row)
         
         if let label = memberCell.labelCount {
             label.text = "\(indexPath.row + 1)"
@@ -179,11 +177,11 @@ extension RandomDrawingViewController: UITableViewDataSource {
 // MARK: Drawing
 extension RandomDrawingViewController {
     
-    func doDrawingFromRemaining(remaining: Int, pool: [Member], selected: [Member]?,completion: (([Member]?)->Void)) {
+    func doDrawingFromRemaining(remaining: Int, pool: ArraySlice<FirebaseMember>, selected: [FirebaseMember]?,completion: (([FirebaseMember]?)->Void)) {
         var pool = pool
         var selected = selected
         if selected == nil {
-            selected = [Member]()
+            selected = [FirebaseMember]()
         }
         
         if remaining == 0 {
@@ -204,7 +202,7 @@ extension RandomDrawingViewController {
             pool.remove(at: index)
         }
         
-        self.doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
+        doDrawingFromRemaining(remaining: remaining - 1, pool: pool, selected: selected, completion: completion)
     }
 }
 
