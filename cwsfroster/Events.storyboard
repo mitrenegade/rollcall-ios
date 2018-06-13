@@ -673,9 +673,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
-                        <outlet property="constraintRatingsHeight" destination="I52-3K-fxw" id="wY4-zf-9jh"/>
                         <outlet property="inputNumber" destination="ihx-ip-lMD" id="hzU-OP-peZ"/>
-                        <outlet property="ratingsCanvas" destination="0Di-nu-V5C" id="YKu-3C-TTi"/>
                         <outlet property="switchRepeats" destination="9mf-7s-aIN" id="Yd2-AD-4hh"/>
                         <outlet property="tableView" destination="bWC-a8-4zK" id="w2V-AY-jF7"/>
                     </connections>

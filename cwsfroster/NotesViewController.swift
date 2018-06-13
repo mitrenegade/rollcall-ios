@@ -17,8 +17,8 @@ class NotesViewController: UIViewController {
     @IBOutlet weak var constraintTopOffset: NSLayoutConstraint!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
     
-    var practice: Practice?
-    var member: Member?
+    var practice: FirebaseEvent?
+    var member: FirebaseMember?
     
     override func viewDidLoad() {
         super.viewDidLoad()

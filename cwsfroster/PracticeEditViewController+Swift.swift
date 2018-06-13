@@ -25,7 +25,7 @@ extension PracticeEditViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.done, target: self, action: #selector(NotesViewController.dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
@@ -131,11 +131,6 @@ extension PracticeEditViewController {
             if let practice = practice {
                 controller.practice = practice
             }
-        } else if segue.identifier == "ToEventNotes", let controller = segue.destination as? NotesViewController {
-            if let practice = practice {
-                // BOBBY TODO
-                //                controller.currentPractice = practice
-            }
         } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
             if let practice = practice {
                 controller.practice = practice
@@ -152,7 +147,7 @@ extension PracticeEditViewController: UITextViewDelegate {
     }
     
     func dismissKeyboard() {
-        self.view.endEditing(true)
+        view.endEditing(true)
 
         ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text ?? "", params: ["for": "practice"], error: nil)
     }
