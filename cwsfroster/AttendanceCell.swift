@@ -30,7 +30,6 @@ class AttendanceCell: UITableViewCell {
         let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         unchecked.image = UIImage(named: "unchecked")
         self.accessoryView = unchecked
-        // BOBBY TODO: use FirebaseUser instead of Member
         if attendance != AttendedStatus.None {
             let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
             checked.image = UIImage(named: "checked")

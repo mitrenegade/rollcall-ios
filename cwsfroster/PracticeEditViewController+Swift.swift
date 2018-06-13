@@ -138,8 +138,7 @@ extension PracticeEditViewController {
             }
         } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
             if let practice = practice {
-                // BOBBY TODO
-                //                controller.currentPractice = practice
+                controller.practice = practice
             }
         }
     }
@@ -200,8 +199,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 practice?.date = date
                 createPracticeInfo?["date"] = date
-                // BOBBY TODO
-//                ParseLog.log(typeString: "PracticeDateChanged", title: self.practice.id, message: nil, params: ["date": date], error: nil)
+                ParseLog.log(typeString: "PracticeDateChanged", title: practice.id, message: nil, params: ["date": date], error: nil)
                 
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
