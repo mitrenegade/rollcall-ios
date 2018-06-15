@@ -169,11 +169,11 @@ extension IntroViewController {
     }
     
     func loginToFirebase(email: String, password: String, completion:((_ user: User?, _ error: Error?) -> Void)?) {
-        firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (user, error) in
+        firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (result, error) in
             if let error = error {
                 completion?(nil, error)
             }
-            else {
+            else if let user = result?.user {
                 print("LoginLogout: LoginSuccess from email")
                 completion?(user, nil)
             }
@@ -204,7 +204,7 @@ extension IntroViewController {
             }
         }
 
-        firAuth.createUser(withEmail: email, password: password, completion: { (user, error) in
+        firAuth.createUser(withEmail: email, password: password, completion: { (result, error) in
             if let error = error as NSError? {
                 print("Error: \(error)")
                 if error.code == 17007, let parseUsername = parseUsername {
@@ -227,8 +227,8 @@ extension IntroViewController {
                 self.enableButtons(true)
             }
             else {
-                print("createUser results: \(String(describing: user))")
-                guard let user = user else { return }
+                print("createUser results: \(String(describing: result))")
+                guard let user = result?.user else { return }
                 if self.isSignup {
                     // create org
                     self.promptForNewOrgName(completion: { (name) in
