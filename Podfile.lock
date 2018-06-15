@@ -50,7 +50,7 @@ PODS:
     - Parse/Core (= 1.17.1)
   - Parse/Core (1.17.1):
     - Bolts/Tasks (~> 1.9)
-  - RACameraHelper (0.1.0)
+  - RACameraHelper (0.1.2)
   - RxCocoa (4.2.0):
     - RxSwift (~> 4.0)
   - RxOptional (3.4.0):
@@ -67,7 +67,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Storage
   - Parse
-  - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`)
+  - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.2`)
   - RxCocoa
   - RxOptional
   - RxSwift
@@ -97,11 +97,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
+    :tag: 0.1.2
 
 CHECKOUT OPTIONS:
   RACameraHelper:
-    :commit: 874237264d0b75c52153bc755abcf5fc60225b6f
     :git: https://github.com/bobbyren/RACameraHelper
+    :tag: 0.1.2
 
 SPEC CHECKSUMS:
   AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
@@ -120,11 +121,11 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Parse: d3edaf8c7c722cb33cb83ba7821d015ae32d362d
-  RACameraHelper: 3c75fa8630814a94c14f72949a26db0c1d56fff7
+  RACameraHelper: 5671f398d8c0805bffaeb611d5ed15ebadb2017d
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxOptional: fabc37fc8e3cf4c336ebaeb5c92b576c64b2e6c5
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
 
-PODFILE CHECKSUM: 841b15edca4e779e9e035c7682d2f3ceca732ace
+PODFILE CHECKSUM: 323aeebf4b773ccbd25847955329e763de35b278
 
 COCOAPODS: 1.5.0

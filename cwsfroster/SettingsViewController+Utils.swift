@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RACameraHelper
 
 extension SettingsViewController {
     func notifyForLogoutInSuccess() {
@@ -15,15 +16,15 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: CameraHelperDelegate {
-    func didCancelSelection() {
+    public func didCancelSelection() {
         
     }
     
-    func didCancelPicker() {
+    public func didCancelPicker() {
         //        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[[Organization current] objectId] message:nil params:nil error:error];
     }
     
-    func didSelectPhoto(selected: UIImage?) {
+    public func didSelectPhoto(selected: UIImage?) {
         //        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[org objectId] message:nil params:nil error:nil];
         // save image to firebase
         dismiss(animated: false) {
@@ -37,12 +38,11 @@ extension SettingsViewController: CameraHelperDelegate {
             cameraHelper = CameraHelper()
         }
         cameraHelper.delegate = self
-        cameraHelper.root = self
     }
     
     func goToUpdateLogo() {
         print("UpdateLogo")
-        cameraHelper.takeOrSelectPhoto()
+        cameraHelper.takeOrSelectPhoto(from: self)
 //        [ParseLog logWithTypeString:@"UpdateOrganizationLogo" title:[[Organization current] objectId] message:nil params:nil error:nil];
     }
     

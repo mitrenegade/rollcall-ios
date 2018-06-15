@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import RACameraHelper
 
 class MemberInfoViewController: UIViewController {
     
@@ -19,6 +20,7 @@ class MemberInfoViewController: UIViewController {
     @IBOutlet var switchInactive: UISwitch!
     @IBOutlet var labelPaymentWarning: UILabel!
     @IBOutlet var buttonPayment: UIButton!
+    let cameraHelper = CameraHelper()
 
     var member: FirebaseMember?
     var delegate: MemberDelegate?
@@ -27,6 +29,7 @@ class MemberInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cameraHelper.delegate = self
 
         // Do any additional setup after loading the view.
         newPhoto = nil
@@ -104,7 +107,8 @@ class MemberInfoViewController: UIViewController {
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        self.takePhoto()
+        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
+        cameraHelper.takeOrSelectPhoto(from: self)
     }
 
     @IBAction func didClickSave(_ sender: AnyObject?) {
@@ -112,14 +116,16 @@ class MemberInfoViewController: UIViewController {
     }
     
     fileprivate func saveMember() {
-        guard let email = self.inputEmail.text, !email.isEmpty, email.isValidEmail() else {
+        let email = self.inputEmail.text
+        let name = self.inputName.text
+        let notes = inputNotes.text
+        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
+        
+        if let email = email, !email.isEmpty, !email.isValidEmail() {
+            // only check for validity if email was entered
             self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
             return
         }
-        let name = self.inputName.text
-        let notes = inputNotes.text
-        
-        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
         
         if isCreatingMember {
             OrganizationService.shared.createMember(email: email, name: name, notes: notes, status: status) { [weak self] (member, error) in
@@ -201,30 +207,20 @@ extension MemberInfoViewController: UITextViewDelegate {
 }
 
 // MARK: Camera
-extension MemberInfoViewController: CameraControlsDelegate {
-    func takePhoto() {
-        self.view.endEditing(true)
-
-        let controller = CameraOverlayViewController(
-            nibName:"CameraOverlayViewController",
-            bundle: nil
-            )
-        controller.delegate = self
-        controller.view.frame = self.view.frame
-        controller.takePhoto(from: self)
-        
-        // add overlayview
-        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
+extension MemberInfoViewController: CameraHelperDelegate {
+    func didCancelSelection() {
+        print("Did not edit image")
     }
-
-    func didTakePhoto(image: UIImage) {
-        self.photoView.image = image
+    
+    func didCancelPicker() {
+        print("Did not select image")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didSelectPhoto(selected: UIImage?) {
+        self.photoView.image = selected
         self.photoView.layer.cornerRadius = photoView.frame.size.width / 2
-        self.newPhoto = image
-        self.dismissCamera()
-    }
-
-    func dismissCamera() {
-        self.dismiss(animated: true, completion: nil)
+        self.newPhoto = selected
+        dismiss(animated: true, completion: nil)
     }
 }

@@ -32,7 +32,6 @@
 		8E9D891F20CB130900AD382F /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D891E20CB130900AD382F /* EventService.swift */; };
 		8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */; };
 		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
-		8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070C120C3469C00EF478F /* CameraHelper.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
 		8EE005AB1E3D844400272DC0 /* Splash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AA1E3D844400272DC0 /* Splash.storyboard */; };
 		8EE005AD1E3D875600272DC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005AC1E3D875600272DC0 /* Assets.xcassets */; };
@@ -43,8 +42,6 @@
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
-		8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */; };
-		8EF3D9671E764B3F003BFB61 /* CameraOverlayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */; };
 		9E156176199266A700A31398 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E156175199266A700A31398 /* IntroViewController.m */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
@@ -140,7 +137,6 @@
 		8E9D891E20CB130900AD382F /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
-		8EA070C120C3469C00EF478F /* CameraHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraHelper.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		8EE005AA1E3D844400272DC0 /* Splash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Splash.storyboard; sourceTree = "<group>"; };
 		8EE005AC1E3D875600272DC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,8 +147,6 @@
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
-		8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraOverlayViewController.swift; sourceTree = "<group>"; };
-		8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CameraOverlayViewController.xib; sourceTree = "<group>"; };
 		9E156174199266A700A31398 /* IntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntroViewController.h; sourceTree = "<group>"; };
 		9E156175199266A700A31398 /* IntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntroViewController.m; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
@@ -300,14 +294,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		8EA070C020C3469C00EF478F /* Photo */ = {
-			isa = PBXGroup;
-			children = (
-				8EA070C120C3469C00EF478F /* CameraHelper.swift */,
-			);
-			path = Photo;
-			sourceTree = "<group>";
-		};
 		8EE005A41E3D833E00272DC0 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -353,15 +339,6 @@
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
 			);
 			name = Events;
-			sourceTree = "<group>";
-		};
-		8EF3D96A1E765A2E003BFB61 /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-				8EF3D9641E764B3F003BFB61 /* CameraOverlayViewController.swift */,
-				8EF3D9651E764B3F003BFB61 /* CameraOverlayViewController.xib */,
-			);
-			name = Camera;
 			sourceTree = "<group>";
 		};
 		9E15616F1992661200A31398 /* Images */ = {
@@ -471,8 +448,6 @@
 				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
 				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
-				8EA070C020C3469C00EF478F /* Photo */,
-				8EF3D96A1E765A2E003BFB61 /* Camera */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);
 			path = cwsfroster;
@@ -630,7 +605,6 @@
 			files = (
 				9E649FED19B609C400334B34 /* IntroTutorial1.xib in Resources */,
 				9E649FE419B6040A00334B34 /* icon114.png in Resources */,
-				8EF3D9671E764B3F003BFB61 /* CameraOverlayViewController.xib in Resources */,
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
@@ -742,7 +716,6 @@
 			files = (
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
-				8EA070C320C3469C00EF478F /* CameraHelper.swift in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
@@ -782,7 +755,6 @@
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
-				8EF3D9661E764B3F003BFB61 /* CameraOverlayViewController.swift in Sources */,
 				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,

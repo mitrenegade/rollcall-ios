@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import RACameraHelper
 
 class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var inputName: UITextField!
@@ -24,6 +25,7 @@ class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var buttonSave: UIButton!
     
     var practice: FirebaseEvent?
+    let cameraHelper = CameraHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,7 @@ class OnsiteSignupViewController: UIViewController {
         labelWelcome.alpha = 0
         
         setupKeyboardDoneButtonView()
+        cameraHelper.delegate = self
     }
     
     func close() {
@@ -148,34 +151,28 @@ extension OnsiteSignupViewController: UITextFieldDelegate {
         return true
     }
 }
-extension OnsiteSignupViewController: CameraControlsDelegate {
+
+// MARK: Camera
+extension OnsiteSignupViewController: CameraHelperDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
-        self.view.endEditing(true)
-        self.takePhoto()
-    }
-    
-    func takePhoto() {
-        self.view.endEditing(true)
-        
-        let controller = CameraOverlayViewController(
-            nibName:"CameraOverlayViewController",
-            bundle: nil
-        )
-        controller.delegate = self
-        controller.view.frame = UIScreen.main.bounds
-        controller.takePhoto(from: self)
-        
+        view.endEditing(true)
         ParseLog.log(typeString: "EditOnsiteSignupPhoto", title: nil, message: nil, params: nil, error: nil)
+        cameraHelper.takeOrSelectPhoto(from: self)
     }
     
-    func didTakePhoto(image: UIImage) {
-        self.buttonPhoto.setImage(image, for: .normal)
+    func didCancelSelection() {
+        print("Did not edit image")
+    }
+    
+    func didCancelPicker() {
+        print("Did not select image")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didSelectPhoto(selected: UIImage?) {
+        buttonPhoto.setImage(selected, for: .normal)
         buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
-        self.addedPhoto = image
-        self.dismissCamera()
-    }
-    
-    func dismissCamera() {
-        self.dismiss(animated: true, completion: nil)
+        addedPhoto = selected
+        dismiss(animated: true, completion: nil)
     }
 }
