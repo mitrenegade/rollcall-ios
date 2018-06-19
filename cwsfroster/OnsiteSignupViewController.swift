@@ -75,12 +75,18 @@ class OnsiteSignupViewController: UIViewController {
         
         OrganizationService.shared.createMember(email: email, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
             
-            // BOBBY TODO
-//            if let photo = self.addedPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-//                member.photo = PFFile(data:data)
-//            }
-            
             if let member = member {
+                if let photo = self?.addedPhoto {
+                    print("FirebaseImageService: uploading member photo for \(member.id)")
+                    FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, completion: { (url) in
+                        if let url = url {
+                            member.photoUrl = url
+                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "Onsite", params: nil, error: nil)
+                            print("FirebaseImageService: uploading member photo complete with url \(url)")
+                        }
+                    })
+                }
+
                 self?.notify("member:updated", object: nil, userInfo: nil)
                 ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
                 

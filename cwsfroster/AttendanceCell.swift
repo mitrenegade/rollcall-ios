@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import AsyncImageView
 
 class AttendanceCell: UITableViewCell {
 
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: AsyncImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,19 +40,15 @@ class AttendanceCell: UITableViewCell {
         self.tag = row; // make sure photo loads for correct cell
         photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
 
-        // BOBBY TODO
-//        if let photo = member.photo {
-//            photo.getDataInBackground(block: { (data, error) in
-//                if self.tag != row {
-//                    return
-//                }
-//                if let data = data {
-//                    let image = UIImage(data: data)
-//                    self.photoView.image = image
-//                }
-//            })
-//        }
-        
+        if let url = member.photoUrl {
+            photoView.imageURL = URL(string: url)
+            photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
+            // BOBBY TODO
+            //                if self.tag != row {
+            //                    return
+            //                }
+        }
+
         if member.isInactive {
             nameLabel.alpha = 0.5;
         }

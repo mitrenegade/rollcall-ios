@@ -9,10 +9,11 @@
 import UIKit
 import Parse
 import RACameraHelper
+import AsyncImageView
 
 class MemberInfoViewController: UIViewController {
     
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: AsyncImageView!
     @IBOutlet var buttonPhoto: UIButton!
     @IBOutlet var inputName: UITextField!
     @IBOutlet var inputEmail: UITextField!
@@ -39,15 +40,9 @@ class MemberInfoViewController: UIViewController {
             self.title = "Edit member"
             self.navigationItem.rightBarButtonItem = nil
             
-            if let photo = member.photoUrl {
-                // BOBBY TODO
-//                photo.getDataInBackground(block: { (data, error) in
-//                    if let data = data {
-//                        let image = UIImage(data: data)
-//                        self.photoView.image = image
-//                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
-//                    }
-//                })
+            if let url = member.photoUrl {
+                photoView.imageURL = URL(string: url)
+                photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
             }
             self.switchInactive.isOn = member.isInactive
         } else {
@@ -137,8 +132,15 @@ class MemberInfoViewController: UIViewController {
                     ParseLog.log(typeString: "MemberCreated", title: member.id, message: nil, params: params as NSDictionary?, error: nil)
 
                     self?.delegate?.didUpdateMember(member)
-                    if let photo = self?.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-                        // BOBBY TODO: upload photo
+                    if let photo = self?.newPhoto {
+                        print("FirebaseImageService: uploading member photo for \(member.id)")
+                        FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, completion: { (url) in
+                            if let url = url {
+                                member.photoUrl = url
+                                print("FirebaseImageService: uploading member photo complete with url \(url)")
+                            }
+                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                        })
                         self?.close()
                     } else {
                         self?.close()

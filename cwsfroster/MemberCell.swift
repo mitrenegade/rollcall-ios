@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import AsyncImageView
 
 class MemberCell: UITableViewCell {
 
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: AsyncImageView!
     @IBOutlet var labelName: UILabel!
     
     @IBOutlet var labelCount: UILabel?
@@ -34,17 +35,13 @@ class MemberCell: UITableViewCell {
         self.tag = row; // make sure photo loads for correct cell
         photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         
-        if let photoUrl = member.photoUrl {
+        if let url = member.photoUrl {
+            photoView.imageURL = URL(string: url)
+            photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
             // BOBBY TODO
-//            photo.getDataInBackground(block: { (data, error) in
-//                if self.tag != row {
-//                    return
-//                }
-//                if let data = data {
-//                    let image = UIImage(data: data)
-//                    self.photoView.image = image
-//                }
-//            })
+            //                if self.tag != row {
+            //                    return
+            //                }
         }
 
         if member.isInactive {
