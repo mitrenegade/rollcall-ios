@@ -33,7 +33,6 @@ class MemberCell: UITableViewCell {
         labelName.text = member.name
         
         self.tag = row; // make sure photo loads for correct cell
-        photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         
         if let url = member.photoUrl {
             photoView.imageURL = URL(string: url)
@@ -42,6 +41,10 @@ class MemberCell: UITableViewCell {
             //                if self.tag != row {
             //                    return
             //                }
+        } else if let photo = member.temporaryPhoto {
+            photoView.image = photo
+        } else {
+            photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         }
 
         if member.isInactive {

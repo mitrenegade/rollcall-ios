@@ -22,7 +22,7 @@ class MemberInfoViewController: UIViewController {
     @IBOutlet var labelPaymentWarning: UILabel!
     @IBOutlet var buttonPayment: UIButton!
     let cameraHelper = CameraHelper()
-
+    
     var member: FirebaseMember?
     var delegate: MemberDelegate?
     var newPhoto: UIImage?
@@ -152,12 +152,38 @@ class MemberInfoViewController: UIViewController {
                 }
             }
         } else if let member = member {
-            self.delegate?.didUpdateMember(member)
-            var params = [String:Any]()
-            if let name = self.member?.name { params["name"] = name }
-            if let email = self.member?.email { params["email"] = email }
-            ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
-            close()
+            if let photo = newPhoto {
+                let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+                })
+
+                member.temporaryPhoto = photo
+                print("FirebaseImageService: uploading member photo for \(member.id)")
+                present(alert, animated: true, completion: nil)
+                FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                    alert.title = "Upload progress: \(Int(percent*100))%"
+                }, completion: { [weak self] (url) in
+                    alert.dismiss(animated: true, completion: nil)
+                    if let url = url {
+                        member.photoUrl = url
+                        print("FirebaseImageService: uploading member photo complete with url \(url)")
+                    }
+                    ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                    self?.delegate?.didUpdateMember(member)
+                    var params = [String:Any]()
+                    if let name = self?.member?.name { params["name"] = name }
+                    if let email = self?.member?.email { params["email"] = email }
+                    ParseLog.log(typeString: "MemberUpdated", title: self?.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+                    self?.close()
+                })
+            } else {
+                self.delegate?.didUpdateMember(member)
+                var params = [String:Any]()
+                if let name = self.member?.name { params["name"] = name }
+                if let email = self.member?.email { params["email"] = email }
+                ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+                close()
+            }
         }
     }
 }
