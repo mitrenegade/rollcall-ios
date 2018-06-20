@@ -31,13 +31,13 @@ class LoggingService: NSObject {
         let eventString: String
         switch event {
         case .unknown:
-            eventString = info["title"] ?? "unknown"
+            eventString = info?["title"] as? String ?? "unknown"
         default:
             eventString = event.rawValue
         }
         
         let id = FirebaseAPIService.uniqueId()
-        guard let ref = loggingRef?.child(eventString).child(id) else { return }
+        let ref = loggingRef.child(eventString).child(id)
         var params = info ?? [:]
         params["timestamp"] = Date().timeIntervalSince1970
         if let userId = AuthService.currentUser?.uid {
@@ -75,20 +75,22 @@ class ParseLog: NSObject {
     // compatible with ObjC
     class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
-            return
+//            return
         #endif
 
         var info: [String: Any]?
-        if var params = params, let error = error {
-            params["error"] = error
+        if let params = params as? [String: Any], let error = error {
             info = params
-        } else if let params = params {
+            info?["error"] = error
+        } else if let params = params as? [String: Any] {
             info = params
         } else if let error = error {
             info = ["error": error]
+        } else {
+            info = [String: Any]()
         }
-        info["title"] = typeString
-        LoggingService.shared.log(event: LoggingEvent.other(typeString), message: message, info: params, error: error)
+        info?["title"] = typeString
+        LoggingService.shared.log(event: .unknown, message: message, info: info, error: error)
     }
 }
 
