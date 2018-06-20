@@ -220,6 +220,10 @@ extension IntroViewController {
                             }
                         }
                     })
+                } else if error.code == 17006 {
+                    // project not set up with email login. this should not happen anymore
+                    self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    self.hideProgress()
                 } else {
                     self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
                     self.hideProgress()
