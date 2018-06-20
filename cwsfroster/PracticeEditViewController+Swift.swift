@@ -194,8 +194,9 @@ extension PracticeEditViewController: UITextFieldDelegate {
             if let text = inputDate.text, let date = dateForDateString[text] as? Date {
                 practice?.date = date
                 createPracticeInfo?["date"] = date
-                ParseLog.log(typeString: "PracticeDateChanged", title: practice.id, message: nil, params: ["date": date], error: nil)
-                
+                if let practice = practice {
+                    ParseLog.log(typeString: "PracticeDateChanged", title: practice.id, message: nil, params: ["date": date], error: nil)
+                }
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
         }

@@ -66,7 +66,7 @@ class OnsiteSignupViewController: UIViewController {
             return
         }
         
-        guard let email = inputEmail.text, !email.isEmpty && !email.isValidEmail() else {
+        guard let email = inputEmail.text, !email.isEmpty && email.isValidEmail() else {
             self.simpleAlert("Please enter a valid email", message: nil)
             return
         }
@@ -77,8 +77,17 @@ class OnsiteSignupViewController: UIViewController {
             
             if let member = member {
                 if let photo = self?.addedPhoto {
+                    member.photo = photo
                     print("FirebaseImageService: uploading member photo for \(member.id)")
-                    FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, completion: { (url) in
+//                    let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+//                    })
+//                    self?.present(alert, animated: true, completion: nil)
+                    FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id,  progressHandler: { (percent) in
+//                        alert.title =
+                        print("Upload progress: \(Int(percent*100))%")
+                    }, completion: { (url) in
+//                        alert.dismiss(animated: true, completion: nil)
                         if let url = url {
                             member.photoUrl = url
                             ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "Onsite", params: nil, error: nil)
