@@ -23,9 +23,6 @@ extension SettingsViewController: CameraHelperDelegate {
     }
     
     public func didSelectPhoto(selected: UIImage?) {
-        if let org = OrganizationService.shared.current.value {
-            ParseLog.log(typeString: "OrganizationImageChanged", title: org.id, message: nil, params: nil, error: nil)
-        }
         // save image to firebase
         dismiss(animated: false) {
             guard let image = selected else { return }

@@ -106,6 +106,8 @@ extension SplashViewController {
             }
             return
         }
+        
+        Analytics.setUserProperty("true", forName: "ConvertedFromParse")
 
         // make sure org exists
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
@@ -189,7 +191,6 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-                        // BOBBY TODO
                         do {
                             let data = try photo.getData()
                             if let image = UIImage(data: data) {
