@@ -22,6 +22,9 @@ let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
     static let APP_ID = "916600723"
 }
 
+let SOFT_UPGRADE_INTERVAL_DEFAULT = (3600*24*7)
+let APP_STORE_URL = "itms-apps://itunes.apple.com/app/id" + Constants.APP_ID
+
 enum NotificationType: String {
     case LogoutSuccess
     case LoginSuccess
