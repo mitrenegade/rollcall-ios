@@ -27,6 +27,10 @@ class SplashViewController: UIViewController {
         
         listenFor(.LoginSuccess, action: #selector(didLogin(_:)), object: nil)
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
+        
+        SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {[weak self]_ in
+            print("Settings updated")
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -48,9 +52,7 @@ class SplashViewController: UIViewController {
     
     func goHome() {
         if presentedViewController != nil {
-            dismiss(animated: true, completion: {
-                self.promptForUpgradeIfNeeded()
-            })
+            dismiss(animated: true, completion: nil)
         } else {
             let segue: String
             if AuthService.isLoggedIn {

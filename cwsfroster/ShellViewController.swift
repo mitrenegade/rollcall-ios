@@ -41,6 +41,8 @@ class ShellViewController: UITabBarController {
         stopListeningFor("organization:name:changed")
         stopListeningFor("goToSettings")
         stopListeningFor(.LogoutSuccess)
+        
+        UpgradeService().clearOnLogout()
     }
     
     override func viewDidAppear(_ animated: Bool) {

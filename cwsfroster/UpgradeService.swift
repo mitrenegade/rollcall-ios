@@ -54,4 +54,10 @@ class UpgradeService: NSObject {
         defaults.set(neverShowAgain, forKey: "neverShowSoftUpgrade")
         defaults.synchronize()
     }
+    
+    func clearOnLogout() {
+        defaults.set(nil, forKey: "softUpgradeLastViewTimestamp")
+        defaults.set(nil, forKey: "neverShowSoftUpgrade")
+        defaults.synchronize()
+    }
 }
