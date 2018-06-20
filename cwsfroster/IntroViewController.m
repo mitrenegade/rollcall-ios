@@ -9,7 +9,6 @@
 #import "IntroViewController.h"
 #import <Parse/Parse.h>
 #import "MBProgressHUD.h"
-#import "AsyncImageView.h"
 #import "TutorialScrollView.h"
 #import "UIAlertView+MKBlockAdditions.h"
 

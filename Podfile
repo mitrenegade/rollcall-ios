@@ -12,6 +12,5 @@ pod 'Firebase/Storage'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxOptional'
-pod 'AsyncImageView'
 pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.2'
 end

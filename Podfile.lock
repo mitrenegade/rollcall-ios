@@ -1,5 +1,4 @@
 PODS:
-  - AsyncImageView (1.6)
   - Bolts/Tasks (1.9.0)
   - Crashlytics (3.10.2):
     - Fabric (~> 1.7.7)
@@ -59,7 +58,6 @@ PODS:
   - RxSwift (4.2.0)
 
 DEPENDENCIES:
-  - AsyncImageView
   - Crashlytics
   - Fabric
   - Firebase/Auth
@@ -74,7 +72,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - AsyncImageView
     - Bolts
     - Crashlytics
     - Fabric
@@ -105,7 +102,6 @@ CHECKOUT OPTIONS:
     :tag: 0.1.2
 
 SPEC CHECKSUMS:
-  AsyncImageView: 416e99402e5b1f20571de70ad619ced90f56a7d9
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   Crashlytics: 0360624eea1c978a743feddb2fb1ef8b37fb7a0d
   Fabric: bda89e242bce1b7b8ab264248cf3407774ce0095
@@ -126,6 +122,6 @@ SPEC CHECKSUMS:
   RxOptional: fabc37fc8e3cf4c336ebaeb5c92b576c64b2e6c5
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
 
-PODFILE CHECKSUM: 323aeebf4b773ccbd25847955329e763de35b278
+PODFILE CHECKSUM: 0afc37d5e1c1a76a3bff582206c86acc349db42a
 
 COCOAPODS: 1.5.0

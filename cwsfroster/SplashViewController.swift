@@ -11,13 +11,12 @@ import Parse
 import RxSwift
 import RxOptional
 import Firebase
-import AsyncImageView
 
 class SplashViewController: UIViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var labelInfo: UILabel!
-    @IBOutlet weak var logo: AsyncImageView!
+    @IBOutlet weak var logo: RAImageView!
     
     var first: Bool = true
     

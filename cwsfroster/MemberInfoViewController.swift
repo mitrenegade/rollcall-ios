@@ -9,11 +9,10 @@
 import UIKit
 import Parse
 import RACameraHelper
-import AsyncImageView
 
 class MemberInfoViewController: UIViewController {
     
-    @IBOutlet var photoView: AsyncImageView!
+    @IBOutlet var photoView: RAImageView!
     @IBOutlet var buttonPhoto: UIButton!
     @IBOutlet var inputName: UITextField!
     @IBOutlet var inputEmail: UITextField!
@@ -41,7 +40,7 @@ class MemberInfoViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = nil
             
             if let url = member.photoUrl {
-                photoView.imageURL = URL(string: url)
+                photoView.imageUrl = url
                 photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
             }
             self.switchInactive.isOn = member.isInactive
@@ -157,7 +156,6 @@ class MemberInfoViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
                 })
 
-                member.temporaryPhoto = photo
                 print("FirebaseImageService: uploading member photo for \(member.id)")
                 present(alert, animated: true, completion: nil)
                 FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
@@ -169,6 +167,7 @@ class MemberInfoViewController: UIViewController {
                         print("FirebaseImageService: uploading member photo complete with url \(url)")
                     }
                     ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                    member.temporaryPhoto = photo
                     self?.delegate?.didUpdateMember(member)
                     var params = [String:Any]()
                     if let name = self?.member?.name { params["name"] = name }
