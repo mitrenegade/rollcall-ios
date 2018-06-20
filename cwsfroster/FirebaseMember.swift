@@ -15,7 +15,7 @@ class FirebaseMember: FirebaseBaseModel {
         case android
     }
     
-    var temporaryPhoto: UIImage?
+    var photo: UIImage?
 
     var name: String? {
         get {

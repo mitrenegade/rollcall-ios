@@ -40,6 +40,7 @@ class AttendanceCell: UITableViewCell {
 
         if let url = member.photoUrl {
             photoView.imageUrl = url
+            photoView.image = member.photo
             photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
         } else {
             photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];

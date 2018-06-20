@@ -34,10 +34,8 @@ class MemberCell: UITableViewCell {
         self.tag = row; // make sure photo loads for correct cell
         
         if let url = member.photoUrl {
-            photoView.image = nil
             photoView.imageUrl = url
-        } else if let photo = member.temporaryPhoto {
-            photoView.image = photo
+            photoView.image = member.photo
         } else {
             photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         }

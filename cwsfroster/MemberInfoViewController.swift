@@ -39,6 +39,9 @@ class MemberInfoViewController: UIViewController {
             self.title = "Edit member"
             self.navigationItem.rightBarButtonItem = nil
             
+            if let photo = member.photo {
+                photoView.image = photo
+            }
             if let url = member.photoUrl {
                 photoView.imageUrl = url
                 photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
@@ -152,6 +155,7 @@ class MemberInfoViewController: UIViewController {
             }
         } else if let member = member {
             if let photo = newPhoto {
+                member.photo = photo
                 let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
                 })
@@ -167,7 +171,6 @@ class MemberInfoViewController: UIViewController {
                         print("FirebaseImageService: uploading member photo complete with url \(url)")
                     }
                     ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
-                    member.temporaryPhoto = photo
                     self?.delegate?.didUpdateMember(member)
                     var params = [String:Any]()
                     if let name = self?.member?.name { params["name"] = name }
