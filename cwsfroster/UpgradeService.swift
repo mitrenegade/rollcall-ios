@@ -69,3 +69,37 @@ class UpgradeService: NSObject {
         defaults.synchronize()
     }
 }
+
+// helpers
+extension UpgradeService {
+    func promptForUpgradeIfNeeded(from controller: UIViewController) {
+        guard shouldShowSoftUpgrade || shouldShowForceUpgrade else { return }
+        
+        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "RollCall"
+        let version = shouldShowForceUpgrade ? SettingsService.forceUpgradeVersion : SettingsService.newestVersion
+        let alert = UIAlertController(title: "Upgrade available", message: "There is a newer version (\(version)) of \(title) available in the App Store.", preferredStyle: .alert)
+        if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
+        {
+            alert.addAction(UIAlertAction(title: "Open in App Store", style: .default, handler: { (action) in
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
+                self.softUpgradeDismissed(neverShowAgain: false)
+            }))
+        }
+        if shouldShowSoftUpgrade {
+            alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
+                self.softUpgradeDismissed(neverShowAgain: true)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+            }))
+            alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+                self.softUpgradeDismissed(neverShowAgain: false)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+            }))
+        }
+        controller.present(alert, animated: true)
+    }
+}
