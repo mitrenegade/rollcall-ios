@@ -138,13 +138,6 @@ extension MembersTableViewController: MemberDelegate {
     }
     
     func didUpdateMember(_ member: FirebaseMember) {
-        _members = _members.filter() { $0.id != member.id }
-        _members.append(member)
-        _members = _members.sorted {
-            guard let n1 = $0.name?.uppercased() else { return false }
-            guard let n2 = $1.name?.uppercased() else { return true }
-            return n1 < n2
-        }
         tableView.reloadData()
         notify("member:updated", object: nil, userInfo: nil)
     }
