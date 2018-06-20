@@ -12,6 +12,7 @@ import Firebase
 
 class ShellViewController: UITabBarController {
     var disposeBag: DisposeBag? = DisposeBag()
+    fileprivate var upgradeShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,8 @@ class ShellViewController: UITabBarController {
     
     fileprivate func promptForUpgradeIfNeeded() {
         guard UpgradeService().shouldShowSoftUpgrade else { return }
+        guard !upgradeShown else { return }
+        upgradeShown = true
         
         let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "Balizinha"
         let version = SettingsService.newestVersion

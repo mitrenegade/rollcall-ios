@@ -305,3 +305,34 @@ extension IntroViewController {
         present(alert, animated: true, completion: nil)
     }
 }
+
+extension IntroViewController {
+    func promptForUpgradeIfNeeded() {
+        guard UpgradeService().shouldShowSoftUpgrade else { return }
+        
+        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "Balizinha"
+        let version = SettingsService.newestVersion
+        let alert = UIAlertController(title: "Upgrade available", message: "There is a newer version (\(version)) of \(title) available in the App Store.", preferredStyle: .alert)
+        if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
+        {
+            alert.addAction(UIAlertAction(title: "Open in App Store", style: .default, handler: { (action) in
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
+                UpgradeService().softUpgradeDismissed(neverShowAgain: false)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
+            UpgradeService().softUpgradeDismissed(neverShowAgain: true)
+            LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+        }))
+        alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+            UpgradeService().softUpgradeDismissed(neverShowAgain: false)
+            LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+        }))
+        present(alert, animated: true)
+    }
+}
