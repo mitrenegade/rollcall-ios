@@ -9,6 +9,7 @@
 import UIKit
 
 class RAImageView: UIImageView {
+    static var imageCache = [String: UIImage]()
     let defaultSession = URLSession(configuration: .default)
     var loadingUrl: String?
     var task: URLSessionDataTask?
@@ -33,6 +34,7 @@ class RAImageView: UIImageView {
         guard let imageUrl = imageUrl, let url = URL(string: imageUrl) else {
             return
         }
+        
         if activityIndicator == nil {
             let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
             activityIndicator.hidesWhenStopped = true
@@ -40,9 +42,16 @@ class RAImageView: UIImageView {
             addSubview(activityIndicator)
             self.activityIndicator = activityIndicator
         }
+        
+        if let cached = RAImageView.imageCache[imageUrl] as? UIImage {
+            DispatchQueue.main.async { // this seems to force a redraw
+                self.image = cached
+            }
+            return
+        }
 
         loadingUrl = imageUrl
-        let currentUrl = loadingUrl
+        let currentUrl = imageUrl
         activityIndicator?.startAnimating()
         task = defaultSession.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
             defer {
@@ -52,11 +61,12 @@ class RAImageView: UIImageView {
             if nil != error {
                 print("error")
             } else if let data = data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
+                let image = UIImage(data: data)
+                RAImageView.imageCache[currentUrl] = image
                 guard self?.loadingUrl == currentUrl else {
                     print("url has changed - cancel")
                     return
                 }
-                let image = UIImage(data: data)
                 DispatchQueue.main.async {
                     self?.image = image
                 }

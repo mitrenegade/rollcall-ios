@@ -38,6 +38,7 @@ class MemberCell: UITableViewCell {
             photoView.image = member.photo
         } else {
             photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
+            photoView.imageUrl = nil
         }
 
         if member.isInactive {

@@ -41,6 +41,7 @@ class MemberInfoViewController: UIViewController {
             
             if let photo = member.photo {
                 photoView.image = photo
+                photoView.imageUrl = nil
             }
             if let url = member.photoUrl {
                 photoView.imageUrl = url
