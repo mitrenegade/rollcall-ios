@@ -220,6 +220,10 @@ extension IntroViewController {
                             }
                         }
                     })
+                } else if error.code == 17006 {
+                    // project not set up with email login. this should not happen anymore
+                    self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    self.hideProgress()
                 } else {
                     self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
                     self.hideProgress()
@@ -299,5 +303,39 @@ extension IntroViewController {
             completion?(nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension IntroViewController {
+    func promptForUpgradeIfNeeded() {
+        let service = UpgradeService()
+        guard service.shouldShowSoftUpgrade || service.shouldShowForceUpgrade else { return }
+        
+        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "RollCall"
+        let version = SettingsService.newestVersion
+        let alert = UIAlertController(title: "Upgrade available", message: "There is a newer version (\(version)) of \(title) available in the App Store.", preferredStyle: .alert)
+        if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
+        {
+            alert.addAction(UIAlertAction(title: "Open in App Store", style: .default, handler: { (action) in
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
+                service.softUpgradeDismissed(neverShowAgain: false)
+            }))
+        }
+        if service.shouldShowSoftUpgrade {
+            alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: true)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+            }))
+            alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: false)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+            }))
+        }
+        present(alert, animated: true)
     }
 }

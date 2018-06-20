@@ -21,6 +21,8 @@
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
+		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
+		8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CF20DA826B0075548C /* SettingsService.swift */; };
 		8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */; };
 		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
 		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */; };
@@ -126,6 +128,8 @@
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
+		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
+		8E3DD1CF20DA826B0075548C /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
 		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnsiteSignupViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 		8E1D993520B20C86005E4186 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8E3DD1CF20DA826B0075548C /* SettingsService.swift */,
+				8E3DD1CD20DA81670075548C /* UpgradeService.swift */,
 				8E1D993320B20C78005E4186 /* AuthService.swift */,
 				C6D9631120C2181900317C0C /* OrganizationService.swift */,
 				8EA070BE20C342B000EF478F /* FirebaseImageService.swift */,
@@ -678,6 +684,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RACameraHelper/RACameraHelper.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
@@ -691,6 +698,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RACameraHelper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
@@ -710,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */,
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController+Utils.swift in Sources */,
@@ -724,6 +733,7 @@
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
 				C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
+				8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */,
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
 				8E1F63F21E46D330004E8723 /* Member.swift in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,

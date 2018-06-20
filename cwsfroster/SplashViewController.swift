@@ -27,6 +27,10 @@ class SplashViewController: UIViewController {
         
         listenFor(.LoginSuccess, action: #selector(didLogin(_:)), object: nil)
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
+        
+        SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {[weak self]_ in
+            print("Settings updated")
+        }).disposed(by: disposeBag)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -35,7 +39,7 @@ class SplashViewController: UIViewController {
         activityIndicator.stopAnimating()
         labelInfo.isHidden = true
         labelInfo.text = nil
-        
+
         if first && AuthService.isLoggedIn {
             self.didLogin(nil)
         } else {

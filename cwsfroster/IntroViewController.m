@@ -65,6 +65,8 @@
     if (![PFUser currentUser]) {
         [self loadTutorial];
     }
+    
+    [self promptForUpgradeIfNeeded];
 }
 
 -(void)enableButtons:(BOOL)enabled {

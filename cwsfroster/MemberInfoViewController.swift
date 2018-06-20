@@ -163,6 +163,9 @@ class MemberInfoViewController: UIViewController {
                 }
             }
         } else if let member = member {
+            var params = [String:Any]()
+            if let name = self.member?.name { params["name"] = name }
+            if let email = self.member?.email { params["email"] = email }
             ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
             if let photo = newPhoto {
                 member.photo = photo
@@ -182,16 +185,10 @@ class MemberInfoViewController: UIViewController {
                     }
                     ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
                     self?.delegate?.didUpdateMember(member)
-                    var params = [String:Any]()
-                    if let name = self?.member?.name { params["name"] = name }
-                    if let email = self?.member?.email { params["email"] = email }
                     self?.close()
                 })
             } else {
                 self.delegate?.didUpdateMember(member)
-                var params = [String:Any]()
-                if let name = self.member?.name { params["name"] = name }
-                if let email = self.member?.email { params["email"] = email }
                 close()
             }
         }

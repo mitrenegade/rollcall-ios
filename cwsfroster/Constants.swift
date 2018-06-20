@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Firebase
 
-let TESTING = true
+let TESTING = false
 let OFFLINE_MODE = false
 let PARSE_APP_ID = "1rpbRs78obshXacjudYUWffbxIiXs05cti4AQ9XY"
 let PARSE_CLIENT_KEY = "Saw8mERqjgFuswlvBgHjCCfK7SR8aKuU9Vg7uyMA"
@@ -21,6 +21,9 @@ let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
 @objc class Constants: NSObject {
     static let APP_ID = "916600723"
 }
+
+let SOFT_UPGRADE_INTERVAL_DEFAULT = (3600*24*7)
+let APP_STORE_URL = "itms-apps://itunes.apple.com/app/id" + Constants.APP_ID
 
 enum NotificationType: String {
     case LogoutSuccess

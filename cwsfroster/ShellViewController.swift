@@ -12,6 +12,7 @@ import Firebase
 
 class ShellViewController: UITabBarController {
     var disposeBag: DisposeBag? = DisposeBag()
+    fileprivate var upgradeShown: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,8 @@ class ShellViewController: UITabBarController {
         stopListeningFor("organization:name:changed")
         stopListeningFor("goToSettings")
         stopListeningFor(.LogoutSuccess)
+        
+        UpgradeService().clearOnLogout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,8 +58,42 @@ class ShellViewController: UITabBarController {
                 simpleAlert(title, message: "Add some members to your new organization")
             }
         }
+        
+        self.promptForUpgradeIfNeeded()
     }
     
+    fileprivate func promptForUpgradeIfNeeded() {
+        let service = UpgradeService()
+        guard service.shouldShowSoftUpgrade || service.shouldShowForceUpgrade else { return }
+        
+        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "RollCall"
+        let version = SettingsService.newestVersion
+        let alert = UIAlertController(title: "Upgrade available", message: "There is a newer version (\(version)) of \(title) available in the App Store.", preferredStyle: .alert)
+        if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
+        {
+            alert.addAction(UIAlertAction(title: "Open in App Store", style: .default, handler: { (action) in
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
+                service.softUpgradeDismissed(neverShowAgain: false)
+            }))
+        }
+        if service.shouldShowSoftUpgrade {
+            alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: true)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+            }))
+            alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: false)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+            }))
+        }
+        present(alert, animated: true)
+    }
+
     func listenForOrganization() {
         print("Listening for organization")
         guard let disposeBag = disposeBag else { return }
