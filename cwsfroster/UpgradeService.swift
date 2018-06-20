@@ -11,11 +11,13 @@ import UIKit
 class UpgradeService: NSObject {
     fileprivate let currentVersion: String!
     fileprivate let newestVersion: String?
+    fileprivate let forceUpgradeVersion: String?
     fileprivate let upgradeInterval: TimeInterval!
     fileprivate let defaults: UserDefaults!
-    init(currentVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown", newestVersion: String = SettingsService.newestVersion, upgradeInterval: TimeInterval = SettingsService.softUpgradeInterval, defaults: UserDefaults = UserDefaults.standard) {
+    init(currentVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown", newestVersion: String = SettingsService.newestVersion, forceUpgradeVersion: String = SettingsService.forceUpgradeVersion, upgradeInterval: TimeInterval = SettingsService.softUpgradeInterval, defaults: UserDefaults = UserDefaults.standard) {
         self.currentVersion = currentVersion
         self.newestVersion = newestVersion
+        self.forceUpgradeVersion = forceUpgradeVersion
         self.upgradeInterval = upgradeInterval
         self.defaults = defaults
         
@@ -44,8 +46,14 @@ class UpgradeService: NSObject {
         guard newerVersionAvailable else { return false }
         guard softUpgradeTimeElapsed else { return false }
         guard !neverShowSoftUpgrade else { return false }
+        guard !shouldShowForceUpgrade else { return false }
         
         return true
+    }
+    
+    var shouldShowForceUpgrade: Bool {
+        guard let upgradeVersion = forceUpgradeVersion else { return false }
+        return currentVersion < upgradeVersion
     }
     
     // after user dismisses Soft Upgrade, set default values as needed

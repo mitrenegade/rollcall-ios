@@ -63,11 +63,10 @@ class ShellViewController: UITabBarController {
     }
     
     fileprivate func promptForUpgradeIfNeeded() {
-        guard UpgradeService().shouldShowSoftUpgrade else { return }
-        guard !upgradeShown else { return }
-        upgradeShown = true
+        let service = UpgradeService()
+        guard service.shouldShowSoftUpgrade || service.shouldShowForceUpgrade else { return }
         
-        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "Balizinha"
+        let title = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String ?? "RollCall"
         let version = SettingsService.newestVersion
         let alert = UIAlertController(title: "Upgrade available", message: "There is a newer version (\(version)) of \(title) available in the App Store.", preferredStyle: .alert)
         if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
@@ -79,19 +78,22 @@ class ShellViewController: UITabBarController {
                     UIApplication.shared.openURL(url)
                 }
                 LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
-                UpgradeService().softUpgradeDismissed(neverShowAgain: false)
+                service.softUpgradeDismissed(neverShowAgain: false)
             }))
         }
-        alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
-            UpgradeService().softUpgradeDismissed(neverShowAgain: true)
-            LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
-        }))
-        alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
-            UpgradeService().softUpgradeDismissed(neverShowAgain: false)
-            LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
-        }))
+        if service.shouldShowSoftUpgrade {
+            alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: true)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+            }))
+            alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+                service.softUpgradeDismissed(neverShowAgain: false)
+                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+            }))
+        }
         present(alert, animated: true)
     }
+
     func listenForOrganization() {
         print("Listening for organization")
         guard let disposeBag = disposeBag else { return }

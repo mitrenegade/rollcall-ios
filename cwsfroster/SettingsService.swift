@@ -13,7 +13,7 @@ import RxSwift
 fileprivate var singleton: SettingsService?
 class SettingsService: NSObject {
     private var remoteConfig = RemoteConfig.remoteConfig()
-    static let defaults: [String: Any] = ["newestVersionIOS":"0.1.0", "softUpgradeInterval": SOFT_UPGRADE_INTERVAL_DEFAULT]
+    static let defaults: [String: Any] = ["newestVersionIOS":"0.1.0", "forceUpgradeVersionIOS": "0.2.0", "softUpgradeInterval": SOFT_UPGRADE_INTERVAL_DEFAULT]
 
     static var shared: SettingsService {
         if singleton == nil {
@@ -31,6 +31,8 @@ class SettingsService: NSObject {
             self.remoteConfig.fetch(completionHandler: { (status, error) in
                 self.remoteConfig.activateFetched()
                 print("Settings: * newestVersion \(SettingsService.newestVersion)")
+                print("Settings: * forceUpgradeVersion \(SettingsService.forceUpgradeVersion)")
+                print("Settings: * softUpgradeInterval \(SettingsService.softUpgradeInterval)")
                 self.recordExperimentGroups()
                 observer.onNext("done")
             })
@@ -64,6 +66,10 @@ extension SettingsService {
     
     class var softUpgradeInterval: TimeInterval {
         return shared.featureValue("softUpgradeInterval").numberValue?.doubleValue ?? defaults["softUpgardeInterval"] as! TimeInterval
+    }
+    
+    class var forceUpgradeVersion: String {
+        return shared.featureValue("forceUpgradeVersionIOS").stringValue ?? defaults["forceUpgradeVersionIOS"] as! String
     }
 }
 
