@@ -171,7 +171,6 @@ extension OnsiteSignupViewController: UITextFieldDelegate {
 extension OnsiteSignupViewController: CameraHelperDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         view.endEditing(true)
-        ParseLog.log(typeString: "EditOnsiteSignupPhoto", title: nil, message: nil, params: nil, error: nil)
         cameraHelper.takeOrSelectPhoto(from: self)
     }
     

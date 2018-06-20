@@ -105,7 +105,6 @@ class MemberInfoViewController: UIViewController {
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
         cameraHelper.takeOrSelectPhoto(from: self)
     }
 
@@ -164,6 +163,7 @@ class MemberInfoViewController: UIViewController {
                 }
             }
         } else if let member = member {
+            ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
             if let photo = newPhoto {
                 member.photo = photo
                 let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
@@ -185,7 +185,6 @@ class MemberInfoViewController: UIViewController {
                     var params = [String:Any]()
                     if let name = self?.member?.name { params["name"] = name }
                     if let email = self?.member?.email { params["email"] = email }
-                    ParseLog.log(typeString: "MemberUpdated", title: self?.member?.id, message: nil, params: params as NSDictionary?, error: nil)
                     self?.close()
                 })
             } else {
@@ -193,7 +192,6 @@ class MemberInfoViewController: UIViewController {
                 var params = [String:Any]()
                 if let name = self.member?.name { params["name"] = name }
                 if let email = self.member?.email { params["email"] = email }
-                ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
                 close()
             }
         }
