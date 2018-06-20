@@ -133,18 +133,27 @@ class MemberInfoViewController: UIViewController {
                     if let email = member.email { params["email"] = email }
                     ParseLog.log(typeString: "MemberCreated", title: member.id, message: nil, params: params as NSDictionary?, error: nil)
 
-                    self?.delegate?.didUpdateMember(member)
                     if let photo = self?.newPhoto {
+                        member.photo = photo
+                        let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+                        })
                         print("FirebaseImageService: uploading member photo for \(member.id)")
-                        FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, completion: { (url) in
+                        self?.present(alert, animated: true, completion: nil)
+                        FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                            alert.title = "Upload progress: \(Int(percent*100))%"
+                        }, completion: { (url) in
+                            alert.dismiss(animated: true, completion: nil)
                             if let url = url {
                                 member.photoUrl = url
                                 print("FirebaseImageService: uploading member photo complete with url \(url)")
                             }
                             ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                            self?.delegate?.didCreateMember(member)
+                            self?.close()
                         })
-                        self?.close()
                     } else {
+                        self?.delegate?.didCreateMember(member)
                         self?.close()
                     }
                 } else {
