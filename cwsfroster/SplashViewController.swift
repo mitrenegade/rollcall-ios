@@ -106,6 +106,8 @@ extension SplashViewController {
             }
             return
         }
+        
+        Analytics.setUserProperty("true", forName: "ConvertedFromParse")
 
         // make sure org exists
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
