@@ -127,7 +127,7 @@ class OrganizationService: NSObject {
         })
     }
     
-    func createMember(email: String, name: String? = nil, notes: String? = nil, status: MemberStatus, completion:@escaping (FirebaseMember?, NSError?) -> Void) {
+    func createMember(email: String? = nil, name: String? = nil, notes: String? = nil, status: MemberStatus, completion:@escaping (FirebaseMember?, NSError?) -> Void) {
         guard let org = current.value else {
             completion(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
@@ -136,7 +136,10 @@ class OrganizationService: NSObject {
         print ("Create member")
         
         let ref = firRef.child("members").child(FirebaseAPIService.uniqueId())
-        var params: [String: Any] = ["email": email, "createdAt": Date().timeIntervalSince1970, "organization": org.id]
+        var params: [String: Any] = ["createdAt": Date().timeIntervalSince1970, "organization": org.id]
+        if let email = email {
+            params["email"] = email
+        }
         if let name = name {
             params["name"] = name
         }

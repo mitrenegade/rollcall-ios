@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import RACameraHelper
 
 class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var inputName: UITextField!
@@ -24,6 +25,7 @@ class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var buttonSave: UIButton!
     
     var practice: FirebaseEvent?
+    let cameraHelper = CameraHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +39,7 @@ class OnsiteSignupViewController: UIViewController {
         labelWelcome.alpha = 0
         
         setupKeyboardDoneButtonView()
+        cameraHelper.delegate = self
     }
     
     func close() {
@@ -63,7 +66,7 @@ class OnsiteSignupViewController: UIViewController {
             return
         }
         
-        guard let email = inputEmail.text, !email.isEmpty && !email.isValidEmail() else {
+        guard let email = inputEmail.text, !email.isEmpty && email.isValidEmail() else {
             self.simpleAlert("Please enter a valid email", message: nil)
             return
         }
@@ -72,12 +75,27 @@ class OnsiteSignupViewController: UIViewController {
         
         OrganizationService.shared.createMember(email: email, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
             
-            // BOBBY TODO
-//            if let photo = self.addedPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-//                member.photo = PFFile(data:data)
-//            }
-            
             if let member = member {
+                if let photo = self?.addedPhoto {
+                    member.photo = photo
+                    print("FirebaseImageService: uploading member photo for \(member.id)")
+//                    let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+//                    alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+//                    })
+//                    self?.present(alert, animated: true, completion: nil)
+                    FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id,  progressHandler: { (percent) in
+//                        alert.title =
+                        print("Upload progress: \(Int(percent*100))%")
+                    }, completion: { (url) in
+//                        alert.dismiss(animated: true, completion: nil)
+                        if let url = url {
+                            member.photoUrl = url
+                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "Onsite", params: nil, error: nil)
+                            print("FirebaseImageService: uploading member photo complete with url \(url)")
+                        }
+                    })
+                }
+
                 self?.notify("member:updated", object: nil, userInfo: nil)
                 ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
                 
@@ -148,34 +166,28 @@ extension OnsiteSignupViewController: UITextFieldDelegate {
         return true
     }
 }
-extension OnsiteSignupViewController: CameraControlsDelegate {
+
+// MARK: Camera
+extension OnsiteSignupViewController: CameraHelperDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
-        self.view.endEditing(true)
-        self.takePhoto()
-    }
-    
-    func takePhoto() {
-        self.view.endEditing(true)
-        
-        let controller = CameraOverlayViewController(
-            nibName:"CameraOverlayViewController",
-            bundle: nil
-        )
-        controller.delegate = self
-        controller.view.frame = UIScreen.main.bounds
-        controller.takePhoto(from: self)
-        
+        view.endEditing(true)
         ParseLog.log(typeString: "EditOnsiteSignupPhoto", title: nil, message: nil, params: nil, error: nil)
+        cameraHelper.takeOrSelectPhoto(from: self)
     }
     
-    func didTakePhoto(image: UIImage) {
-        self.buttonPhoto.setImage(image, for: .normal)
+    func didCancelSelection() {
+        print("Did not edit image")
+    }
+    
+    func didCancelPicker() {
+        print("Did not select image")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didSelectPhoto(selected: UIImage?) {
+        buttonPhoto.setImage(selected, for: .normal)
         buttonPhoto.layer.cornerRadius = buttonPhoto.frame.size.width / 2
-        self.addedPhoto = image
-        self.dismissCamera()
-    }
-    
-    func dismissCamera() {
-        self.dismiss(animated: true, completion: nil)
+        addedPhoto = selected
+        dismiss(animated: true, completion: nil)
     }
 }

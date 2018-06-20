@@ -11,13 +11,12 @@ import Parse
 import RxSwift
 import RxOptional
 import Firebase
-import AsyncImageView
 
 class SplashViewController: UIViewController {
 
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var labelInfo: UILabel!
-    @IBOutlet weak var logo: AsyncImageView!
+    @IBOutlet weak var logo: RAImageView!
     
     var first: Bool = true
     
@@ -190,8 +189,23 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-//                        params["photoUrl"] = BOBBY TODO
+                        // BOBBY TODO
+                        do {
+                            let data = try photo.getData()
+                            if let image = UIImage(data: data) {
+                                FirebaseImageService.uploadImage(image: image, type: "member", uid: id, completion: { (url) in
+                                    if let url = url {
+                                        let asyncRef = firRef.child("members").child(id)
+                                        asyncRef.updateChildValues(["photoUrl":url])
+                                    }
+                                })
+                            }
+                        }
+                        catch let error {
+                            print("some error \(error)")
+                        }
                     }
+
                     if let status = member.status {
                         switch status.intValue {
                         case MemberStatus.Active.rawValue:
@@ -301,11 +315,14 @@ extension SplashViewController {
                 do {
                     let data = try imageFile.getData()
                     if let image = UIImage(data: data) {
-                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
-                            if let url = url, let currentOrg = OrganizationService.shared.current.value {
-                                currentOrg.photoUrl = url
-                            }
-                        })
+                        DispatchQueue.main.async {
+                            // upload must happen on main queue
+                            FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
+                                if let url = url, let currentOrg = OrganizationService.shared.current.value {
+                                    currentOrg.photoUrl = url
+                                }
+                            })
+                        }
                     }
                 } catch let error {
                     print("oops")

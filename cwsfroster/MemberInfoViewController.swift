@@ -8,10 +8,11 @@
 
 import UIKit
 import Parse
+import RACameraHelper
 
 class MemberInfoViewController: UIViewController {
     
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: RAImageView!
     @IBOutlet var buttonPhoto: UIButton!
     @IBOutlet var inputName: UITextField!
     @IBOutlet var inputEmail: UITextField!
@@ -19,7 +20,8 @@ class MemberInfoViewController: UIViewController {
     @IBOutlet var switchInactive: UISwitch!
     @IBOutlet var labelPaymentWarning: UILabel!
     @IBOutlet var buttonPayment: UIButton!
-
+    let cameraHelper = CameraHelper()
+    
     var member: FirebaseMember?
     var delegate: MemberDelegate?
     var newPhoto: UIImage?
@@ -27,6 +29,7 @@ class MemberInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        cameraHelper.delegate = self
 
         // Do any additional setup after loading the view.
         newPhoto = nil
@@ -36,15 +39,13 @@ class MemberInfoViewController: UIViewController {
             self.title = "Edit member"
             self.navigationItem.rightBarButtonItem = nil
             
-            if let photo = member.photoUrl {
-                // BOBBY TODO
-//                photo.getDataInBackground(block: { (data, error) in
-//                    if let data = data {
-//                        let image = UIImage(data: data)
-//                        self.photoView.image = image
-//                        self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
-//                    }
-//                })
+            if let photo = member.photo {
+                photoView.image = photo
+                photoView.imageUrl = nil
+            }
+            if let url = member.photoUrl {
+                photoView.imageUrl = url
+                photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
             }
             self.switchInactive.isOn = member.isInactive
         } else {
@@ -104,7 +105,8 @@ class MemberInfoViewController: UIViewController {
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        self.takePhoto()
+        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
+        cameraHelper.takeOrSelectPhoto(from: self)
     }
 
     @IBAction func didClickSave(_ sender: AnyObject?) {
@@ -112,14 +114,16 @@ class MemberInfoViewController: UIViewController {
     }
     
     fileprivate func saveMember() {
-        guard let email = self.inputEmail.text, !email.isEmpty, email.isValidEmail() else {
+        let email = self.inputEmail.text
+        let name = self.inputName.text
+        let notes = inputNotes.text
+        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
+        
+        if let email = email, !email.isEmpty, !email.isValidEmail() {
+            // only check for validity if email was entered
             self.simpleAlert("Invalid email", message: "Please enter a valid email if it exists.")
             return
         }
-        let name = self.inputName.text
-        let notes = inputNotes.text
-        
-        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
         
         if isCreatingMember {
             OrganizationService.shared.createMember(email: email, name: name, notes: notes, status: status) { [weak self] (member, error) in
@@ -130,11 +134,27 @@ class MemberInfoViewController: UIViewController {
                     if let email = member.email { params["email"] = email }
                     ParseLog.log(typeString: "MemberCreated", title: member.id, message: nil, params: params as NSDictionary?, error: nil)
 
-                    self?.delegate?.didUpdateMember(member)
-                    if let photo = self?.newPhoto, let data = UIImageJPEGRepresentation(photo, 0.8) {
-                        // BOBBY TODO: upload photo
-                        self?.close()
+                    if let photo = self?.newPhoto {
+                        member.photo = photo
+                        let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+                        })
+                        print("FirebaseImageService: uploading member photo for \(member.id)")
+                        self?.present(alert, animated: true, completion: nil)
+                        FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                            alert.title = "Upload progress: \(Int(percent*100))%"
+                        }, completion: { (url) in
+                            alert.dismiss(animated: true, completion: nil)
+                            if let url = url {
+                                member.photoUrl = url
+                                print("FirebaseImageService: uploading member photo complete with url \(url)")
+                            }
+                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                            self?.delegate?.didCreateMember(member)
+                            self?.close()
+                        })
                     } else {
+                        self?.delegate?.didCreateMember(member)
                         self?.close()
                     }
                 } else {
@@ -144,12 +164,38 @@ class MemberInfoViewController: UIViewController {
                 }
             }
         } else if let member = member {
-            self.delegate?.didUpdateMember(member)
-            var params = [String:Any]()
-            if let name = self.member?.name { params["name"] = name }
-            if let email = self.member?.email { params["email"] = email }
-            ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
-            close()
+            if let photo = newPhoto {
+                member.photo = photo
+                let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
+                })
+
+                print("FirebaseImageService: uploading member photo for \(member.id)")
+                present(alert, animated: true, completion: nil)
+                FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                    alert.title = "Upload progress: \(Int(percent*100))%"
+                }, completion: { [weak self] (url) in
+                    alert.dismiss(animated: true, completion: nil)
+                    if let url = url {
+                        member.photoUrl = url
+                        print("FirebaseImageService: uploading member photo complete with url \(url)")
+                    }
+                    ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                    self?.delegate?.didUpdateMember(member)
+                    var params = [String:Any]()
+                    if let name = self?.member?.name { params["name"] = name }
+                    if let email = self?.member?.email { params["email"] = email }
+                    ParseLog.log(typeString: "MemberUpdated", title: self?.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+                    self?.close()
+                })
+            } else {
+                self.delegate?.didUpdateMember(member)
+                var params = [String:Any]()
+                if let name = self.member?.name { params["name"] = name }
+                if let email = self.member?.email { params["email"] = email }
+                ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+                close()
+            }
         }
     }
 }
@@ -201,30 +247,20 @@ extension MemberInfoViewController: UITextViewDelegate {
 }
 
 // MARK: Camera
-extension MemberInfoViewController: CameraControlsDelegate {
-    func takePhoto() {
-        self.view.endEditing(true)
-
-        let controller = CameraOverlayViewController(
-            nibName:"CameraOverlayViewController",
-            bundle: nil
-            )
-        controller.delegate = self
-        controller.view.frame = self.view.frame
-        controller.takePhoto(from: self)
-        
-        // add overlayview
-        ParseLog.log(typeString: "EditMemberPhoto", title: member?.id, message: nil, params: nil, error: nil)
+extension MemberInfoViewController: CameraHelperDelegate {
+    func didCancelSelection() {
+        print("Did not edit image")
     }
-
-    func didTakePhoto(image: UIImage) {
-        self.photoView.image = image
+    
+    func didCancelPicker() {
+        print("Did not select image")
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func didSelectPhoto(selected: UIImage?) {
+        self.photoView.image = selected
         self.photoView.layer.cornerRadius = photoView.frame.size.width / 2
-        self.newPhoto = image
-        self.dismissCamera()
-    }
-
-    func dismissCamera() {
-        self.dismiss(animated: true, completion: nil)
+        self.newPhoto = selected
+        dismiss(animated: true, completion: nil)
     }
 }

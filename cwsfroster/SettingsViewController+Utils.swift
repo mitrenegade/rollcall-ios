@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RACameraHelper
 
 extension SettingsViewController {
     func notifyForLogoutInSuccess() {
@@ -15,16 +16,16 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: CameraHelperDelegate {
-    func didCancelSelection() {
-        
+    public func didCancelSelection() {
     }
     
-    func didCancelPicker() {
-        //        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[[Organization current] objectId] message:nil params:nil error:error];
+    public func didCancelPicker() {
     }
     
-    func didSelectPhoto(selected: UIImage?) {
-        //        [ParseLog logWithTypeString:@"OrganizationImageChanged" title:[org objectId] message:nil params:nil error:nil];
+    public func didSelectPhoto(selected: UIImage?) {
+        if let org = OrganizationService.shared.current.value {
+            ParseLog.log(typeString: "OrganizationImageChanged", title: org.id, message: nil, params: nil, error: nil)
+        }
         // save image to firebase
         dismiss(animated: false) {
             guard let image = selected else { return }
@@ -37,28 +38,29 @@ extension SettingsViewController: CameraHelperDelegate {
             cameraHelper = CameraHelper()
         }
         cameraHelper.delegate = self
-        cameraHelper.root = self
     }
     
     func goToUpdateLogo() {
         print("UpdateLogo")
-        cameraHelper.takeOrSelectPhoto()
-//        [ParseLog logWithTypeString:@"UpdateOrganizationLogo" title:[[Organization current] objectId] message:nil params:nil error:nil];
+        cameraHelper.takeOrSelectPhoto(from: self)
     }
     
     func uploadPhoto(image: UIImage) {
         guard let org = OrganizationService.shared.current.value else { return }
         showProgress("Saving new logo")
+        print("FirebaseImageService: uploading org photo for \(org.id)")
         FirebaseImageService.uploadImage(image: image, type: "organization", uid: org.id, progressHandler: { (progress) in
             self.updateProgress(Float(progress))
-        }) { (url) in
+        }) { [weak self] (url) in
             if let url = url {
                 org.photoUrl = url
+                print("FirebaseImageService: uploading org photo complete with url \(url)")
+                ParseLog.log(typeString: "UpdateOrganizationLogo", title: org.id, message: nil, params: nil, error: nil)
+            } else {
+                // failure
+                self?.simpleAlert("Upload failed", message: "There was an error uploading a new logo.")
             }
-            //        // failure
-            //        progress.labelText = @"Upload failed";
-            //        progress.mode = MBProgressHUDModeText;
-            self.hideProgress()
+            self?.hideProgress()
         }
     }
 }

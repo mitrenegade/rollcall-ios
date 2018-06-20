@@ -10,7 +10,7 @@ import UIKit
 
 class MemberCell: UITableViewCell {
 
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: RAImageView!
     @IBOutlet var labelName: UILabel!
     
     @IBOutlet var labelCount: UILabel?
@@ -32,19 +32,13 @@ class MemberCell: UITableViewCell {
         labelName.text = member.name
         
         self.tag = row; // make sure photo loads for correct cell
-        photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
         
-        if let photoUrl = member.photoUrl {
-            // BOBBY TODO
-//            photo.getDataInBackground(block: { (data, error) in
-//                if self.tag != row {
-//                    return
-//                }
-//                if let data = data {
-//                    let image = UIImage(data: data)
-//                    self.photoView.image = image
-//                }
-//            })
+        if let url = member.photoUrl {
+            photoView.imageUrl = url
+            photoView.image = member.photo
+        } else {
+            photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
+            photoView.imageUrl = nil
         }
 
         if member.isInactive {

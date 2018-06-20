@@ -1,4 +1,4 @@
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'rollcall' do
@@ -12,5 +12,5 @@ pod 'Firebase/Storage'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxOptional'
-pod 'AsyncImageView'
+pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.2'
 end

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol MemberDelegate: class {
+    func didCreateMember(_ member: FirebaseMember)
     func didUpdateMember(_ member: FirebaseMember)
 }
 
@@ -125,8 +126,19 @@ extension MembersTableViewController {
 }
 
 extension MembersTableViewController: MemberDelegate {
+    func didCreateMember(_ member: FirebaseMember) {
+        _members.append(member)
+        _members = _members.sorted {
+            guard let n1 = $0.name?.uppercased() else { return false }
+            guard let n2 = $1.name?.uppercased() else { return true }
+            return n1 < n2
+        }
+        tableView.reloadData()
+        notify("member:updated", object: nil, userInfo: nil)
+    }
+    
     func didUpdateMember(_ member: FirebaseMember) {
-        reloadMembers()
+        tableView.reloadData()
         notify("member:updated", object: nil, userInfo: nil)
     }
 }

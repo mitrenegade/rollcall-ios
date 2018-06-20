@@ -11,7 +11,7 @@ import UIKit
 class AttendanceCell: UITableViewCell {
 
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var photoView: UIImageView!
+    @IBOutlet var photoView: RAImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,21 +37,16 @@ class AttendanceCell: UITableViewCell {
         }
         
         self.tag = row; // make sure photo loads for correct cell
-        photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
 
-        // BOBBY TODO
-//        if let photo = member.photo {
-//            photo.getDataInBackground(block: { (data, error) in
-//                if self.tag != row {
-//                    return
-//                }
-//                if let data = data {
-//                    let image = UIImage(data: data)
-//                    self.photoView.image = image
-//                }
-//            })
-//        }
-        
+        if let url = member.photoUrl {
+            photoView.imageUrl = url
+            photoView.image = member.photo
+            photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
+        } else {
+            photoView.image = UIImage(named: "user1") // [UIImage imageNamed:@"user1"];
+            photoView.imageUrl = nil
+        }
+
         if member.isInactive {
             nameLabel.alpha = 0.5;
         }
