@@ -52,6 +52,7 @@ class MembersTableViewController: UITableViewController {
     }
     
     func goToSettings() {
+        Crashlytics.crash()
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
