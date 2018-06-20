@@ -29,7 +29,7 @@
 		8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FF0D220D9F5FB008BAC71 /* RAImageView.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
-		8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* ParseLogService.swift */; };
+		8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* LoggingService.swift */; };
 		8E9D891F20CB130900AD382F /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D891E20CB130900AD382F /* EventService.swift */; };
 		8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */; };
 		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
@@ -134,7 +134,7 @@
 		8E6FF0D220D9F5FB008BAC71 /* RAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAImageView.swift; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
-		8E800D301E3E94770085EC4D /* ParseLogService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParseLogService.swift; path = ../ParseLogService.swift; sourceTree = "<group>"; };
+		8E800D301E3E94770085EC4D /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggingService.swift; path = ../LoggingService.swift; sourceTree = "<group>"; };
 		8E9D891E20CB130900AD382F /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
@@ -486,7 +486,7 @@
 				8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */,
 				8E1F64061E4A03D3004E8723 /* String+Utils.swift */,
 				8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */,
-				8E800D301E3E94770085EC4D /* ParseLogService.swift */,
+				8E800D301E3E94770085EC4D /* LoggingService.swift */,
 				8E6FF0D220D9F5FB008BAC71 /* RAImageView.swift */,
 			);
 			path = Utils;
@@ -749,7 +749,7 @@
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
-				8E800D311E3E94770085EC4D /* ParseLogService.swift in Sources */,
+				8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */,
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,

@@ -189,7 +189,6 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-                        // BOBBY TODO
                         do {
                             let data = try photo.getData()
                             if let image = UIImage(data: data) {
