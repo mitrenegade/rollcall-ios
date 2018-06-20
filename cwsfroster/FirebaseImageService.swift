@@ -24,11 +24,11 @@ class FirebaseImageService: NSObject {
         
         let imageRef: StorageReference = imageBaseRef.child(type).child(uid)
         let uploadTask = imageRef.putData(data, metadata: nil) { (meta, error) in
-            guard let metadata = meta as? StorageMetadata else {
+            guard let metadata = meta else {
                 completion(nil)
                 return
             }
-            metadata.storageReference?.downloadURL(completion: { (url, error) in
+            imageRef.downloadURL(completion: { (url, error) in
                 completion(url?.absoluteString)
             })
         }

@@ -11,7 +11,7 @@ import AsyncImageView
 
 class MemberCell: UITableViewCell {
 
-    @IBOutlet var photoView: AsyncImageView!
+    @IBOutlet var photoView: UIImageView!
     @IBOutlet var labelName: UILabel!
     
     @IBOutlet var labelCount: UILabel?
@@ -34,9 +34,17 @@ class MemberCell: UITableViewCell {
         
         self.tag = row; // make sure photo loads for correct cell
         
-        if let url = member.photoUrl {
-            photoView.imageURL = URL(string: url)
-            photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
+        if let url = member.photoUrl, let URL = URL(string: url) {
+            DispatchQueue.global().async {
+                
+                let data = try! Data(contentsOf: URL)
+                let image = UIImage(data: data)
+                DispatchQueue.main.async {
+                    self.photoView.image = image
+                    self.photoView.layer.cornerRadius = self.photoView.frame.size.width / 2
+                }
+            }
+//            photoView.imageURL =
             // BOBBY TODO
             //                if self.tag != row {
             //                    return
