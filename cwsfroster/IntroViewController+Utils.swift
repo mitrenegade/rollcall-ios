@@ -245,7 +245,7 @@ extension IntroViewController {
                     })
                 } else {
                     self.goToPractices()
-                    self.createFirebaseUser(id: user.uid, username: nil)
+                    self.createFirebaseUser(id: user.uid, username: parseUsername)
                 }
             }
         })
