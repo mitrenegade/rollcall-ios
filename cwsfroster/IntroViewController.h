@@ -13,20 +13,7 @@
 
 @interface IntroViewController : UIViewController <UITextFieldDelegate, UIAlertViewDelegate>
 {
-    IBOutlet UITextField *inputLogin;
-    IBOutlet UITextField *inputPassword;
-    IBOutlet UITextField *inputConfirmation;
 
-    IBOutlet NSLayoutConstraint *constraintConfirmationHeight;
-    
-    NSMutableDictionary *ready;
-
-    MBProgressHUD *progress;
-    BOOL isFailed;
-
-    IBOutlet TutorialScrollView *tutorialView;
-    
-    BOOL isParseConversion;
 }
 
 @property (nonatomic) BOOL isSignup;

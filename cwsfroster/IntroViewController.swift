@@ -11,7 +11,77 @@ import Parse
 import Firebase
 
 // MARK: Swift notifications
-extension IntroViewController {
+class IntroViewController: UIViewController {
+    @IBOutlet weak var inputLogin: UITextField!
+    @IBOutlet weak var inputPassword: UITextField!
+    @IBOutlet weak var inputConfirmation: UITextField!
+    
+    @IBOutlet weak var buttonLoginSignup: UIButton!
+    @IBOutlet weak var buttonSwitchMode: UIButton!
+
+    @IBOutlet weak var constraintConfirmationHeight: NSLayoutConstraint!
+    
+    var ready: [String: Any] = [:]
+
+//    var progress: MBProgressHUD?
+    var isSignup: Bool = false
+    var isFailed: Bool = false
+    var isParseConversion: Bool = false
+
+    @IBOutlet weak var tutorialView: TutorialScrollView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        refresh()
+        enableButtons()
+    }
+    
+    func refresh() {
+        constraintConfirmationHeight.constant = isSignup ? 40 : 0
+        inputPassword.text = nil
+        inputConfirmation.text = nil
+        inputLogin.superview?.layer.borderWidth = 1
+        inputLogin.superview?.layer.borderColor = UIColor.lightGray.cgColor
+        inputPassword.superview.layer.borderWidth = 1
+        inputPassword.superview.layer.borderColor = UIColor.lightGray.cgColor
+        inputConfirmation.superview.layer.borderWidth = 1
+        inputConfirmation.superview.layer.borderColor = UIColor.lightGray.cgColor
+
+        inputLogin.alpha = 1
+        inputPassword.alpha = 1
+        
+        view.setNeedsUpdateConstraints()
+        UIView.animate(withDuration: .25, animations: {
+            let title = self.isSignup ? "Sign up" : "Log in"
+            self.buttonLoginSignup.setTitle(title, for: .normal)
+            let title2 = self.isSignup ? "Back to login" : "New user?"
+            buttonSwitchMode.setTitle(title2, for: .normal)
+            
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func loadTutorial() {
+        tutorialView.setTutorialPages(["IntroTutorial0", "IntroTutorial1", "IntroTutorial2", "IntroTutorial3"])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if PFUser.current() == nil {
+            loadTutorial()
+        }
+        
+        promptForUpgradeIfNeeded()
+    }
+    
+    func enableButtons(_ enabled: Bool) {
+        buttonLoginSignup.alpha = enabled ? 1 : .5
+        buttonSwitchMode.alpha = enabled ? 1 : .5
+        buttonLoginSignup.isEnabled = enabled
+        buttonSwitchMode.isEnabled = enabled
+    }
+    
     func notifyForLogInSuccess() {
         self.notify(.LoginSuccess, object: nil, userInfo: ["convertedFromParse": isParseConversion])
     }
