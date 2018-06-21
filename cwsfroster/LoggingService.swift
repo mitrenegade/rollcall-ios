@@ -20,7 +20,15 @@ fileprivate var singleton: LoggingService?
 fileprivate var loggingRef: DatabaseReference = firRef.child("logs")
 
 enum LoggingEvent: String {
-    case softUpgradeDismissed = "SoftUpgradeDismissed"
+    // first time user
+    case createEmailUser
+    case migrateSynchronizeParse
+    case createOrganization
+    
+    // upgrade
+    case upgradeDisplayed
+    case softUpgradeDismissed
+
     case unknown
 }
 
@@ -57,6 +65,11 @@ class LoggingService: NSObject {
     }
     
     func log(event: LoggingEvent, message: String? = nil, info: [String: Any]?, error: NSError? = nil) {
+        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        if !TESTING {
+            return
+        }
+        #endif
         var params: [String: Any] = info ?? [:]
         if let message = message {
             params["message"] = message
@@ -76,7 +89,9 @@ class ParseLog: NSObject {
     // compatible with ObjC
     class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
-//            return
+        if !TESTING {
+            return
+        }
         #endif
 
         var info: [String: Any]?

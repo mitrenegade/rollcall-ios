@@ -67,6 +67,7 @@ class SplashViewController: UIViewController {
         // update firebase object
         if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
             synchronizeParseOrganization()
+            LoggingService.shared.log(event: .migrateSynchronizeParse, info: nil)
         } else {
             activityIndicator.startAnimating()
             OrganizationService.shared.startObservingOrganization()

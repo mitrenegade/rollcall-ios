@@ -213,11 +213,13 @@ extension IntroViewController {
                         if let error = error as NSError? {
                             self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
                             self.hideProgress()
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
                         } else {
                             self.goToPractices()
                             if let user = user {
                                 self.createFirebaseUser(id: user.uid, username: parseUsername)
                             }
+                            LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
                         }
                     })
                 } else if error.code == 17006 {
@@ -226,6 +228,7 @@ extension IntroViewController {
                     self.hideProgress()
                 } else {
                     self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                    LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
                     self.hideProgress()
                 }
                 self.enableButtons(true)
@@ -235,6 +238,7 @@ extension IntroViewController {
                 guard let user = result?.user else { return }
                 if self.isSignup {
                     // create org
+                    LoggingService.shared.log(event: .createEmailUser, message: "create email user success on signup", info: ["email": email])
                     self.promptForNewOrgName(completion: { (name) in
                         let userId = user.uid
                         let orgName = name ?? user.email ?? "unnamed"
@@ -244,6 +248,7 @@ extension IntroViewController {
                         self.goToPractices()
                     })
                 } else {
+                    LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
                     self.goToPractices()
                     self.createFirebaseUser(id: user.uid, username: parseUsername)
                 }
@@ -269,6 +274,7 @@ extension IntroViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
             PFUser.logOut()
             self.hideProgress()
             self.enableButtons(true)
@@ -294,12 +300,15 @@ extension IntroViewController {
         }
         alert.addAction(UIAlertAction(title: "Save", style: .default, handler: { (action) in
             if let textField = alert.textFields?[0], let name = textField.text, !name.isEmpty {
+                LoggingService.shared.log(event: .createOrganization, info: ["name": name])
                 completion?(name)
             } else {
+                LoggingService.shared.log(event: .createOrganization, info: nil)
                 completion?(nil)
             }
         }))
         alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createOrganization, info: ["skipped": true])
             completion?(nil)
         }))
         present(alert, animated: true, completion: nil)

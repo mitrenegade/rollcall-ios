@@ -101,5 +101,6 @@ extension UpgradeService {
             }))
         }
         controller.present(alert, animated: true)
+        LoggingService.shared.log(event: .upgradeDisplayed, info: ["type": shouldShowForceUpgrade ? "force" : "soft"])
     }
 }
