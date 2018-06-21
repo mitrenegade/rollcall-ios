@@ -189,20 +189,24 @@ extension IntroViewController {
                     // 0) not an email login. try parse
                     self.loginToParse(email: email, password: password, completion: { (success, error) in
                         if success {
-                            self.promptForNewEmail(parseUsername: email)
                             self.isParseConversion = true
+                            self.hideProgress() {
+                                self.promptForNewEmail(parseUsername: email)
+                            }
                         } else {
-                            self.simpleAlert("Could not log in", message: "Please try again")
-                            self.hideProgress()
-                            self.enableButtons(true)
+                            self.hideProgress() {
+                                self.simpleAlert("Could not log in", message: "Please try again")
+                                self.enableButtons(true)
+                            }
                             return
                         }
                     })
                 }
                 else if error.code == 17009 { // 1) invalid firebase password
-                    self.simpleAlert("Invalid password", message: "Please try again")
-                    self.hideProgress()
-                    self.enableButtons(true)
+                    self.hideProgress() {
+                        self.simpleAlert("Invalid password", message: "Please try again")
+                        self.enableButtons(true)
+                    }
                     return
                 }
                 else if error.code == 17011 { // 2) invalid firebase user
@@ -223,9 +227,10 @@ extension IntroViewController {
                     })
                 }
                 else { // unknown error
-                    self.simpleAlert("Could not login", message: "Unknown error: \(error)")
-                    self.hideProgress()
-                    self.enableButtons(true)
+                    self.hideProgress() {
+                        self.simpleAlert("Could not login", message: "Unknown error: \(error)")
+                        self.enableButtons(true)
+                    }
                 }
             } else {
                 self.goToPractices()
@@ -295,9 +300,10 @@ extension IntroViewController {
                     self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
                     self.hideProgress()
                 } else {
-                    self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                    LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
-                    self.hideProgress()
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                    }
                 }
                 self.enableButtons(true)
             }
@@ -307,14 +313,16 @@ extension IntroViewController {
                 if self.isSignup {
                     // create org
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on signup", info: ["email": email])
-                    self.promptForNewOrgName(completion: { (name) in
-                        let userId = user.uid
-                        let orgName = name ?? user.email ?? "unnamed"
-                        self.createFirebaseUser(id: user.uid, username: parseUsername)
-                        OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-                        
-                        self.goToPractices()
-                    })
+                    self.hideProgress() {
+                        self.promptForNewOrgName(completion: { (name) in
+                            let userId = user.uid
+                            let orgName = name ?? user.email ?? "unnamed"
+                            self.createFirebaseUser(id: user.uid, username: parseUsername)
+                            OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+                            
+                            self.goToPractices()
+                        })
+                    }
                 } else {
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
                     self.goToPractices()
@@ -401,9 +409,13 @@ extension IntroViewController {
         self.alert = alert
     }
     
-    func hideProgress() {
-        alert?.dismiss(animated: true, completion: nil)
-        alert = nil
+    func hideProgress(_ completion:(()->Void)? = nil) {
+        if alert == nil {
+            completion?()
+        } else {
+            alert?.dismiss(animated: true, completion: completion)
+            alert = nil
+        }
     }
     
     func updateProgress(percent: Double = 0) {
