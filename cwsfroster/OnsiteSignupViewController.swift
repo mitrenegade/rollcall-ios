@@ -66,14 +66,17 @@ class OnsiteSignupViewController: UIViewController {
             return
         }
         
-        guard let email = inputEmail.text, !email.isEmpty && email.isValidEmail() else {
-            self.simpleAlert("Please enter a valid email", message: nil)
-            return
+        // only check email if it was entered - not required
+        if let email = inputEmail.text, !email.isEmpty {
+            guard email.isValidEmail() else {
+                self.simpleAlert("Please enter a valid email", message: nil)
+                return
+            }
         }
         
         self.buttonSave.isEnabled = false
         
-        OrganizationService.shared.createMember(email: email, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
+        OrganizationService.shared.createMember(email: inputEmail.text, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
             
             if let member = member {
                 if let photo = self?.addedPhoto {
