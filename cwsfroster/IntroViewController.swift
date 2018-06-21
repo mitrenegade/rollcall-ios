@@ -1,5 +1,5 @@
 //
-//  IntroViewController+Utils.swift
+//  IntroViewController.swift
 //  cwsfroster
 //
 //  Created by Bobby Ren on 1/28/17.
@@ -10,7 +10,6 @@ import Foundation
 import Parse
 import Firebase
 
-// MARK: Swift notifications
 class IntroViewController: UIViewController {
     @IBOutlet weak var inputLogin: UITextField!
     @IBOutlet weak var inputPassword: UITextField!
@@ -21,9 +20,8 @@ class IntroViewController: UIViewController {
 
     @IBOutlet weak var constraintConfirmationHeight: NSLayoutConstraint!
     
-    var ready: [String: Any] = [:]
+    var alert: UIAlertController?
 
-//    var progress: MBProgressHUD?
     var isSignup: Bool = false
     var isFailed: Bool = false
     var isParseConversion: Bool = false
@@ -34,7 +32,7 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         
         refresh()
-        enableButtons()
+        enableButtons(true)
     }
     
     func refresh() {
@@ -43,20 +41,20 @@ class IntroViewController: UIViewController {
         inputConfirmation.text = nil
         inputLogin.superview?.layer.borderWidth = 1
         inputLogin.superview?.layer.borderColor = UIColor.lightGray.cgColor
-        inputPassword.superview.layer.borderWidth = 1
-        inputPassword.superview.layer.borderColor = UIColor.lightGray.cgColor
-        inputConfirmation.superview.layer.borderWidth = 1
-        inputConfirmation.superview.layer.borderColor = UIColor.lightGray.cgColor
+        inputPassword.superview?.layer.borderWidth = 1
+        inputPassword.superview?.layer.borderColor = UIColor.lightGray.cgColor
+        inputConfirmation.superview?.layer.borderWidth = 1
+        inputConfirmation.superview?.layer.borderColor = UIColor.lightGray.cgColor
 
         inputLogin.alpha = 1
         inputPassword.alpha = 1
         
         view.setNeedsUpdateConstraints()
-        UIView.animate(withDuration: .25, animations: {
+        UIView.animate(withDuration: 0.25, animations: {
             let title = self.isSignup ? "Sign up" : "Log in"
             self.buttonLoginSignup.setTitle(title, for: .normal)
             let title2 = self.isSignup ? "Back to login" : "New user?"
-            buttonSwitchMode.setTitle(title2, for: .normal)
+            self.buttonSwitchMode.setTitle(title2, for: .normal)
             
             self.view.layoutIfNeeded()
         })
@@ -76,8 +74,8 @@ class IntroViewController: UIViewController {
     }
     
     func enableButtons(_ enabled: Bool) {
-        buttonLoginSignup.alpha = enabled ? 1 : .5
-        buttonSwitchMode.alpha = enabled ? 1 : .5
+        buttonLoginSignup.alpha = enabled ? 1 : 0.5
+        buttonSwitchMode.alpha = enabled ? 1 : 0.5
         buttonLoginSignup.isEnabled = enabled
         buttonSwitchMode.isEnabled = enabled
     }
@@ -389,5 +387,85 @@ extension IntroViewController {
     func promptForUpgradeIfNeeded() {
         UpgradeService().promptForUpgradeIfNeeded(from: self)
     }
+}
 
+// MARK: - Progress
+extension IntroViewController {
+    func showProgress(_ title: String?) {
+        let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
+            self?.alert = nil
+        })
+        
+        present(alert, animated: true, completion: nil)
+        self.alert = alert
+    }
+    
+    func hideProgress() {
+        alert?.dismiss(animated: true, completion: nil)
+        alert = nil
+    }
+    
+    func updateProgress(percent: Double = 0) {
+        alert?.message = "\(percent * 100)%"
+    }
+}
+
+extension IntroViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: - Password reset
+extension IntroViewController {
+    @IBAction func didClickPasswordReset(_ sender: Any?) {
+        guard let user = PFUser.current() else { return }
+        let message: String
+        if let email = user.email, email.isValidEmail() {
+            message = "Sending a password reset link to \(email)"
+        } else {
+            message = "Please enter an email associated with your account"
+        }
+        let alert = UIAlertController(title: "Request password reset", message: "Please enter an email associated with your account.", preferredStyle: .alert)
+        
+        if user.email == nil {
+            alert.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "Email"
+            }
+        }
+        alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { (action) in
+            if let email = user.email, email.isValidEmail() {
+                self.resetPassword(email)
+            } else if let textField = alert.textFields?[0], let email = textField.text {
+                self.resetPassword(email)
+            } else {
+                // do nothing
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": user.email, "cancelled": true])
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    fileprivate func resetPassword(_ email: String) {
+        PFUser.requestPasswordResetForEmail(inBackground: email) { [weak self] (success, error) in
+            if success {
+                self?.simpleAlert("Password reset sent", message: "Please check your email for password reset instructions")
+                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": true])
+            } else if let error = error as? NSError {
+                if error.code == 125 {
+                    self?.simpleAlert("Invalid email", message: "Please enter a valid email to send a reset link")
+                } else if error.code == 205 {
+                    self?.simpleAlert("Invalid user", message: "No user was found with that email. Please create a new account.")
+                } else {
+                    self?.simpleAlert("Error resetting password", defaultMessage: "Please create a new account", error: error)
+                }
+                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": false, "error": error])
+            }
+        }
+    }
 }

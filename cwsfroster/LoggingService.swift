@@ -28,6 +28,9 @@ enum LoggingEvent: String {
     // upgrade
     case upgradeDisplayed
     case softUpgradeDismissed
+    
+    // password reset
+    case passwordReset
 
     case unknown
 }
