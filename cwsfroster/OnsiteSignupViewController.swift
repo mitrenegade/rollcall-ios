@@ -99,7 +99,7 @@ class OnsiteSignupViewController: UIViewController {
                     })
                 }
 
-                self?.notify("member:updated", object: nil, userInfo: nil)
+                self?.notify("member:created", object: nil, userInfo: nil)
                 ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
                 
                 // add attendance
