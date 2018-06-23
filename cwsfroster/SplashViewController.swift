@@ -44,11 +44,6 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-//        guard first else {
-//            return
-//        }
-//        first = false
-
         guard AuthService.isLoggedIn else {
             goHome()
             return
@@ -92,8 +87,16 @@ class SplashViewController: UIViewController {
             labelInfo.text = "Loading organization"
             OrganizationService.shared.startObservingOrganization()
             OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
-                print("org \(org)")
-                self.goHome()
+                if let url = org.photoUrl {
+                    self.logo.imageUrl = url
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.logo.alpha = 1
+                    }, completion: { (success) in
+                        self.goHome()
+                    })
+                } else {
+                    self.goHome()
+                }
                 self.disposeBag = DisposeBag() // stops listening
             }).disposed(by: disposeBag)
         }
