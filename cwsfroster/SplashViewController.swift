@@ -54,7 +54,7 @@ class SplashViewController: UIViewController {
             return
         }
         
-        if AuthService.isLoggedIn {
+        if firAuth.currentUser != nil {
             if let org = OrganizationService.shared.current.value {
                 goHome()
             } else {
@@ -362,9 +362,7 @@ extension SplashViewController {
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty, email.isValidEmail() {
                 self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
             } else {
-                self.simpleAlert("Please enter an email", message: "Your account must be migrated to an email login", completion: {
-                    self.promptForNewEmail(parseUsername: parseUsername)
-                })
+                self.promptForNewEmail(parseUsername: parseUsername)
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
