@@ -43,10 +43,10 @@ class SplashViewController: UIViewController {
         labelInfo.text = nil
 
         guard first else {
-            first = true
             return
         }
-        
+        first = false
+
         guard AuthService.isLoggedIn else {
             goHome()
             return
@@ -111,6 +111,8 @@ extension SplashViewController {
             return
         }
         
+        hideProgress()
+        
         print("Calling synchronize with parse")
         classNames = ["members", "practices", "attendances"]
         activityIndicator.startAnimating()
@@ -126,21 +128,9 @@ extension SplashViewController {
         
         Analytics.setUserProperty("true", forName: "ConvertedFromParse")
 
-        // make sure org exists
+        // if org does not exist, create org in firebase
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
-            labelInfo.text = "Creating organization"
-            let org = Organization()
-            org.name = user.username
-            org.saveInBackground(block: { [weak self] (success, error) in
-                if success {
-                    user.setObject(org, forKey: "organization")
-                    user.saveEventually()
-                    self?.synchronizeParseOrganization()
-                }
-                else {
-                    self?.synchronizeParseOrganization()
-                }
-            })
+            syncComplete()
             return
         }
         
@@ -155,26 +145,18 @@ extension SplashViewController {
             Organization.current = org
 
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                do {
-                    let data = try imageFile.getData()
-                    if let image = UIImage(data: data) {
-                        self?.logo.image = image
-                        UIView.animate(withDuration: 0.25, animations: {
-                            self?.logo.alpha = 1
-                        })
+                imageFile.getDataInBackground(block: { (data, error) in
+                    DispatchQueue.main.async {
+                        if let data = data, let image = UIImage(data: data) {
+                            self?.logo.image = image
+                            UIView.animate(withDuration: 0.25, animations: {
+                                self?.logo.alpha = 1
+                            })
+                        }
                         self?.syncParseObjects()
                     }
-                    else {
-                        print("no image")
-                        self?.syncParseObjects()
-                    }
-                }
-                catch {
-                    print("some error")
-                    self?.syncParseObjects()
-                }
-            }
-            else {
+                })
+            } else {
                 self?.syncParseObjects()
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
@@ -208,20 +190,19 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-                        do {
-                            let data = try photo.getData()
-                            if let image = UIImage(data: data) {
-                                FirebaseImageService.uploadImage(image: image, type: "member", uid: id, completion: { (url) in
-                                    if let url = url {
-                                        let asyncRef = firRef.child("members").child(id)
-                                        asyncRef.updateChildValues(["photoUrl":url])
-                                    }
-                                })
+                        photo.getDataInBackground(block: { (data, error) in
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    // upload must happen on main queue
+                                    FirebaseImageService.uploadImage(image: image, type: "member", uid: id, completion: { (url) in
+                                        if let url = url {
+                                            let asyncRef = firRef.child("members").child(id)
+                                            asyncRef.updateChildValues(["photoUrl":url])
+                                        }
+                                    })
+                                }
                             }
-                        }
-                        catch let error {
-                            print("some error \(error)")
-                        }
+                        })
                     }
 
                     if let status = member.status {
@@ -317,10 +298,12 @@ extension SplashViewController {
         labelInfo.text = nil
 
         // only create organization for a migration after all other objects have been migrated
-        guard let org = Organization.current, let orgId = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+        guard let userId = firAuth.currentUser?.uid else { return }
+        let orgId = Organization.current?.objectId ?? FirebaseAPIService.uniqueId()
         
         // make sure Firebase Organization exists
-        OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
+        let org: Organization? = Organization.current
+        OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org?.name ?? "My Organization \(orgId)", leftPowerUserFeedback: org?.leftPowerUserFeedback?.boolValue ?? false)
 
         OrganizationService.shared.startObservingOrganization()
         OrganizationService.shared.current.asObservable().filterNil().take(1).subscribe(onNext: { (org) in
@@ -328,24 +311,19 @@ extension SplashViewController {
         }).disposed(by: disposeBag)
         
         // save image to firebase
-        DispatchQueue.global().async {
-            if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                do {
-                    let data = try imageFile.getData()
-                    if let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            // upload must happen on main queue
-                            FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
-                                if let url = url, let currentOrg = OrganizationService.shared.current.value {
-                                    currentOrg.photoUrl = url
-                                }
-                            })
-                        }
+        if let imageFile: PFFile = Organization.current?.object(forKey: "logoData") as? PFFile {
+            imageFile.getDataInBackground(block: { (data, error) in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        // upload must happen on main queue
+                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
+                            if let url = url, let currentOrg = OrganizationService.shared.current.value {
+                                currentOrg.photoUrl = url
+                            }
+                        })
                     }
-                } catch let error {
-                    print("oops")
                 }
-            }
+            })
         }
     }
 }

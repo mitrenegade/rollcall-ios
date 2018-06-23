@@ -403,6 +403,11 @@ extension IntroViewController {
 // MARK: - Progress
 extension IntroViewController {
     func showProgress(_ title: String?) {
+        guard self.alert == nil else {
+            self.alert?.title = title
+            return
+        }
+        
         let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
             self?.alert = nil
