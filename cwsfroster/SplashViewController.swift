@@ -54,7 +54,7 @@ class SplashViewController: UIViewController {
             return
         }
         
-        if AuthService.isLoggedIn {
+        if firAuth.currentUser != nil {
             if let org = OrganizationService.shared.current.value {
                 goHome()
             } else {
@@ -81,13 +81,15 @@ class SplashViewController: UIViewController {
     }
     
     func didLogin(_ notification: NSNotification?) {
-        print("BOBBYTEST logged in, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
+        print("didLogin, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
         // update firebase object
         if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
             synchronizeParseOrganization()
             LoggingService.shared.log(event: .migrateSynchronizeParse, info: nil)
         } else {
             activityIndicator.startAnimating()
+            labelInfo.isHidden = false
+            labelInfo.text = "Loading organization"
             OrganizationService.shared.startObservingOrganization()
             OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
                 print("org \(org)")
@@ -161,6 +163,7 @@ extension SplashViewController {
                             })
                         }
                         self?.syncParseObjects()
+                        print("Synchronize: logo complete")
                     }
                 })
             } else {
@@ -241,6 +244,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "members")!)
             }
+            print("Synchronize: members complete")
             group.leave()
         })
 
@@ -273,6 +277,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "practices")!)
             }
+            print("Synchronize: events complete")
             group.leave()
         })
 
@@ -291,6 +296,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "attendances")!)
             }
+            print("Synchronize: attendances complete")
             group.leave()
         })
         
@@ -362,15 +368,14 @@ extension SplashViewController {
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty, email.isValidEmail() {
                 self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
             } else {
-                self.simpleAlert("Please enter an email", message: "Your account must be migrated to an email login", completion: {
-                    self.promptForNewEmail(parseUsername: parseUsername)
-                })
+                self.promptForNewEmail(parseUsername: parseUsername)
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
             LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
             PFUser.logOut()
             self.hideProgress()
+            self.goHome()
             return
         }))
         present(alert, animated: true, completion: nil)
@@ -398,14 +403,16 @@ extension SplashViewController {
             } else {
                 if let password = password, password == text {
                     self.createEmailUser(email: email, password: password, parseUsername: parseUsername)
+                } else {
+                    self.simpleAlert("Please try again", message: "Password and confirmation do not match", completion: {
+                        self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                    })
                 }
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
-            PFUser.logOut()
-            self.hideProgress()
-            return
+            LoggingService.shared.log(event: .createEmailUser, message: "password entry cancelled", info: ["parseUsername": parseUsername, "email": email])
+            self.promptForNewEmail(parseUsername: parseUsername)
         }))
         present(alert, animated: true, completion: nil)
     }
@@ -418,9 +425,18 @@ extension SplashViewController {
                     // email already taken; try logging in
                     self.loginToFirebase(email: email, password: password, completion: { (user, error) in
                         if let error = error as NSError? {
-                            self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                            if error.code == 17009 {
+                                // The password is invalid or the user does not have a password - account already in use
+                                self.simpleAlert("Could not sign in", message: "The email you chose is already in use. Please check your password or try a different email.", completion: {
+                                    self.promptForNewEmail(parseUsername: parseUsername)
+                                })
+                            } else {
+                                self.simpleAlert("Could not sign in", defaultMessage: nil, error: error, completion: {
+                                    self.startMigrationProcess()
+                                })
+                            }
                             self.hideProgress()
-                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername, "error": error.debugDescription, "errorCode": error.code])
                         } else {
                             self.synchronizeParseOrganization()
                             LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
@@ -433,8 +449,16 @@ extension SplashViewController {
                     }
                 } else {
                     self.hideProgress() {
-                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: {
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
+                            if error.code == 17026 {
+                                // password is too short - retry from password flow
+                                self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                            } else {
+                                // retry whole migration process
+                                self.startMigrationProcess()
+                            }
+                        })
                     }
                 }
             }

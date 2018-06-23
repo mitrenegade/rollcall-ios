@@ -45,7 +45,6 @@ for your awesome event</string>
                             </activityIndicatorView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-qx-1sF">
                                 <rect key="frame" x="16" y="499.5" width="343" height="21"/>
-                                <color key="backgroundColor" red="0.98524647949999999" green="0.99966174360000004" blue="0.23009261489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3SC-gK-gYd"/>
                                 </constraints>
