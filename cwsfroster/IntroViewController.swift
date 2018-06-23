@@ -289,7 +289,6 @@ extension IntroViewController {
                             LoggingService.shared.log(event: .createEmailUser, message: "create user failed", info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
                         } else {
                             self.goToPractices()
-                            // BOBBY TODO is this an extra?
                             if let user = user {
                                 self.createFirebaseUser(id: user.uid, username: parseUsername)
                             }
@@ -350,7 +349,7 @@ extension IntroViewController {
         }
         alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty {
-                LoggingService.shared.log(event: .createEmailUser, message: "create email user started", info: ["parseUsername": parseUsername, "email": email] )
+                LoggingService.shared.log(event: .createEmailUser, message: "migrate email user started", info: ["parseUsername": parseUsername, "email": email] )
                 self.createEmailUser(email: email, parseUsername: parseUsername)
                 self.showProgress("Migrating account...")
             } else {
