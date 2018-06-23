@@ -18,7 +18,7 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: RAImageView!
     
-    @IBOutlet weak var constraintActivityIndicatorToLogo: NSLayoutConstraint!
+    @IBOutlet weak var constraintLogoHeight: NSLayoutConstraint!
     
     var first: Bool = true
     
@@ -88,6 +88,7 @@ class SplashViewController: UIViewController {
             OrganizationService.shared.startObservingOrganization()
             OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
                 if let url = org.photoUrl {
+                    self.constraintLogoHeight.constant = 500
                     self.logo.imageUrl = url
                     UIView.animate(withDuration: 0.25, animations: {
                         self.logo.alpha = 1
@@ -95,6 +96,7 @@ class SplashViewController: UIViewController {
                         self.goHome()
                     })
                 } else {
+                    self.constraintLogoHeight.constant = 0
                     self.goHome()
                 }
                 self.disposeBag = DisposeBag() // stops listening
@@ -159,8 +161,8 @@ extension SplashViewController {
                 imageFile.getDataInBackground(block: { (data, error) in
                     DispatchQueue.main.async {
                         if let data = data, let image = UIImage(data: data) {
+                            self?.constraintLogoHeight.constant = 500
                             self?.logo.image = image
-                            self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultHigh
                             UIView.animate(withDuration: 0.25, animations: {
                                 self?.logo.alpha = 0 // 1
                             })
@@ -173,7 +175,7 @@ extension SplashViewController {
                 self?.syncParseObjects()
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
-                self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultLow
+                self?.constraintLogoHeight.constant = 0
             }
         }
     }
