@@ -398,6 +398,10 @@ extension SplashViewController {
             } else {
                 if let password = password, password == text {
                     self.createEmailUser(email: email, password: password, parseUsername: parseUsername)
+                } else {
+                    self.simpleAlert("Please try again", message: "Password and confirmation do not match", completion: {
+                        self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                    })
                 }
             }
         }))
