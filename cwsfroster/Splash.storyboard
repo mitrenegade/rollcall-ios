@@ -41,10 +41,11 @@ for your awesome event</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dIT-l8-rgW">
-                                <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                <rect key="frame" x="169" y="491.5" width="37" height="0.0"/>
                             </activityIndicatorView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZX3-qx-1sF">
-                                <rect key="frame" x="16" y="360" width="343" height="21"/>
+                                <rect key="frame" x="16" y="499.5" width="343" height="21"/>
+                                <color key="backgroundColor" red="0.98524647949999999" green="0.99966174360000004" blue="0.23009261489999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="3SC-gK-gYd"/>
                                 </constraints>
@@ -53,7 +54,10 @@ for your awesome event</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IMx-8w-oQ1" customClass="RAImageView" customModule="RollCall" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="510"/>
+                                <rect key="frame" x="0.0" y="183.5" width="375" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="Dxx-jN-3v8"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.094117647058823528" green="0.4823529411764706" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,12 +67,13 @@ for your awesome event</string>
                             <constraint firstItem="ALn-og-M8C" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" id="E4W-SC-vL8"/>
                             <constraint firstItem="ALn-og-M8C" firstAttribute="width" secondItem="fMS-lE-Vdm" secondAttribute="width" multiplier="1:3" id="HBP-7S-bMv"/>
                             <constraint firstItem="ZX3-qx-1sF" firstAttribute="trailing" secondItem="fMS-lE-Vdm" secondAttribute="trailingMargin" id="Hwl-ZJ-8I5"/>
-                            <constraint firstItem="IMx-8w-oQ1" firstAttribute="top" secondItem="iyY-un-avd" secondAttribute="bottom" constant="8" id="JI7-YK-5Da"/>
-                            <constraint firstItem="dIT-l8-rgW" firstAttribute="centerY" secondItem="fMS-lE-Vdm" secondAttribute="centerY" id="OUh-Oo-PYl"/>
+                            <constraint firstItem="dIT-l8-rgW" firstAttribute="top" secondItem="IMx-8w-oQ1" secondAttribute="bottom" priority="999" constant="8" id="NFO-Dh-lo6"/>
+                            <constraint firstItem="dIT-l8-rgW" firstAttribute="centerY" secondItem="fMS-lE-Vdm" secondAttribute="centerY" priority="998" id="OUh-Oo-PYl"/>
                             <constraint firstItem="pa8-Kv-w65" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leading" constant="8" id="P99-OB-KiZ"/>
                             <constraint firstItem="ZX3-qx-1sF" firstAttribute="leading" secondItem="fMS-lE-Vdm" secondAttribute="leadingMargin" id="Qzn-FJ-iVx"/>
+                            <constraint firstItem="IMx-8w-oQ1" firstAttribute="centerX" secondItem="fMS-lE-Vdm" secondAttribute="centerX" id="Rj4-Ci-zlI"/>
                             <constraint firstAttribute="trailing" secondItem="IMx-8w-oQ1" secondAttribute="trailing" id="VQg-Qg-me8"/>
-                            <constraint firstItem="pa8-Kv-w65" firstAttribute="top" secondItem="IMx-8w-oQ1" secondAttribute="bottom" constant="4" id="hE2-XS-diE"/>
+                            <constraint firstItem="IMx-8w-oQ1" firstAttribute="centerY" secondItem="fMS-lE-Vdm" secondAttribute="centerY" id="Yh8-LQ-rlX"/>
                             <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="pa8-Kv-w65" secondAttribute="bottom" id="haK-1J-Ylm"/>
                             <constraint firstAttribute="trailing" secondItem="pa8-Kv-w65" secondAttribute="trailing" constant="8" id="l6T-69-T2W"/>
                             <constraint firstItem="xya-mh-rLc" firstAttribute="top" secondItem="ALn-og-M8C" secondAttribute="bottom" constant="-4" id="ooR-10-kml"/>
@@ -78,6 +83,7 @@ for your awesome event</string>
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="dIT-l8-rgW" id="7KF-qJ-xST"/>
+                        <outlet property="constraintActivityIndicatorToLogo" destination="NFO-Dh-lo6" id="7nd-rB-mZp"/>
                         <outlet property="labelInfo" destination="ZX3-qx-1sF" id="CLt-Os-WBP"/>
                         <outlet property="logo" destination="IMx-8w-oQ1" id="jjg-iI-YGd"/>
                         <segue destination="pcj-lk-8d3" kind="presentation" identifier="toMain" id="zfy-lQ-7qq"/>

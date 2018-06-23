@@ -18,6 +18,8 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: RAImageView!
     
+    @IBOutlet weak var constraintActivityIndicatorToLogo: NSLayoutConstraint!
+    
     var first: Bool = true
     
     fileprivate var disposeBag = DisposeBag()
@@ -42,10 +44,10 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        guard first else {
-            return
-        }
-        first = false
+//        guard first else {
+//            return
+//        }
+//        first = false
 
         guard AuthService.isLoggedIn else {
             goHome()
@@ -53,7 +55,11 @@ class SplashViewController: UIViewController {
         }
         
         if AuthService.isLoggedIn {
-            self.didLogin(nil)
+            if let org = OrganizationService.shared.current.value {
+                goHome()
+            } else {
+                self.didLogin(nil)
+            }
         } else if PFUser.current() != nil {
             // synchronize
             startMigrationProcess()
@@ -149,8 +155,9 @@ extension SplashViewController {
                     DispatchQueue.main.async {
                         if let data = data, let image = UIImage(data: data) {
                             self?.logo.image = image
+                            self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultHigh
                             UIView.animate(withDuration: 0.25, animations: {
-                                self?.logo.alpha = 1
+                                self?.logo.alpha = 0 // 1
                             })
                         }
                         self?.syncParseObjects()
@@ -160,6 +167,7 @@ extension SplashViewController {
                 self?.syncParseObjects()
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
+                self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultLow
             }
         }
     }
