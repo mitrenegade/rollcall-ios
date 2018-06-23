@@ -372,7 +372,7 @@ extension SplashViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseLoggedIn": true, "parseUsername": parseUsername])
             PFUser.logOut()
             self.hideProgress()
             self.goHome()
@@ -411,7 +411,7 @@ extension SplashViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            LoggingService.shared.log(event: .createEmailUser, message: "password entry cancelled", info: ["parseUsername": parseUsername, "email": email])
+            LoggingService.shared.log(event: .createEmailUser, message: "password entry cancelled", info: ["parseLoggedIn": true, "parseUsername": parseUsername, "email": email])
             self.promptForNewEmail(parseUsername: parseUsername)
         }))
         present(alert, animated: true, completion: nil)
@@ -436,10 +436,10 @@ extension SplashViewController {
                                 })
                             }
                             self.hideProgress()
-                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername, "error": error.debugDescription, "errorCode": error.code])
+                            LoggingService.shared.log(event: .createEmailUser, message: "logged in migration failed", info: ["parseLoggedIn": true, "email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
                         } else {
                             self.synchronizeParseOrganization()
-                            LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
+                            LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for logged in migration", info: ["parseLoggedIn": true, "email": email, "parseUsername": parseUsername])
                         }
                     })
                 } else if error.code == 17006 {
@@ -450,7 +450,7 @@ extension SplashViewController {
                 } else {
                     self.hideProgress() {
                         self.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: {
-                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
+                            LoggingService.shared.log(event: .createEmailUser, message: "logged in migration failed", info: ["parseLoggedIn": true, "email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
                             if error.code == 17026 {
                                 // password is too short - retry from password flow
                                 self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
@@ -465,7 +465,7 @@ extension SplashViewController {
             else {
                 print("createUser results: \(String(describing: result))")
                 guard let user = result?.user else { return }
-                LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
+                LoggingService.shared.log(event: .createEmailUser, message: "create email user success on logged in migration", info: ["parseLoggedIn": true, "email": email, "username": parseUsername])
                 self.synchronizeParseOrganization()
             }
         })

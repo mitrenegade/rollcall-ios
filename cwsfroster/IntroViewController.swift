@@ -335,7 +335,6 @@ extension IntroViewController {
                 } else {
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
                     self.goToPractices()
-                    // BOBBY TODO is this extra?
                     self.createFirebaseUser(id: user.uid, username: parseUsername)
                 }
             }
