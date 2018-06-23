@@ -286,7 +286,7 @@ extension IntroViewController {
                         if let error = error as NSError? {
                             self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
                             self.hideProgress()
-                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                            LoggingService.shared.log(event: .createEmailUser, message: "create user failed", info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
                         } else {
                             self.goToPractices()
                             // BOBBY TODO is this an extra?
@@ -296,15 +296,23 @@ extension IntroViewController {
                             LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
                         }
                     })
-                } else if error.code == 17006 {
-                    // project not set up with email login. this should not happen anymore
-                    self.hideProgress() {
-                        self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
-                    }
                 } else {
+                    var message: String?
+                    var displayError: NSError?
+                    if error.code == 17006 {
+                        // project not set up with email login. this should not happen anymore
+                        message = "Please contact us and let us know this error code: \(error.code)"
+                        displayError = nil
+                    } else if error.code == 17007 { // email already taken
+                        message = nil
+                        displayError = error
+                    } else if error.code == 17008 {
+                        message = "Please enter a valid email address."
+                        displayError = nil
+                    }
                     self.hideProgress() {
-                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                        self.simpleAlert("Could not sign up", defaultMessage: message, error: displayError)
+                        LoggingService.shared.log(event: .createEmailUser, message: "other signup error", info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
                     }
                 }
                 self.enableButtons(true)
@@ -342,6 +350,7 @@ extension IntroViewController {
         }
         alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
             if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty {
+                LoggingService.shared.log(event: .createEmailUser, message: "create email user started", info: ["parseUsername": parseUsername, "email": email] )
                 self.createEmailUser(email: email, parseUsername: parseUsername)
                 self.showProgress("Migrating account...")
             } else {
@@ -484,7 +493,7 @@ extension IntroViewController {
                 } else {
                     self?.simpleAlert("Error resetting password", defaultMessage: "Please create a new account", error: error)
                 }
-                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": false, "error": error])
+                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": false, "error": error.localizedDescription, "errorCode": error.code])
             }
         }
     }
