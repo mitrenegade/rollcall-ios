@@ -24,6 +24,7 @@ enum LoggingEvent: String {
     case createEmailUser
     case migrateSynchronizeParse
     case createOrganization
+    case migrationFailed
     
     // upgrade
     case upgradeDisplayed

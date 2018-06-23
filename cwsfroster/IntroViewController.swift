@@ -289,6 +289,7 @@ extension IntroViewController {
                             LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
                         } else {
                             self.goToPractices()
+                            // BOBBY TODO is this an extra?
                             if let user = user {
                                 self.createFirebaseUser(id: user.uid, username: parseUsername)
                             }
@@ -297,8 +298,9 @@ extension IntroViewController {
                     })
                 } else if error.code == 17006 {
                     // project not set up with email login. this should not happen anymore
-                    self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
-                    self.hideProgress()
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    }
                 } else {
                     self.hideProgress() {
                         self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
@@ -326,6 +328,7 @@ extension IntroViewController {
                 } else {
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
                     self.goToPractices()
+                    // BOBBY TODO is this extra?
                     self.createFirebaseUser(id: user.uid, username: parseUsername)
                 }
             }

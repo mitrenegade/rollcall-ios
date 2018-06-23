@@ -22,6 +22,8 @@ class SplashViewController: UIViewController {
     
     fileprivate var disposeBag = DisposeBag()
     
+    var alert: UIAlertController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,12 +42,22 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        if first && AuthService.isLoggedIn {
-            self.didLogin(nil)
-        } else {
-            goHome()
+        guard first else {
+            first = true
+            return
         }
-        first = false
+        
+        guard AuthService.isLoggedIn else {
+            goHome()
+            return
+        }
+        
+        if AuthService.isLoggedIn {
+            self.didLogin(nil)
+        } else if PFUser.current() != nil {
+            // synchronize
+            startMigrationProcess()
+        }
     }
     
     func goHome() {
@@ -337,3 +349,154 @@ extension SplashViewController {
         }
     }
 }
+
+extension SplashViewController {
+    func startMigrationProcess() {
+        guard let username = PFUser.current()?.username else {
+            // this should never happen
+            LoggingService.shared.log(event: .migrationFailed, info: ["reason": "no parse username"])
+            simpleAlert("Login failed", message: "Please try logging in again")
+            PFUser.logOut()
+            return
+        }
+        if username.isValidEmail() {
+            promptForPassword(email: username, password: nil, parseUsername: username)
+        } else {
+            promptForNewEmail(parseUsername: username)
+        }
+    }
+    
+    // STEP 1: prompt for an email
+    func promptForNewEmail(parseUsername: String) {
+        let alert = UIAlertController(title: "Please add an email", message: "Your account must be associated with an email. Please enter your email for logging in.", preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Email"
+        }
+        alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
+            if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty, email.isValidEmail() {
+                self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+            } else {
+                self.simpleAlert("Please enter an email", message: "Your account must be migrated to an email login", completion: {
+                    self.promptForNewEmail(parseUsername: parseUsername)
+                })
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
+            PFUser.logOut()
+            self.hideProgress()
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
+    // Step 2: prompt for password
+    func promptForPassword(email: String, password: String?, parseUsername: String) {
+        let isConfirmation: Bool = password != nil
+        let title = isConfirmation ? "Confirm password" : "Please update your password"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = isConfirmation ? "Enter the same password again" : "Enter a new password"
+            textField.isSecureTextEntry = true
+        }
+        alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
+            guard let textField = alert.textFields?[0], let text = textField.text, !text.isEmpty else {
+                let message = isConfirmation ? "Confirmation must not be empty" : "Password must not be empty"
+                self.simpleAlert("Please try again", message: message, completion: {
+                    self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                })
+                return
+            }
+            if !isConfirmation {
+                self.promptForPassword(email: email, password: text, parseUsername: parseUsername)
+            } else {
+                if let password = password, password == text {
+                    self.createEmailUser(email: email, password: password, parseUsername: parseUsername)
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
+            PFUser.logOut()
+            self.hideProgress()
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func createEmailUser(email: String, password: String, parseUsername: String) {
+        firAuth.createUser(withEmail: email, password: password, completion: { (result, error) in
+            if let error = error as NSError? {
+                print("Error: \(error)")
+                if error.code == 17007 {
+                    // email already taken; try logging in
+                    self.loginToFirebase(email: email, password: password, completion: { (user, error) in
+                        if let error = error as NSError? {
+                            self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                            self.hideProgress()
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                        } else {
+                            self.synchronizeParseOrganization()
+                            LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
+                        }
+                    })
+                } else if error.code == 17006 {
+                    // project not set up with email login. this should not happen anymore
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    }
+                } else {
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                    }
+                }
+            }
+            else {
+                print("createUser results: \(String(describing: result))")
+                guard let user = result?.user else { return }
+                LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
+                self.synchronizeParseOrganization()
+            }
+        })
+    }
+    
+    fileprivate func loginToFirebase(email: String, password: String, completion:((_ user: User?, _ error: Error?) -> Void)?) {
+        firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (result, error) in
+            if let error = error {
+                completion?(nil, error)
+            }
+            else if let user = result?.user {
+                print("LoginLogout: LoginSuccess from email")
+                completion?(user, nil)
+            }
+        })
+    }
+}
+
+// MARK: - Progress
+extension SplashViewController {
+    func showProgress(_ title: String?) {
+        let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
+            self?.alert = nil
+        })
+        
+        present(alert, animated: true, completion: nil)
+        self.alert = alert
+    }
+    
+    func hideProgress(_ completion:(()->Void)? = nil) {
+        if alert == nil {
+            completion?()
+        } else {
+            alert?.dismiss(animated: true, completion: completion)
+            alert = nil
+        }
+    }
+    
+    func updateProgress(percent: Double = 0) {
+        alert?.message = "\(percent * 100)%"
+    }
+}
+
