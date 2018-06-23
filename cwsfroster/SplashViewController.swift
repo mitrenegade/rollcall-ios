@@ -81,7 +81,7 @@ class SplashViewController: UIViewController {
     }
     
     func didLogin(_ notification: NSNotification?) {
-        print("BOBBYTEST logged in, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
+        print("didLogin, convertedFromParse: \(notification?.userInfo?["convertedFromParse"])")
         // update firebase object
         if let userInfo = notification?.userInfo, let convertedFromParse = userInfo["convertedFromParse"] as? Bool, convertedFromParse {
             synchronizeParseOrganization()
@@ -428,7 +428,7 @@ extension SplashViewController {
                             if error.code == 17009 {
                                 // The password is invalid or the user does not have a password - account already in use
                                 self.simpleAlert("Could not sign in", message: "The email you chose is already in use. Please check your password or try a different email.", completion: {
-                                    self.startMigrationProcess()
+                                    self.promptForNewEmail(parseUsername: parseUsername)
                                 })
                             } else {
                                 self.simpleAlert("Could not sign in", defaultMessage: nil, error: error, completion: {
