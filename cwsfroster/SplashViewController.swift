@@ -163,6 +163,7 @@ extension SplashViewController {
                             })
                         }
                         self?.syncParseObjects()
+                        print("Synchronize: logo complete")
                     }
                 })
             } else {
@@ -243,6 +244,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "members")!)
             }
+            print("Synchronize: members complete")
             group.leave()
         })
 
@@ -275,6 +277,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "practices")!)
             }
+            print("Synchronize: events complete")
             group.leave()
         })
 
@@ -293,6 +296,7 @@ extension SplashViewController {
                 }
                 classNames.remove(at: classNames.index(of: "attendances")!)
             }
+            print("Synchronize: attendances complete")
             group.leave()
         })
         
@@ -371,6 +375,7 @@ extension SplashViewController {
             LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
             PFUser.logOut()
             self.hideProgress()
+            self.goHome()
             return
         }))
         present(alert, animated: true, completion: nil)
@@ -406,10 +411,8 @@ extension SplashViewController {
             }
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
-            PFUser.logOut()
-            self.hideProgress()
-            return
+            LoggingService.shared.log(event: .createEmailUser, message: "password entry cancelled", info: ["parseUsername": parseUsername, "email": email])
+            self.promptForNewEmail(parseUsername: parseUsername)
         }))
         present(alert, animated: true, completion: nil)
     }
