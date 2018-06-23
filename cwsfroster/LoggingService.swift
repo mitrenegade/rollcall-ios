@@ -50,8 +50,9 @@ class LoggingService: NSObject {
         }
         
         let id = FirebaseAPIService.uniqueId()
-        let ref = loggingRef.child(eventString).child(id)
+        let ref = loggingRef.child(id)
         var params = info ?? [:]
+        params["title"] = eventString
         params["timestamp"] = Date().timeIntervalSince1970
         if let userId = AuthService.currentUser?.uid {
             params["userId"] = userId
