@@ -88,6 +88,8 @@ class SplashViewController: UIViewController {
             LoggingService.shared.log(event: .migrateSynchronizeParse, info: nil)
         } else {
             activityIndicator.startAnimating()
+            labelInfo.isHidden = false
+            labelInfo.text = "Loading organization"
             OrganizationService.shared.startObservingOrganization()
             OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
                 print("org \(org)")
@@ -431,8 +433,16 @@ extension SplashViewController {
                     }
                 } else {
                     self.hideProgress() {
-                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error, completion: {
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername, "error": error.localizedDescription, "errorCode": error.code])
+                            if error.code == 17026 {
+                                // password is too short - retry from password flow
+                                self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                            } else {
+                                // retry whole migration process
+                                self.startMigrationProcess()
+                            }
+                        })
                     }
                 }
             }
