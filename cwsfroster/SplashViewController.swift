@@ -18,7 +18,7 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: RAImageView!
     
-    @IBOutlet weak var constraintActivityIndicatorToLogo: NSLayoutConstraint!
+    @IBOutlet weak var constraintLogoHeight: NSLayoutConstraint!
     
     var first: Bool = true
     
@@ -43,11 +43,6 @@ class SplashViewController: UIViewController {
         activityIndicator.stopAnimating()
         labelInfo.isHidden = true
         labelInfo.text = nil
-
-//        guard first else {
-//            return
-//        }
-//        first = false
 
         guard AuthService.isLoggedIn else {
             goHome()
@@ -92,8 +87,18 @@ class SplashViewController: UIViewController {
             labelInfo.text = "Loading organization"
             OrganizationService.shared.startObservingOrganization()
             OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
-                print("org \(org)")
-                self.goHome()
+                if let url = org.photoUrl {
+                    self.constraintLogoHeight.constant = 500
+                    self.logo.imageUrl = url
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self.logo.alpha = 1
+                    }, completion: { (success) in
+                        self.goHome()
+                    })
+                } else {
+                    self.constraintLogoHeight.constant = 0
+                    self.goHome()
+                }
                 self.disposeBag = DisposeBag() // stops listening
             }).disposed(by: disposeBag)
         }
@@ -156,8 +161,8 @@ extension SplashViewController {
                 imageFile.getDataInBackground(block: { (data, error) in
                     DispatchQueue.main.async {
                         if let data = data, let image = UIImage(data: data) {
+                            self?.constraintLogoHeight.constant = 500
                             self?.logo.image = image
-                            self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultHigh
                             UIView.animate(withDuration: 0.25, animations: {
                                 self?.logo.alpha = 0 // 1
                             })
@@ -170,7 +175,7 @@ extension SplashViewController {
                 self?.syncParseObjects()
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
-                self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultLow
+                self?.constraintLogoHeight.constant = 0
             }
         }
     }
