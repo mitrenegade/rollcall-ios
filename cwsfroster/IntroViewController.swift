@@ -1,5 +1,5 @@
 //
-//  IntroViewController+Utils.swift
+//  IntroViewController.swift
 //  cwsfroster
 //
 //  Created by Bobby Ren on 1/28/17.
@@ -10,8 +10,76 @@ import Foundation
 import Parse
 import Firebase
 
-// MARK: Swift notifications
-extension IntroViewController {
+class IntroViewController: UIViewController {
+    @IBOutlet weak var inputLogin: UITextField!
+    @IBOutlet weak var inputPassword: UITextField!
+    @IBOutlet weak var inputConfirmation: UITextField!
+    
+    @IBOutlet weak var buttonLoginSignup: UIButton!
+    @IBOutlet weak var buttonSwitchMode: UIButton!
+
+    @IBOutlet weak var constraintConfirmationHeight: NSLayoutConstraint!
+    
+    var alert: UIAlertController?
+
+    var isSignup: Bool = false
+    var isFailed: Bool = false
+    var isParseConversion: Bool = false
+
+    @IBOutlet weak var tutorialView: TutorialScrollView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        refresh()
+        enableButtons(true)
+    }
+    
+    func refresh() {
+        constraintConfirmationHeight.constant = isSignup ? 40 : 0
+        inputPassword.text = nil
+        inputConfirmation.text = nil
+        inputLogin.superview?.layer.borderWidth = 1
+        inputLogin.superview?.layer.borderColor = UIColor.lightGray.cgColor
+        inputPassword.superview?.layer.borderWidth = 1
+        inputPassword.superview?.layer.borderColor = UIColor.lightGray.cgColor
+        inputConfirmation.superview?.layer.borderWidth = 1
+        inputConfirmation.superview?.layer.borderColor = UIColor.lightGray.cgColor
+
+        inputLogin.alpha = 1
+        inputPassword.alpha = 1
+        
+        view.setNeedsUpdateConstraints()
+        UIView.animate(withDuration: 0.25, animations: {
+            let title = self.isSignup ? "Sign up" : "Log in"
+            self.buttonLoginSignup.setTitle(title, for: .normal)
+            let title2 = self.isSignup ? "Back to login" : "New user?"
+            self.buttonSwitchMode.setTitle(title2, for: .normal)
+            
+            self.view.layoutIfNeeded()
+        })
+    }
+    
+    func loadTutorial() {
+        tutorialView.setTutorialPages(["IntroTutorial0", "IntroTutorial1", "IntroTutorial2", "IntroTutorial3"])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if PFUser.current() == nil {
+            loadTutorial()
+        }
+        
+        promptForUpgradeIfNeeded()
+    }
+    
+    func enableButtons(_ enabled: Bool) {
+        buttonLoginSignup.alpha = enabled ? 1 : 0.5
+        buttonSwitchMode.alpha = enabled ? 1 : 0.5
+        buttonLoginSignup.isEnabled = enabled
+        buttonSwitchMode.isEnabled = enabled
+    }
+    
     func notifyForLogInSuccess() {
         self.notify(.LoginSuccess, object: nil, userInfo: ["convertedFromParse": isParseConversion])
     }
@@ -121,20 +189,24 @@ extension IntroViewController {
                     // 0) not an email login. try parse
                     self.loginToParse(email: email, password: password, completion: { (success, error) in
                         if success {
-                            self.promptForNewEmail(parseUsername: email)
                             self.isParseConversion = true
+                            self.hideProgress() {
+                                self.promptForNewEmail(parseUsername: email)
+                            }
                         } else {
-                            self.simpleAlert("Could not log in", message: "Please try again")
-                            self.hideProgress()
-                            self.enableButtons(true)
+                            self.hideProgress() {
+                                self.simpleAlert("Could not log in", message: "Please try again")
+                                self.enableButtons(true)
+                            }
                             return
                         }
                     })
                 }
                 else if error.code == 17009 { // 1) invalid firebase password
-                    self.simpleAlert("Invalid password", message: "Please try again")
-                    self.hideProgress()
-                    self.enableButtons(true)
+                    self.hideProgress() {
+                        self.simpleAlert("Invalid password", message: "Please try again")
+                        self.enableButtons(true)
+                    }
                     return
                 }
                 else if error.code == 17011 { // 2) invalid firebase user
@@ -155,9 +227,10 @@ extension IntroViewController {
                     })
                 }
                 else { // unknown error
-                    self.simpleAlert("Could not login", message: "Unknown error: \(error)")
-                    self.hideProgress()
-                    self.enableButtons(true)
+                    self.hideProgress() {
+                        self.simpleAlert("Could not login", message: "Unknown error: \(error)")
+                        self.enableButtons(true)
+                    }
                 }
             } else {
                 self.goToPractices()
@@ -216,6 +289,7 @@ extension IntroViewController {
                             LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
                         } else {
                             self.goToPractices()
+                            // BOBBY TODO is this an extra?
                             if let user = user {
                                 self.createFirebaseUser(id: user.uid, username: parseUsername)
                             }
@@ -224,12 +298,14 @@ extension IntroViewController {
                     })
                 } else if error.code == 17006 {
                     // project not set up with email login. this should not happen anymore
-                    self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
-                    self.hideProgress()
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    }
                 } else {
-                    self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                    LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
-                    self.hideProgress()
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                    }
                 }
                 self.enableButtons(true)
             }
@@ -239,17 +315,20 @@ extension IntroViewController {
                 if self.isSignup {
                     // create org
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on signup", info: ["email": email])
-                    self.promptForNewOrgName(completion: { (name) in
-                        let userId = user.uid
-                        let orgName = name ?? user.email ?? "unnamed"
-                        self.createFirebaseUser(id: user.uid, username: parseUsername)
-                        OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-                        
-                        self.goToPractices()
-                    })
+                    self.hideProgress() {
+                        self.promptForNewOrgName(completion: { (name) in
+                            let userId = user.uid
+                            let orgName = name ?? user.email ?? "unnamed"
+                            self.createFirebaseUser(id: user.uid, username: parseUsername)
+                            OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+                            
+                            self.goToPractices()
+                        })
+                    }
                 } else {
                     LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
                     self.goToPractices()
+                    // BOBBY TODO is this extra?
                     self.createFirebaseUser(id: user.uid, username: parseUsername)
                 }
             }
@@ -319,5 +398,94 @@ extension IntroViewController {
     func promptForUpgradeIfNeeded() {
         UpgradeService().promptForUpgradeIfNeeded(from: self)
     }
+}
 
+// MARK: - Progress
+extension IntroViewController {
+    func showProgress(_ title: String?) {
+        guard self.alert == nil else {
+            self.alert?.title = title
+            return
+        }
+        
+        let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
+            self?.alert = nil
+        })
+        
+        present(alert, animated: true, completion: nil)
+        self.alert = alert
+    }
+    
+    func hideProgress(_ completion:(()->Void)? = nil) {
+        if alert == nil {
+            completion?()
+        } else {
+            alert?.dismiss(animated: true, completion: completion)
+            alert = nil
+        }
+    }
+    
+    func updateProgress(percent: Double = 0) {
+        alert?.message = "\(percent * 100)%"
+    }
+}
+
+extension IntroViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+// MARK: - Password reset
+extension IntroViewController {
+    @IBAction func didClickPasswordReset(_ sender: Any?) {
+        guard let user = PFUser.current() else { return }
+        let message: String
+        if let email = user.email, email.isValidEmail() {
+            message = "Sending a password reset link to \(email)"
+        } else {
+            message = "Please enter an email associated with your account"
+        }
+        let alert = UIAlertController(title: "Request password reset", message: "Please enter an email associated with your account.", preferredStyle: .alert)
+        
+        if user.email == nil {
+            alert.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "Email"
+            }
+        }
+        alert.addAction(UIAlertAction(title: "Reset", style: .default, handler: { (action) in
+            if let email = user.email, email.isValidEmail() {
+                self.resetPassword(email)
+            } else if let textField = alert.textFields?[0], let email = textField.text {
+                self.resetPassword(email)
+            } else {
+                // do nothing
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": user.email, "cancelled": true])
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    fileprivate func resetPassword(_ email: String) {
+        PFUser.requestPasswordResetForEmail(inBackground: email) { [weak self] (success, error) in
+            if success {
+                self?.simpleAlert("Password reset sent", message: "Please check your email for password reset instructions")
+                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": true])
+            } else if let error = error as? NSError {
+                if error.code == 125 {
+                    self?.simpleAlert("Invalid email", message: "Please enter a valid email to send a reset link")
+                } else if error.code == 205 {
+                    self?.simpleAlert("Invalid user", message: "No user was found with that email. Please create a new account.")
+                } else {
+                    self?.simpleAlert("Error resetting password", defaultMessage: "Please create a new account", error: error)
+                }
+                LoggingService.shared.log(event: .passwordReset, message: nil, info: ["email": email, "success": false, "error": error])
+            }
+        }
+    }
 }

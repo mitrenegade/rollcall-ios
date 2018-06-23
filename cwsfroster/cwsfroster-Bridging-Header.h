@@ -10,10 +10,10 @@
 #define cwsfroster_Bridging_Header_h
 
 #import "AppDelegate.h"
-#import "IntroViewController.h"
 #import "SettingsViewController.h"
 #import "PracticeEditViewController.h"
 #import "PracticesTableViewController.h"
+#import "TutorialScrollView.h"
 #import "Util.h"
 
 #endif /* cwsfroster_Bridging_Header_h */

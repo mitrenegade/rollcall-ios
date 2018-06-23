@@ -18,9 +18,13 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var labelInfo: UILabel!
     @IBOutlet weak var logo: RAImageView!
     
+    @IBOutlet weak var constraintActivityIndicatorToLogo: NSLayoutConstraint!
+    
     var first: Bool = true
     
     fileprivate var disposeBag = DisposeBag()
+    
+    var alert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +44,26 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        if first && AuthService.isLoggedIn {
-            self.didLogin(nil)
-        } else {
+//        guard first else {
+//            return
+//        }
+//        first = false
+
+        guard AuthService.isLoggedIn else {
             goHome()
+            return
         }
-        first = false
+        
+        if AuthService.isLoggedIn {
+            if let org = OrganizationService.shared.current.value {
+                goHome()
+            } else {
+                self.didLogin(nil)
+            }
+        } else if PFUser.current() != nil {
+            // synchronize
+            startMigrationProcess()
+        }
     }
     
     func goHome() {
@@ -99,6 +117,8 @@ extension SplashViewController {
             return
         }
         
+        hideProgress()
+        
         print("Calling synchronize with parse")
         classNames = ["members", "practices", "attendances"]
         activityIndicator.startAnimating()
@@ -114,21 +134,9 @@ extension SplashViewController {
         
         Analytics.setUserProperty("true", forName: "ConvertedFromParse")
 
-        // make sure org exists
+        // if org does not exist, create org in firebase
         guard let orgPointer: PFObject = user.object(forKey: "organization") as? PFObject else {
-            labelInfo.text = "Creating organization"
-            let org = Organization()
-            org.name = user.username
-            org.saveInBackground(block: { [weak self] (success, error) in
-                if success {
-                    user.setObject(org, forKey: "organization")
-                    user.saveEventually()
-                    self?.synchronizeParseOrganization()
-                }
-                else {
-                    self?.synchronizeParseOrganization()
-                }
-            })
+            syncComplete()
             return
         }
         
@@ -143,29 +151,23 @@ extension SplashViewController {
             Organization.current = org
 
             if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                do {
-                    let data = try imageFile.getData()
-                    if let image = UIImage(data: data) {
-                        self?.logo.image = image
-                        UIView.animate(withDuration: 0.25, animations: {
-                            self?.logo.alpha = 1
-                        })
+                imageFile.getDataInBackground(block: { (data, error) in
+                    DispatchQueue.main.async {
+                        if let data = data, let image = UIImage(data: data) {
+                            self?.logo.image = image
+                            self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultHigh
+                            UIView.animate(withDuration: 0.25, animations: {
+                                self?.logo.alpha = 0 // 1
+                            })
+                        }
                         self?.syncParseObjects()
                     }
-                    else {
-                        print("no image")
-                        self?.syncParseObjects()
-                    }
-                }
-                catch {
-                    print("some error")
-                    self?.syncParseObjects()
-                }
-            }
-            else {
+                })
+            } else {
                 self?.syncParseObjects()
                 self?.logo.alpha = 0;
                 self?.logo.image = nil
+                self?.constraintActivityIndicatorToLogo.priority = UILayoutPriorityDefaultLow
             }
         }
     }
@@ -196,20 +198,19 @@ extension SplashViewController {
                         params["notes"] = notes
                     }
                     if let photo = member.photo {
-                        do {
-                            let data = try photo.getData()
-                            if let image = UIImage(data: data) {
-                                FirebaseImageService.uploadImage(image: image, type: "member", uid: id, completion: { (url) in
-                                    if let url = url {
-                                        let asyncRef = firRef.child("members").child(id)
-                                        asyncRef.updateChildValues(["photoUrl":url])
-                                    }
-                                })
+                        photo.getDataInBackground(block: { (data, error) in
+                            if let data = data, let image = UIImage(data: data) {
+                                DispatchQueue.main.async {
+                                    // upload must happen on main queue
+                                    FirebaseImageService.uploadImage(image: image, type: "member", uid: id, completion: { (url) in
+                                        if let url = url {
+                                            let asyncRef = firRef.child("members").child(id)
+                                            asyncRef.updateChildValues(["photoUrl":url])
+                                        }
+                                    })
+                                }
                             }
-                        }
-                        catch let error {
-                            print("some error \(error)")
-                        }
+                        })
                     }
 
                     if let status = member.status {
@@ -305,10 +306,12 @@ extension SplashViewController {
         labelInfo.text = nil
 
         // only create organization for a migration after all other objects have been migrated
-        guard let org = Organization.current, let orgId = org.objectId, let userId = firAuth.currentUser?.uid else { return }
+        guard let userId = firAuth.currentUser?.uid else { return }
+        let orgId = Organization.current?.objectId ?? FirebaseAPIService.uniqueId()
         
         // make sure Firebase Organization exists
-        OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org.name, leftPowerUserFeedback: org.leftPowerUserFeedback?.boolValue ?? false)
+        let org: Organization? = Organization.current
+        OrganizationService.shared.createOrUpdateOrganization(orgId: orgId, ownerId: userId, name: org?.name ?? "My Organization \(orgId)", leftPowerUserFeedback: org?.leftPowerUserFeedback?.boolValue ?? false)
 
         OrganizationService.shared.startObservingOrganization()
         OrganizationService.shared.current.asObservable().filterNil().take(1).subscribe(onNext: { (org) in
@@ -316,24 +319,170 @@ extension SplashViewController {
         }).disposed(by: disposeBag)
         
         // save image to firebase
-        DispatchQueue.global().async {
-            if let imageFile: PFFile = org.object(forKey: "logoData") as? PFFile {
-                do {
-                    let data = try imageFile.getData()
-                    if let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            // upload must happen on main queue
-                            FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
-                                if let url = url, let currentOrg = OrganizationService.shared.current.value {
-                                    currentOrg.photoUrl = url
-                                }
-                            })
-                        }
+        if let imageFile: PFFile = Organization.current?.object(forKey: "logoData") as? PFFile {
+            imageFile.getDataInBackground(block: { (data, error) in
+                if let data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        // upload must happen on main queue
+                        FirebaseImageService.uploadImage(image: image, type: "organization", uid: orgId, completion: { (url) in
+                            if let url = url, let currentOrg = OrganizationService.shared.current.value {
+                                currentOrg.photoUrl = url
+                            }
+                        })
                     }
-                } catch let error {
-                    print("oops")
                 }
-            }
+            })
         }
     }
 }
+
+extension SplashViewController {
+    func startMigrationProcess() {
+        guard let username = PFUser.current()?.username else {
+            // this should never happen
+            LoggingService.shared.log(event: .migrationFailed, info: ["reason": "no parse username"])
+            simpleAlert("Login failed", message: "Please try logging in again")
+            PFUser.logOut()
+            return
+        }
+        if username.isValidEmail() {
+            promptForPassword(email: username, password: nil, parseUsername: username)
+        } else {
+            promptForNewEmail(parseUsername: username)
+        }
+    }
+    
+    // STEP 1: prompt for an email
+    func promptForNewEmail(parseUsername: String) {
+        let alert = UIAlertController(title: "Please add an email", message: "Your account must be associated with an email. Please enter your email for logging in.", preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = "Email"
+        }
+        alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
+            if let textField = alert.textFields?[0], let email = textField.text, !email.isEmpty, email.isValidEmail() {
+                self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+            } else {
+                self.simpleAlert("Please enter an email", message: "Your account must be migrated to an email login", completion: {
+                    self.promptForNewEmail(parseUsername: parseUsername)
+                })
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
+            PFUser.logOut()
+            self.hideProgress()
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+
+    // Step 2: prompt for password
+    func promptForPassword(email: String, password: String?, parseUsername: String) {
+        let isConfirmation: Bool = password != nil
+        let title = isConfirmation ? "Confirm password" : "Please update your password"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        alert.addTextField { (textField : UITextField!) -> Void in
+            textField.placeholder = isConfirmation ? "Enter the same password again" : "Enter a new password"
+            textField.isSecureTextEntry = true
+        }
+        alert.addAction(UIAlertAction(title: "Next", style: .default, handler: { (action) in
+            guard let textField = alert.textFields?[0], let text = textField.text, !text.isEmpty else {
+                let message = isConfirmation ? "Confirmation must not be empty" : "Password must not be empty"
+                self.simpleAlert("Please try again", message: message, completion: {
+                    self.promptForPassword(email: email, password: nil, parseUsername: parseUsername)
+                })
+                return
+            }
+            if !isConfirmation {
+                self.promptForPassword(email: email, password: text, parseUsername: parseUsername)
+            } else {
+                if let password = password, password == text {
+                    self.createEmailUser(email: email, password: password, parseUsername: parseUsername)
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            LoggingService.shared.log(event: .createEmailUser, message: "create email user cancelled", info: ["parseUsername": parseUsername])
+            PFUser.logOut()
+            self.hideProgress()
+            return
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func createEmailUser(email: String, password: String, parseUsername: String) {
+        firAuth.createUser(withEmail: email, password: password, completion: { (result, error) in
+            if let error = error as NSError? {
+                print("Error: \(error)")
+                if error.code == 17007 {
+                    // email already taken; try logging in
+                    self.loginToFirebase(email: email, password: password, completion: { (user, error) in
+                        if let error = error as NSError? {
+                            self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                            self.hideProgress()
+                            LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                        } else {
+                            self.synchronizeParseOrganization()
+                            LoggingService.shared.log(event: .createEmailUser, message: "user reused same email for new migration", info: ["email": email, "parseUsername": parseUsername])
+                        }
+                    })
+                } else if error.code == 17006 {
+                    // project not set up with email login. this should not happen anymore
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: "Please contact us and let us know this error code: \(error.code)", error: nil)
+                    }
+                } else {
+                    self.hideProgress() {
+                        self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
+                        LoggingService.shared.log(event: .createEmailUser, message: error.debugDescription, info: ["email": email, "parseUsername": parseUsername])
+                    }
+                }
+            }
+            else {
+                print("createUser results: \(String(describing: result))")
+                guard let user = result?.user else { return }
+                LoggingService.shared.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email, "username": parseUsername])
+                self.synchronizeParseOrganization()
+            }
+        })
+    }
+    
+    fileprivate func loginToFirebase(email: String, password: String, completion:((_ user: User?, _ error: Error?) -> Void)?) {
+        firAuth.signIn(withEmail: email, password: password, completion: { [weak self] (result, error) in
+            if let error = error {
+                completion?(nil, error)
+            }
+            else if let user = result?.user {
+                print("LoginLogout: LoginSuccess from email")
+                completion?(user, nil)
+            }
+        })
+    }
+}
+
+// MARK: - Progress
+extension SplashViewController {
+    func showProgress(_ title: String?) {
+        let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
+            self?.alert = nil
+        })
+        
+        present(alert, animated: true, completion: nil)
+        self.alert = alert
+    }
+    
+    func hideProgress(_ completion:(()->Void)? = nil) {
+        if alert == nil {
+            completion?()
+        } else {
+            alert?.dismiss(animated: true, completion: completion)
+            alert = nil
+        }
+    }
+    
+    func updateProgress(percent: Double = 0) {
+        alert?.message = "\(percent * 100)%"
+    }
+}
+

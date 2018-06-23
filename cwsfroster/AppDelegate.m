@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
-#import "IntroViewController.h"
 
 @implementation AppDelegate
 
