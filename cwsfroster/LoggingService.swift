@@ -28,8 +28,9 @@ enum LoggingEvent: String {
 
     // settings
     case updateOrganizationName = "UpdateOrganizationName"
-    case updateOrganizationEmail = "UpdateOrganizationEmail"
     case updateOrganizationLogo = "UpdateOrganizationLogo"
+    case updateOrganizationEmail = "UpdateOrganizationEmail"
+    case updateOrganizationPassword = "UpdateOrganizationPassword"
     
     case unknown
 }
