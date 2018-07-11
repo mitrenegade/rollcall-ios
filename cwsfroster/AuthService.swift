@@ -7,21 +7,18 @@
 //
 
 import UIKit
-import Parse
 import Firebase
 
 class AuthService: NSObject {
     class func logout() {
         try! firAuth.signOut()
-        PFUser.logOut()
-        Organization.reset()
         
         OrganizationService.shared.onLogout()
     }
     
     // TODO: use loginState
     class var isLoggedIn: Bool {
-        return PFUser.current() != nil || firAuth.currentUser != nil
+        return firAuth.currentUser != nil
     }
     
     class var currentUser: User? {

@@ -86,21 +86,21 @@ extension UpgradeService {
                 } else {
                     UIApplication.shared.openURL(url)
                 }
-                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
+                LoggingService.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
                 self.softUpgradeDismissed(neverShowAgain: false)
             }))
         }
         if shouldShowSoftUpgrade {
             alert.addAction(UIAlertAction(title: "Do not show again", style: .default, handler: { (action) in
                 self.softUpgradeDismissed(neverShowAgain: true)
-                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
+                LoggingService.log(event: .softUpgradeDismissed, info: ["action": "neverShowAgain"])
             }))
             alert.addAction(UIAlertAction(title: "Later", style: .cancel, handler: { (action) in
                 self.softUpgradeDismissed(neverShowAgain: false)
-                LoggingService.shared.log(event: .softUpgradeDismissed, info: ["action": "later"])
+                LoggingService.log(event: .softUpgradeDismissed, info: ["action": "later"])
             }))
         }
         controller.present(alert, animated: true)
-        LoggingService.shared.log(event: .upgradeDisplayed, info: ["type": shouldShowForceUpgrade ? "force" : "soft"])
+        LoggingService.log(event: .upgradeDisplayed, info: ["type": shouldShowForceUpgrade ? "force" : "soft"])
     }
 }

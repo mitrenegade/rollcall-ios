@@ -8,7 +8,6 @@
 
 #import "PracticesTableViewController.h"
 #import "Util.h"
-#import "SettingsViewController.h"
 
 @interface PracticesTableViewController ()
 
@@ -39,10 +38,6 @@
     [self reloadPractices];
 
     [self listenFor:@"practice:info:updated" action:@selector(reloadPractices)];
-    
-    if ([[Organization current] shouldPromptForPowerUserFeedback]) {
-        [self promptForPowerUserFeedback];
-    }
 }
 #pragma mark - Navigation
 
@@ -67,20 +62,5 @@
         [controller setDelegate:self];
     }
 }
-
-
-/*
--(void)didEditPractice {
-    self.title = self.practice.title;
-    
-    [self notify:@"practice:info:updated"];
-    
-    // update all attendances
-    for (Attendance *attendance in self.practice.attendances) {
-        attendance.date = self.practice.date;
-        [attendance saveOrUpdateToParseWithCompletion:nil];
-    }
-}
- */
 
 @end

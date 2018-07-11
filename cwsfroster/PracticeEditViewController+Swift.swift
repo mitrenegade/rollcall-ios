@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Parse
 import UIKit
 
 extension PracticeEditViewController {
@@ -59,11 +58,11 @@ extension PracticeEditViewController {
         let notes = createPracticeInfo?["notes"] as? String
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: org.id) { [weak self] (event, error) in
             if let event = event {
-                ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
+                LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
                 self?.delegate.didCreatePractice()
                 completion(event)
             } else {
-                print("Create practice error \(error)")
+                print("Create practice error \(error.debugDescription)")
             }
         }
     }
@@ -149,23 +148,15 @@ extension PracticeEditViewController: UITextViewDelegate {
     func dismissKeyboard() {
         view.endEditing(true)
 
-        ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text ?? "", params: ["for": "practice"], error: nil)
+        LoggingService.log(type: "NotesEntered", message: self.inputNotes.text ?? "", info: ["for": "practice"])
     }
     
     // MARK: - keyboard notifications
     func keyboardWillShow(_ n: Notification) {
-        let size = (n.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
-        
-        // these values come from the position/offsets of the current textfields
-        // offsets bring the top of the email field to the top of the screen
-//        self.constraintBottomOffset.constant = size.height
-//        self.constraintTopOffset.constant = -size.height
         self.view.layoutIfNeeded()
     }
     
     func keyboardWillHide(_ n: Notification) {
-//        self.constraintBottomOffset.constant = 0 // by default, from iboutlet settings
-//        self.constraintTopOffset.constant = 0
         self.view.layoutIfNeeded()
     }
     
@@ -195,7 +186,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
                 practice?.date = date
                 createPracticeInfo?["date"] = date
                 if let practice = practice {
-                    ParseLog.log(typeString: "PracticeDateChanged", title: practice.id, message: nil, params: ["date": date], error: nil)
+                    LoggingService.log(type: "PracticeDateChanged", info: ["id": practice.id, "date": date])
                 }
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
@@ -231,7 +222,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
                 }
                 self.activityOverlay.isHidden = false
                 
-                if let practice = self.practice {
+                if self.practice != nil {
                     self.composeEmail()
                 } else {
                     self.createPractice { (event) in
@@ -301,13 +292,13 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.id, "subject": title, "body": message], error: nil)
+        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.current.value?.id ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true) { 
             if result == .cancelled || result == .failed {
-                self.simpleAlert("Attendance record cancelled", defaultMessage: "The event summary was not sent", error: error as? NSError)
+                self.simpleAlert("Attendance record cancelled", defaultMessage: "The event summary was not sent", error: error as NSError?)
             }
             else if result == .sent {
                 self.simpleAlert("Attendance record sent", message: nil)

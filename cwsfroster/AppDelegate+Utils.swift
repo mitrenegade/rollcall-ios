@@ -8,27 +8,10 @@
 //  Move AppDelegate files over until we get rid of core data
 
 import Foundation
-import Parse
 import Firebase
 
 extension AppDelegate {
-    @objc func registerParse() {
-        let configuration = ParseClientConfiguration {
-            $0.applicationId = PARSE_APP_ID
-            $0.clientKey = PARSE_CLIENT_KEY
-            //$0.server = LOCAL_TEST ? PARSE_SERVER_URL_LOCAL : PARSE_SERVER_URL
-            $0.server = PARSE_SERVER
-        }
-        
-        Parse.initialize(with: configuration)
-        /*
-        Review.registerSubclass()
-        Call.registerSubclass()
-        User.registerSubclass()
-        PaymentMethod.registerSubclass()
-        */
-    }
-    
+
     @objc func registerFirebase() {
         // Firebase
         // Do not include infolist in project: https://firebase.google.com/docs/configure/#reliable-analytics
