@@ -12,10 +12,6 @@
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
-		8E1F63F21E46D330004E8723 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63F11E46D330004E8723 /* Member.swift */; };
-		8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FA1E46E06A004E8723 /* Organization.swift */; };
-		8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FC1E46E072004E8723 /* Practice.swift */; };
-		8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63FE1E46E079004E8723 /* Attendance.swift */; };
 		8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */; };
 		8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64021E478627004E8723 /* PracticesTableViewController+Swift.swift */; };
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
@@ -118,10 +114,6 @@
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
-		8E1F63F11E46D330004E8723 /* Member.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
-		8E1F63FA1E46E06A004E8723 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
-		8E1F63FC1E46E072004E8723 /* Practice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
-		8E1F63FE1E46E079004E8723 /* Attendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticeEditViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E1F64021E478627004E8723 /* PracticesTableViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticesTableViewController+Swift.swift"; sourceTree = "<group>"; };
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
@@ -286,7 +278,6 @@
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C68338FC20A42AF700080BCE /* Parse */,
 				C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */,
 				C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */,
 				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
@@ -524,17 +515,6 @@
 			name = "Random Drawing";
 			sourceTree = "<group>";
 		};
-		C68338FC20A42AF700080BCE /* Parse */ = {
-			isa = PBXGroup;
-			children = (
-				8E1F63FA1E46E06A004E8723 /* Organization.swift */,
-				8E1F63F11E46D330004E8723 /* Member.swift */,
-				8E1F63FC1E46E072004E8723 /* Practice.swift */,
-				8E1F63FE1E46E079004E8723 /* Attendance.swift */,
-			);
-			name = Parse;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -675,10 +655,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-rollcall/Pods-rollcall-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
-				"${BUILT_PRODUCTS_DIR}/Parse/Parse.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/RACameraHelper/RACameraHelper.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -689,10 +667,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Parse.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RACameraHelper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -719,7 +695,6 @@
 				8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
-				8E1F63FB1E46E06A004E8723 /* Organization.swift in Sources */,
 				8E1F64031E478627004E8723 /* PracticesTableViewController+Swift.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
@@ -730,7 +705,6 @@
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */,
 				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
-				8E1F63F21E46D330004E8723 /* Member.swift in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
@@ -742,7 +716,6 @@
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
-				8E1F63FF1E46E079004E8723 /* Attendance.swift in Sources */,
 				8E9D891F20CB130900AD382F /* EventService.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
@@ -757,7 +730,6 @@
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
-				8E1F63FD1E46E072004E8723 /* Practice.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 import RxSwift
 import RxOptional
 import Firebase

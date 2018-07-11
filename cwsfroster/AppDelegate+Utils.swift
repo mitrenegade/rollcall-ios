@@ -8,7 +8,6 @@
 //  Move AppDelegate files over until we get rid of core data
 
 import Foundation
-import Parse
 import Firebase
 
 extension AppDelegate {

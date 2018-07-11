@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Parse
 
 enum TestAlertType: String {
     case GenericTestAlert

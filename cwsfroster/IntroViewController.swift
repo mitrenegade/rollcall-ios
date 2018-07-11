@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import Parse
-import Firebase
 
 class IntroViewController: UIViewController {
     @IBOutlet weak var inputLogin: UITextField!
