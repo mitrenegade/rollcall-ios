@@ -145,15 +145,8 @@ extension IntroViewController {
             print("Invalid password")
             return
         }
-        // tries firebase login.
-        // 0) if firebase fails because username is not an email, try parse login then prompt for an email
-        // 1) if firebase fails because of invalid password, retries
-        // 3) if parse login is successful, creates firebase user
-        // 4) if parse login is unsuccessful because of invalid password, retries
-        // 5) if parse login is unsuccessful because of invalid user, creates firebase user
         enableButtons(false)
         showProgress("Logging in...")
-        
         firAuth.signIn(withEmail: email, password: password, completion: { (result, error) in
             if let error = error as NSError? {
                 print("Error: \(error)")
