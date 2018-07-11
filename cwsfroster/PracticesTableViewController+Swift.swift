@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 var _practices: [FirebaseEvent]?
-var _oldPractices: [Practice]?
 extension PracticesTableViewController {
     func setupSettingsNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
@@ -87,7 +86,7 @@ extension PracticesTableViewController: UITableViewDataSource {
 extension PracticesTableViewController {
     func reloadPractices() {
         OrganizationService.shared.events { [weak self] (events, error) in
-            if let error = error as? NSError, let reason = error.userInfo["reason"] as? String, reason == "no org" {
+            if let error = error as NSError?, let reason = error.userInfo["reason"] as? String, reason == "no org" {
                 // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
                 print("uh oh this shouldn't happen")
             } else {
@@ -120,24 +119,25 @@ extension PracticesTableViewController: PracticeEditDelegate {
     }
 
     func deletePracticeAt(indexPath: NSIndexPath) {
-        guard let practices = Organization.current?.practices else {
+        guard let practices = _practices else {
             self.tableView.reloadData()
             return
         }
-        let practice = practices[indexPath.row]
-        practice.deleteInBackground { (success, error) in
-            if success {
-                Organization.queryForPractices(completion: { (practices, error) in
-                    self.tableView.reloadData()
-                    self.notify("practice:deleted", object: nil, userInfo: nil)
-                    ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
-                })
-            }
-            else {
-                self.tableView.reloadData()
-                ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
-            }
-        }
+        let practice = practices[indexPath.row] as FirebaseEvent
+        // BOBBY TODO DELETE EVENT
+//        practice.deleteInBackground { (success, error) in
+//            if success {
+//                Organization.queryForPractices(completion: { (practices, error) in
+//                    self.tableView.reloadData()
+//                    self.notify("practice:deleted", object: nil, userInfo: nil)
+//                    ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
+//                })
+//            }
+//            else {
+//                self.tableView.reloadData()
+//                ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
+//            }
+//        }
     }
 
 }
@@ -151,10 +151,6 @@ extension PracticesTableViewController {
         alert.addAction(UIAlertAction(title: "Send Feedback", style: .cancel, handler: { (action) in
             if let textField = alert.textFields?.first, let text = textField.text {
                 ParseLog.log(typeString: "PowerUserFeedback", title: nil, message: text, params: nil, error: nil)
-                Organization.current?.leftPowerUserFeedback = NSNumber(booleanLiteral: true)
-                Organization.current?.saveInBackground(block: { (success, error) in
-                    print("saved feedback \(success) \(error)")
-                })
             }
         }))
         alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { (action) in
