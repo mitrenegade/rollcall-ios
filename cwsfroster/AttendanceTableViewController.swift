@@ -88,7 +88,7 @@ extension AttendanceTableViewController {
 
         if indexPath.section == 0 {
             performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
-            ParseLog.log(typeString: "OnsiteSignupClicked", title: nil, message: nil, params: nil, error: nil)
+            LoggingService.log(type: "OnsiteSignupClicked")
             return
         }
         

@@ -59,15 +59,12 @@ class OrganizationService: NSObject {
         current.value = nil
     }
     
-    func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool, migrated: Bool = false) {
+    func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool) {
         let ref = firRef.child("organizations").child(orgId)
         var params: [String: Any] = ["owner": ownerId]
         params["leftPowerUserFeedback"] = leftPowerUserFeedback
         if let name = name {
             params["name"] = name
-        }
-        if migrated {
-            params["migratedFromParse"] = true
         }
         ref.updateChildValues(params)
     }

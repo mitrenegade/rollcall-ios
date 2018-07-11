@@ -111,7 +111,7 @@ extension SettingsViewController {
             OrganizationService.shared.current.value?.name = name
 
             self.simpleAlert("Organization updated", message: "Organization name has been changed to \(name)")
-            LoggingService.shared.log(event: .updateOrganizationName, info: ["title": orgId ?? "", "name": name])
+            LoggingService.log(event: .updateOrganizationName, info: ["title": orgId ?? "", "name": name])
             self.notify("organization:name:changed", object: nil, userInfo: nil)
         }
     }
@@ -126,10 +126,10 @@ extension SettingsViewController {
             AuthService.currentUser?.updateEmail(to: newEmail, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update login", defaultMessage: "Your login could not be updated to \(newEmail)", error: error)
-                    LoggingService.shared.log(event: .updateOrganizationEmail, info: ["error": error.localizedDescription])
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["error": error.localizedDescription])
                 } else {
                     self.simpleAlert("Email login updated", message: "Your new login and email is \(newEmail)")
-                    LoggingService.shared.log(event: .updateOrganizationEmail, info: ["title": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["title": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
                 }
             })
         }
@@ -227,7 +227,7 @@ extension SettingsViewController: CameraHelperDelegate {
             if let url = url {
                 org.photoUrl = url
                 print("FirebaseImageService: uploading org photo complete with url \(url)")
-                LoggingService.shared.log(event: .updateOrganizationLogo, info: ["title": org.id])
+                LoggingService.log(event: .updateOrganizationLogo, info: ["title": org.id])
             } else {
                 // failure
                 self?.simpleAlert("Upload failed", message: "There was an error uploading a new logo.")

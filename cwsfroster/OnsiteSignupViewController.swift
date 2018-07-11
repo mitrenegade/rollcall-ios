@@ -92,14 +92,14 @@ class OnsiteSignupViewController: UIViewController {
 //                        alert.dismiss(animated: true, completion: nil)
                         if let url = url {
                             member.photoUrl = url
-                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "Onsite", params: nil, error: nil)
+                            LoggingService.log(type: "MemberPhoto", info: ["id": member.id, "source": "Onsite"])
                             print("FirebaseImageService: uploading member photo complete with url \(url)")
                         }
                     })
                 }
 
                 self?.notify("member:created", object: nil, userInfo: nil)
-                ParseLog.log(typeString: "OnsiteSignup", title: member.id, message: nil, params: ["photo": self?.addedPhoto != nil], error: nil)
+                LoggingService.log(type: "OnsiteSignup", info: ["id": member.id, "photo": self?.addedPhoto != nil])
                 
                 // add attendance
                 self?.practice?.addAttendance(for: member)

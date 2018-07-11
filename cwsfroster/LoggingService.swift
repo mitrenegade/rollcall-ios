@@ -7,12 +7,6 @@
 //
 
 import UIKit
-
-enum TestAlertType: String {
-    case GenericTestAlert
-}
-
-import UIKit
 import Firebase
 
 fileprivate var singleton: LoggingService?
@@ -48,7 +42,7 @@ class LoggingService: NSObject {
         let eventString: String
         switch event {
         case .unknown:
-            eventString = info?["title"] as? String ?? "unknown"
+            eventString = info?["type"] as? String ?? "unknown"
         default:
             eventString = event.rawValue
         }
@@ -73,66 +67,41 @@ class LoggingService: NSObject {
         Analytics.logEvent(eventString, parameters: info)
     }
     
-    func log(event: LoggingEvent, message: String? = nil, info: [String: Any]?, error: NSError? = nil) {
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
-        if !TESTING {
-            return
-        }
-        #endif
-        var params: [String: Any] = info ?? [:]
-        if let message = message {
-            params["message"] = message
-        }
-        if let error = error {
-            params["error"] = "\(error)"
-        }
-        writeLog(event: event, info: params)
-    }
-}
-
-class ParseLog: NSObject {
-    class func log(type: TestAlertType, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
-        log(typeString: type.rawValue, title: title, message: message, params: params, error: error)
-    }
-
     // compatible with ObjC
-    class func log(typeString: String, title: String?, message: String?, params: NSDictionary?, error: NSError?) {
+    class func log(type: String, message: String? = nil, info: [String: Any]? = nil, error: NSError? = nil) {
+        
+        var params: [String: Any]?
+        if let info = info {
+            params = info
+        } else {
+            params = [String: Any]()
+        }
+        params?["type"] = type
+        LoggingService.log(event: .unknown, message: message, info: params, error: error)
+    }
+    
+    class func log(event: LoggingEvent, message: String? = nil, info: [String: Any]? = nil, error: NSError? = nil) {
         #if (arch(i386) || arch(x86_64)) && os(iOS)
         if !TESTING {
             return
         }
         #endif
 
-        var info: [String: Any]?
-        if let params = params as? [String: Any], let error = error {
-            info = params
-            info?["error"] = error
-        } else if let params = params as? [String: Any] {
-            info = params
-        } else if let error = error {
-            info = ["error": error]
+        var params: [String: Any]?
+        if let info = info {
+            params = info
         } else {
-            info = [String: Any]()
+            params = [String: Any]()
         }
-        info?["title"] = typeString
-        LoggingService.shared.log(event: .unknown, message: message, info: info, error: error)
-    }
-}
-
-extension UIViewController {
-
-    func testAlert(_ title: String, message: String?, type: TestAlertType, error: Error? = nil, params: [String: Any]? = nil, completion: (() -> Void)? = nil) {
         
-        var paramsDict: NSDictionary? = nil
-        if let params = params {
-            paramsDict = NSDictionary(dictionary: params)
+        if let error = error {
+            params?["errorCode"] = error.code
+            params?["error"] = error.localizedDescription
         }
-        let err: NSError? = error as? NSError
-        
-        ParseLog.log(type: type, title: title, message: message, params: paramsDict, error: err)
-        
-        if TESTING == true {
-            self.simpleAlert(title, defaultMessage: "Error type: \(type.rawValue) \(message ?? "")", error: err, completion: completion)
+        if let message = message {
+            params?["message"] = message
         }
+        
+        LoggingService.shared.writeLog(event: event, info: params)
     }
 }

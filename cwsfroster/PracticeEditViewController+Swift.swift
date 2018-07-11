@@ -58,7 +58,7 @@ extension PracticeEditViewController {
         let notes = createPracticeInfo?["notes"] as? String
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: org.id) { [weak self] (event, error) in
             if let event = event {
-                ParseLog.log(typeString: "PracticeCreated", title: event.id, message: nil, params: nil, error: nil)
+                LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
                 self?.delegate.didCreatePractice()
                 completion(event)
             } else {
@@ -148,7 +148,7 @@ extension PracticeEditViewController: UITextViewDelegate {
     func dismissKeyboard() {
         view.endEditing(true)
 
-        ParseLog.log(typeString: "NotesEntered", title: nil, message: self.inputNotes.text ?? "", params: ["for": "practice"], error: nil)
+        LoggingService.log(type: "NotesEntered", message: self.inputNotes.text ?? "", info: ["for": "practice"])
     }
     
     // MARK: - keyboard notifications
@@ -186,7 +186,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
                 practice?.date = date
                 createPracticeInfo?["date"] = date
                 if let practice = practice {
-                    ParseLog.log(typeString: "PracticeDateChanged", title: practice.id, message: nil, params: ["date": date], error: nil)
+                    LoggingService.log(type: "PracticeDateChanged", info: ["id": practice.id, "date": date])
                 }
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             }
@@ -292,7 +292,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": OrganizationService.shared.current.value?.id ?? "unknown", "event": self.practice.id, "subject": title, "body": message], error: nil)
+        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.current.value?.id ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

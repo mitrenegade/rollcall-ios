@@ -38,7 +38,7 @@ class RandomDrawingViewController: UIViewController {
         
         inputNumber.text = "\(members?.count ?? 0)"
         
-        ParseLog.log(typeString: "RandomDrawingScreen", title: nil, message: nil, params: nil, error: nil)
+        LoggingService.log(type: "RandomDrawingScreen")
     }
     
     fileprivate func reloadData() {
@@ -59,12 +59,12 @@ class RandomDrawingViewController: UIViewController {
     
     @IBAction func switchChanged(_ sender: UISwitch?) {
         dismissKeyboard()
-        ParseLog.log(typeString: "RandomDrawingRepeatsSet", title: nil, message: nil, params: ["repeats": repeats], error: nil)
+        LoggingService.log(type: "RandomDrawingRepeatsSet", info: ["repeats": repeats])
     }
     
     @IBAction func didClickInfo(_ sender: UIButton?) {
         simpleAlert("What does Repeat mean?", message: "If Repeat is selected, the same person can be picked multiple times. Otherwise, the pool of names gets smaller each time, and you can only draw the same number of times as attendees.")
-        ParseLog.log(typeString: "RepeatInfoButtonClicked", title: nil, message: nil, params: nil, error: nil)
+        LoggingService.log(type: "RepeatInfoButtonClicked")
     }
     
     @IBAction func didClickDoDrawing(_ sender: UIButton?) {
@@ -78,7 +78,7 @@ class RandomDrawingViewController: UIViewController {
             return
         }
         
-        ParseLog.log(typeString: "RandomDrawingDone", title: nil, message: nil, params: ["repeats": repeats, "totalCount": totalCount], error: nil)
+        LoggingService.log(type: "RandomDrawingDone", info: ["repeats": repeats, "totalCount": totalCount])
         
         let pool = members[0..<members.count]
         drawingResults = nil
@@ -104,7 +104,7 @@ class RandomDrawingViewController: UIViewController {
         let title = "Cannot do drawing"
         let message = "There are currently no attendees at this event"
         simpleAlert(title, message: message)
-        ParseLog.log(typeString: "RandomDrawingFailed", title: nil, message: nil, params: nil, error: nil)
+        LoggingService.log(type: "RandomDrawingFailed")
     }
 }
 

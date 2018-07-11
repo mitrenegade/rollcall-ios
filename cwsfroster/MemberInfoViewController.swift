@@ -126,11 +126,11 @@ class MemberInfoViewController: UIViewController {
         if isCreatingMember {
             OrganizationService.shared.createMember(email: email, name: name, notes: notes, status: status) { [weak self] (member, error) in
                 
-                var params = [String:Any]()
                 if let member = member {
+                    var params: [String:Any] = ["id": member.id]
                     if let name = member.name { params["name"] = name }
                     if let email = member.email { params["email"] = email }
-                    ParseLog.log(typeString: "MemberCreated", title: member.id, message: nil, params: params as NSDictionary?, error: nil)
+                    LoggingService.log(type: "MemberCreated", info: params)
 
                     if let photo = self?.newPhoto {
                         member.photo = photo
@@ -147,7 +147,8 @@ class MemberInfoViewController: UIViewController {
                                 member.photoUrl = url
                                 print("FirebaseImageService: uploading member photo complete with url \(url)")
                             }
-                            ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                            params["source"] = "CreateMember"
+                            LoggingService.log(type: "MemberPhoto", info: params)
                             self?.delegate?.didCreateMember(member)
                             self?.close()
                         })
@@ -162,10 +163,10 @@ class MemberInfoViewController: UIViewController {
                 }
             }
         } else if let member = member {
-            var params = [String:Any]()
+            var params: [String:Any] = ["id": member.id]
             if let name = self.member?.name { params["name"] = name }
             if let email = self.member?.email { params["email"] = email }
-            ParseLog.log(typeString: "MemberUpdated", title: self.member?.id, message: nil, params: params as NSDictionary?, error: nil)
+            LoggingService.log(type: "MemberUpdated", info: params)
             if let photo = newPhoto {
                 member.photo = photo
                 let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
@@ -182,7 +183,8 @@ class MemberInfoViewController: UIViewController {
                         member.photoUrl = url
                         print("FirebaseImageService: uploading member photo complete with url \(url)")
                     }
-                    ParseLog.log(typeString: "MemberPhoto", title: member.id, message: "CreateMember", params: nil, error: nil)
+                    params["source"] = "UpdateMember"
+                    LoggingService.log(type: "MemberPhoto", info: params)
                     self?.delegate?.didUpdateMember(member)
                     self?.close()
                 })
@@ -202,7 +204,7 @@ extension MemberInfoViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let member = self.member else { return }
         if textField == inputName {
-            if let text = textField.text, text.characters.count > 0 {
+            if let text = textField.text, !text.isEmpty {
                 member.name = text
             }
             else {
@@ -210,7 +212,7 @@ extension MemberInfoViewController: UITextFieldDelegate {
             }
         }
         else if textField == inputEmail {
-            if let text = textField.text, text.characters.count > 0 {
+            if let text = textField.text, !text.isEmpty {
                 if text.isValidEmail() {
                     member.email = text
                 }

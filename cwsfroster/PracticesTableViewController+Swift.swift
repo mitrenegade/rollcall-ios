@@ -130,12 +130,12 @@ extension PracticesTableViewController: PracticeEditDelegate {
 //                Organization.queryForPractices(completion: { (practices, error) in
 //                    self.tableView.reloadData()
 //                    self.notify("practice:deleted", object: nil, userInfo: nil)
-//                    ParseLog.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
+//                    LoggingService.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
 //                })
 //            }
 //            else {
 //                self.tableView.reloadData()
-//                ParseLog.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
+//                LoggingService.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
 //            }
 //        }
     }
@@ -150,20 +150,20 @@ extension PracticesTableViewController {
         }
         alert.addAction(UIAlertAction(title: "Send Feedback", style: .cancel, handler: { (action) in
             if let textField = alert.textFields?.first, let text = textField.text {
-                ParseLog.log(typeString: "PowerUserFeedback", title: nil, message: text, params: nil, error: nil)
+                LoggingService.log(type: "PowerUserFeedback", message: text)
             }
         }))
         alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { (action) in
             let deferDate = Date(timeIntervalSinceNow: 3600*24*7)
             UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
             UserDefaults.standard.synchronize()
-            ParseLog.log(typeString: "PowerUserFeedbackLater", title: nil, message: nil, params: nil, error: nil)
+            LoggingService.log(type: "PowerUserFeedbackLater")
         }))
         alert.addAction(UIAlertAction(title: "No Thanks", style: .default, handler: { (action) in
             let deferDate = Date(timeIntervalSinceNow: 3600*24*7*52)
             UserDefaults.standard.set(deferDate, forKey: powerUserPromptDeferDate)
             UserDefaults.standard.synchronize()
-            ParseLog.log(typeString: "PowerUserFeedbackNever", title: nil, message: nil, params: nil, error: nil)
+            LoggingService.log(type: "PowerUserFeedbackNever")
         }))
         self.present(alert, animated: true, completion: nil)
     }
