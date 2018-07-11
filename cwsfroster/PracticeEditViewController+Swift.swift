@@ -62,7 +62,7 @@ extension PracticeEditViewController {
                 self?.delegate.didCreatePractice()
                 completion(event)
             } else {
-                print("Create practice error \(error)")
+                print("Create practice error \(error.debugDescription)")
             }
         }
     }
@@ -153,18 +153,10 @@ extension PracticeEditViewController: UITextViewDelegate {
     
     // MARK: - keyboard notifications
     func keyboardWillShow(_ n: Notification) {
-        let size = (n.userInfo![UIKeyboardFrameBeginUserInfoKey] as AnyObject).cgRectValue.size
-        
-        // these values come from the position/offsets of the current textfields
-        // offsets bring the top of the email field to the top of the screen
-//        self.constraintBottomOffset.constant = size.height
-//        self.constraintTopOffset.constant = -size.height
         self.view.layoutIfNeeded()
     }
     
     func keyboardWillHide(_ n: Notification) {
-//        self.constraintBottomOffset.constant = 0 // by default, from iboutlet settings
-//        self.constraintTopOffset.constant = 0
         self.view.layoutIfNeeded()
     }
     
@@ -230,7 +222,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
                 }
                 self.activityOverlay.isHidden = false
                 
-                if let practice = self.practice {
+                if self.practice != nil {
                     self.composeEmail()
                 } else {
                     self.createPractice { (event) in
@@ -300,13 +292,13 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": Organization.current?.objectId ?? "unknown", "event": self.practice.id, "subject": title, "body": message], error: nil)
+        ParseLog.log(typeString: "EmailEventDetails", title: nil, message: nil, params: ["org": OrganizationService.shared.current.value?.id ?? "unknown", "event": self.practice.id, "subject": title, "body": message], error: nil)
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         self.dismiss(animated: true) { 
             if result == .cancelled || result == .failed {
-                self.simpleAlert("Attendance record cancelled", defaultMessage: "The event summary was not sent", error: error as? NSError)
+                self.simpleAlert("Attendance record cancelled", defaultMessage: "The event summary was not sent", error: error as NSError?)
             }
             else if result == .sent {
                 self.simpleAlert("Attendance record sent", message: nil)
