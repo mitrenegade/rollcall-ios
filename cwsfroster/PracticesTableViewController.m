@@ -39,10 +39,6 @@
     [self reloadPractices];
 
     [self listenFor:@"practice:info:updated" action:@selector(reloadPractices)];
-    
-    if ([[Organization current] shouldPromptForPowerUserFeedback]) {
-        [self promptForPowerUserFeedback];
-    }
 }
 #pragma mark - Navigation
 

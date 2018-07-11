@@ -39,7 +39,7 @@
 		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
 		8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */; };
 		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
-		8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */; };
+		8EE005BB1E3DA42200272DC0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
@@ -75,7 +75,6 @@
 		9E98DB4F19B2EA5B006D81FC /* checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4D19B2EA5B006D81FC /* checked@2x.png */; };
 		9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */; };
 		9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */; };
-		9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA0995019B0F448007BC1FD /* SettingsViewController.m */; };
 		9EA0995319B0FCBA007BC1FD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EA0995219B0FCBA007BC1FD /* MessageUI.framework */; };
 		9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */; };
 		9EC0F50819A4CEFF003441AC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC0F50719A4CEFF003441AC /* Social.framework */; };
@@ -141,7 +140,7 @@
 		8EE005B31E3D955200272DC0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
-		8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SettingsViewController+Utils.swift"; sourceTree = "<group>"; };
+		8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
 		9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-paddle@2x.png"; sourceTree = "<group>"; };
@@ -184,8 +183,6 @@
 		9E98DB4E19B2EA5B006D81FC /* unchecked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unchecked@2x.png"; sourceTree = "<group>"; };
 		9E99F8C6193D7074004EB5C1 /* PracticesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticesTableViewController.h; sourceTree = "<group>"; };
 		9E99F8C7193D7074004EB5C1 /* PracticesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticesTableViewController.m; sourceTree = "<group>"; };
-		9EA0994F19B0F448007BC1FD /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		9EA0995019B0F448007BC1FD /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		9EA0995219B0FCBA007BC1FD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		9EA7D2C919995B7B003C5D7C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9EA7D2CA19995B7B003C5D7C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -436,9 +433,7 @@
 				C645B8FC1E5A7CE50001A119 /* Random Drawing */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */,
 				C6D9631320C21CA700317C0C /* ShellViewController.swift */,
-				9EA0994F19B0F448007BC1FD /* SettingsViewController.h */,
-				9EA0995019B0F448007BC1FD /* SettingsViewController.m */,
-				8EE005BA1E3DA42200272DC0 /* SettingsViewController+Utils.swift */,
+				8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 			);
 			path = cwsfroster;
@@ -704,12 +699,11 @@
 				C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */,
-				8EE005BB1E3DA42200272DC0 /* SettingsViewController+Utils.swift in Sources */,
+				8EE005BB1E3DA42200272DC0 /* SettingsViewController.swift in Sources */,
 				9E99F8C8193D7074004EB5C1 /* PracticesTableViewController.m in Sources */,
 				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
 				8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */,
-				9EA0995119B0F448007BC1FD /* SettingsViewController.m in Sources */,
 				8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
 				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */,

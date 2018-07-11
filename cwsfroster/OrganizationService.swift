@@ -19,6 +19,11 @@ class OrganizationService: NSObject {
     
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
+    
+    @objc func currentOrganizationName() -> String? {
+        return current.value?.name
+    }
+    
     func startObservingOrganization() {
         guard !OFFLINE_MODE else {
             let org = FirebaseOfflineParser.shared.offlineOrganization()

@@ -32,6 +32,10 @@ enum LoggingEvent: String {
     // password reset
     case passwordReset
 
+    // settings
+    case updateOrganizationName = "UpdateOrganizationName"
+    case updateOrganizationEmail = "UpdateOrganizationEmail"
+    
     case unknown
 }
 
