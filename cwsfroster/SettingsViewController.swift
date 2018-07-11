@@ -61,7 +61,8 @@ extension SettingsViewController {
             simpleAlert("About RollCall", message: message)
             
         case .organization:
-            guard let title = OrganizationService.shared.current.value?.name else { return }
+            guard let org =  OrganizationService.shared.current.value else { return }
+            let title = org.name ?? "Your nrganization"
             let message = "Please select from the following options"
             let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Change name", style: .default, handler: { (action) in
@@ -72,10 +73,20 @@ extension SettingsViewController {
                 self.goToUpdateLogo()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
+            present(alert, animated: true, completion: nil)
         case .account:
-            self.goToUpdateEmail()
-
+            guard let org =  OrganizationService.shared.current.value else { return }
+            let title = org.name ?? "Your organization"
+            let message = "Please select from the following options"
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Change email", style: .default, handler: { (action) in
+                self.goToUpdateEmail()
+            }))
+            alert.addAction(UIAlertAction(title: "Change password", style: .default, handler: { (action) in
+                self.goToUpdatePassword(nil)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            present(alert, animated: true, completion: nil)
         case .feedback:
             goToFeedback()
             
@@ -118,7 +129,6 @@ extension SettingsViewController {
     }
     
     func goToUpdateEmail() {
-        // do this?
         guard let email = AuthService.currentUser?.email else { return }
         let title = "Your current login is \(email)"
         let message = "Please enter new login email"
@@ -127,10 +137,36 @@ extension SettingsViewController {
             AuthService.currentUser?.updateEmail(to: newEmail, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update login", defaultMessage: "Your login could not be updated to \(newEmail)", error: error)
-                    LoggingService.log(event: .updateOrganizationEmail, info: ["error": error.localizedDescription])
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.current.value?.id ?? ""], error: error)
                 } else {
                     self.simpleAlert("Email login updated", message: "Your new login and email is \(newEmail)")
-                    LoggingService.log(event: .updateOrganizationEmail, info: ["title": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
+                }
+            })
+        }
+    }
+
+    func goToUpdatePassword(_ entered: String?) {
+        let title = entered == nil ? "Update password" : "Confirm password"
+        let message = entered == nil ? "Please enter new password" : "Please confirm your new password"
+        inputPrompt(title: title, message: message, placeholder: nil) { (newPassword) in
+            guard let password = newPassword else { return }
+            guard let entered = entered else {
+                self.goToUpdatePassword(password)
+                return
+            }
+            guard password == entered else {
+                self.simpleAlert("Password mismatch", message: "You must confirm the new password.")
+                LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? "", "error": "Password confirmation did not match"])
+                return
+            }
+            AuthService.currentUser?.updatePassword(to: password, completion: { (error) in
+                if let error = error as NSError? {
+                    self.simpleAlert("Could not update password", defaultMessage: "Your password could not be updated.", error: error)
+                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? ""], error: error)
+                } else {
+                    self.simpleAlert("Password updated", message: nil)
+                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? ""])
                 }
             })
         }
