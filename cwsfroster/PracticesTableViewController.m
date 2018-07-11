@@ -8,7 +8,6 @@
 
 #import "PracticesTableViewController.h"
 #import "Util.h"
-#import "SettingsViewController.h"
 
 @interface PracticesTableViewController ()
 

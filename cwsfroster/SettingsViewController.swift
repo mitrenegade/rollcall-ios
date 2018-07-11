@@ -11,6 +11,7 @@ import RACameraHelper
 
 class SettingsViewController: UIViewController {
     var cameraHelper: CameraHelper?
+    var alert: UIAlertController?
 
     // TODO: make case iterable
     enum Sections: String {
@@ -123,10 +124,12 @@ extension SettingsViewController {
         inputPrompt(title: title, message: message, placeholder: email) { (newEmail) in
             guard let newEmail = newEmail else { return }
             AuthService.currentUser?.updateEmail(to: newEmail, completion: { (error) in
-                if let error = error as? NSError {
+                if let error = error as NSError? {
                     self.simpleAlert("Could not update login", defaultMessage: "Your login could not be updated to \(newEmail)", error: error)
+                    LoggingService.shared.log(event: .updateOrganizationEmail, info: ["error": error.localizedDescription])
                 } else {
                     self.simpleAlert("Email login updated", message: "Your new login and email is \(newEmail)")
+                    LoggingService.shared.log(event: .updateOrganizationEmail, info: ["title": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
                 }
             })
         }
@@ -206,12 +209,12 @@ extension SettingsViewController: CameraHelperDelegate {
         if cameraHelper == nil {
             cameraHelper = CameraHelper()
         }
-        cameraHelper.delegate = self
+        cameraHelper?.delegate = self
     }
     
     func goToUpdateLogo() {
         print("UpdateLogo")
-        cameraHelper.takeOrSelectPhoto(from: self)
+        cameraHelper?.takeOrSelectPhoto(from: self)
     }
     
     func uploadPhoto(image: UIImage) {
@@ -219,12 +222,12 @@ extension SettingsViewController: CameraHelperDelegate {
         showProgress("Saving new logo")
         print("FirebaseImageService: uploading org photo for \(org.id)")
         FirebaseImageService.uploadImage(image: image, type: "organization", uid: org.id, progressHandler: { (progress) in
-            self.updateProgress(Float(progress))
+            self.updateProgress(percent: progress)
         }) { [weak self] (url) in
             if let url = url {
                 org.photoUrl = url
                 print("FirebaseImageService: uploading org photo complete with url \(url)")
-                LoggingService.shared.log(event: "UpdateOrganizationLogo", info: ["title": org.id])
+                LoggingService.shared.log(event: .updateOrganizationLogo, info: ["title": org.id])
             } else {
                 // failure
                 self?.simpleAlert("Upload failed", message: "There was an error uploading a new logo.")
