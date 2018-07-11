@@ -12,7 +12,7 @@
         <!--Settings-->
         <scene sceneID="Cbc-Di-ihA">
             <objects>
-                <tableViewController id="aBt-N9-VLP" customClass="SettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="aBt-N9-VLP" customClass="SettingsViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ze9-IT-sQI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -35,7 +35,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="2do-Fc-2rD">
                         <barButtonItem key="leftBarButtonItem" title="Close" id="Rf0-vw-PME">
                             <connections>
-                                <action selector="didClickClose" destination="aBt-N9-VLP" id="0fN-11-0A2"/>
+                                <action selector="didClickClose" destination="aBt-N9-VLP" id="7g2-rw-3XT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

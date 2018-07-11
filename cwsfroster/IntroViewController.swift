@@ -150,10 +150,15 @@ extension IntroViewController {
         firAuth.signIn(withEmail: email, password: password, completion: { (result, error) in
             if let error = error as NSError? {
                 print("Error: \(error)")
-                if error.code == 17011 { // 2) invalid firebase user
+                if error.code == 17011 {
                     // invalid user. firebase error message is too wordy
                     self.hideProgress() {
-                        self.simpleAlert("Invalid password", message: "Please try again")
+                        self.simpleAlert("Could not login", message: "Please try again")
+                        self.enableButtons(true)
+                    }
+                } else if error.code == 17008 { // not an email address
+                    self.hideProgress() {
+                        self.simpleAlert("Could not login", message: "Login must be an email address.")
                         self.enableButtons(true)
                     }
                 } else { // unknown error
