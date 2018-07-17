@@ -167,7 +167,7 @@ extension IntroViewController {
                         self.enableButtons(true)
                     }
                 }
-            } else if let user = result {
+            } else if let user = result?.user {
                 self.goToPractices()
                 self.createFirebaseUser(id: user.uid)
             } else {
@@ -217,9 +217,8 @@ extension IntroViewController {
                 }
                 self.enableButtons(true)
             }
-            else {
-                print("createUser results: \(String(describing: result))")
-                guard let user = result else { return }
+            else if let user = result?.user {
+                print("createUser results: \(String(describing: user))")
                 if self.isSignup {
                     // create org
                     LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["email": email])
