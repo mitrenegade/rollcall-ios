@@ -33,7 +33,11 @@ class OrganizationService: NSObject {
         print("Start observing organization")
         disposeBag = DisposeBag() // clear previous listeners
         
-        guard let userId = firAuth.currentUser?.uid else { return }
+        guard let userId = firAuth.currentUser?.uid else {
+            print("UserId doesn't exist while observing org; logging out")
+            AuthService.logout()
+            return
+        }
         let ref = firRef.child("organizations")
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             guard snapshot.exists() else {

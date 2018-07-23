@@ -91,6 +91,13 @@ class SplashViewController: UIViewController {
             }
             self.disposeBag = DisposeBag() // stops listening
         }).disposed(by: disposeBag)
+        
+        OrganizationService.shared.current.asObservable().skip(1).subscribe(onNext: { (org) in
+            if org == nil, let userId = AuthService.currentUser?.uid, let orgName = AuthService.currentUser?.email {
+                AuthService.createFirebaseUser(id: userId)
+                OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+            }
+        }).disposed(by: disposeBag)
     }
     
     func didLogout() {

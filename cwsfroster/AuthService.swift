@@ -24,4 +24,12 @@ class AuthService: NSObject {
     class var currentUser: User? {
         return firAuth.currentUser
     }
+    
+    class func createFirebaseUser(id: String) {
+        // TODO: does this need to be a user? can it be in the organization?
+        let ref = firRef.child("users").child(id)
+        let params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
+        ref.updateChildValues(params)
+    }
+
 }

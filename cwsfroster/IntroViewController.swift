@@ -110,7 +110,9 @@ class IntroViewController: UIViewController {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showProgress(_:)), object: nil)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideProgress), object: nil)
         
-        notifyForLogInSuccess()
+        hideProgress {
+            self.notifyForLogInSuccess()
+        }
     }
 }
 
@@ -169,7 +171,7 @@ extension IntroViewController {
                 }
             } else if let user = result?.user {
                 self.goToPractices()
-                self.createFirebaseUser(id: user.uid)
+                AuthService.createFirebaseUser(id: user.uid)
             } else {
                 self.simpleAlert("Unknown login error", message: "No user was found")
                 AuthService.logout()
@@ -226,7 +228,7 @@ extension IntroViewController {
                         self.promptForNewOrgName(completion: { (name) in
                             let userId = user.uid
                             let orgName = name ?? user.email ?? "unnamed"
-                            self.createFirebaseUser(id: user.uid)
+                            AuthService.createFirebaseUser(id: user.uid)
                             OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                             
                             self.goToPractices()
@@ -235,19 +237,12 @@ extension IntroViewController {
                 } else {
                     LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email])
                     self.goToPractices()
-                    self.createFirebaseUser(id: user.uid)
+                    AuthService.createFirebaseUser(id: user.uid)
                 }
             }
         })
     }
 
-    func createFirebaseUser(id: String) {
-        // TODO: does this need to be a user? can it be in the organization?
-        let ref = firRef.child("users").child(id)
-        let params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
-        ref.updateChildValues(params)
-    }
-    
     func promptForNewOrgName(completion: ((String?)->Void)?) {
         let alert = UIAlertController(title: "What is your organization called?", message: "Please enter the name for your organization.", preferredStyle: .alert)
         alert.addTextField { (textField : UITextField!) -> Void in
