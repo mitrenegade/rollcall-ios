@@ -150,7 +150,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="name"/>
                                         <connections>
                                             <outlet property="delegate" destination="EDo-iT-LY1" id="G8H-7q-erU"/>
                                         </connections>

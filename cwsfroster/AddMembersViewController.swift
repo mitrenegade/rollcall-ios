@@ -35,6 +35,10 @@ class AddMembersViewController: UIViewController {
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputName.inputAccessoryView = keyboardDoneButtonView
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(didClickCancel(_:))) // hide/disable back button
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didClickSave(_:))) // hide/disable back button
+
         reloadTableData()
     }
 
@@ -51,10 +55,24 @@ class AddMembersViewController: UIViewController {
     func didAddMember() {
         print("Add member \(inputName.text)")
         if let name = inputName.text {
+            if names.contains(name) {
+                simpleAlert("This name has been added", message: "\(name) is already in your new members list.")
+                inputName.text = nil
+                return
+            }
             names.append(name)
             reloadTableData()
         }
         inputName.text = nil
+    }
+    
+    func didClickCancel(_ sender: Any?) {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+
+    func didClickSave(_ sender: Any?) {
+        // TODO: save
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 }
 
@@ -72,6 +90,19 @@ extension AddMembersViewController: UITableViewDataSource {
         guard indexPath.row < names.count else { return cell }
         cell.textLabel?.text = names[indexPath.row]
         return cell
+    }
+}
+
+extension AddMembersViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        guard row < names.count else { return }
+        names.remove(at: row)
+        tableView.reloadData()
     }
 }
 
