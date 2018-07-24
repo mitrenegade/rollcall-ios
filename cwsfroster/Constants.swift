@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Firebase
 
-let TESTING = true
+let TESTING = false
 let OFFLINE_MODE = false
 
 let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
