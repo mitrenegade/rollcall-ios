@@ -37,7 +37,7 @@ class MembersTableViewController: UITableViewController {
     fileprivate func setupPlusNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         button.setImage(UIImage(named: "plus"), for: .normal)
-        button.addTarget(self, action: #selector(goToAddMember), for: .touchUpInside)
+        button.addTarget(self, action: #selector(goToAddMembers), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
@@ -56,8 +56,8 @@ class MembersTableViewController: UITableViewController {
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
-    func goToAddMember() {
-        performSegue(withIdentifier: "toAddMember", sender: nil)
+    func goToAddMembers() {
+        performSegue(withIdentifier: "toAddMembers", sender: nil)
     }
     
     fileprivate func deleteMember(at row: Int) {
@@ -115,13 +115,14 @@ extension MembersTableViewController {
 
 extension MembersTableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let nav = segue.destination as? UINavigationController, let controller = nav.viewControllers.first as? MemberInfoViewController else { return }
-        controller.delegate = self
         if segue.identifier == "toEditMember", let row = tableView.indexPathForSelectedRow?.row {
+            guard let nav = segue.destination as? UINavigationController, let controller = nav.viewControllers.first as? MemberInfoViewController else { return }
+            controller.delegate = self
             let member = _members[row]
             controller.member = member
-        } else if segue.identifier == "toAddMember" {
-            controller.member = nil
+        } else if segue.identifier == "toAddMembers" {
+            guard let nav = segue.destination as? UINavigationController, let controller = nav.viewControllers.first as? AddMembersViewController else { return }
+//            controller.delegate = self
         }
     }
 }

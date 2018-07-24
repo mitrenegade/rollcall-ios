@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */; };
+		8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0932106A79D00E02558 /* AddMembersViewController.swift */; };
+		8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */; };
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
@@ -110,6 +112,8 @@
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
+		8E18B0932106A79D00E02558 /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
+		8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNameInputCell.swift; sourceTree = "<group>"; };
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
@@ -311,6 +315,8 @@
 				8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */,
 				8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */,
 				8E4BE96520CCE74300556771 /* MembersTableViewController.swift */,
+				8E18B0932106A79D00E02558 /* AddMembersViewController.swift */,
+				8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -684,6 +690,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */,
 				8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */,
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
@@ -704,6 +711,7 @@
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
 				8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */,
 				8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */,
+				8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */,
 				8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */,
 				8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */,
 				9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */,
