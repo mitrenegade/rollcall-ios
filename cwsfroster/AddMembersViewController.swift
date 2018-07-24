@@ -10,8 +10,10 @@ import UIKit
 
 class AddMembersViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
 
     @IBOutlet weak var constraintNameInputHeight: NSLayoutConstraint!
     @IBOutlet weak var inputName: UITextField!
@@ -39,6 +41,9 @@ class AddMembersViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didClickSave(_:))) // hide/disable back button
 
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
         reloadTableData()
     }
 
@@ -54,16 +59,21 @@ class AddMembersViewController: UIViewController {
 
     func didAddMember() {
         print("Add member \(inputName.text)")
-        if let name = inputName.text {
-            if names.contains(name) {
-                simpleAlert("This name has been added", message: "\(name) is already in your new members list.")
-                inputName.text = nil
-                return
-            }
-            names.append(name)
-            reloadTableData()
+        defer {
+            inputName.text = nil
         }
-        inputName.text = nil
+        
+        guard let name = inputName.text, !name.isEmpty else {
+            return
+        }
+
+        guard !names.contains(name) else {
+            simpleAlert("This name has been added", message: "\(name) is already in your new members list.")
+            return
+        }
+
+        names.append(name)
+        reloadTableData()
     }
     
     func didClickCancel(_ sender: Any?) {
@@ -108,13 +118,20 @@ extension AddMembersViewController: UITableViewDelegate {
 
 extension AddMembersViewController: UITextFieldDelegate {
     func dismissKeyboard() {
+        didAddMember()
         view.endEditing(true)
     }
     
-    func keyboardWillShow(_ n: Notification) {
+    @objc func keyboardWillShow(_ notification: Notification) {
+        let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+        constraintBottomOffset.constant = keyboardHeight
     }
     
-    func keyboardWillHide(_ n: Notification) {
+    @objc func keyboardWillHide(_ notification: Notification) {
+        self.constraintBottomOffset.constant = 0
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

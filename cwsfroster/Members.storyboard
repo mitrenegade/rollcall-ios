@@ -180,6 +180,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="DuS-LQ-vEc"/>
                     <connections>
+                        <outlet property="constraintBottomOffset" destination="IOG-Vc-BWV" id="ur8-r6-2PI"/>
                         <outlet property="constraintNameInputHeight" destination="z1y-op-xci" id="G4h-xe-7iW"/>
                         <outlet property="inputName" destination="BIV-it-gmg" id="jRK-SE-FQ1"/>
                         <outlet property="segmentedControl" destination="kps-4S-QVh" id="N4W-oo-YVg"/>
