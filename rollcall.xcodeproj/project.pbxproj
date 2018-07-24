@@ -11,6 +11,8 @@
 		8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */; };
 		8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0932106A79D00E02558 /* AddMembersViewController.swift */; };
 		8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */; };
+		8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */; };
+		8E1BC50F2106D9F1004192F3 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC50E2106D9F1004192F3 /* ContactCell.swift */; };
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
@@ -114,6 +116,8 @@
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
 		8E18B0932106A79D00E02558 /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNameInputCell.swift; sourceTree = "<group>"; };
+		8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		8E1BC50E2106D9F1004192F3 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
@@ -317,6 +321,8 @@
 				8E4BE96520CCE74300556771 /* MembersTableViewController.swift */,
 				8E18B0932106A79D00E02558 /* AddMembersViewController.swift */,
 				8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */,
+				8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */,
+				8E1BC50E2106D9F1004192F3 /* ContactCell.swift */,
 			);
 			name = Members;
 			sourceTree = "<group>";
@@ -718,6 +724,7 @@
 				C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
+				8E1BC50F2106D9F1004192F3 /* ContactCell.swift in Sources */,
 				8E9D891F20CB130900AD382F /* EventService.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
@@ -728,6 +735,7 @@
 				9EA7D2CB19995B7B003C5D7C /* MBProgressHUD.m in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
+				8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */,
 				8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */,
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
