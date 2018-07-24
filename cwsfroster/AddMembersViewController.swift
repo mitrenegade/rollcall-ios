@@ -20,17 +20,15 @@ class AddMembersViewController: UIViewController {
     @IBOutlet weak var constraintNameInputHeight: NSLayoutConstraint!
     @IBOutlet weak var inputName: UITextField!
     
-    let store = CNContactStore()
-    
     var alert: UIAlertController?
 
     fileprivate enum AddMemberMode: Int {
         case manual = 0
         case contacts = 1
     }
-    fileprivate var mode: AddMemberMode = .manual
     var names: [String] = []
     var emails: [String: String] = [:]
+    var contacts: [CNContact] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,23 +51,30 @@ class AddMembersViewController: UIViewController {
         reloadTableData()
     }
 
+    fileprivate var mode: AddMemberMode = .manual {
+        didSet {
+            if mode == .contacts {
+                requestAccess { (success) in
+                    print("Access granted \(success)")
+                    if !success {
+                        self.mode = .manual
+                    } else {
+                        self.constraintNameInputHeight.constant = 0
+                        self.loadContacts()
+                    }
+                }
+            } else {
+                self.segmentedControl.selectedSegmentIndex = AddMemberMode.manual.rawValue
+                self.constraintNameInputHeight.constant = 40
+            }
+            
+            reloadTableData()
+        }
+    }
+
     @IBAction func segmentedControlDidChange(_ sender: Any?) {
         let selectedIndex = segmentedControl.selectedSegmentIndex
-        
-        if selectedIndex == AddMemberMode.contacts.rawValue {
-            requestAccess { (success) in
-                print("Access granted \(success)")
-                if !success {
-                    self.segmentedControl.selectedSegmentIndex = AddMemberMode.manual.rawValue
-                    self.constraintNameInputHeight.constant = 40
-                } else {
-                    self.loadContacts()
-                }
-            }
-        }
-        
-        constraintNameInputHeight.constant = selectedIndex == AddMemberMode.manual.rawValue ? 40 : 0
-        reloadTableData()
+        mode = AddMemberMode(rawValue: selectedIndex)!
     }
     
     func reloadTableData() {
@@ -148,14 +153,24 @@ extension AddMembersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
+        if mode == .manual {
+            return names.count
+        }
+        return contacts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewMemberCell", for: indexPath)
-        guard indexPath.row < names.count else { return cell }
-        cell.textLabel?.text = names[indexPath.row]
-        return cell
+        if mode == .manual {
+            guard indexPath.row < names.count else { return cell }
+            cell.textLabel?.text = names[indexPath.row]
+            return cell
+        } else {
+            guard indexPath.row < contacts.count else { return cell }
+            let name = "\(contacts[indexPath.row].givenName) \(contacts[indexPath.row].familyName)"
+            cell.textLabel?.text = name
+            return cell
+        }
     }
 }
 
@@ -234,6 +249,7 @@ extension AddMembersViewController {
         case .denied:
             showSettingsAlert(completionHandler)
         case .restricted, .notDetermined:
+            let store = CNContactStore()
             store.requestAccess(for: .contacts) { granted, error in
                 if granted {
                     completionHandler(true)
@@ -259,8 +275,35 @@ extension AddMembersViewController {
     }
     
     func loadContacts() {
+        let contactStore = CNContactStore()
+        let keysToFetch = [
+            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+            CNContactEmailAddressesKey] as [Any]
         
-        print("Here")
+        // Get all the containers
+        var allContainers: [CNContainer] = []
+        do {
+            allContainers = try contactStore.containers(matching: nil)
+        } catch let error {
+            print("Error fetching containers \(error)")
+        }
+        
+        var results: [CNContact] = []
+        
+        // Iterate all containers and append their contacts to our results array
+        for container in allContainers {
+            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
+            
+            do {
+                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
+                results.append(contentsOf: containerResults)
+            } catch let error {
+                print("Error fetching results for container \(error)")
+            }
+        }
+        
+        contacts = results
+        reloadTableData()
     }
 }
 
