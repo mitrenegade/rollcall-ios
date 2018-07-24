@@ -43,17 +43,6 @@ class AddMembersViewController: UIViewController {
         reloadTableData()
     }
     
-    @IBAction func didClickContacts(_ sender: Any?) {
-        requestAccess { (success) in
-            print("Access granted \(success)")
-            if success {
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "toContacts", sender: nil)
-                }
-            }
-        }
-    }
-    
     func reloadTableData() {
         tableView.reloadData()
     }
@@ -105,7 +94,8 @@ class AddMembersViewController: UIViewController {
         var count: Double = 0
         for name in newNames {
             dispatchGroup.enter()
-            OrganizationService.shared.createMember(email: nil, name: name, notes: nil, status: .Active) { [weak self] (member, error) in
+            let email = emails[name]
+            OrganizationService.shared.createMember(email: email, name: name, notes: nil, status: .Active) { [weak self] (member, error) in
                 print("member added")
                 count += 1
                 DispatchQueue.main.async {
@@ -136,7 +126,9 @@ extension AddMembersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewMemberCell", for: indexPath)
         guard indexPath.row < names.count else { return cell }
-        cell.textLabel?.text = names[indexPath.row]
+        let name = names[indexPath.row]
+        cell.textLabel?.text = name
+        cell.detailTextLabel?.text = emails[name]
         return cell
     }
 }
@@ -154,7 +146,25 @@ extension AddMembersViewController: UITableViewDelegate {
     }
 }
 
-extension AddMembersViewController {
+// MARK: - Contacts
+extension AddMembersViewController: ContactsDelegate {
+    @IBAction func didClickContacts(_ sender: Any?) {
+        requestAccess { (success) in
+            print("Access granted \(success)")
+            if success {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "toContacts", sender: nil)
+                }
+            }
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toContacts", let controller = segue.destination as? ContactsViewController {
+            controller.delegate = self
+        }
+    }
+    
     fileprivate func requestAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
         switch CNContactStore.authorizationStatus(for: .contacts) {
         case .authorized:
@@ -185,6 +195,19 @@ extension AddMembersViewController {
             completionHandler(false)
         })
         present(alert, animated: true)
+    }
+    
+    func didSelectContacts(_ contacts: [CNContact]) {
+        for contact in contacts {
+            let name = "\(contact.givenName) \(contact.familyName)"
+            let email = contact.emailAddresses.first?.value as? String
+            if !names.contains(name) {
+                names.append(name)
+                emails[name] = email
+            }
+        }
+        navigationController?.popToViewController(self, animated: true)
+        reloadTableData()
     }
 }
 
