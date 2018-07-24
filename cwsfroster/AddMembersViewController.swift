@@ -8,11 +8,8 @@
 
 import UIKit
 import Contacts
-import ContactsUI
 
 class AddMembersViewController: UIViewController {
-    
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var constraintBottomOffset: NSLayoutConstraint!
@@ -22,13 +19,8 @@ class AddMembersViewController: UIViewController {
     
     var alert: UIAlertController?
 
-    fileprivate enum AddMemberMode: Int {
-        case manual = 0
-        case contacts = 1
-    }
     var names: [String] = []
     var emails: [String: String] = [:]
-    var contacts: [CNContact] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,31 +42,16 @@ class AddMembersViewController: UIViewController {
 
         reloadTableData()
     }
-
-    fileprivate var mode: AddMemberMode = .manual {
-        didSet {
-            if mode == .contacts {
-                requestAccess { (success) in
-                    print("Access granted \(success)")
-                    if !success {
-                        self.mode = .manual
-                    } else {
-                        self.constraintNameInputHeight.constant = 0
-                        self.loadContacts()
-                    }
+    
+    @IBAction func didClickContacts(_ sender: Any?) {
+        requestAccess { (success) in
+            print("Access granted \(success)")
+            if success {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "toContacts", sender: nil)
                 }
-            } else {
-                self.segmentedControl.selectedSegmentIndex = AddMemberMode.manual.rawValue
-                self.constraintNameInputHeight.constant = 40
             }
-            
-            reloadTableData()
         }
-    }
-
-    @IBAction func segmentedControlDidChange(_ sender: Any?) {
-        let selectedIndex = segmentedControl.selectedSegmentIndex
-        mode = AddMemberMode(rawValue: selectedIndex)!
     }
     
     func reloadTableData() {
@@ -153,24 +130,14 @@ extension AddMembersViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if mode == .manual {
-            return names.count
-        }
-        return contacts.count
+        return names.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewMemberCell", for: indexPath)
-        if mode == .manual {
-            guard indexPath.row < names.count else { return cell }
-            cell.textLabel?.text = names[indexPath.row]
-            return cell
-        } else {
-            guard indexPath.row < contacts.count else { return cell }
-            let name = "\(contacts[indexPath.row].givenName) \(contacts[indexPath.row].familyName)"
-            cell.textLabel?.text = name
-            return cell
-        }
+        guard indexPath.row < names.count else { return cell }
+        cell.textLabel?.text = names[indexPath.row]
+        return cell
     }
 }
 
@@ -184,6 +151,40 @@ extension AddMembersViewController: UITableViewDelegate {
         guard row < names.count else { return }
         names.remove(at: row)
         tableView.reloadData()
+    }
+}
+
+extension AddMembersViewController {
+    fileprivate func requestAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        switch CNContactStore.authorizationStatus(for: .contacts) {
+        case .authorized:
+            completionHandler(true)
+        case .denied:
+            showSettingsAlert(completionHandler)
+        case .restricted, .notDetermined:
+            let store = CNContactStore()
+            store.requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    completionHandler(true)
+                } else {
+                    DispatchQueue.main.async {
+                        self.showSettingsAlert(completionHandler)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        let alert = UIAlertController(title: "Access to contacts needed", message: "RollCall needs permission to add members from your contacts. Would you like to grant permissions?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+            completionHandler(false)
+            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            completionHandler(false)
+        })
+        present(alert, animated: true)
     }
 }
 
@@ -240,70 +241,3 @@ extension AddMembersViewController {
         alert?.message = "\(percent * 100)%"
     }
 }
-
-extension AddMembersViewController {
-    func requestAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
-        switch CNContactStore.authorizationStatus(for: .contacts) {
-        case .authorized:
-            completionHandler(true)
-        case .denied:
-            showSettingsAlert(completionHandler)
-        case .restricted, .notDetermined:
-            let store = CNContactStore()
-            store.requestAccess(for: .contacts) { granted, error in
-                if granted {
-                    completionHandler(true)
-                } else {
-                    DispatchQueue.main.async {
-                        self.showSettingsAlert(completionHandler)
-                    }
-                }
-            }
-        }
-    }
-    
-    private func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
-        let alert = UIAlertController(title: "Access to contacts needed", message: "RollCall needs permission to add members from your contacts. Would you like to grant permissions?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
-            completionHandler(false)
-            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
-        })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
-            completionHandler(false)
-        })
-        present(alert, animated: true)
-    }
-    
-    func loadContacts() {
-        let contactStore = CNContactStore()
-        let keysToFetch = [
-            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-            CNContactEmailAddressesKey] as [Any]
-        
-        // Get all the containers
-        var allContainers: [CNContainer] = []
-        do {
-            allContainers = try contactStore.containers(matching: nil)
-        } catch let error {
-            print("Error fetching containers \(error)")
-        }
-        
-        var results: [CNContact] = []
-        
-        // Iterate all containers and append their contacts to our results array
-        for container in allContainers {
-            let fetchPredicate = CNContact.predicateForContactsInContainer(withIdentifier: container.identifier)
-            
-            do {
-                let containerResults = try contactStore.unifiedContacts(matching: fetchPredicate, keysToFetch: keysToFetch as! [CNKeyDescriptor])
-                results.append(contentsOf: containerResults)
-            } catch let error {
-                print("Error fetching results for container \(error)")
-            }
-        }
-        
-        contacts = results
-        reloadTableData()
-    }
-}
-
