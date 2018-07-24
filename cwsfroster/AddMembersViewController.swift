@@ -67,6 +67,7 @@ class AddMembersViewController: UIViewController {
     }
     
     func didClickCancel(_ sender: Any?) {
+        LoggingService.log(event: .addMembersCancelled, message: nil, info: nil, error: nil)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 
@@ -92,6 +93,7 @@ class AddMembersViewController: UIViewController {
     fileprivate func addNewMembers(newNames: [String]) {
         let dispatchGroup = DispatchGroup()
         var count: Double = 0
+        LoggingService.log(event: .addMembersSaved, message: nil, info: ["count": newNames.count], error: nil)
         for name in newNames {
             dispatchGroup.enter()
             let email = emails[name]
@@ -156,6 +158,7 @@ extension AddMembersViewController: ContactsDelegate {
                     self.performSegue(withIdentifier: "toContacts", sender: nil)
                 }
             }
+            LoggingService.log(event: .contactsButtonClicked, message: nil, info: ["granted": success], error: nil)
         }
     }
     
@@ -188,10 +191,12 @@ extension AddMembersViewController: ContactsDelegate {
     private func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
         let alert = UIAlertController(title: "Access to contacts needed", message: "RollCall needs permission to add members from your contacts. Would you like to grant permissions?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+            LoggingService.log(event: .contactsPermissionSettings, message: nil, info: ["opened settings": true], error: nil)
             completionHandler(false)
             UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            LoggingService.log(event: .contactsPermissionSettings, message: nil, info: ["opened settings": false], error: nil)
             completionHandler(false)
         })
         present(alert, animated: true)

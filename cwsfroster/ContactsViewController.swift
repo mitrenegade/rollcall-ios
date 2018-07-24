@@ -69,6 +69,7 @@ class ContactsViewController: UIViewController {
             return tuple.selected
             }.compactMap() { return $0.contact }
         delegate?.didSelectContacts(results)
+        LoggingService.log(event: .contactsAdded, message: nil, info: ["count": results.count], error: nil)
     }
 }
 

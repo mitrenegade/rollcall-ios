@@ -31,6 +31,15 @@ enum LoggingEvent: String {
     case updateOrganizationLogo = "UpdateOrganizationLogo"
     case updateOrganizationEmail = "UpdateOrganizationEmail"
     case updateOrganizationPassword = "UpdateOrganizationPassword"
+
+    // add member
+    case addMembersSaved
+    case addMembersCancelled
+
+    // add member - contacts permission
+    case contactsButtonClicked
+    case contactsPermissionSettings
+    case contactsAdded
     
     case unknown
 }
