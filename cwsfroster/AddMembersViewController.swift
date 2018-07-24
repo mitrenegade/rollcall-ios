@@ -109,8 +109,10 @@ class AddMembersViewController: UIViewController {
             OrganizationService.shared.createMember(email: nil, name: name, notes: nil, status: .Active) { [weak self] (member, error) in
                 print("member added")
                 count += 1
-                let progress: Double = count / Double(newNames.count)
-                self?.updateProgress(percent: progress )
+                DispatchQueue.main.async {
+                    let progress: Double = count / Double(newNames.count)
+                    self?.updateProgress(percent: progress )
+                }
                 dispatchGroup.leave()
             }
         }
