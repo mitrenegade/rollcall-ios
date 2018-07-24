@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Contacts
+import ContactsUI
 
 class AddMembersViewController: UIViewController {
     
@@ -18,6 +20,8 @@ class AddMembersViewController: UIViewController {
     @IBOutlet weak var constraintNameInputHeight: NSLayoutConstraint!
     @IBOutlet weak var inputName: UITextField!
     
+    let store = CNContactStore()
+    
     var alert: UIAlertController?
 
     fileprivate enum AddMemberMode: Int {
@@ -26,7 +30,7 @@ class AddMembersViewController: UIViewController {
     }
     fileprivate var mode: AddMemberMode = .manual
     var names: [String] = []
-    var emails: [String] = []
+    var emails: [String: String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +56,19 @@ class AddMembersViewController: UIViewController {
     @IBAction func segmentedControlDidChange(_ sender: Any?) {
         let selectedIndex = segmentedControl.selectedSegmentIndex
         
+        if selectedIndex == AddMemberMode.contacts.rawValue {
+            requestAccess { (success) in
+                print("Access granted \(success)")
+                if !success {
+                    self.segmentedControl.selectedSegmentIndex = AddMemberMode.manual.rawValue
+                    self.constraintNameInputHeight.constant = 40
+                } else {
+                    self.loadContacts()
+                }
+            }
+        }
+        
+        constraintNameInputHeight.constant = selectedIndex == AddMemberMode.manual.rawValue ? 40 : 0
         reloadTableData()
     }
     
@@ -208,3 +225,42 @@ extension AddMembersViewController {
         alert?.message = "\(percent * 100)%"
     }
 }
+
+extension AddMembersViewController {
+    func requestAccess(completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        switch CNContactStore.authorizationStatus(for: .contacts) {
+        case .authorized:
+            completionHandler(true)
+        case .denied:
+            showSettingsAlert(completionHandler)
+        case .restricted, .notDetermined:
+            store.requestAccess(for: .contacts) { granted, error in
+                if granted {
+                    completionHandler(true)
+                } else {
+                    DispatchQueue.main.async {
+                        self.showSettingsAlert(completionHandler)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func showSettingsAlert(_ completionHandler: @escaping (_ accessGranted: Bool) -> Void) {
+        let alert = UIAlertController(title: "Access to contacts needed", message: "RollCall needs permission to add members from your contacts. Would you like to grant permissions?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
+            completionHandler(false)
+            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+        })
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
+            completionHandler(false)
+        })
+        present(alert, animated: true)
+    }
+    
+    func loadContacts() {
+        
+        print("Here")
+    }
+}
+
