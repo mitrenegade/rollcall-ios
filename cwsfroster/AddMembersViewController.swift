@@ -17,6 +17,8 @@ class AddMembersViewController: UIViewController {
 
     @IBOutlet weak var constraintNameInputHeight: NSLayoutConstraint!
     @IBOutlet weak var inputName: UITextField!
+    
+    var alert: UIAlertController?
 
     fileprivate enum AddMemberMode: Int {
         case manual = 0
@@ -81,8 +83,43 @@ class AddMembersViewController: UIViewController {
     }
 
     func didClickSave(_ sender: Any?) {
-        // TODO: save
-        navigationController?.dismiss(animated: true, completion: nil)
+        dismissKeyboard()
+        showProgress("Adding new members")
+        OrganizationService.shared.members { [weak self] (members, error) in
+            if let error = error as NSError? {
+                DispatchQueue.main.async {
+                    self?.simpleAlert("Could not add members", defaultMessage: "There was an error adding new members.", error: error)
+                }
+                return
+            } else {
+                let filtered = self?.names.filter() { name in
+                    let existing = members.filter() { return $0.name == name }
+                    return existing.isEmpty
+                }
+                self?.addNewMembers(newNames: filtered ?? [])
+            }
+        }
+    }
+    
+    fileprivate func addNewMembers(newNames: [String]) {
+        let dispatchGroup = DispatchGroup()
+        var count: Double = 0
+        for name in newNames {
+            dispatchGroup.enter()
+            OrganizationService.shared.createMember(email: nil, name: name, notes: nil, status: .Active) { [weak self] (member, error) in
+                print("member added")
+                count += 1
+                let progress: Double = count / Double(newNames.count)
+                self?.updateProgress(percent: progress )
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+            self?.notify("member:created", object: nil, userInfo: nil)
+            self?.hideProgress({
+                self?.navigationController?.dismiss(animated: true, completion: nil)
+            })
+        }
     }
 }
 
@@ -137,5 +174,35 @@ extension AddMembersViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         didAddMember()
         return false
+    }
+}
+
+extension AddMembersViewController {
+    func showProgress(_ title: String?) {
+        guard self.alert == nil else {
+            self.alert?.title = title
+            return
+        }
+        
+        let alert = UIAlertController(title: title ?? "Progress", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel) { [weak self] (action) in
+            self?.alert = nil
+        })
+        
+        present(alert, animated: true, completion: nil)
+        self.alert = alert
+    }
+    
+    func hideProgress(_ completion:(()->Void)? = nil) {
+        if alert == nil {
+            completion?()
+        } else {
+            alert?.dismiss(animated: true, completion: completion)
+            alert = nil
+        }
+    }
+    
+    func updateProgress(percent: Double = 0) {
+        alert?.message = "\(percent * 100)%"
     }
 }
