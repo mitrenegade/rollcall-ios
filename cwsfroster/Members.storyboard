@@ -114,10 +114,10 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9Xx-6r-FNT">
-                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
+                                <rect key="frame" x="0.0" y="148" width="375" height="519"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewMemberCell" textLabel="d18-de-gVJ" detailTextLabel="YLn-18-4Mg" style="IBUITableViewCellStyleSubtitle" id="dtv-kJ-lVQ">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewMemberCell" textLabel="d18-de-gVJ" style="IBUITableViewCellStyleDefault" id="dtv-kJ-lVQ">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dtv-kJ-lVQ" id="7uS-Qa-Gi3">
@@ -125,51 +125,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d18-de-gVJ">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YLn-18-4Mg">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                    </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MemberNameInputCell" id="dMS-nQ-lSz" customClass="MemberNameInputCell" customModule="RollCall" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dMS-nQ-lSz" id="PKr-39-Vdr">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Member name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pm8-HE-khc">
-                                                    <rect key="frame" x="15" y="6" width="345" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="qzT-wZ-TID"/>
-                                                    </constraints>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="name"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="dMS-nQ-lSz" id="in5-G3-iRE"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Pm8-HE-khc" firstAttribute="leading" secondItem="PKr-39-Vdr" secondAttribute="leading" constant="15" id="GsY-jd-IZO"/>
-                                                <constraint firstItem="Pm8-HE-khc" firstAttribute="centerY" secondItem="PKr-39-Vdr" secondAttribute="centerY" id="URh-f1-p67"/>
-                                                <constraint firstAttribute="trailing" secondItem="Pm8-HE-khc" secondAttribute="trailing" constant="15" id="Uvv-OC-vqv"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="inputName" destination="Pm8-HE-khc" id="uOD-m4-Jsd"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -177,19 +140,48 @@
                                     <outlet property="delegate" destination="EDo-iT-LY1" id="swU-QW-1Wt"/>
                                 </connections>
                             </tableView>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GD6-1L-wP5">
+                                <rect key="frame" x="0.0" y="104" width="375" height="40"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter new member name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BIV-it-gmg">
+                                        <rect key="frame" x="8" y="5" width="359" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="YuH-aQ-PLb"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="EDo-iT-LY1" id="G8H-7q-erU"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="BIV-it-gmg" firstAttribute="leading" secondItem="GD6-1L-wP5" secondAttribute="leading" constant="8" id="fIW-LJ-1FH"/>
+                                    <constraint firstItem="BIV-it-gmg" firstAttribute="centerY" secondItem="GD6-1L-wP5" secondAttribute="centerY" id="spV-Ex-fkL"/>
+                                    <constraint firstAttribute="trailing" secondItem="BIV-it-gmg" secondAttribute="trailing" constant="8" id="v0T-S8-gG8"/>
+                                    <constraint firstAttribute="height" constant="40" id="z1y-op-xci"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="9Xx-6r-FNT" firstAttribute="top" secondItem="GD6-1L-wP5" secondAttribute="bottom" constant="4" id="8Ij-sA-COi"/>
                             <constraint firstAttribute="trailing" secondItem="9Xx-6r-FNT" secondAttribute="trailing" id="BiB-Yz-Vaq"/>
                             <constraint firstItem="kps-4S-QVh" firstAttribute="centerX" secondItem="cT1-2e-WDV" secondAttribute="centerX" id="CYr-YK-cKD"/>
-                            <constraint firstItem="9Xx-6r-FNT" firstAttribute="top" secondItem="kps-4S-QVh" secondAttribute="bottom" constant="8" id="CcR-c5-He1"/>
                             <constraint firstItem="YFv-t4-g1b" firstAttribute="top" secondItem="9Xx-6r-FNT" secondAttribute="bottom" id="IOG-Vc-BWV"/>
+                            <constraint firstItem="GD6-1L-wP5" firstAttribute="leading" secondItem="cT1-2e-WDV" secondAttribute="leading" id="Nbl-wo-9Ns"/>
+                            <constraint firstAttribute="trailing" secondItem="GD6-1L-wP5" secondAttribute="trailing" id="oo3-nr-L33"/>
                             <constraint firstItem="9Xx-6r-FNT" firstAttribute="leading" secondItem="cT1-2e-WDV" secondAttribute="leading" id="qoN-Xb-5xM"/>
+                            <constraint firstItem="GD6-1L-wP5" firstAttribute="top" secondItem="kps-4S-QVh" secondAttribute="bottom" constant="4" id="tkz-bD-8uy"/>
                             <constraint firstItem="kps-4S-QVh" firstAttribute="top" secondItem="lwq-pA-RW5" secondAttribute="bottom" constant="8" id="xKn-Ho-eGQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DuS-LQ-vEc"/>
                     <connections>
+                        <outlet property="constraintNameInputHeight" destination="z1y-op-xci" id="G4h-xe-7iW"/>
+                        <outlet property="inputName" destination="BIV-it-gmg" id="jRK-SE-FQ1"/>
                         <outlet property="segmentedControl" destination="kps-4S-QVh" id="N4W-oo-YVg"/>
                         <outlet property="tableView" destination="9Xx-6r-FNT" id="j1B-se-Ibl"/>
                     </connections>

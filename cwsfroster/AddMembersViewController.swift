@@ -13,6 +13,9 @@ class AddMembersViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
 
+    @IBOutlet weak var constraintNameInputHeight: NSLayoutConstraint!
+    @IBOutlet weak var inputName: UITextField!
+
     fileprivate enum AddMemberMode: Int {
         case manual = 0
         case contacts = 1
@@ -23,6 +26,14 @@ class AddMembersViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let keyboardDoneButtonView: UIToolbar = UIToolbar()
+        keyboardDoneButtonView.sizeToFit()
+        keyboardDoneButtonView.barStyle = UIBarStyle.black
+        keyboardDoneButtonView.tintColor = UIColor.white
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
+        keyboardDoneButtonView.setItems([saveButton], animated: true)
+        self.inputName.inputAccessoryView = keyboardDoneButtonView
 
         reloadTableData()
     }
@@ -36,38 +47,47 @@ class AddMembersViewController: UIViewController {
     func reloadTableData() {
         tableView.reloadData()
     }
+
+    func didAddMember() {
+        print("Add member \(inputName.text)")
+        if let name = inputName.text {
+            names.append(name)
+            reloadTableData()
+        }
+        inputName.text = nil
+    }
 }
 
 extension AddMembersViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        }
         return names.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            guard let cell: MemberNameInputCell = tableView.dequeueReusableCell(withIdentifier: "MemberNameInputCell", for: indexPath) as? MemberNameInputCell else { return UITableViewCell() }
-            cell.delegate = self
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NewMemberCell", for: indexPath)
-            guard indexPath.row < names.count else { return cell }
-            cell.textLabel?.text = names[indexPath.row]
-//            cell.detailTextLabel?.text = emails[indexPath.row]
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewMemberCell", for: indexPath)
+        guard indexPath.row < names.count else { return cell }
+        cell.textLabel?.text = names[indexPath.row]
+        return cell
     }
 }
 
-extension AddMembersViewController: MemberNameInputDelegate {
-    func didAddMember(name: String) {
-        names.append(name)
-        reloadTableData()
+extension AddMembersViewController: UITextFieldDelegate {
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func keyboardWillShow(_ n: Notification) {
+    }
+    
+    func keyboardWillHide(_ n: Notification) {
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        didAddMember()
+        return false
     }
 }
