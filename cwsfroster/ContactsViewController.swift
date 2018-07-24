@@ -12,6 +12,7 @@ import Contacts
 class ContactsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var contacts: [CNContact] = []
+    var selected: [Bool] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,9 @@ class ContactsViewController: UIViewController {
         }
 
         contacts = results
+        for contact in contacts {
+            selected.append(false)
+        }
         reloadTableData()
     }
 }
@@ -67,14 +71,20 @@ extension ContactsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactCell
         guard indexPath.row < contacts.count else { return cell }
-        let name = "\(contacts[indexPath.row].givenName) \(contacts[indexPath.row].familyName)"
-        cell.textLabel?.text = name
+        let contact = contacts[indexPath.row]
+        let name = "\(contact.givenName) \(contact.familyName)"
+        let email = contact.emailAddresses.first?.value as String?
+        cell.configure(name: name, email: email, selected: selected[indexPath.row])
         return cell
     }
 }
 
 extension ContactsViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        selected[indexPath.row] = !selected[indexPath.row]
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }
