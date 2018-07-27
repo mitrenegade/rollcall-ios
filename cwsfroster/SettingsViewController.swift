@@ -73,6 +73,13 @@ extension SettingsViewController {
                 self.goToUpdateLogo()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            {
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    alert.popoverPresentationController?.sourceView = cell
+                    alert.popoverPresentationController?.sourceRect = cell.frame
+                }
+            }
             present(alert, animated: true, completion: nil)
         case .account:
             guard let org =  OrganizationService.shared.current.value else { return }
@@ -86,6 +93,10 @@ extension SettingsViewController {
                 self.goToUpdatePassword(nil)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            if let cell = tableView.cellForRow(at: indexPath) {
+                alert.popoverPresentationController?.sourceView = cell
+                alert.popoverPresentationController?.sourceRect = cell.frame
+            }
             present(alert, animated: true, completion: nil)
         case .feedback:
             goToFeedback()
