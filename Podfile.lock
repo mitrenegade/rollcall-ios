@@ -58,7 +58,7 @@ PODS:
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - Protobuf (3.6.0)
-  - RACameraHelper (0.1.3)
+  - RACameraHelper (0.1.4)
   - RxCocoa (4.2.0):
     - RxSwift (~> 4.0)
   - RxOptional (3.5.0):
@@ -74,7 +74,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
-  - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.3`)
+  - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.4`)
   - RxCocoa
   - RxOptional
   - RxSwift
@@ -104,12 +104,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
-    :tag: 0.1.3
+    :tag: 0.1.4
 
 CHECKOUT OPTIONS:
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
-    :tag: 0.1.3
+    :tag: 0.1.4
 
 SPEC CHECKSUMS:
   Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
@@ -128,11 +128,11 @@ SPEC CHECKSUMS:
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
-  RACameraHelper: 3547ad0290d366314eed0abb33a9909087cf9edc
+  RACameraHelper: 4131be7aa90a0e4e1a81989a1c535aaa9498628a
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxOptional: bd32ff8ca9df4177683d56ffeb618a9d4d5d5cad
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
 
-PODFILE CHECKSUM: 71d84be8c32de0683741d11a57724ac38d515b10
+PODFILE CHECKSUM: ef72bb8c1df6830cb0a9d693ebe99a8f64d98bdb
 
 COCOAPODS: 1.5.0
