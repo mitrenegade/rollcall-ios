@@ -104,7 +104,7 @@ class MemberInfoViewController: UIViewController {
     
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
-        cameraHelper.takeOrSelectPhoto(from: self)
+        cameraHelper.takeOrSelectPhoto(from: self, fromView: buttonPhoto)
     }
 
     @IBAction func didClickSave(_ sender: AnyObject?) {

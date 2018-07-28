@@ -173,7 +173,7 @@ extension OnsiteSignupViewController: UITextFieldDelegate {
 extension OnsiteSignupViewController: CameraHelperDelegate {
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         view.endEditing(true)
-        cameraHelper.takeOrSelectPhoto(from: self)
+        cameraHelper.takeOrSelectPhoto(from: self, fromView: buttonPhoto)
     }
     
     func didCancelSelection() {

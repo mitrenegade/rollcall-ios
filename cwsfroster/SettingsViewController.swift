@@ -261,7 +261,9 @@ extension SettingsViewController: CameraHelperDelegate {
     
     func goToUpdateLogo() {
         print("UpdateLogo")
-        cameraHelper?.takeOrSelectPhoto(from: self)
+        let indexPath = IndexPath(row: SECTION_TITLES.index(of: .organization)!, section: 0)
+        let cell = tableView.cellForRow(at: indexPath)
+        cameraHelper?.takeOrSelectPhoto(from: self, fromView: cell)
     }
     
     func uploadPhoto(image: UIImage) {
