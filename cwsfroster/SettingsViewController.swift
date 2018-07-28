@@ -75,10 +75,8 @@ extension SettingsViewController {
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
             {
-                if let cell = tableView.cellForRow(at: indexPath) {
-                    alert.popoverPresentationController?.sourceView = cell
-                    alert.popoverPresentationController?.sourceRect = cell.frame
-                }
+                alert.popoverPresentationController?.sourceView = tableView
+                alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
             }
             present(alert, animated: true, completion: nil)
         case .account:
@@ -93,9 +91,10 @@ extension SettingsViewController {
                 self.goToUpdatePassword(nil)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            if let cell = tableView.cellForRow(at: indexPath) {
-                alert.popoverPresentationController?.sourceView = cell
-                alert.popoverPresentationController?.sourceRect = cell.frame
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            {
+                alert.popoverPresentationController?.sourceView = tableView
+                alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
             }
             present(alert, animated: true, completion: nil)
         case .feedback:
