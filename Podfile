@@ -12,5 +12,5 @@ pod 'Firebase/RemoteConfig'
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxOptional'
-pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.2'
+pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.4'
 end

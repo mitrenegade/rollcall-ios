@@ -73,6 +73,11 @@ extension SettingsViewController {
                 self.goToUpdateLogo()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            {
+                alert.popoverPresentationController?.sourceView = tableView
+                alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
+            }
             present(alert, animated: true, completion: nil)
         case .account:
             guard let org =  OrganizationService.shared.current.value else { return }
@@ -86,6 +91,11 @@ extension SettingsViewController {
                 self.goToUpdatePassword(nil)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            {
+                alert.popoverPresentationController?.sourceView = tableView
+                alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
+            }
             present(alert, animated: true, completion: nil)
         case .feedback:
             goToFeedback()
@@ -251,7 +261,9 @@ extension SettingsViewController: CameraHelperDelegate {
     
     func goToUpdateLogo() {
         print("UpdateLogo")
-        cameraHelper?.takeOrSelectPhoto(from: self)
+        let indexPath = IndexPath(row: SECTION_TITLES.index(of: .organization)!, section: 0)
+        let cell = tableView.cellForRow(at: indexPath)
+        cameraHelper?.takeOrSelectPhoto(from: self, fromView: cell)
     }
     
     func uploadPhoto(image: UIImage) {
