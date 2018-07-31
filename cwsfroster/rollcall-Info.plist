@@ -44,11 +44,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>RollCall needs to access your camera if you want to upload a photo.</string>
+	<string>RollCall needs to access your camera to upload a profile photo for new members.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>RollCall needs to access your contacts to add members</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>RollCall needs to access your photo library if you want to select a photo.</string>
+	<string>RollCall needs to access your photo library to upload a profile photo for new members.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Splash</string>
 	<key>UIMainStoryboardFile</key>
