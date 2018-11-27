@@ -152,14 +152,7 @@ class OrganizationService: NSObject {
         if let notes = notes {
             params["notes"] = notes
         }
-        switch status {
-        case .Inactive:
-            params["status"] = "inactive"
-        case .Active:
-            params["status"] = "active"
-        default:
-            params["status"] = "unknown"
-        }
+        params["status"] = status.rawValue
         ref.setValue(params) { (error, ref) in
             if let error = error as NSError? {
                 print(error)

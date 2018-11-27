@@ -97,7 +97,7 @@ class AddMembersViewController: UIViewController {
         for name in newNames {
             dispatchGroup.enter()
             let email = emails[name]
-            OrganizationService.shared.createMember(email: email, name: name, notes: nil, status: .Active) { [weak self] (member, error) in
+            OrganizationService.shared.createMember(email: email, name: name, notes: nil, status: .active) { [weak self] (member, error) in
                 print("member added")
                 count += 1
                 DispatchQueue.main.async {

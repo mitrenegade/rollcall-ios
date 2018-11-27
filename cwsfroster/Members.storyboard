@@ -336,6 +336,9 @@
                                     <constraint firstAttribute="height" constant="31" id="9xP-Sm-haS"/>
                                     <constraint firstAttribute="width" constant="49" id="BgU-xB-dTg"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="didClickSwitch:" destination="Lnu-I3-xE9" eventType="valueChanged" id="aX4-FK-Rf9"/>
+                                </connections>
                             </switch>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rGS-A0-jPK">
                                 <rect key="frame" x="16" y="198" width="343" height="30"/>

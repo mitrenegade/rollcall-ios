@@ -75,7 +75,7 @@ class OnsiteSignupViewController: UIViewController {
         
         self.buttonSave.isEnabled = false
         
-        OrganizationService.shared.createMember(email: inputEmail.text, name: name, notes: inputAbout.text, status: .Active) { [weak self] (member, error) in
+        OrganizationService.shared.createMember(email: inputEmail.text, name: name, notes: inputAbout.text, status: .active) { [weak self] (member, error) in
             
             if let member = member {
                 if let photo = self?.addedPhoto {
