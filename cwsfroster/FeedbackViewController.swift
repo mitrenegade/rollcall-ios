@@ -36,7 +36,8 @@ class FeedbackViewController: UIViewController {
         inputDetails.layer.borderColor = UIColor.lightGray.cgColor
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Submit", style: .done, target: self, action: #selector(didClickSubmit(sender:)))
-        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(close))
+
         // Do any additional setup after loading the view, typically from a nib.
         let keyboardNextButtonView = UIToolbar()
         keyboardNextButtonView.sizeToFit()
@@ -74,32 +75,42 @@ class FeedbackViewController: UIViewController {
         if let details = inputDetails.text, !details.isEmpty {
             params["details"] = details
         }
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+        params["version"] = version
+        let org = OrganizationService.shared.current.value?.name ?? ""
+        params["organization"] = org
+        let orgId = OrganizationService.shared.current.value?.id ?? ""
+        params["organizationId"] = orgId
+
         cancelInput()
         
-        showProgress(nil)
-        FirebaseAPIService().cloudFunction(functionName: "submitFeedback", method: "POST", params: params) { [weak self] (result, error) in
-            print("Feedback result \(String(describing: result)) error \(String(describing: error))")
+        showProgress("Submitting feedback")
+        let id = FirebaseAPIService.uniqueId()
+        let ref = firRef.child("feedback").child(id)
+        ref.updateChildValues(params) { (error, ref) in
+            print("Feedback result \(String(describing: ref)) error \(String(describing: error))")
             DispatchQueue.main.async {
-                self?.hideProgress()
-                if let error = error as NSError? {
-                    self?.simpleAlert("Feedback failed", defaultMessage: "Could not submit feedback about \"\(subject)\"", error: error)
-                } else {
-                    var title = "Feedback submitted"
-                    var message = "Thank you for your feedback"
-                    if self?.isLeagueInquiry == true {
-                        title = "Inquiry submitted"
-                        message = "Your question about leagues has been submitted."
+                self.hideProgress({
+                    if let error = error as NSError? {
+                        self.simpleAlert("Feedback failed", defaultMessage: "Could not submit feedback about \"\(subject)\"", error: error)
+                    } else {
+                        var title = "Feedback submitted"
+                        var message = "Thank you for your feedback"
+                        if self.isLeagueInquiry == true {
+                            title = "Inquiry submitted"
+                            message = "Your question about leagues has been submitted."
+                        }
+                        self.simpleAlert(title, message: message, completion: {
+                            self.close()
+                        })
                     }
-                    self?.simpleAlert(title, message: message, completion: {
-                        self?.close()
-                    })
-                }
+                })
             }
         }
     }
     
     func close() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
     @objc fileprivate func keyboardWillShow(_ notification: Notification) {

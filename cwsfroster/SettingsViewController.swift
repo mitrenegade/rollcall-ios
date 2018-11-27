@@ -109,18 +109,6 @@ extension SettingsViewController {
 
 extension SettingsViewController {
     func goToFeedback() {
-//        guard MFMailComposeViewController.canSendMail() else { return }
-//
-//        let title = "RollCall Feedback"
-//        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
-//        let org = OrganizationService.shared.current.value?.name ?? ""
-//        let message = "Organization: \(org)\nVersion: \(version)";
-//        let composer = MFMailComposeViewController(rootViewController: self)
-//        composer.delegate = self
-//        composer.setSubject(title)
-//        composer.setToRecipients(["bobby@renderapps.io"])
-//        composer.setMessageBody(message, isHTML: false)
-//        present(composer, animated: true, completion: nil)
         guard let nav = UIStoryboard(name: "Feedback", bundle: nil).instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers.first as? FeedbackViewController else { return }
         present(nav, animated: true, completion: nil)
     }
