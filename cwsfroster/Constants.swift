@@ -37,10 +37,9 @@ enum NotificationType: String {
     case Freebie = 2
 }
 
-@objc enum MemberStatus: Int {
-    case Inactive = 0
-    case Beginner = 1 // DEPRECATED
-    case Active = 2
+enum MemberStatus: String {
+    case inactive
+    case active
 }
 
 // Firebase

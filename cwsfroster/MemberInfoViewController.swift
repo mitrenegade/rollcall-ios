@@ -101,7 +101,12 @@ class MemberInfoViewController: UIViewController {
             saveMember()
         }
     }
-    
+
+    @IBAction func didClickSwitch(_ sender: UISwitch?) {
+        let status: MemberStatus = switchInactive.isOn ? .inactive : .active
+        member?.status = status.rawValue
+    }
+
     @IBAction func didClickAddPhoto(_ sender: AnyObject?) {
         self.view.endEditing(true)
         cameraHelper.takeOrSelectPhoto(from: self, fromView: buttonPhoto)
@@ -115,7 +120,7 @@ class MemberInfoViewController: UIViewController {
         let email = self.inputEmail.text
         let name = self.inputName.text
         let notes = inputNotes.text
-        let status: MemberStatus = switchInactive.isOn ? .Inactive : .Active
+        let status: MemberStatus = switchInactive.isOn ? .inactive : .active
         
         if let email = email, !email.isEmpty, !email.isValidEmail() {
             // only check for validity if email was entered
@@ -166,6 +171,7 @@ class MemberInfoViewController: UIViewController {
             var params: [String:Any] = ["id": member.id]
             if let name = self.member?.name { params["name"] = name }
             if let email = self.member?.email { params["email"] = email }
+            params["status"] = status.rawValue
             LoggingService.log(type: "MemberUpdated", info: params)
             if let photo = newPhoto {
                 member.photo = photo
