@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		7CDA9BF40B40D18B6E676602 /* Pods_rollcall.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DEBB361C23414764499094E /* Pods_rollcall.framework */; };
 		8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */; };
+		8E09574121ACE00E0037DA17 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E09574021ACE00D0037DA17 /* Feedback.storyboard */; };
+		8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */; };
 		8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0932106A79D00E02558 /* AddMembersViewController.swift */; };
 		8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */; };
 		8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */; };
@@ -114,6 +116,8 @@
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
+		8E09574021ACE00D0037DA17 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
+		8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
 		8E18B0932106A79D00E02558 /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNameInputCell.swift; sourceTree = "<group>"; };
 		8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -266,6 +270,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E09584321ACE0960037DA17 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */,
+			);
+			name = Feedback;
+			sourceTree = "<group>";
+		};
 		8E1D993520B20C86005E4186 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +314,7 @@
 				8EE005B81E3DA30C00272DC0 /* Settings.storyboard */,
 				8E800D2B1E3E614A0085EC4D /* Members.storyboard */,
 				8E800D2E1E3E61C10085EC4D /* Events.storyboard */,
+				8E09574021ACE00D0037DA17 /* Feedback.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -445,6 +458,7 @@
 				8EE551501E3E611D001FB0C4 /* Events */,
 				C645B8FC1E5A7CE50001A119 /* Random Drawing */,
 				8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */,
+				8E09584321ACE0960037DA17 /* Feedback */,
 				C6D9631320C21CA700317C0C /* ShellViewController.swift */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */,
 				9E649FE919B608C300334B34 /* Tutorials */,
@@ -573,6 +587,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 9E80084216196883003E9B16;
 			productRefGroup = 9E80084E16196883003E9B16 /* Products */;
@@ -606,6 +621,7 @@
 				8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */,
 				9E649FE019B6040A00334B34 /* icon29.png in Resources */,
 				8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */,
+				8E09574121ACE00E0037DA17 /* Feedback.storyboard in Resources */,
 				9E649FE119B6040A00334B34 /* icon57.png in Resources */,
 				ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */,
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
@@ -744,6 +760,7 @@
 				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
+				8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */,
 				8E1D993420B20C78005E4186 /* AuthService.swift in Sources */,
 				8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
