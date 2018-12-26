@@ -23,7 +23,7 @@ class SettingsViewController: UITableViewController {
         case feedback = "Feedback"
         case logout = "Logout"
     }
-    let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .feedback, .logout]
+    let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .payment, .feedback, .logout]
 
     func notifyForLogoutInSuccess() {
         self.notify(.LogoutSuccess, object: nil, userInfo: nil)
