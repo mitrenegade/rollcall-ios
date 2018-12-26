@@ -34,7 +34,7 @@ exports.stripeConnectRedirectHandler = functions.https.onRequest((req, res) => {
 
             return storeStripeConnectTokens(userId, stripeUserId, accessToken, refreshToken, publishableKey).then(result => {
                 console.log("StripeConnectRedirectHandler: stored tokens with result " + JSON.stringify(result))
-                let url = "panna://stripeConnect/" + userId
+                let url = "rollcall://stripeConnect/" + userId
                 return res.redirect(url)
             })
     });
