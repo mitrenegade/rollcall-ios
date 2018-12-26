@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import Firebase
 
-let TESTING = false
+let TESTING = true
 let OFFLINE_MODE = false
 
 let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
@@ -22,8 +22,8 @@ let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
 let STRIPE_CLIENT_ID_DEV = "ca_ECowy0cLCEaImKunoIsUfm2n4EbhxrMO"
 let STRIPE_CLIENT_ID_PROD = "ca_ECowdoBb2DfRFlBMQSZ2jT4SSXAUJ6Lx"
 
-let FIREBASE_URL_DEV = "www.google.com"
-let FIREBASE_URL_PROD = "www.google.com"
+let FIREBASE_URL_DEV = "https://us-central1-rollcall-and-random-dev.cloudfunctions.net"
+let FIREBASE_URL_PROD = "https://us-central1-rollcall-and-random-drawing.cloudfunctions.net"
 
 let SOFT_UPGRADE_INTERVAL_DEFAULT = (3600*24*7)
 let APP_STORE_URL = "itms-apps://itunes.apple.com/app/id" + Constants.APP_ID
