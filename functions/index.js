@@ -1,6 +1,7 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const request = require('request')
+const app = require('express')
 
 admin.initializeApp(functions.config().firebase);
 
@@ -31,10 +32,10 @@ exports.stripeConnectRedirectHandler = functions.https.onRequest((req, res) => {
             let stripeUserId = json.stripe_user_id
             let publishableKey = json.stripe_publishable_key
 
-            storeStripeConnectTokens(userId, stripeUserId, accessToken, refreshToken, publishableKey).then(result => {
+            return storeStripeConnectTokens(userId, stripeUserId, accessToken, refreshToken, publishableKey).then(result => {
                 console.log("StripeConnectRedirectHandler: stored tokens with result " + JSON.stringify(result))
                 let url = "panna://stripeConnect/" + userId
-                res.redirect(url)
+                return res.redirect(url)
             })
     });
 })
