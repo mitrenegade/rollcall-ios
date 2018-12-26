@@ -18,11 +18,12 @@ class SettingsViewController: UITableViewController {
     enum Sections: String {
         case about = "About"
         case organization = "My organization"
-        case account = "My account"
+        case profile = "My profile"
+        case payment = "Payment settings"
         case feedback = "Feedback"
         case logout = "Logout"
     }
-    let SECTION_TITLES: [Sections] = [.about, .organization, .account, .feedback, .logout]
+    let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .feedback, .logout]
 
     func notifyForLogoutInSuccess() {
         self.notify(.LogoutSuccess, object: nil, userInfo: nil)
@@ -79,7 +80,7 @@ extension SettingsViewController {
                 alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
             }
             present(alert, animated: true, completion: nil)
-        case .account:
+        case .profile:
             guard let org =  OrganizationService.shared.current.value else { return }
             let title = org.name ?? "Your organization"
             let message = "Please select from the following options"
@@ -97,6 +98,8 @@ extension SettingsViewController {
                 alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
             }
             present(alert, animated: true, completion: nil)
+        case .payment:
+            goToPayments()
         case .feedback:
             goToFeedback()
             
@@ -112,7 +115,12 @@ extension SettingsViewController {
         guard let nav = UIStoryboard(name: "Feedback", bundle: nil).instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers.first as? FeedbackViewController else { return }
         present(nav, animated: true, completion: nil)
     }
-    
+
+    func goToPayments() {
+        guard let nav = UIStoryboard(name: "Stripe", bundle: nil).instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers.first as? StripeViewController else { return }
+        present(nav, animated: true, completion: nil)
+    }
+
     func goToUpdateOrganizationName() {
         let orgId = OrganizationService.shared.current.value?.id
         let orgName = OrganizationService.shared.current.value?.name ?? ""

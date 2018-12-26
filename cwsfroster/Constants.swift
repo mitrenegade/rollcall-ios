@@ -19,6 +19,12 @@ let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
     static let APP_ID = "916600723"
 }
 
+let STRIPE_CLIENT_ID_DEV = "ca_ECowy0cLCEaImKunoIsUfm2n4EbhxrMO"
+let STRIPE_CLIENT_ID_PROD = "ca_ECowdoBb2DfRFlBMQSZ2jT4SSXAUJ6Lx"
+
+let FIREBASE_URL_DEV = "www.google.com"
+let FIREBASE_URL_PROD = "www.google.com"
+
 let SOFT_UPGRADE_INTERVAL_DEFAULT = (3600*24*7)
 let APP_STORE_URL = "itms-apps://itunes.apple.com/app/id" + Constants.APP_ID
 
