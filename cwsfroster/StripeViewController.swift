@@ -36,7 +36,7 @@ class StripeConnectViewModel {
     }
     
     var isConnectButtonVisible: Bool {
-        if case .account = accountState {
+        if accountState == .none || accountState == .unknown {
             return true
         }
         return false
