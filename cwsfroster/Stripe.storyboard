@@ -99,6 +99,9 @@
                                                     <segment title="All Time"/>
                                                 </segments>
                                                 <color key="tintColor" red="0.094117647060000004" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <action selector="didChangeHistoryMode:" destination="4c8-RD-1Nh" eventType="valueChanged" id="SN0-eH-4iu"/>
+                                                </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Received" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXV-dd-YkB">
                                                 <rect key="frame" x="132" y="48" width="111.5" height="20.5"/>

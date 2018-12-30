@@ -63,6 +63,7 @@ class StripeConnectViewModel {
 class StripeViewController: UIViewController {
     
     var stripeService: StripeService?
+    var accountState: AccountState = .unknown
     
     @IBOutlet weak var stackView: UIStackView!
     
@@ -93,15 +94,17 @@ class StripeViewController: UIViewController {
         }).disposed(by: disposeBag)
         
         viewIconBG.layer.cornerRadius = viewIconBG.frame.size.height / 2
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
     }
     
     private func listenForAccount() {
-        stripeService?.accountState.asObservable().distinctUntilChanged().subscribe(onNext: { (state) in
-            self.refreshViews(for: state)
+        stripeService?.accountState.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (state) in
+            self?.accountState = state
+            self?.refresh()
         }).disposed(by: disposeBag)
     }
     
-    private func refreshViews(for state: AccountState) {
+    private func refresh() {
         let mode: PaymentHistoryMode
         switch selectorTime.selectedSegmentIndex {
         case 0:
@@ -111,7 +114,7 @@ class StripeViewController: UIViewController {
         default:
             mode = .all
         }
-        let viewModel = StripeConnectViewModel(state: state, mode: mode)
+        let viewModel = StripeConnectViewModel(state: accountState, mode: mode)
         
         viewSetup.isHidden = !viewModel.isViewSetupVisible
         labelLoading.isHidden = !viewModel.isLoadingVisible
@@ -121,8 +124,16 @@ class StripeViewController: UIViewController {
         labelInfo.text = viewModel.labelInfoText
     }
     
+    @objc private func close() {
+        navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func didClickConnect(_ sender: Any?) {
         guard let orgId = OrganizationService.shared.current.value?.id, let urlString = stripeService?.getOAuthUrl(orgId), let url = URL(string: urlString) else { return }
-        UIApplication.shared.openURL(url)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    @IBAction func didChangeHistoryMode(_ sender: Any?) {
+        refresh()
     }
 }
