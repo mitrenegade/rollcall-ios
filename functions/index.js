@@ -55,7 +55,7 @@ storeStripeConnectTokens = function(userId, stripeUserId, accessToken, refreshTo
 
 exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 	var accountId = req.query.accountId
-	if (accountId == undefined) {
+	if (accountId === undefined) {
 		console.log("getConnectAccountInfo: No Stripe account provided")
 		return res.status(500).json({"error": "No Stripe account provided"})
 	}
@@ -63,7 +63,7 @@ exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 	return stripe.accounts.retrieve(accountId,
 		function(err, account) {
 		// asynchronously called
-			if (err != undefined) {
+			if (err !== undefined) {
 				console.log("getConnectAccountInfo: received error while retrieving accounts: " + JSON.stringify(err))
 				return res.status(500).json({"error": "Received error while retrieving accounts", "info": err})
 			} else {
