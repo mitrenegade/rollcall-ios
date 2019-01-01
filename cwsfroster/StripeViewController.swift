@@ -23,12 +23,16 @@ class StripeConnectViewModel {
         self.mode = mode
     }
     
+    private var hasAccount: Bool {
+        if case .account = accountState {
+            return true
+        }
+        return false
+    }
+    
     // Setup Stripe
     var isViewSetupVisible: Bool {
-        if case .account = accountState {
-            return false
-        }
-        return true
+        return !hasAccount
     }
     
     var isLoadingVisible: Bool {
@@ -44,10 +48,7 @@ class StripeConnectViewModel {
     
     // Payment history
     var isViewHistoryVisible: Bool {
-        if case .account = accountState {
-            return true
-        }
-        return false
+        return hasAccount
     }
     
     var labelInfoText: String {
@@ -57,6 +58,10 @@ class StripeConnectViewModel {
         case .all:
             return "Over all time"
         }
+    }
+    
+    var isSettingsVisible: Bool {
+        return hasAccount
     }
 }
 
@@ -95,6 +100,7 @@ class StripeViewController: UIViewController {
         
         viewIconBG.layer.cornerRadius = viewIconBG.frame.size.height / 2
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
+        refresh()
     }
     
     private func listenForAccount() {
@@ -122,10 +128,27 @@ class StripeViewController: UIViewController {
         
         viewTotalPayments.isHidden = !viewModel.isViewHistoryVisible
         labelInfo.text = viewModel.labelInfoText
+        
+        setupSettingsNavButton(isVisible: viewModel.isSettingsVisible)
     }
     
     @objc private func close() {
         navigationController?.dismiss(animated: true, completion: nil)
+    }
+    
+    private func setupSettingsNavButton(isVisible: Bool) {
+        if isVisible {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            button.setImage(UIImage(named: "settingsIcon30"), for: .normal)
+            button.addTarget(self, action: #selector(goToSettings), for: .touchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
+        } else {
+            navigationItem.rightBarButtonItem = nil
+        }
+    }
+    
+    @objc private func goToSettings() {
+        
     }
     
     @IBAction func didClickConnect(_ sender: Any?) {
