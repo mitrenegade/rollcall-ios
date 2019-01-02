@@ -3,6 +3,9 @@ const admin = require('firebase-admin');
 const request = require('request')
 const app = require('express')
 
+const config = functions.config().dev
+const stripe = require('stripe')(config.stripe.token)
+
 admin.initializeApp(functions.config().firebase);
 
 /*** Stripe connect ***/
@@ -49,3 +52,24 @@ storeStripeConnectTokens = function(userId, stripeUserId, accessToken, refreshTo
     console.log("StoreStripeConnectTokens: ref " + ref + " tokens " + JSON.stringify(params))
     return admin.database().ref(ref).set(params)
 }
+
+exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
+	var accountId = req.query.accountId
+	if (accountId === undefined) {
+		console.log("getConnectAccountInfo: No Stripe account provided")
+		return res.status(500).json({"error": "No Stripe account provided"})
+	}
+
+	return stripe.accounts.retrieve(accountId,
+		function(err, account) {
+		// asynchronously called
+			if (err !== undefined) {
+				console.log("getConnectAccountInfo: received error while retrieving accounts: " + JSON.stringify(err))
+				return res.status(500).json({"error": "Received error while retrieving accounts", "info": err})
+			} else {
+				console.log("getConnectAccountInfo: Retrieved accounts for " + accountId + ": " + JSON.stringify(account))
+				return res.status(200).json({"account": account})
+			}
+		}
+	);
+})

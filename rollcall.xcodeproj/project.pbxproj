@@ -25,6 +25,7 @@
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
 		8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CF20DA826B0075548C /* SettingsService.swift */; };
+		8E3FFF5921D6CB4200B831B3 /* TheNounProject in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FFF5821D6CB4200B831B3 /* TheNounProject */; };
 		8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */; };
 		8E428C511E4C3CCD009CC0A2 /* AttendanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */; };
 		8E428C531E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */; };
@@ -134,6 +135,7 @@
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
 		8E3DD1CF20DA826B0075548C /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		8E3FFF5821D6CB4200B831B3 /* TheNounProject */ = {isa = PBXFileReference; lastKnownFileType = text; path = TheNounProject; sourceTree = "<group>"; };
 		8E428C4E1E4C3A23009CC0A2 /* MemberCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberCell.swift; sourceTree = "<group>"; };
 		8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceCell.swift; sourceTree = "<group>"; };
 		8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnsiteSignupViewController.swift; sourceTree = "<group>"; };
@@ -490,6 +492,7 @@
 				9E80085F16196883003E9B16 /* rollcall-Prefix.pch */,
 				AC8EF0E51C265A330029EBAE /* cwsfroster-Bridging-Header.h */,
 				8EE005AC1E3D875600272DC0 /* Assets.xcassets */,
+				8E3FFF5821D6CB4200B831B3 /* TheNounProject */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
+				8E3FFF5921D6CB4200B831B3 /* TheNounProject in Resources */,
 				C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */,
 				9E649FEF19B60EEC00334B34 /* IntroTutorial2.xib in Resources */,
 				9E98DB5019B2EA5B006D81FC /* unchecked@2x.png in Resources */,
