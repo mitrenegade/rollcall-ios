@@ -73,3 +73,83 @@ exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 		}
 	);
 })
+
+/*
+ * Params:
+ * amount: Int, cents
+ * orgId: String
+ * eventId: String
+ * chargeId: String, client-generated
+ * source: payment token from stripe
+ */
+exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
+    // Create a charge using the pushId as the idempotency key, protecting against double charges 
+    const amount = req.body.amount;
+    const orgId = req.body.orgId
+    const source = req.body.source
+    const eventId = req.body.eventId
+    const chargeId = req.body.chargeId
+    const idempotency_key = chargeId
+    const currency = 'USD'
+    console.log("CreateStripeConnectCharge amount " + amount + " orgId " + orgId + " event " + eventId + " source " + source)
+    var accountRef = `/stripeAccounts/${orgId}`
+    return admin.database().ref(accountRef).once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+            throw new Error("No Stripe account found for organization")
+        }
+        const customerDict = snapshot.val()
+        const connectId = customerDict["stripeUserId"]
+        if (connectId === undefined) {
+            throw new Error("No Stripe account associated with organization")
+        }
+        return connectId
+    }).then(stripe_account => {
+        const charge = {
+            amount, 
+            currency,
+            source
+        }
+        const headers = {
+//            idempotency_key, 
+            stripe_account
+        }
+        console.log("CreateStripeConnectCharge: creating charge for stripe connect: charge: " + JSON.stringify(charge), " headers: " + JSON.stringify(headers))
+        return stripe.charges.create(charge, headers)
+        .then(response => {
+            // If the result is successful, write it back to the database
+            console.log("CreateStripeConnectCharge success with response " + JSON.stringify(response))
+            const ref = admin.database().ref(`/charges/events/${eventId}/${chargeId}`)
+            return ref.update(response)
+        }, error => {
+            // We want to capture errors and render them in a user-friendly way, while
+            // still logging an exception with Stackdriver
+            console.log("CreateStripeConnectCharge createCharge error: " + error)
+            const ref = admin.database().ref(`/charges/events/${eventId}/${chargeId}`)
+            return ref.child('error').set(error.message)
+        })
+    }).catch((error) => {
+        console.log("CreateStripeConnectCharge caught error: " + error) //JSON.stringify(error))
+        return res.status(500).json({"error": error})
+    })
+})
+
+exports.ephemeralKeys = functions.https.onRequest((req, res) => {
+//exports.ephemeralKeys = function(req, res, stripe) {
+    let stripe_version = req.body.api_version
+    let customer_id = req.body.customer_id
+    console.log('Stripe v1.0 ephemeralKeys with ' + stripe_version + ' and ' + customer_id)
+    if (!stripe_version) {
+        return res.status(400).end();
+    }
+    // This function assumes that some previous middleware has determined the
+    // correct customerId for the session and saved it on the request object.
+    return stripe.ephemeralKeys.create(
+        {customer: customer_id},
+        {stripe_version: stripe_version}
+    ).then((key) => {
+        return res.status(200).json(key);
+    }).catch((err) => {
+        return res.status(500).json({"error": err});
+    })
+})
+
