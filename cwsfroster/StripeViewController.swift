@@ -148,7 +148,10 @@ class StripeViewController: UIViewController {
     }
     
     @objc private func goToSettings() {
-        
+        // TODO: give user the option to disconnect
+        if case .account(let id) = accountState {
+            simpleAlert("Stripe connected", message: "Current Stripe account is \(id)")
+        }
     }
     
     @IBAction func didClickConnect(_ sender: Any?) {
