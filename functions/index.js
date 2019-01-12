@@ -55,7 +55,7 @@ storeStripeConnectTokens = function(userId, stripeUserId, accessToken, refreshTo
 
 exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 	var accountId = req.query.accountId
-	if (accountId === undefined) {
+	if (accountId == undefined) {
 		console.log("getConnectAccountInfo: No Stripe account provided")
 		return res.status(500).json({"error": "No Stripe account provided"})
 	}
@@ -63,7 +63,7 @@ exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 	return stripe.accounts.retrieve(accountId,
 		function(err, account) {
 		// asynchronously called
-			if (err !== undefined) {
+			if (err != undefined) {
 				console.log("getConnectAccountInfo: received error while retrieving accounts: " + JSON.stringify(err))
 				return res.status(500).json({"error": "Received error while retrieving accounts", "info": err})
 			} else {
@@ -99,7 +99,7 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
         }
         const customerDict = snapshot.val()
         const connectId = customerDict["stripeUserId"]
-        if (connectId === undefined) {
+        if (connectId == undefined) {
             throw new Error("No Stripe account associated with organization")
         }
         return connectId
@@ -136,15 +136,15 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
 exports.ephemeralKeys = functions.https.onRequest((req, res) => {
 //exports.ephemeralKeys = function(req, res, stripe) {
     let stripe_version = req.body.api_version
-    let customer_id = req.body.customer_id
-    console.log('Stripe v1.0 ephemeralKeys with ' + stripe_version + ' and ' + customer_id)
+    let customerId = req.body.customerId
+    console.log('Stripe v1.0 ephemeralKeys with ' + stripe_version + ' and ' + customerId)
     if (!stripe_version) {
         return res.status(400).end();
     }
     // This function assumes that some previous middleware has determined the
     // correct customerId for the session and saved it on the request object.
     return stripe.ephemeralKeys.create(
-        {customer: customer_id},
+        {customer: customerId},
         {stripe_version: stripe_version}
     ).then((key) => {
         return res.status(200).json(key);
@@ -153,3 +153,48 @@ exports.ephemeralKeys = functions.https.onRequest((req, res) => {
     })
 })
 
+exports.validateStripeCustomer = functions.https.onRequest((req, res) => {
+//exports.validateStripeCustomer = function(req, res, exports, admin, stripe) {
+    const userId = req.body.userId
+    const email = req.body.email
+
+    if (userId == undefined || userId == "") {
+        return res.status(500).json({"error": "Could not validate Stripe customer: empty user id"})
+    }
+    if (email == undefined || email == "") {
+        return res.status(500).json({"error": "Could not validate Stripe customer: empty email"})
+    }
+
+    var customerRef = `/stripeCustomers/${userId}/customerId`
+    return admin.database().ref(customerRef).once('value')
+    .then(snapshot => {
+        if (!snapshot.exists()) {
+            console.log("ValidateStripeCustomer: userId " + userId + " customer not found. Creating...")
+            return exports.createStripeCustomer(email, userId)
+        } else {
+            console.log("ValidateStripeCustomer: userId " + userId + " customer found: " + snapshot.val())
+            return snapshot.val()
+        }
+    }).then(customer => {
+        return res.status(200).json({"customerId": customer})
+    })
+})
+
+createStripeCustomer = function(email, uid) {
+    console.log("Stripe 1.0: Creating stripeCustomer " + uid + " " + email)
+    const ref = `/stripeCustomers/${uid}/customerId`
+    return stripe.customers.create({
+        email: email
+    }, function(err, customer) {
+        if (err != undefined) {
+            console.log('CreateStripeCustomer v1.0' + ref + ' resulted in error ' + err)
+            return err
+        } else {
+            console.log('CreateStripeCustomer v1.0 ' + ref + ' email ' + email + ' created with customerId ' + customer.id)
+            return admin.database().ref(ref).set(customer.id);
+        }
+    }).then(result => {
+        console.log('createStripeCustomer returning the value')
+        return admin.database().ref(ref).once('value')
+    })
+}
