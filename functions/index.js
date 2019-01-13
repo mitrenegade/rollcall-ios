@@ -198,3 +198,30 @@ createStripeCustomer = function(email, uid) {
         return admin.database().ref(ref).once('value')
     })
 }
+
+exports.savePaymentInfo = functions.https.onRequest((req, res) => {
+//exports.savePaymentInfo = function(req, res, admin) {
+    const userId = req.body.userId
+    const source = req.body.source
+    const last4 = req.body.last4
+    const label = req.body.label
+    var customerId = "unknown"
+    console.log("Stripe 1.0: SavePaymentInfo: userId " + userId + " source " + source + " last4 " + last4 + " label " + label)
+    var customerRef = `/stripeCustomers/${userId}/customerId`
+    return admin.database().ref(customerRef).once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+            throw new Error("Customer doesn't exist")
+        }
+        return snapshot.val();
+    }).then(customer => {
+        var userRef = `/stripeCustomers/${userId}`
+        var params = {"source": source, "last4": last4, "label": label}
+        customerId = customer
+        return admin.database().ref(userRef).update(params)
+    }).then(result => {
+        return res.status(200).json({"customerId": customerId})
+    }).catch((err) => {
+        console.log("Probably no customerId for userId. err " + JSON.stringify(err))
+        return res.status(500).json({"error": err})
+    })
+})
