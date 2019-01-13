@@ -8,6 +8,17 @@ const stripe = require('stripe')(config.stripe.token)
 
 admin.initializeApp(functions.config().firebase);
 
+exports.secondsSince1970 = function() {
+    var secondsSince1970 = new Date().getTime() / 1000
+    return Math.floor(secondsSince1970)
+}
+
+exports.createUniqueId = function() {
+    var secondsSince1970 = exports.secondsSince1970()
+    var randomId = Math.floor(Math.random() * 899999 + 100000)
+    return `${secondsSince1970}-${randomId}`
+}
+
 /*** Stripe connect ***/
 // https://stackoverflow.com/questions/52493606/stripe-connect-firebase-functions
 exports.stripeConnectRedirectHandler = functions.https.onRequest((req, res) => {
@@ -88,9 +99,13 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
     const orgId = req.body.orgId
     const source = req.body.source
     const eventId = req.body.eventId
-    const chargeId = req.body.chargeId
-    const idempotency_key = chargeId
     const currency = 'USD'
+    var chargeId = req.body.chargeId
+    if (chargeId == undefined) {
+        chargeId = exports.createUniqueId()
+    }
+    const idempotency_key = chargeId
+
     console.log("CreateStripeConnectCharge amount " + amount + " orgId " + orgId + " event " + eventId + " source " + source)
     var accountRef = `/stripeAccounts/${orgId}`
     return admin.database().ref(accountRef).once('value').then(snapshot => {
@@ -125,7 +140,9 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
             // still logging an exception with Stackdriver
             console.log("CreateStripeConnectCharge createCharge error: " + error)
             const ref = admin.database().ref(`/charges/events/${eventId}/${chargeId}`)
-            return ref.child('error').set(error.message)
+            return ref.child('error').set(error.message).then(()=> {
+                throw error
+            })
         })
     }).catch((error) => {
         console.log("CreateStripeConnectCharge caught error: " + error) //JSON.stringify(error))
