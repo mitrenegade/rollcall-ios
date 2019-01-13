@@ -170,7 +170,7 @@ exports.validateStripeCustomer = functions.https.onRequest((req, res) => {
     .then(snapshot => {
         if (!snapshot.exists()) {
             console.log("ValidateStripeCustomer: userId " + userId + " customer not found. Creating...")
-            return exports.createStripeCustomer(email, userId)
+            return createStripeCustomer(email, userId)
         } else {
             console.log("ValidateStripeCustomer: userId " + userId + " customer found: " + snapshot.val())
             return snapshot.val()
