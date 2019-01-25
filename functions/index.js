@@ -55,7 +55,7 @@ exports.stripeConnectRedirectHandler = functions.https.onRequest((req, res) => {
 })
 
 storeStripeConnectTokens = function(userId, stripeUserId, accessToken, refreshToken, publishableKey) {
-    const ref = `/stripeAccounts/${userId}`
+    const ref = `/stripeConnectAccounts/${userId}`
     const params = {"accessToken": accessToken, 
                     "refreshToken": refreshToken,
                     "stripeUserId": stripeUserId,
@@ -96,33 +96,29 @@ exports.getConnectAccountInfo = functions.https.onRequest((req, res) => {
 exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
     // Create a charge using the pushId as the idempotency key, protecting against double charges 
     const amount = req.body.amount;
-    const orgId = req.body.orgId
-    const source = req.body.source
-    const eventId = req.body.eventId
     const currency = 'USD'
+    const eventId = req.body.eventId
+    const connectId = req.body.connectId // index into stripeConnectAccount
+    const customerId = req.body.customerId // index into stripeCustomer
     var chargeId = req.body.chargeId
     if (chargeId == undefined) {
         chargeId = exports.createUniqueId()
     }
+
     const idempotency_key = chargeId
 
-    console.log("CreateStripeConnectCharge amount " + amount + " orgId " + orgId + " event " + eventId + " source " + source)
-    var accountRef = `/stripeAccounts/${orgId}`
-    return admin.database().ref(accountRef).once('value').then(snapshot => {
-        if (!snapshot.exists()) {
-            throw new Error("No Stripe account found for organization")
-        }
-        const customerDict = snapshot.val()
-        const connectId = customerDict["stripeUserId"]
-        if (connectId == undefined) {
-            throw new Error("No Stripe account associated with organization")
-        }
-        return connectId
-    }).then(stripe_account => {
+    console.log("CreateStripeConnectCharge amount " + amount + " connectId " + connectId + " customerId " + customerId + " event " + eventId)
+    // TODO: use two promises to pull stripeConnectAccount and stripeCustomer info
+    createStripeConnectChargeToken(connectId, customerId).then(result => {
+        var token = result.token
+        var stripe_account = result.stripe_account
+        console.log("CreateStripeConnectChargeToken for account " + stripe_account + " token: " + JSON.stringify(token))
+        var source = token.id
         const charge = {
             amount, 
             currency,
             source
+            //application_fee
         }
         const headers = {
 //            idempotency_key, 
@@ -134,7 +130,10 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
             // If the result is successful, write it back to the database
             console.log("CreateStripeConnectCharge success with response " + JSON.stringify(response))
             const ref = admin.database().ref(`/charges/events/${eventId}/${chargeId}`)
-            return ref.update(response)
+            // TODO: also add connectId to it
+            return ref.update(response).then(result => {
+                return res.status(200).json({"success": true, "chargeId": chargeId, "result": response})
+            })
         }, error => {
             // We want to capture errors and render them in a user-friendly way, while
             // still logging an exception with Stackdriver
@@ -149,6 +148,42 @@ exports.createStripeConnectCharge = functions.https.onRequest((req, res) => {
         return res.status(500).json({"error": error})
     })
 })
+
+// https://stripe.com/docs/connect/shared-customers
+// https://stripe.com/docs/sources/connect#shared-card-sources
+createStripeConnectChargeToken = function(connectId, customerId) {
+    return admin.database().ref(`/stripeConnectAccounts/${connectId}`).once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+            throw new Error("No Stripe account found for organization " + connectId)
+        }
+        var stripe_account = snapshot.val().stripeUserId
+        if (stripe_account == undefined) {
+            throw new Error("No Stripe account associated with " + connectId + ". Dict: " + JSON.stringify(snapshot.val()))
+        }
+        console.log("createStripeConnectChargeToken: Stripe account " + stripe_account)
+        return admin.database().ref(`/stripeCustomers/${customerId}`).once('value').then(snapshot => {
+            if (!snapshot.exists()) {
+                throw new Error("No customer account found for " + customerId)
+            }
+            var customer = snapshot.val().customerId
+            var original_source = snapshot.val().source
+            if (customer == undefined) {
+                throw new Error("No customer account associated with " + customer)
+            }
+            console.log("createStripeConnectChargeToken: Customer " + customer + " source " + original_source + " stripe_account " + stripe_account)
+            // create a one time shared source
+            return stripe.sources.create({
+                customer,
+                original_source,
+                usage: 'single_use' // TODO: make this reusable, and add it to a customer/stripe account
+            }, {
+                stripe_account
+            })
+        }).then(token => {
+            return {token, stripe_account}
+        })
+    })
+}
 
 exports.ephemeralKeys = functions.https.onRequest((req, res) => {
 //exports.ephemeralKeys = function(req, res, stripe) {
@@ -197,6 +232,8 @@ exports.validateStripeCustomer = functions.https.onRequest((req, res) => {
     })
 })
 
+// May need to create a shared customer: https://stripe.com/docs/connect/shared-customers
+// from https://adamjstevenson.com/stripe/2017/10/20/building-a-marketplace-using-stripe-connect-examples.html
 createStripeCustomer = function(email, uid) {
     console.log("Stripe 1.0: Creating stripeCustomer " + uid + " " + email)
     const ref = `/stripeCustomers/${uid}/customerId`
