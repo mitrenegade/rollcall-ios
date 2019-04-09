@@ -13,7 +13,7 @@ pod 'RxSwift'
 pod 'RxCocoa'
 pod 'RxOptional'
 pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.5'
-pod 'RenderPay', :git => 'git@bitbucket.org:renderapps/renderpay.git', :tag => '0.0.4'
-pod 'Balizinha', :git => 'https://bitbucket.org/renderapps/balizinha-pod', :tag => '0.5.0'
-
+pod 'RenderPay', :git => 'git@bitbucket.org:renderapps/renderpay.git', :tag => '0.1.2'
+pod 'Balizinha', :git => 'https://bitbucket.org/renderapps/balizinha-pod', :tag => '0.5.8'
+pod 'RenderCloud', :git => 'git@bitbucket.org:renderapps/RenderCloud.git', :tag=>'1.1.0'
 end

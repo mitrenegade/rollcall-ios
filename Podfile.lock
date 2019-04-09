@@ -1,5 +1,5 @@
 PODS:
-  - Balizinha (0.5.0):
+  - Balizinha (0.5.8):
     - Firebase
     - Firebase/Analytics
     - Firebase/Auth
@@ -8,102 +8,143 @@ PODS:
     - Firebase/Messaging
     - Firebase/RemoteConfig
     - Firebase/Storage
+    - RenderCloud
     - RxCocoa
     - RxOptional
     - RxSwift
-  - Crashlytics (3.10.5):
-    - Fabric (~> 1.7.9)
-  - Fabric (1.7.9)
-  - Firebase (5.4.0):
-    - Firebase/Core (= 5.4.0)
-  - Firebase/Analytics (5.4.0):
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
+  - Firebase (5.20.1):
+    - Firebase/Core (= 5.20.1)
+  - Firebase/Analytics (5.20.1):
     - Firebase/Core
-  - Firebase/Auth (5.4.0):
+  - Firebase/Auth (5.20.1):
     - Firebase/CoreOnly
-    - FirebaseAuth (= 5.0.2)
-  - Firebase/Core (5.4.0):
+    - FirebaseAuth (= 5.4.2)
+  - Firebase/Core (5.20.1):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.0.1)
-  - Firebase/CoreOnly (5.4.0):
-    - FirebaseCore (= 5.0.5)
-  - Firebase/Database (5.4.0):
+    - FirebaseAnalytics (= 5.8.0)
+  - Firebase/CoreOnly (5.20.1):
+    - FirebaseCore (= 5.4.1)
+  - Firebase/Database (5.20.1):
     - Firebase/CoreOnly
-    - FirebaseDatabase (= 5.0.2)
-  - Firebase/Messaging (5.4.0):
+    - FirebaseDatabase (= 5.1.1)
+  - Firebase/Messaging (5.20.1):
     - Firebase/CoreOnly
-    - FirebaseMessaging (= 3.0.3)
-  - Firebase/RemoteConfig (5.4.0):
+    - FirebaseMessaging (= 3.5.0)
+  - Firebase/RemoteConfig (5.20.1):
     - Firebase/Core
-    - FirebaseRemoteConfig (= 3.0.0)
-  - Firebase/Storage (5.4.0):
+    - FirebaseRemoteConfig (= 3.1.0)
+  - Firebase/Storage (5.20.1):
     - Firebase/CoreOnly
-    - FirebaseStorage (= 3.0.0)
+    - FirebaseStorage (= 3.1.1)
   - FirebaseABTesting (2.0.0):
     - FirebaseCore (~> 5.0)
     - Protobuf (~> 3.5)
-  - FirebaseAnalytics (5.0.1):
-    - FirebaseCore (~> 5.0)
-    - FirebaseInstanceID (~> 3.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - FirebaseAnalytics (5.8.0):
+    - FirebaseCore (~> 5.4)
+    - FirebaseInstanceID (~> 3.8)
+    - GoogleAppMeasurement (= 5.8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
+    - GoogleUtilities/MethodSwizzler (~> 5.2)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseAuth (5.0.2):
-    - FirebaseCore (~> 5.0)
+  - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseAuth (5.4.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (5.0.5):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseDatabase (5.0.2):
-    - FirebaseCore (~> 5.0)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (5.4.1):
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseDatabase (5.1.1):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
     - leveldb-library (~> 1.18)
-  - FirebaseInstanceID (3.1.1):
-    - FirebaseCore (~> 5.0)
-  - FirebaseMessaging (3.0.3):
-    - FirebaseCore (~> 5.0)
-    - FirebaseInstanceID (~> 3.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
+  - FirebaseInstanceID (3.8.1):
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/UserDefaults (~> 5.2)
+  - FirebaseMessaging (3.5.0):
+    - FirebaseAnalyticsInterop (~> 1.1)
+    - FirebaseCore (~> 5.2)
+    - FirebaseInstanceID (~> 3.6)
+    - GoogleUtilities/Environment (~> 5.3)
+    - GoogleUtilities/Reachability (~> 5.3)
+    - GoogleUtilities/UserDefaults (~> 5.3)
     - Protobuf (~> 3.1)
-  - FirebaseRemoteConfig (3.0.0):
+  - FirebaseRemoteConfig (3.1.0):
     - FirebaseABTesting (~> 2.0)
-    - FirebaseAnalytics (~> 5.0)
-    - FirebaseCore (~> 5.0)
-    - FirebaseInstanceID (~> 3.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - FirebaseAnalytics (~> 5.3)
+    - FirebaseCore (~> 5.1)
+    - FirebaseInstanceID (~> 3.3)
+    - GoogleUtilities/Environment (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - Protobuf (~> 3.5)
-  - FirebaseStorage (3.0.0):
-    - FirebaseCore (~> 5.0)
+  - FirebaseStorage (3.1.1):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/Defines (2.1.4)
-  - GoogleToolboxForMac/Logger (2.1.4):
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.4)":
-    - GoogleToolboxForMac/Defines (= 2.1.4)
-  - GTMSessionFetcher/Core (1.1.15)
+  - GoogleAppMeasurement (5.8.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
+    - GoogleUtilities/MethodSwizzler (~> 5.2)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - nanopb (~> 0.3)
+  - GoogleUtilities/AppDelegateSwizzler (5.5.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (5.5.0)
+  - GoogleUtilities/Logger (5.5.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (5.5.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (5.5.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (5.5.0)"
+  - GoogleUtilities/Reachability (5.5.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (5.5.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.2.1)
   - leveldb-library (1.20)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - Protobuf (3.6.0)
+  - nanopb (0.3.901):
+    - nanopb/decode (= 0.3.901)
+    - nanopb/encode (= 0.3.901)
+  - nanopb/decode (0.3.901)
+  - nanopb/encode (0.3.901)
+  - Protobuf (3.7.0)
   - RACameraHelper (0.1.5)
-  - RenderPay (0.0.4):
-    - Balizinha (~> 0.5.0)
+  - RenderCloud (1.1.0)
+  - RenderPay (0.1.2):
     - Firebase
     - Firebase/Auth
     - Firebase/Core
     - Firebase/Database
     - Firebase/RemoteConfig
     - Firebase/Storage
+    - RenderCloud (~> 1.1.0)
     - RxCocoa
+    - RxOptional
     - RxSwift
-  - RxCocoa (4.2.0):
-    - RxSwift (~> 4.0)
-  - RxOptional (3.5.0):
+    - Stripe
+  - RxCocoa (4.5.0):
+    - RxSwift (>= 4.4.2, ~> 4.4)
+  - RxOptional (3.6.2):
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
-  - RxSwift (4.2.0)
+  - RxSwift (4.5.0)
+  - Stripe (15.0.0)
 
 DEPENDENCIES:
-  - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`, tag `0.5.0`)
+  - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`, tag `0.5.8`)
   - Crashlytics
   - Fabric
   - Firebase/Auth
@@ -112,7 +153,8 @@ DEPENDENCIES:
   - Firebase/RemoteConfig
   - Firebase/Storage
   - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.5`)
-  - "RenderPay (from `git@bitbucket.org:renderapps/renderpay.git`, tag `0.0.4`)"
+  - "RenderCloud (from `git@bitbucket.org:renderapps/RenderCloud.git`, tag `1.1.0`)"
+  - "RenderPay (from `git@bitbucket.org:renderapps/renderpay.git`, tag `0.1.2`)"
   - RxCocoa
   - RxOptional
   - RxSwift
@@ -124,14 +166,17 @@ SPEC REPOS:
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
     - FirebaseMessaging
     - FirebaseRemoteConfig
     - FirebaseStorage
-    - GoogleToolboxForMac
+    - GoogleAppMeasurement
+    - GoogleUtilities
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
@@ -139,54 +184,66 @@ SPEC REPOS:
     - RxCocoa
     - RxOptional
     - RxSwift
+    - Stripe
 
 EXTERNAL SOURCES:
   Balizinha:
     :git: https://bitbucket.org/renderapps/balizinha-pod
-    :tag: 0.5.0
+    :tag: 0.5.8
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
     :tag: 0.1.5
+  RenderCloud:
+    :git: "git@bitbucket.org:renderapps/RenderCloud.git"
+    :tag: 1.1.0
   RenderPay:
     :git: "git@bitbucket.org:renderapps/renderpay.git"
-    :tag: 0.0.4
+    :tag: 0.1.2
 
 CHECKOUT OPTIONS:
   Balizinha:
     :git: https://bitbucket.org/renderapps/balizinha-pod
-    :tag: 0.5.0
+    :tag: 0.5.8
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
     :tag: 0.1.5
+  RenderCloud:
+    :git: "git@bitbucket.org:renderapps/RenderCloud.git"
+    :tag: 1.1.0
   RenderPay:
     :git: "git@bitbucket.org:renderapps/renderpay.git"
-    :tag: 0.0.4
+    :tag: 0.1.2
 
 SPEC CHECKSUMS:
-  Balizinha: 307b85f5e767d31c7aa9b710d2ada20f80886846
-  Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
-  Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
-  Firebase: d66f4f29c23f22d96808d9abc174d81d8eee968f
+  Balizinha: 3ba649fae34dc2cae27920dd3dc9ee52d273ea15
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
   FirebaseABTesting: 1f50b8d50f5e3469eea54e7463a7b7fe221d1f5e
-  FirebaseAnalytics: b3628aea54c50464c32c393fb2ea032566e7ecc2
-  FirebaseAuth: 096e457cdd4274412a66c4a35874787e411f5a03
-  FirebaseCore: 42b3267233bd21a5abd54117ccc38ca3dd0f8e83
-  FirebaseDatabase: 27be5ac5bc75e0b17537b2bbfada8258addcc8cd
-  FirebaseInstanceID: f3f0657372592ecdfdfe2cac604a5a75758376a6
-  FirebaseMessaging: f43eb0c0e1da096e659de6f713038e74862a62cd
-  FirebaseRemoteConfig: 3c57e4644bd6976b671ae0b725cd709f198bd1f5
-  FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
-  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
-  GTMSessionFetcher: 5fa5b80fd20e439ef5f545fb2cb3ca6c6714caa2
+  FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
+  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseAuth: dd7bbf03a5aee0eafb3a1aee4d2812bd74bac890
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: f1a9a8be1aee4bf71a2fc0f4096df6788bdfda61
+  FirebaseDatabase: 2c15b0ea6f2c6eb5e57413f9d6340f1e50b81ae3
+  FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
+  FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
+  FirebaseRemoteConfig: 7e11c65f0769c09bff6947997c209515058c5318
+  FirebaseStorage: 6162ef4322502b818d9de0ec552f5226d283de43
+  GoogleAppMeasurement: 1624046ab1bcc5e170061a56ef5679000b079c8e
+  GoogleUtilities: 6481e6318c5fcabaaa8513ef8120f329055d7c10
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  Protobuf: 0fc0ad8bec688b2a3017a139953e01374fedbd5f
+  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
   RACameraHelper: 7c56ad6e5c4983e62e9ebb65039d868960adfeef
-  RenderPay: 261521607464d7f939d47d99813bb02ff2e4e678
-  RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
-  RxOptional: bd32ff8ca9df4177683d56ffeb618a9d4d5d5cad
-  RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
+  RenderCloud: 2206a9dba1f8b28a394867718dfabd2cb846fa87
+  RenderPay: 2c04d1b88f06952febe856da030cd11a703fef56
+  RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
+  RxOptional: 80426a0ddbd092573e4c482d8cc13302078c4d5e
+  RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
+  Stripe: 312b22a67af9fa55c246d26148b3f3a9636a0ff2
 
-PODFILE CHECKSUM: 70d4df5e124ad2d9259d9baa65b89a627071ee27
+PODFILE CHECKSUM: 8bcd59820f8a573f40146219978ce8f419b0c6b4
 
 COCOAPODS: 1.6.1
