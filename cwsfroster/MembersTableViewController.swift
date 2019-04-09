@@ -41,7 +41,7 @@ class MembersTableViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    func reloadMembers() {
+    @objc func reloadMembers() {
         OrganizationService.shared.members { [weak self] (members, error) in
             self?._members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }
@@ -52,11 +52,11 @@ class MembersTableViewController: UITableViewController {
         }
     }
     
-    func goToSettings() {
+    @objc func goToSettings() {
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
-    func goToAddMembers() {
+    @objc func goToAddMembers() {
         performSegue(withIdentifier: "toAddMembers", sender: nil)
     }
     

@@ -25,11 +25,11 @@ extension PracticesTableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    func goToSettings() {
+    @objc func goToSettings() {
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
-    func goToAddEvent() {
+    @objc func goToAddEvent() {
         performSegue(withIdentifier: "toNewEvent", sender: nil)
     }
 }
@@ -74,7 +74,7 @@ extension PracticesTableViewController: UITableViewDataSource {
         return true
     }
 
-    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         self.deletePracticeAt(indexPath: indexPath as NSIndexPath)
     }
 

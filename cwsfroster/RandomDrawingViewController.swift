@@ -32,7 +32,7 @@ class RandomDrawingViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItem.Style.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         inputNumber.inputAccessoryView = keyboardDoneButtonView
         
@@ -109,7 +109,7 @@ class RandomDrawingViewController: UIViewController {
 }
 
 extension RandomDrawingViewController {
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
         
         guard let text = inputNumber.text, let count = Int(text) else {

@@ -64,7 +64,7 @@ class ContactsViewController: UIViewController {
         reloadTableData()
     }
     
-    func didClickSave(_ sender: Any?) {
+    @objc func didClickSave(_ sender: Any?) {
         let results = contacts.filter { (tuple) -> Bool in
             return tuple.selected
             }.compactMap() { return $0.contact }

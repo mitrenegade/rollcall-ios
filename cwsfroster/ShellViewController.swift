@@ -35,7 +35,7 @@ class ShellViewController: UITabBarController {
         print("deinit succeess")
     }
     
-    func didLogout() {
+    @objc func didLogout() {
         // this causes listenForOrganization to be successfully cleared even if ShellViewController is not actually correctly deallocated on logout (corner case)
         disposeBag = nil
         print("here didlogout")
@@ -70,7 +70,7 @@ class ShellViewController: UITabBarController {
         }).disposed(by: disposeBag)
     }
     
-    func updateTabBarIcons() {
+    @objc func updateTabBarIcons() {
         guard let name = OrganizationService.shared.current.value?.name else { return }
         if name.lowercased().contains("taekwondo") {
             setIcon(iconName: "icon-tkd-paddle", for: 0)
@@ -88,7 +88,7 @@ class ShellViewController: UITabBarController {
         controller.tabBarItem.selectedImage = image
     }
     
-    func goToSettings() {
+    @objc func goToSettings() {
         if let nav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() {
             present(nav, animated: true, completion: nil)
         }

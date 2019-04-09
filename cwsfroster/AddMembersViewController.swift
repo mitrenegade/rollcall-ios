@@ -29,7 +29,7 @@ class AddMembersViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItem.Style.done, target: self, action: #selector(dismissKeyboard))
         keyboardDoneButtonView.setItems([saveButton], animated: true)
         self.inputName.inputAccessoryView = keyboardDoneButtonView
 
@@ -37,8 +37,8 @@ class AddMembersViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(didClickSave(_:))) // hide/disable back button
 
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIResponder.keyboardWillHideNotification, object: nil)
 
         reloadTableData()
     }
@@ -66,12 +66,12 @@ class AddMembersViewController: UIViewController {
         reloadTableData()
     }
     
-    func didClickCancel(_ sender: Any?) {
+    @objc func didClickCancel(_ sender: Any?) {
         LoggingService.log(event: .addMembersCancelled, message: nil, info: nil, error: nil)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 
-    func didClickSave(_ sender: Any?) {
+    @objc func didClickSave(_ sender: Any?) {
         dismissKeyboard()
         showProgress("Adding new members")
         OrganizationService.shared.members { [weak self] (members, error) in
@@ -140,7 +140,7 @@ extension AddMembersViewController: UITableViewDelegate {
         return true
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let row = indexPath.row
         guard row < names.count else { return }
         names.remove(at: row)
@@ -193,7 +193,7 @@ extension AddMembersViewController: ContactsDelegate {
         alert.addAction(UIAlertAction(title: "Open Settings", style: .default) { action in
             LoggingService.log(event: .contactsPermissionSettings, message: nil, info: ["opened settings": true], error: nil)
             completionHandler(false)
-            UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!)
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
         })
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { action in
             LoggingService.log(event: .contactsPermissionSettings, message: nil, info: ["opened settings": false], error: nil)
@@ -217,14 +217,14 @@ extension AddMembersViewController: ContactsDelegate {
 }
 
 extension AddMembersViewController: UITextFieldDelegate {
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         didAddMember()
         view.endEditing(true)
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
         let userInfo:NSDictionary = notification.userInfo! as NSDictionary
-        let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
         constraintBottomOffset.constant = keyboardHeight
