@@ -141,7 +141,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.5.0)
-  - Stripe (15.0.0)
+  - Stripe (14.0.0)
 
 DEPENDENCIES:
   - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`, tag `0.5.8`)
@@ -158,6 +158,7 @@ DEPENDENCIES:
   - RxCocoa
   - RxOptional
   - RxSwift
+  - Stripe (~> 14.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -242,8 +243,8 @@ SPEC CHECKSUMS:
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxOptional: 80426a0ddbd092573e4c482d8cc13302078c4d5e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  Stripe: 312b22a67af9fa55c246d26148b3f3a9636a0ff2
+  Stripe: db29ad197c74aca6fb981e4e8355cf7ebd0fca5a
 
-PODFILE CHECKSUM: 8bcd59820f8a573f40146219978ce8f419b0c6b4
+PODFILE CHECKSUM: 8ddd8bd0d5dcbf96dfb419b5933a2ef162c589ea
 
 COCOAPODS: 1.6.1
