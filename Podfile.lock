@@ -141,7 +141,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.5.0)
-  - Stripe (14.0.0)
+  - Stripe (14.0.2)
 
 DEPENDENCIES:
   - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`, tag `0.5.8`)
@@ -161,7 +161,7 @@ DEPENDENCIES:
   - Stripe (~> 14.0.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Crashlytics
     - Fabric
     - Firebase
@@ -217,8 +217,8 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Balizinha: 3ba649fae34dc2cae27920dd3dc9ee52d273ea15
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  Crashlytics: a33af323773f73904037dc2e684cd2f0d29f4fe2
+  Fabric: 09ef2d9b99b104702bede1acaf469fb8f20a9146
   Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
   FirebaseABTesting: 1f50b8d50f5e3469eea54e7463a7b7fe221d1f5e
   FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
@@ -243,8 +243,8 @@ SPEC CHECKSUMS:
   RxCocoa: cbf70265dc65a981d4ac982e513c10cf23df24a0
   RxOptional: 80426a0ddbd092573e4c482d8cc13302078c4d5e
   RxSwift: f172070dfd1a93d70a9ab97a5a01166206e1c575
-  Stripe: db29ad197c74aca6fb981e4e8355cf7ebd0fca5a
+  Stripe: 25c07000e7e86ffc53da0e41a5dd1bce30470fe0
 
 PODFILE CHECKSUM: 8ddd8bd0d5dcbf96dfb419b5933a2ef162c589ea
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.10.1

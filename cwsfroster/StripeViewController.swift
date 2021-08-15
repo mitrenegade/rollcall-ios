@@ -67,7 +67,7 @@ class StripeConnectViewModel {
 
 class StripeViewController: UIViewController {
     
-    var stripeService: StripeService?
+    var stripeService: StripePaymentSer?
     var accountState: AccountState = .unknown
     
     @IBOutlet weak var stackView: UIStackView!
