@@ -50,7 +50,7 @@ class OnsiteSignupViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Next", UIBarButtonItem.StylemStyle.done, target: self, action: #selector(dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(dismissKeyboard))
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([flex, saveButton], animated: true)
         
@@ -139,7 +139,7 @@ class OnsiteSignupViewController: UIViewController {
 }
 
 extension OnsiteSignupViewController: UITextFieldDelegate {
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         currentInput?.resignFirstResponder()
     }
 

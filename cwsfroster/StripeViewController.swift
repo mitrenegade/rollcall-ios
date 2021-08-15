@@ -67,7 +67,7 @@ class StripeConnectViewModel {
 
 class StripeViewController: UIViewController {
     
-    var stripeService: StripePaymentSer?
+    var stripeService: StripePaymentService?
     var accountState: AccountState = .unknown
     
     @IBOutlet weak var stackView: UIStackView!
@@ -90,7 +90,7 @@ class StripeViewController: UIViewController {
         
         let clientId = TESTING ? STRIPE_CLIENT_ID_DEV : STRIPE_CLIENT_ID_PROD
         let baseUrl = TESTING ? FIREBASE_URL_DEV : FIREBASE_URL_PROD
-        stripeService = StripeService(clientId: clientId, baseUrl: baseUrl)
+        stripeService = StripePaymentService(clientId: clientId, baseUrl: baseUrl)
         OrganizationService.shared.current.asObservable().filterNil().subscribe(onNext: { [weak self] (org) in
             // start updating StripeService/s accountStatus
             self?.stripeService?.startListeningForAccount(userId: org.id)

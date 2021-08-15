@@ -10,16 +10,13 @@ import Foundation
 
 extension String {
     func attributedString(_ substring: String, size: CGFloat) -> NSAttributedString? {
-        var attributes = Dictionary<String, AnyObject>()
-        attributes[NSForegroundColorAttributeName] = UIColor.white
-        attributes[NSFontAttributeName] = UIFont.systemFont(ofSize: size)
+        let attributes: [NSAttributedString.Key: AnyObject] = [.foregroundColor: UIColor.white,
+                                                               .font: UIFont.systemFont(ofSize: size)]
         
-        let attributedString: NSMutableAttributedString = NSMutableAttributedString(string: self, attributes: attributes) as NSMutableAttributedString
+        let attributedString = NSMutableAttributedString(string: self, attributes: attributes)
         let range = (self as NSString).range(of: substring)
-        
-        var otherAttrs = Dictionary<String, AnyObject>()
-        otherAttrs[NSForegroundColorAttributeName] = UIColor.darkGray
-        attributedString.addAttributes(otherAttrs, range: range)
+
+        attributedString.addAttributes([.foregroundColor: UIColor.darkGray], range: range)
         
         return attributedString
     }
