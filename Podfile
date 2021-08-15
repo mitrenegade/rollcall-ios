@@ -15,6 +15,6 @@ pod 'RxOptional'
 pod 'RACameraHelper', :git => 'https://github.com/bobbyren/RACameraHelper', :tag => '0.1.5'
 pod 'RenderPay', :git => 'git@bitbucket.org:renderapps/renderpay.git', :tag => '1.0.1'
 pod 'Balizinha', :git => 'https://bitbucket.org/renderapps/balizinha-pod', :tag => '0.5.8'
-pod 'RenderCloud', :git => 'git@bitbucket.org:renderapps/RenderCloud.git', :tag=>'1.1.0'
+pod 'RenderCloud', :git => 'git@bitbucket.org:renderapps/RenderCloud.git', :tag => '2.0.0'
 pod 'Stripe', '~>14.0.0'
 end
