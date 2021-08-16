@@ -112,7 +112,7 @@ class FirebaseEvent: FirebaseBaseModel {
 
     func removeAttendance(for member: FirebaseMember) {
         var attendances = attendees
-        if attendances.contains(member.id), let index = attendees.index(of: member.id) {
+        if attendances.contains(member.id), let index = attendees.firstIndex(of: member.id) {
             attendeesReadWriteQueue.sync {
                 attendances.remove(at: index)
                 attendees = attendances
