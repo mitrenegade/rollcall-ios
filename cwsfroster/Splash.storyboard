@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hbg-wf-fgx">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Hbg-wf-fgx">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -89,21 +84,12 @@ for your awesome event</string>
                         <outlet property="constraintLogoHeight" destination="ARm-i3-NI1" id="jTQ-pq-bWA"/>
                         <outlet property="labelInfo" destination="ZX3-qx-1sF" id="CLt-Os-WBP"/>
                         <outlet property="logo" destination="IMx-8w-oQ1" id="jjg-iI-YGd"/>
-                        <segue destination="pcj-lk-8d3" kind="presentation" identifier="toMain" id="zfy-lQ-7qq"/>
                         <segue destination="wJ9-tt-XGJ" kind="presentation" identifier="toLogin" id="dV2-8D-tD5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="erC-hP-5do" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="104.8" y="90.404797601199405"/>
-        </scene>
-        <!--Main-->
-        <scene sceneID="mLo-I9-5bH">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" id="pcj-lk-8d3" sceneMemberID="viewController"/>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eUh-sh-Ch9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="667" y="-60"/>
         </scene>
         <!--Login-->
         <scene sceneID="P6m-5m-eAQ">
