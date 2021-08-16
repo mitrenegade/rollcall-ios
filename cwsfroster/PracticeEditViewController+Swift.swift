@@ -19,7 +19,7 @@ extension PracticeEditViewController {
         }
     }
     
-    func setupTextView() {
+    @objc func setupTextView() {
         let keyboardDoneButtonView: UIToolbar = UIToolbar()
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
@@ -29,7 +29,7 @@ extension PracticeEditViewController {
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
     
-    func configureForPractice() {
+    @objc func configureForPractice() {
         if practice == nil {
             self.title = "New event";
             self.constraintButtonEmailHeight.constant = 0

@@ -153,8 +153,8 @@ class StripeViewController: UIViewController {
     }
     
     @IBAction func didClickConnect(_ sender: Any?) {
-        guard let orgId = OrganizationService.shared.current.value?.id, let urlString = stripeConnectService.getOAuthUrl(orgId), let url = URL(string: urlString) else { return }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        guard let orgId = OrganizationService.shared.current.value?.id else { return }
+        stripeConnectService.connectToAccount(orgId)
     }
     
     @IBAction func didChangeHistoryMode(_ sender: Any?) {

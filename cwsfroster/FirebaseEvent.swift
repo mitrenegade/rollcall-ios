@@ -14,7 +14,7 @@ fileprivate let formatter = DateFormatter()
 class FirebaseEvent: FirebaseBaseModel {
 //    var service = EventService.shared
     
-    var title: String? {
+    @objc var title: String? {
         get {
             return self.dict["title"] as? String
         }
@@ -24,7 +24,7 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
 
-    var date: Date? {
+    @objc var date: Date? {
         get {
             if let val = self.dict["date"] as? TimeInterval {
                 return Date(timeIntervalSince1970: val)
@@ -138,7 +138,7 @@ extension FirebaseEvent {
         return date.timeStringForPicker()
     }
     
-    func dateOnly() -> Date? {
+    @objc func dateOnly() -> Date? {
         let calendar = Calendar(identifier: .gregorian)
         guard let date = self.date else { return nil }
         let dateComponents = calendar.dateComponents([.day, .month, .year], from: date)
