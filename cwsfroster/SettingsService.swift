@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseRemoteConfig
 import FirebaseAnalytics
 import RxSwift
 

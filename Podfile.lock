@@ -4,6 +4,8 @@ PODS:
     - RenderPay
   - Firebase (8.5.0):
     - Firebase/Core (= 8.5.0)
+  - Firebase/Analytics (8.5.0):
+    - Firebase/Core
   - Firebase/Auth (8.5.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 8.5.0)
@@ -12,6 +14,9 @@ PODS:
     - FirebaseAnalytics (~> 8.5.0)
   - Firebase/CoreOnly (8.5.0):
     - FirebaseCore (= 8.5.0)
+  - Firebase/Crashlytics (8.5.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 8.5.0)
   - Firebase/Database (8.5.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 8.5.0)
@@ -150,12 +155,13 @@ PODS:
 
 DEPENDENCIES:
   - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`)
+  - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Crashlytics
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
-  - FirebaseCrashlytics
   - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.5`)
   - "RenderCloud (from `git@bitbucket.org:renderapps/RenderCloud.git`)"
   - "RenderPay (from `git@bitbucket.org:renderapps/renderpay.git`)"
@@ -244,6 +250,6 @@ SPEC CHECKSUMS:
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   Stripe: 25c07000e7e86ffc53da0e41a5dd1bce30470fe0
 
-PODFILE CHECKSUM: 4461cd74222ccb1daaad032ee84056c9d00cd9c6
+PODFILE CHECKSUM: 9bb8ed95d134c6b9919145ba2ee0032178f5d36b
 
 COCOAPODS: 1.10.1
