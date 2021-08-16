@@ -67,7 +67,8 @@ class StripeConnectViewModel {
 
 class StripeViewController: UIViewController {
     
-    var stripeService: StripePaymentService?
+    private let stripePaymentService = Globals.stripePaymentService
+    private let stripeConnectService = Globals.stripeConnectService
     var accountState: AccountState = .unknown
     
     @IBOutlet weak var stackView: UIStackView!
@@ -88,12 +89,9 @@ class StripeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let clientId = TESTING ? STRIPE_CLIENT_ID_DEV : STRIPE_CLIENT_ID_PROD
-        let baseUrl = TESTING ? FIREBASE_URL_DEV : FIREBASE_URL_PROD
-        stripeService = StripePaymentService(clientId: clientId, baseUrl: baseUrl)
         OrganizationService.shared.current.asObservable().filterNil().subscribe(onNext: { [weak self] (org) in
             // start updating StripeService/s accountStatus
-            self?.stripeService?.startListeningForAccount(userId: org.id)
+            self?.stripeConnectService.startListeningForAccount(userId: org.id)
             self?.disposeBag = DisposeBag()
             self?.listenForAccount()
         }).disposed(by: disposeBag)
@@ -104,7 +102,7 @@ class StripeViewController: UIViewController {
     }
     
     private func listenForAccount() {
-        stripeService?.accountState.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (state) in
+        stripeConnectService.accountState.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (state) in
             self?.accountState = state
             self?.refresh()
         }).disposed(by: disposeBag)
@@ -155,7 +153,7 @@ class StripeViewController: UIViewController {
     }
     
     @IBAction func didClickConnect(_ sender: Any?) {
-        guard let orgId = OrganizationService.shared.current.value?.id, let urlString = stripeService?.getOAuthUrl(orgId), let url = URL(string: urlString) else { return }
+        guard let orgId = OrganizationService.shared.current.value?.id, let urlString = stripeConnectService.getOAuthUrl(orgId), let url = URL(string: urlString) else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     

@@ -114,12 +114,12 @@ class OnsiteSignupViewController: UIViewController {
                 self?.labelWelcome.alpha = 1
                 self?.labelWelcome.text = "Welcome \(member.name ?? "")"
                 
-                UIView.animate(withDuration: 0.25, delay: 2, optUIView.AnimationOptionsptions.curveLinear, animations: {
+                UIView.animate(withDuration: 0.25, delay: 2, options: .curveLinear, animations: {
                     self?.labelWelcome.alpha = 0
                 }, completion: nil)
                 
                 self?.reset()
-            } else if let error = error {
+            } else if error != nil {
                 print("Error creating member")
                 self?.simpleAlert("Could not sign up user", message: "There was an error adding \(name) to this event. Please add them manually by editing event attendees")
             }
