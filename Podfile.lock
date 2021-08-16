@@ -2,9 +2,6 @@ PODS:
   - Balizinha (1.3.0):
     - RenderCloud
     - RenderPay
-  - Crashlytics (3.14.0):
-    - Fabric (~> 1.10.2)
-  - Fabric (1.10.2)
   - Firebase (8.5.0):
     - Firebase/Core (= 8.5.0)
   - Firebase/Auth (8.5.0):
@@ -58,6 +55,13 @@ PODS:
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
     - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.5.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
   - FirebaseDatabase (8.5.0):
     - FirebaseCore (~> 8.0)
     - leveldb-library (~> 1.22)
@@ -146,13 +150,12 @@ PODS:
 
 DEPENDENCIES:
   - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`)
-  - Crashlytics
-  - Fabric
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/RemoteConfig
   - Firebase/Storage
+  - FirebaseCrashlytics
   - RACameraHelper (from `https://github.com/bobbyren/RACameraHelper`, tag `0.1.5`)
   - "RenderCloud (from `git@bitbucket.org:renderapps/RenderCloud.git`)"
   - "RenderPay (from `git@bitbucket.org:renderapps/renderpay.git`)"
@@ -163,14 +166,13 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Crashlytics
-    - Fabric
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
     - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseRemoteConfig
@@ -215,14 +217,13 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Balizinha: d281a654ad311f545869974b71b31add9079914f
-  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
-  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: ff8c73105b90e33e1dc6c8e5445d7adc2ccdc7c1
   FirebaseABTesting: f7cb3fbed1c5bd3e733a79d9955447be3f3b06a5
   FirebaseAnalytics: 96325c1e0acbd2bb805c6a613028b1fe599d6a37
   FirebaseAuth: b152ea261b60eeb9419ae7e5bf34761382b33277
   FirebaseCore: 1c1ca72483b59b17050f5b4cec4fb748425a3901
   FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
+  FirebaseCrashlytics: 8e7cf678cb149d421198388c6fc3d3acfd266539
   FirebaseDatabase: 65c3742ed355f9b9db222036fd154e699ab7d672
   FirebaseInstallations: f2bc590b291d25fb40a9a05b8281c02a881b5117
   FirebaseRemoteConfig: 693c1f150408e9a727daf4d8c55c7f9c29ef9ad5
@@ -243,6 +244,6 @@ SPEC CHECKSUMS:
   RxSwift: d356ab7bee873611322f134c5f9ef379fa183d8f
   Stripe: 25c07000e7e86ffc53da0e41a5dd1bce30470fe0
 
-PODFILE CHECKSUM: 61eb8a3dbfafacc064d2323c01468b4b09724c37
+PODFILE CHECKSUM: 4461cd74222ccb1daaad032ee84056c9d00cd9c6
 
 COCOAPODS: 1.10.1
