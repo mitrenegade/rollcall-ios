@@ -10,12 +10,13 @@ import UIKit
 import Firebase
 import RxOptional
 import RxSwift
+import RxCocoa
 
 class OrganizationService: NSObject {
     static let shared = OrganizationService()
     
     fileprivate var disposeBag: DisposeBag!
-    let current: Variable<FirebaseOrganization?> = Variable(nil)
+    let current: BehaviorRelay<FirebaseOrganization?> = BehaviorRelay(value: nil)
     
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
@@ -27,7 +28,7 @@ class OrganizationService: NSObject {
     func startObservingOrganization() {
         guard !OFFLINE_MODE else {
             let org = FirebaseOfflineParser.shared.offlineOrganization()
-            current.value = org
+            current.accept(org)
             return
         }
         print("Start observing organization")
@@ -41,12 +42,12 @@ class OrganizationService: NSObject {
         let ref = firRef.child("organizations")
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             guard snapshot.exists() else {
-                self?.current.value = nil
+                self?.current.accept(nil)
                 return
             }
             if let data =  snapshot.children.allObjects.first as? DataSnapshot {
                 let org = FirebaseOrganization(snapshot: data)
-                OrganizationService.shared.current.value = org
+                OrganizationService.shared.current.accept(org)
             }
         })
         organizerRef = ref
@@ -60,7 +61,7 @@ class OrganizationService: NSObject {
         }
         organizerRef = nil
         organizerRefHandle = nil
-        current.value = nil
+        current.accept(nil)
     }
     
     func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool) {

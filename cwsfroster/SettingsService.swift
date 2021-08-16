@@ -29,7 +29,7 @@ class SettingsService: NSObject {
         return Observable.create({ (observer) -> Disposable in
             self.remoteConfig.setDefaults(SettingsService.defaults as? [String : NSObject])
             self.remoteConfig.fetch(completionHandler: { (status, error) in
-                self.remoteConfig.activateFetched()
+                self.remoteConfig.activate(completion: nil)
                 print("Settings: * newestVersion \(SettingsService.newestVersion)")
                 print("Settings: * forceUpgradeVersion \(SettingsService.forceUpgradeVersion)")
                 print("Settings: * softUpgradeInterval \(SettingsService.softUpgradeInterval)")
@@ -65,7 +65,7 @@ extension SettingsService {
     }
     
     class var softUpgradeInterval: TimeInterval {
-        return shared.featureValue("softUpgradeInterval").numberValue?.doubleValue ?? defaults["softUpgardeInterval"] as! TimeInterval
+        return shared.featureValue("softUpgradeInterval").numberValue.doubleValue ?? defaults["softUpgardeInterval"] as! TimeInterval
     }
     
     class var forceUpgradeVersion: String {
