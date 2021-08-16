@@ -1,5 +1,5 @@
 PODS:
-  - Balizinha (1.2.2):
+  - Balizinha (1.3.0):
     - RenderCloud
     - RenderPay
   - Crashlytics (3.14.0):
@@ -201,7 +201,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Balizinha:
-    :commit: f04a3a8d8343d455f065c0fed5e1a435212b8f0e
+    :commit: d0691c1d89600a7b45c963c8794bd829aecd9eeb
     :git: https://bitbucket.org/renderapps/balizinha-pod
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
@@ -214,7 +214,7 @@ CHECKOUT OPTIONS:
     :git: "git@bitbucket.org:renderapps/renderpay.git"
 
 SPEC CHECKSUMS:
-  Balizinha: e13b6b7cf72ed3f4182c0a60001606f389eb0adb
+  Balizinha: d281a654ad311f545869974b71b31add9079914f
   Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
   Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: ff8c73105b90e33e1dc6c8e5445d7adc2ccdc7c1
