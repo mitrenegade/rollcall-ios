@@ -13,7 +13,7 @@ import Firebase
 class ShellViewController: UITabBarController {
     var disposeBag: DisposeBag = DisposeBag()
     fileprivate var upgradeShown: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -82,7 +82,8 @@ class ShellViewController: UITabBarController {
                 .instantiateInitialViewController() as? PracticesTableViewController else {
             return
         }
-        viewControllers = [eventsViewController, membersViewController]
+        viewControllers = [UINavigationController(rootViewController: eventsViewController),
+                           UINavigationController(rootViewController: membersViewController)]
     }
     
     @objc func updateTabBarIcons() {
@@ -104,9 +105,10 @@ class ShellViewController: UITabBarController {
     }
     
     @objc func goToSettings() {
-        if let nav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() {
-            present(nav, animated: true, completion: nil)
-        }
+        let settingsViewController = SettingsViewController(nibName: nil, bundle: nil)
+        present(UINavigationController(rootViewController: settingsViewController),
+                animated: true,
+                completion: nil)
     }
 
 }
