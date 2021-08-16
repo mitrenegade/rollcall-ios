@@ -36,7 +36,7 @@ class RAImageView: UIImageView {
         }
         
         if activityIndicator == nil {
-            let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+            let activityIndicator = UIActivityIndicatorView(style: .gray)
             activityIndicator.hidesWhenStopped = true
             activityIndicator.center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
             addSubview(activityIndicator)

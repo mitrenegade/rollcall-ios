@@ -41,7 +41,7 @@ class MembersTableViewController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    func reloadMembers() {
+    @objc func reloadMembers() {
         OrganizationService.shared.members { [weak self] (members, error) in
             self?._members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }
@@ -52,11 +52,11 @@ class MembersTableViewController: UITableViewController {
         }
     }
     
-    func goToSettings() {
+    @objc func goToSettings() {
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
-    func goToAddMembers() {
+    @objc func goToAddMembers() {
         performSegue(withIdentifier: "toAddMembers", sender: nil)
     }
     
@@ -104,7 +104,7 @@ extension MembersTableViewController {
     }
 
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
             deleteMember(at: indexPath.row)

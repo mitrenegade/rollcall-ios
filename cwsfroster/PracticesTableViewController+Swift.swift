@@ -11,25 +11,25 @@ import UIKit
 
 var _practices: [FirebaseEvent]?
 extension PracticesTableViewController {
-    func setupSettingsNavButton() {
+    @objc func setupSettingsNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         button.setImage(UIImage(named: "hamburger4-square"), for: .normal)
         button.addTarget(self, action: #selector(goToSettings), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    func setupPlusNavButton() {
+    @objc func setupPlusNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         button.setImage(UIImage(named: "plus"), for: .normal)
         button.addTarget(self, action: #selector(goToAddEvent), for: .touchUpInside)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
-    func goToSettings() {
+    @objc func goToSettings() {
         notify("goToSettings", object: nil, userInfo: nil)
     }
     
-    func goToAddEvent() {
+    @objc func goToAddEvent() {
         performSegue(withIdentifier: "toNewEvent", sender: nil)
     }
 }
@@ -74,7 +74,7 @@ extension PracticesTableViewController: UITableViewDataSource {
         return true
     }
 
-    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         self.deletePracticeAt(indexPath: indexPath as NSIndexPath)
     }
 
@@ -84,7 +84,7 @@ extension PracticesTableViewController: UITableViewDataSource {
     }
 }
 extension PracticesTableViewController {
-    func reloadPractices() {
+    @objc func reloadPractices() {
         OrganizationService.shared.events { [weak self] (events, error) in
             if let error = error as NSError?, let reason = error.userInfo["reason"] as? String, reason == "no org" {
                 // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
@@ -102,7 +102,7 @@ extension PracticesTableViewController {
         }
     }
 
-    func practice(for row: Int) -> FirebaseEvent? {
+    @objc func practice(for row: Int) -> FirebaseEvent? {
         return practices[row]
     }
 }

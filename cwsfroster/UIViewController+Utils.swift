@@ -68,9 +68,9 @@ extension NSObject {
 
 extension UIAlertController {
     class func simpleAlert(_ title: String, message: String?, completion: (() -> Void)?) -> UIAlertController {
-        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let alert: UIAlertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.view.tintColor = UIColor.black
-        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertAction.Style.default, handler: { (action) -> Void in
             print("cancel")
             if completion != nil {
                 completion!()

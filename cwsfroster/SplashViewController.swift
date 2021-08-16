@@ -70,7 +70,7 @@ class SplashViewController: UIViewController {
         }
     }
     
-    func didLogin(_ notification: NSNotification?) {
+    @objc func didLogin(_ notification: NSNotification?) {
         // update firebase object
         activityIndicator.startAnimating()
         labelInfo.isHidden = false
@@ -100,7 +100,7 @@ class SplashViewController: UIViewController {
         }).disposed(by: disposeBag)
     }
     
-    func didLogout() {
+    @objc func didLogout() {
         print("logged out")
         goHome()
     }

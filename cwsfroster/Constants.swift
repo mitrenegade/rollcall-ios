@@ -9,6 +9,10 @@
 import UIKit
 import Foundation
 import Firebase
+import RenderPay
+import RenderCloud
+import FirebaseDatabase
+import FirebaseAuth
 
 let TESTING = true
 let OFFLINE_MODE = false
@@ -52,3 +56,13 @@ enum MemberStatus: String {
 var firRef = Database.database().reference()
 let firAuth = Auth.auth()
 
+enum Globals {
+    static let firRef: DatabaseReference = Database.database().reference()
+    static let firAuth: Auth = Auth.auth()
+    static var apiService: CloudAPIService & CloudDatabaseService = RenderAPIService(baseUrl: TESTING ? FIREBASE_URL_DEV : FIREBASE_URL_PROD, baseRef: firRef)
+    static var defaultLogger: LoggingService? = nil // TODO: use LoggingService
+    static var stripeConnectService = StripeConnectService(clientId: TESTING ? STRIPE_CLIENT_ID_DEV : STRIPE_CLIENT_ID_PROD,
+                                                           apiService: Globals.apiService,
+                                                           logger: nil)
+    static var stripePaymentService: StripePaymentService = StripePaymentService(apiService: Globals.apiService)
+}

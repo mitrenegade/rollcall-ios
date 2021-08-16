@@ -41,7 +41,7 @@ class OnsiteSignupViewController: UIViewController {
         cameraHelper.delegate = self
     }
     
-    func close() {
+    @objc func close() {
         navigationController?.popViewController(animated: true)
     }
     
@@ -50,7 +50,7 @@ class OnsiteSignupViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.done, target: self, action: #selector(dismissKeyboard))
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(dismissKeyboard))
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         keyboardDoneButtonView.setItems([flex, saveButton], animated: true)
         
@@ -114,12 +114,12 @@ class OnsiteSignupViewController: UIViewController {
                 self?.labelWelcome.alpha = 1
                 self?.labelWelcome.text = "Welcome \(member.name ?? "")"
                 
-                UIView.animate(withDuration: 0.25, delay: 2, options: UIViewAnimationOptions.curveLinear, animations: {
+                UIView.animate(withDuration: 0.25, delay: 2, options: .curveLinear, animations: {
                     self?.labelWelcome.alpha = 0
                 }, completion: nil)
                 
                 self?.reset()
-            } else if let error = error {
+            } else if error != nil {
                 print("Error creating member")
                 self?.simpleAlert("Could not sign up user", message: "There was an error adding \(name) to this event. Please add them manually by editing event attendees")
             }
@@ -139,7 +139,7 @@ class OnsiteSignupViewController: UIViewController {
 }
 
 extension OnsiteSignupViewController: UITextFieldDelegate {
-    func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         currentInput?.resignFirstResponder()
     }
 

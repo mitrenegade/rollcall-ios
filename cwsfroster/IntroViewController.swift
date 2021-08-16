@@ -273,7 +273,7 @@ extension IntroViewController {
 
 // MARK: - Progress
 extension IntroViewController {
-    func showProgress(_ title: String?) {
+    @objc func showProgress(_ title: String?) {
         guard self.alert == nil else {
             self.alert?.title = title
             return
@@ -288,7 +288,7 @@ extension IntroViewController {
         self.alert = alert
     }
     
-    func hideProgress(_ completion:(()->Void)? = nil) {
+    @objc func hideProgress(_ completion:(()->Void)? = nil) {
         if alert == nil {
             completion?()
         } else {

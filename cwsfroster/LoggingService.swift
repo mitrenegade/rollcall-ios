@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAnalytics
 
 fileprivate var singleton: LoggingService?
 fileprivate var loggingRef: DatabaseReference = firRef.child("logs")
