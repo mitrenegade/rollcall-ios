@@ -44,7 +44,7 @@ class FirebaseOfflineParser: NSObject {
             guard let dict = value as? [String: Any] else { return false }
             return dict["organization"] as? String == organization.id
         })
-        let mapped = filtered.flatMap({ (key, value) -> FirebaseEvent? in
+        let mapped = filtered.compactMap({ (key, value) -> FirebaseEvent? in
             guard let dict = value as? [String: Any] else { return nil }
             return FirebaseEvent(id: key, dict: dict)
         })

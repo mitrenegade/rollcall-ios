@@ -33,7 +33,7 @@ extension PracticesTableViewController {
         performSegue(withIdentifier: "toNewEvent", sender: nil)
     }
 }
-extension PracticesTableViewController: UITableViewDataSource {
+extension PracticesTableViewController {
     var practices: [FirebaseEvent] {
         return _practices ?? []
     }

@@ -30,7 +30,7 @@ class MemberNameInputCell: UITableViewCell {
     }
     
     func updateMember() {
-        print("Add member \(inputName.text)")
+        print("Add member \(String(describing: inputName.text))")
         if let name = inputName.text {
             delegate?.didAddMember(name: name)
         }

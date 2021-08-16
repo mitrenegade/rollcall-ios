@@ -36,14 +36,14 @@ class RAImageView: UIImageView {
         }
         
         if activityIndicator == nil {
-            let activityIndicator = UIActivityIndicatorView(style: .gray)
+            let activityIndicator = UIActivityIndicatorView(style: .medium)
             activityIndicator.hidesWhenStopped = true
             activityIndicator.center = CGPoint(x: frame.size.width / 2, y: frame.size.height / 2)
             addSubview(activityIndicator)
             self.activityIndicator = activityIndicator
         }
         
-        if let cached = RAImageView.imageCache[imageUrl] as? UIImage {
+        if let cached = RAImageView.imageCache[imageUrl] {
             DispatchQueue.main.async { // this seems to force a redraw
                 self.image = cached
             }

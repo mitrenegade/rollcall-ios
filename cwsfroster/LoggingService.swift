@@ -92,7 +92,7 @@ class LoggingService: NSObject {
     }
     
     class func log(event: LoggingEvent, message: String? = nil, info: [String: Any]? = nil, error: NSError? = nil) {
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        #if targetEnvironment(simulator)
         if !TESTING {
             return
         }

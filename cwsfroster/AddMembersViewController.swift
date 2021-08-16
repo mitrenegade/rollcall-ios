@@ -48,7 +48,7 @@ class AddMembersViewController: UIViewController {
     }
 
     func didAddMember() {
-        print("Add member \(inputName.text)")
+        print("Add member \(String(describing: inputName.text))")
         defer {
             inputName.text = nil
         }
@@ -185,6 +185,8 @@ extension AddMembersViewController: ContactsDelegate {
                     }
                 }
             }
+        @unknown default:
+            fatalError()
         }
     }
     
@@ -205,7 +207,7 @@ extension AddMembersViewController: ContactsDelegate {
     func didSelectContacts(_ contacts: [CNContact]) {
         for contact in contacts {
             let name = "\(contact.givenName) \(contact.familyName)"
-            let email = contact.emailAddresses.first?.value as? String
+            let email = contact.emailAddresses.first?.value as String?
             if !names.contains(name) {
                 names.append(name)
                 emails[name] = email

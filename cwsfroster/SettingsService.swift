@@ -66,7 +66,7 @@ extension SettingsService {
     }
     
     class var softUpgradeInterval: TimeInterval {
-        return shared.featureValue("softUpgradeInterval").numberValue.doubleValue ?? defaults["softUpgardeInterval"] as! TimeInterval
+        return shared.featureValue("softUpgradeInterval").numberValue.doubleValue 
     }
     
     class var forceUpgradeVersion: String {

@@ -70,8 +70,8 @@ class ShellViewController: UITabBarController {
             .current
             .asObservable()
             .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] (org) in
-                print("Listening for organization -> title: \(org?.name)")
+            .subscribe(onNext: { (org) in
+                print("Listening for organization -> title: \(String(describing: org?.name))")
             }).disposed(by: disposeBag)
     }
 
