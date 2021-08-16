@@ -14,7 +14,7 @@ import RenderCloud
 import FirebaseDatabase
 import FirebaseAuth
 
-let TESTING = true
+let TESTING = false
 let OFFLINE_MODE = false
 
 let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"

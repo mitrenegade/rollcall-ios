@@ -11,9 +11,9 @@ import RxSwift
 import Firebase
 
 class ShellViewController: UITabBarController {
-    var disposeBag: DisposeBag? = DisposeBag()
+    var disposeBag: DisposeBag = DisposeBag()
     fileprivate var upgradeShown: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +24,8 @@ class ShellViewController: UITabBarController {
         if UserDefaults.standard.bool(forKey: "organization:is:new") {
             selectedIndex = 1
         }
+
+        setupViews()
         
         updateTabBarIcons()
         
@@ -37,7 +39,7 @@ class ShellViewController: UITabBarController {
     
     @objc func didLogout() {
         // this causes listenForOrganization to be successfully cleared even if ShellViewController is not actually correctly deallocated on logout (corner case)
-        disposeBag = nil
+        disposeBag = DisposeBag()
         print("here didlogout")
         stopListeningFor("organization:name:changed")
         stopListeningFor("goToSettings")
@@ -64,10 +66,24 @@ class ShellViewController: UITabBarController {
 
     func listenForOrganization() {
         print("Listening for organization")
-        guard let disposeBag = disposeBag else { return }
-        OrganizationService.shared.current.asObservable().distinctUntilChanged().subscribe(onNext: { [weak self] (org) in
-            print("Listening for organization -> title: \(org?.name)")
-        }).disposed(by: disposeBag)
+        OrganizationService.shared
+            .current
+            .asObservable()
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] (org) in
+                print("Listening for organization -> title: \(org?.name)")
+            }).disposed(by: disposeBag)
+    }
+
+    private func setupViews() {
+        guard let membersViewController = UIStoryboard(name: "Members", bundle: nil)
+                .instantiateInitialViewController() as? MembersTableViewController,
+              let eventsViewController = UIStoryboard(name: "Events", bundle: nil)
+                .instantiateInitialViewController() as? PracticesTableViewController else {
+            return
+        }
+        viewControllers = [UINavigationController(rootViewController: eventsViewController),
+                           UINavigationController(rootViewController: membersViewController)]
     }
     
     @objc func updateTabBarIcons() {
@@ -89,8 +105,10 @@ class ShellViewController: UITabBarController {
     }
     
     @objc func goToSettings() {
-        if let nav = UIStoryboard(name: "Settings", bundle: nil).instantiateInitialViewController() {
-            present(nav, animated: true, completion: nil)
-        }
+        let settingsViewController = SettingsViewController(nibName: nil, bundle: nil)
+        present(UINavigationController(rootViewController: settingsViewController),
+                animated: true,
+                completion: nil)
     }
+
 }

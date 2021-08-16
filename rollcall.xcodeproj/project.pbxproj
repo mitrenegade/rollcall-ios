@@ -47,7 +47,6 @@
 		8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */; };
 		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
 		8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */; };
-		8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005B81E3DA30C00272DC0 /* Settings.storyboard */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
@@ -94,7 +93,6 @@
 		9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F30E1936D2410056140F /* UIImage+Resize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		9EC5F31E1936D2410056140F /* UIImage+RoundedCorner.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */; };
 		9EC5F31F1936D2410056140F /* Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 9EC5F3121936D2410056140F /* Util.m */; };
-		9EC5F3331936D60D0056140F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EC5F3321936D60D0056140F /* Main.storyboard */; };
 		9EC5F33B1936DCA50056140F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33A1936DCA50056140F /* CoreData.framework */; };
 		9EC5F33D1936DD000056140F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EC5F33C1936DD000056140F /* CoreLocation.framework */; };
 		AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AC3178CA1B409ADA00668B98 /* star@2x.png */; };
@@ -156,7 +154,6 @@
 		8EE005B21E3D955200272DC0 /* UIViewController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Utils.swift"; path = "../UIViewController+Utils.swift"; sourceTree = "<group>"; };
 		8EE005B31E3D955200272DC0 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		8EE005B81E3DA30C00272DC0 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
@@ -222,7 +219,6 @@
 		9EC5F3101936D2410056140F /* UIImage+RoundedCorner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+RoundedCorner.m"; sourceTree = "<group>"; };
 		9EC5F3111936D2410056140F /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		9EC5F3121936D2410056140F /* Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Util.m; sourceTree = "<group>"; };
-		9EC5F3321936D60D0056140F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9EC5F33A1936DCA50056140F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		9EC5F33C1936DD000056140F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AC3178CA1B409ADA00668B98 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
@@ -320,10 +316,8 @@
 		8EE005A41E3D833E00272DC0 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				9EC5F3321936D60D0056140F /* Main.storyboard */,
 				8EE005A81E3D83F500272DC0 /* Login.storyboard */,
 				8EE005AA1E3D844400272DC0 /* Splash.storyboard */,
-				8EE005B81E3DA30C00272DC0 /* Settings.storyboard */,
 				8E800D2B1E3E614A0085EC4D /* Members.storyboard */,
 				8E800D2E1E3E61C10085EC4D /* Events.storyboard */,
 				8E09574021ACE00D0037DA17 /* Feedback.storyboard */,
@@ -645,8 +639,6 @@
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
 				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
 				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,
-				9EC5F3331936D60D0056140F /* Main.storyboard in Resources */,
-				8EE005B91E3DA30C00272DC0 /* Settings.storyboard in Resources */,
 				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
 				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
 				AC3178CB1B409ADA00668B98 /* star@2x.png in Resources */,

@@ -54,19 +54,20 @@ class SplashViewController: UIViewController {
         } else {
             self.didLogin(nil)
         }
+
     }
     
     func goHome() {
+        disposeBag = DisposeBag() // stops listening
         if presentedViewController != nil {
             dismiss(animated: true, completion: nil)
         } else {
-            let segue: String
             if AuthService.isLoggedIn {
-                segue = "toMain"
+                let shellViewController = ShellViewController()
+                present(shellViewController, animated: true, completion: nil)
             } else {
-                segue = "toLogin"
+                performSegue(withIdentifier: "toLogin", sender: nil)
             }
-            performSegue(withIdentifier: segue, sender: nil)
         }
     }
     
@@ -76,21 +77,25 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = false
         labelInfo.text = "Loading organization"
         OrganizationService.shared.startObservingOrganization()
-        OrganizationService.shared.current.asObservable().distinctUntilChanged().filterNil().subscribe(onNext: { (org) in
-            if let url = org.photoUrl {
-                self.constraintLogoHeight.constant = 500
-                self.logo.imageUrl = url
-                UIView.animate(withDuration: 0.25, animations: {
-                    self.logo.alpha = 1
-                }, completion: { (success) in
-                    self.goHome()
-                })
-            } else {
-                self.constraintLogoHeight.constant = 0
-                self.goHome()
-            }
-            self.disposeBag = DisposeBag() // stops listening
-        }).disposed(by: disposeBag)
+        OrganizationService.shared
+            .current
+            .asObservable()
+            .distinctUntilChanged()
+            .filterNil()
+            .subscribe(onNext: { [weak self] (org) in
+                if let url = org.photoUrl {
+                    self?.constraintLogoHeight.constant = 500
+                    self?.logo.imageUrl = url
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self?.logo.alpha = 1
+                    }, completion: { (success) in
+                        self?.goHome()
+                    })
+                } else {
+                    self?.constraintLogoHeight.constant = 0
+                    self?.goHome()
+                }
+            }).disposed(by: disposeBag)
         
         OrganizationService.shared.current.asObservable().skip(1).subscribe(onNext: { (org) in
             if org == nil, let userId = AuthService.currentUser?.uid, let orgName = AuthService.currentUser?.email {

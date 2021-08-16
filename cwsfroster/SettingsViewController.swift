@@ -29,7 +29,24 @@ class SettingsViewController: UITableViewController {
         self.notify(.LogoutSuccess, object: nil, userInfo: nil)
     }
     
-    @IBAction func didClickClose() {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        title = "Settings"
+        if #available(iOS 13.0, *) {
+            let closeButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didClickClose))
+            navigationItem.leftBarButtonItem = closeButtonItem
+        } else {
+            // Fallback on earlier versions
+        }
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    @objc private func didClickClose() {
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
