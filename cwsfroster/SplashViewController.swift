@@ -63,10 +63,7 @@ class SplashViewController: UIViewController {
             dismiss(animated: true, completion: nil)
         } else {
             if AuthService.isLoggedIn {
-                guard let shellViewController = UIStoryboard(name: "Main", bundle: nil)
-                        .instantiateInitialViewController() else {
-                    fatalError("Could not instantiate shell")
-                }
+                let shellViewController = ShellViewController()
                 present(shellViewController, animated: true, completion: nil)
             } else {
                 performSegue(withIdentifier: "toLogin", sender: nil)
