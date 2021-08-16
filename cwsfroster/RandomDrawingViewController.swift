@@ -83,7 +83,6 @@ class RandomDrawingViewController: UIViewController {
         let pool = members[0..<members.count]
         drawingResults = nil
         doDrawingFromRemaining(remaining: totalCount, pool: pool, selected: nil) { (results) in
-            print("results \(results)")
             self.drawingResults = results
             self.tableView.reloadData()
         }

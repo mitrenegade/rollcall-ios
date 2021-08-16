@@ -38,7 +38,7 @@ extension AppDelegate {
 
     @objc func handleCustomURI(_ url: URL) {
         if let components = URLComponents(url: url, resolvingAgainstBaseURL: true), components.scheme == "rollcall" {
-            var pathComponents = components.path.components(separatedBy: "/")
+            let pathComponents = components.path.components(separatedBy: "/")
             print("url: \(url)\ncomponents: \(components)\npath: \(pathComponents)")
         }
 

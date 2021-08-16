@@ -84,7 +84,7 @@ extension AttendanceTableViewController {
 extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let practice = self.currentPractice else { return }
+        guard self.currentPractice != nil else { return }
 
         if indexPath.section == 0 {
             performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)

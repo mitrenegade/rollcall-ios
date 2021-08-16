@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4Ed-tT-Fa1">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="4Ed-tT-Fa1">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,7 +13,7 @@
             <objects>
                 <navigationController id="4Ed-tT-Fa1" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aM3-K3-QYC">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -29,24 +27,24 @@
         <!--Stripe View Controller-->
         <scene sceneID="81D-PO-BYh">
             <objects>
-                <viewController id="4c8-RD-1Nh" customClass="StripeViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StripeViewController" id="4c8-RD-1Nh" customClass="StripeViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jc1-zE-eFE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hjT-fG-RgY">
-                                <rect key="frame" x="0.0" y="76" width="375" height="318.5"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="318.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8kH-cN-WX8" userLabel="View - Setup">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="162.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OA3-Ra-e4n">
-                                                <rect key="frame" x="150" y="8" width="75" height="20.5"/>
+                                                <rect key="frame" x="150.5" y="8" width="74.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZR-az-eK0">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZR-az-eK0">
                                                 <rect key="frame" x="96" y="124.5" width="183" height="30"/>
                                                 <state key="normal" title="Set up your Stripe account"/>
                                                 <connections>
@@ -90,7 +88,7 @@
                                         <rect key="frame" x="0.0" y="162.5" width="375" height="156"/>
                                         <subviews>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="r9C-5F-Cl4">
-                                                <rect key="frame" x="110" y="8" width="155" height="21"/>
+                                                <rect key="frame" x="104" y="8" width="167" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="b0x-O7-kBF"/>
                                                 </constraints>
@@ -104,7 +102,7 @@
                                                 </connections>
                                             </segmentedControl>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total Received" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mXV-dd-YkB">
-                                                <rect key="frame" x="132" y="48" width="111.5" height="20.5"/>
+                                                <rect key="frame" x="132" y="48" width="111" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -116,7 +114,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Since..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRA-eM-LAc">
-                                                <rect key="frame" x="159.5" y="119.5" width="56.5" height="20.5"/>
+                                                <rect key="frame" x="159.5" y="119.5" width="56" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -147,13 +145,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="khz-RK-Fzv"/>
                         <color key="backgroundColor" red="0.094117647060000004" green="0.4823529412" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="hjT-fG-RgY" firstAttribute="leading" secondItem="khz-RK-Fzv" secondAttribute="leading" id="Zje-29-K2K"/>
                             <constraint firstItem="hjT-fG-RgY" firstAttribute="trailing" secondItem="khz-RK-Fzv" secondAttribute="trailing" id="ibh-by-O6Y"/>
                             <constraint firstItem="hjT-fG-RgY" firstAttribute="top" secondItem="khz-RK-Fzv" secondAttribute="top" constant="12" id="kOA-Av-HWn"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="khz-RK-Fzv"/>
                     </view>
                     <navigationItem key="navigationItem" id="Wwx-1X-JgV"/>
                     <connections>

@@ -23,7 +23,7 @@ class EventService: NSObject {
         
         print ("Create events")
 
-        guard let user = AuthService.currentUser else { return }
+        guard AuthService.currentUser != nil else { return }
         
         let newEventRef = firRef.child("events").child(FirebaseAPIService.uniqueId())
         
@@ -36,7 +36,7 @@ class EventService: NSObject {
         }
 
         newEventRef.setValue(params) { (error, ref) in
-            if let error = error as? NSError {
+            if let error = error as NSError? {
                 print(error)
                 completion(nil, error)
             } else {
@@ -45,7 +45,7 @@ class EventService: NSObject {
                         completion(nil, nil)
                         return
                     }
-                    guard let user = AuthService.currentUser else {
+                    guard AuthService.currentUser != nil else {
                         completion(nil, nil)
                         return
                     }

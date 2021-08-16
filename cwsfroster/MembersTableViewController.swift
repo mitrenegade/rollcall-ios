@@ -121,7 +121,7 @@ extension MembersTableViewController {
             let member = _members[row]
             controller.member = member
         } else if segue.identifier == "toAddMembers" {
-            guard let nav = segue.destination as? UINavigationController, let controller = nav.viewControllers.first as? AddMembersViewController else { return }
+            guard let nav = segue.destination as? UINavigationController, let _ = nav.viewControllers.first as? AddMembersViewController else { return }
 //            controller.delegate = self
         }
     }

@@ -91,7 +91,7 @@ extension SettingsViewController {
                 self.goToUpdateLogo()
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            if (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad)
             {
                 alert.popoverPresentationController?.sourceView = tableView
                 alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
@@ -109,7 +109,7 @@ extension SettingsViewController {
                 self.goToUpdatePassword(nil)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.pad)
+            if (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad)
             {
                 alert.popoverPresentationController?.sourceView = tableView
                 alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
@@ -129,12 +129,12 @@ extension SettingsViewController {
 
 extension SettingsViewController {
     func goToFeedback() {
-        guard let nav = UIStoryboard(name: "Feedback", bundle: nil).instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers.first as? FeedbackViewController else { return }
+        guard let nav = UIStoryboard(name: "Feedback", bundle: nil).instantiateInitialViewController() as? UINavigationController, let _ = nav.viewControllers.first as? FeedbackViewController else { return }
         present(nav, animated: true, completion: nil)
     }
 
     func goToPayments() {
-        guard let nav = UIStoryboard(name: "Stripe", bundle: nil).instantiateInitialViewController() as? UINavigationController, let controller = nav.viewControllers.first as? StripeViewController else { return }
+        guard let nav = UIStoryboard(name: "Stripe", bundle: nil).instantiateInitialViewController() as? UINavigationController, let _ = nav.viewControllers.first as? StripeViewController else { return }
         present(nav, animated: true, completion: nil)
     }
 

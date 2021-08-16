@@ -118,7 +118,7 @@ extension FirebaseAPIService: URLSessionDelegate, URLSessionDataDelegate {
             } catch let error {
                 print("FirebaseAPIService: JSON parsing resulted in error \(error)")
                 let dataString = String.init(data: usableData, encoding: .utf8)
-                print("StripeService: try reading data as string: \(dataString)")
+                print("StripeService: try reading data as string: \(String(describing: dataString))")
                 completionHandler?(nil, error)
             }
         }
