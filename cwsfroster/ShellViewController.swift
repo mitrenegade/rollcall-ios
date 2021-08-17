@@ -55,7 +55,7 @@ class ShellViewController: UITabBarController {
             UserDefaults.standard.set(false, forKey: "organization:is:new")
             UserDefaults.standard.synchronize()
             
-            if let name = OrganizationService.shared.current.value?.name {
+            if let name = OrganizationService.shared.currentOrganizationName {
                 let title = "Welcome to \(name)"
                 simpleAlert(title, message: "Add some members to your new organization")
             }
@@ -67,9 +67,7 @@ class ShellViewController: UITabBarController {
     func listenForOrganization() {
         print("Listening for organization")
         OrganizationService.shared
-            .current
-            .asObservable()
-            .distinctUntilChanged()
+            .currentObservable
             .subscribe(onNext: { (org) in
                 print("Listening for organization -> title: \(String(describing: org?.name))")
             }).disposed(by: disposeBag)
@@ -87,7 +85,7 @@ class ShellViewController: UITabBarController {
     }
     
     @objc func updateTabBarIcons() {
-        guard let name = OrganizationService.shared.current.value?.name else { return }
+        guard let name = OrganizationService.shared.currentOrganizationName else { return }
         if name.lowercased().contains("taekwondo") {
             setIcon(iconName: "icon-tkd-paddle", for: 0)
             setIcon(iconName: "icon-tkd-helmet", for: 1)
