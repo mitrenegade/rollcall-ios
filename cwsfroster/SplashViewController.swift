@@ -53,16 +53,13 @@ class SplashViewController: UIViewController {
             .currentObservable
             .take(1)
             .subscribe(onNext: { [weak self] org in
-                if org == nil {
+                if org != nil {
                     self?.goHome()
                 } else {
                     self?.didLogin(nil)
                 }
             })
             .disposed(by: disposeBag)
-
-            goHome()
-
     }
     
     func goHome() {
