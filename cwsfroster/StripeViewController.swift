@@ -89,13 +89,16 @@ class StripeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OrganizationService.shared.current.asObservable().filterNil().subscribe(onNext: { [weak self] (org) in
-            // start updating StripeService/s accountStatus
-            self?.stripeConnectService.startListeningForAccount(userId: org.id)
-            self?.disposeBag = DisposeBag()
-            self?.listenForAccount()
-        }).disposed(by: disposeBag)
-        
+        OrganizationService.shared
+            .currentObservable
+            .filterNil()
+            .subscribe(onNext: { [weak self] (org) in
+                // start updating StripeService/s accountStatus
+                self?.stripeConnectService.startListeningForAccount(userId: org.id)
+                self?.disposeBag = DisposeBag()
+                self?.listenForAccount()
+            }).disposed(by: disposeBag)
+
         viewIconBG.layer.cornerRadius = viewIconBG.frame.size.height / 2
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(close))
         refresh()
@@ -153,7 +156,7 @@ class StripeViewController: UIViewController {
     }
     
     @IBAction func didClickConnect(_ sender: Any?) {
-        guard let orgId = OrganizationService.shared.current.value?.id else { return }
+        guard let orgId = OrganizationService.shared.currentOrganizationId else { return }
         stripeConnectService.connectToAccount(orgId)
     }
     

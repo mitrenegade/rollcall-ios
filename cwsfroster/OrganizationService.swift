@@ -16,19 +16,34 @@ class OrganizationService: NSObject {
     static let shared = OrganizationService()
     
     fileprivate var disposeBag: DisposeBag!
-    let current: BehaviorRelay<FirebaseOrganization?> = BehaviorRelay(value: nil)
+
+    private let currentRelay: BehaviorRelay<FirebaseOrganization?> = BehaviorRelay(value: nil)
+    var currentObservable: Observable<FirebaseOrganization?> {
+        currentRelay.distinctUntilChanged()
+    }
+
+    private let loadingRelay: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+    var loadingObservable: Observable<Bool> {
+        loadingRelay.distinctUntilChanged()
+    }
     
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
     
-    @objc func currentOrganizationName() -> String? {
-        return current.value?.name
+    var currentOrganizationName: String? {
+        currentRelay.value?.name
     }
-    
+
+    var currentOrganizationId: String? {
+        currentRelay.value?.id
+    }
+
     func startObservingOrganization() {
+        loadingRelay.accept(true)
         guard !OFFLINE_MODE else {
             let org = FirebaseOfflineParser.shared.offlineOrganization()
-            current.accept(org)
+            currentRelay.accept(org)
+            loadingRelay.accept(false)
             return
         }
         print("Start observing organization")
@@ -37,17 +52,19 @@ class OrganizationService: NSObject {
         guard let userId = firAuth.currentUser?.uid else {
             print("UserId doesn't exist while observing org; logging out")
             AuthService.logout()
+            loadingRelay.accept(false)
             return
         }
         let ref = firRef.child("organizations")
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
+            self?.loadingRelay.accept(false)
             guard snapshot.exists() else {
-                self?.current.accept(nil)
+                self?.currentRelay.accept(nil)
                 return
             }
             if let data =  snapshot.children.allObjects.first as? DataSnapshot {
                 let org = FirebaseOrganization(snapshot: data)
-                OrganizationService.shared.current.accept(org)
+                self?.currentRelay.accept(org)
             }
         })
         organizerRef = ref
@@ -61,9 +78,9 @@ class OrganizationService: NSObject {
         }
         organizerRef = nil
         organizerRefHandle = nil
-        current.accept(nil)
+        currentRelay.accept(nil)
     }
-    
+
     func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool) {
         let ref = firRef.child("organizations").child(orgId)
         var params: [String: Any] = ["owner": ownerId]
@@ -73,9 +90,18 @@ class OrganizationService: NSObject {
         }
         ref.updateChildValues(params)
     }
-    
+
+    // MARK: - Organization updaters
+    func updateName(_ name: String) {
+        currentRelay.value?.name = name
+    }
+
+    func updatePhoto(_ urlString: String) {
+        currentRelay.value?.photoUrl = urlString
+    }
+
     func events(completion: (([FirebaseEvent], Error?) -> Void)?) {
-        guard let org = current.value else {
+        guard let org = currentRelay.value else {
             completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }
@@ -105,7 +131,7 @@ class OrganizationService: NSObject {
     }
     
     func members(completion: (([FirebaseMember], Error?) -> Void)?) {
-        guard let org = current.value else {
+        guard let org = currentRelay.value else {
             completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }
@@ -135,7 +161,7 @@ class OrganizationService: NSObject {
     }
     
     func createMember(email: String? = nil, name: String? = nil, notes: String? = nil, status: MemberStatus, completion:@escaping (FirebaseMember?, NSError?) -> Void) {
-        guard let org = current.value else {
+        guard let org = currentRelay.value else {
             completion(nil, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }
@@ -177,7 +203,7 @@ class OrganizationService: NSObject {
     }
     
     func deleteMember(_ member: FirebaseMember, completion: ((Bool, Error?) -> Void)?) {
-        guard let org = current.value else {
+        guard let org = currentRelay.value else {
             completion?(false, NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
             return
         }

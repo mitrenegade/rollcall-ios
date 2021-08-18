@@ -49,18 +49,25 @@ class SplashViewController: UIViewController {
         }
         
         guard firAuth.currentUser != nil else { return }
-        if OrganizationService.shared.current.value != nil {
-            goHome()
-        } else {
-            self.didLogin(nil)
-        }
-
+        OrganizationService.shared
+            .currentObservable
+            .take(1)
+            .subscribe(onNext: { [weak self] org in
+                if org != nil {
+                    self?.goHome()
+                } else {
+                    self?.didLogin(nil)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func goHome() {
         disposeBag = DisposeBag() // stops listening
         if presentedViewController != nil {
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) { [weak self] in
+                self?.goHome()
+            }
         } else {
             if AuthService.isLoggedIn {
                 let shellViewController = ShellViewController()
@@ -73,14 +80,16 @@ class SplashViewController: UIViewController {
     
     @objc func didLogin(_ notification: NSNotification?) {
         // update firebase object
-        activityIndicator.startAnimating()
-        labelInfo.isHidden = false
-        labelInfo.text = "Loading organization"
         OrganizationService.shared.startObservingOrganization()
         OrganizationService.shared
-            .current
-            .asObservable()
-            .distinctUntilChanged()
+            .loadingObservable
+            .subscribe( onNext: { [weak self] loading in
+                self?.updateLoading(loading)
+            })
+            .disposed(by: disposeBag)
+
+        OrganizationService.shared
+            .currentObservable
             .filterNil()
             .subscribe(onNext: { [weak self] (org) in
                 if let url = org.photoUrl {
@@ -97,19 +106,34 @@ class SplashViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
         
-        OrganizationService.shared.current.asObservable().skip(1).subscribe(onNext: { (org) in
-            if org == nil, let userId = AuthService.currentUser?.uid, let orgName = AuthService.currentUser?.email {
-                AuthService.createFirebaseUser(id: userId)
-                OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-            }
-        }).disposed(by: disposeBag)
+        OrganizationService.shared
+            .currentObservable
+            .skip(1)
+            .subscribe(onNext: { (org) in
+                if org == nil, let userId = AuthService.currentUser?.uid, let orgName = AuthService.currentUser?.email {
+                    AuthService.createFirebaseUser(id: userId)
+                    OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+                }
+            }).disposed(by: disposeBag)
     }
     
     @objc func didLogout() {
         print("logged out")
         goHome()
     }
-    
+
+    private func updateLoading(_ loading: Bool) {
+        if loading {
+            activityIndicator.startAnimating()
+            labelInfo.isHidden = false
+            labelInfo.text = "Loading organization"
+        } else {
+            activityIndicator.stopAnimating()
+            labelInfo.isHidden = true
+            labelInfo.text = nil
+        }
+    }
+
     deinit {
         stopListeningFor(.LoginSuccess)
         stopListeningFor(.LogoutSuccess)

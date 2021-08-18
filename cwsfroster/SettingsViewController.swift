@@ -79,8 +79,7 @@ extension SettingsViewController {
             simpleAlert("About RollCall", message: message)
             
         case .organization:
-            guard let org =  OrganizationService.shared.current.value else { return }
-            let title = org.name ?? "Your nrganization"
+            let title = OrganizationService.shared.currentOrganizationName ?? "Your organization"
             let message = "Please select from the following options"
             let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Change name", style: .default, handler: { (action) in
@@ -98,8 +97,7 @@ extension SettingsViewController {
             }
             present(alert, animated: true, completion: nil)
         case .profile:
-            guard let org =  OrganizationService.shared.current.value else { return }
-            let title = org.name ?? "Your organization"
+            let title = OrganizationService.shared.currentOrganizationName ?? "Your organization"
             let message = "Please select from the following options"
             let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction(title: "Change email", style: .default, handler: { (action) in
@@ -139,13 +137,13 @@ extension SettingsViewController {
     }
 
     func goToUpdateOrganizationName() {
-        let orgId = OrganizationService.shared.current.value?.id
-        let orgName = OrganizationService.shared.current.value?.name ?? ""
+        let orgId = OrganizationService.shared.currentOrganizationId
+        let orgName = OrganizationService.shared.currentOrganizationName ?? ""
         let title = "Organization: \(orgName)"
         let message = "Please enter new organization name"
         inputPrompt(title: title, message: message) { (newName) in
             guard let name = newName else { return }
-            OrganizationService.shared.current.value?.name = name
+            OrganizationService.shared.updateName(name)
 
             self.simpleAlert("Organization updated", message: "Organization name has been changed to \(name)")
             LoggingService.log(event: .updateOrganizationName, info: ["title": orgId ?? "", "name": name])
@@ -162,10 +160,10 @@ extension SettingsViewController {
             AuthService.currentUser?.updateEmail(to: newEmail, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update login", defaultMessage: "Your login could not be updated to \(newEmail)", error: error)
-                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.current.value?.id ?? ""], error: error)
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.currentOrganizationId ?? ""], error: error)
                 } else {
                     self.simpleAlert("Email login updated", message: "Your new login and email is \(newEmail)")
-                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.current.value?.id ?? "", "email": newEmail])
+                    LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.currentOrganizationId ?? "", "email": newEmail])
                 }
             })
         }
@@ -182,16 +180,16 @@ extension SettingsViewController {
             }
             guard password == entered else {
                 self.simpleAlert("Password mismatch", message: "You must confirm the new password.")
-                LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? "", "error": "Password confirmation did not match"])
+                LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.currentOrganizationId ?? "", "error": "Password confirmation did not match"])
                 return
             }
             AuthService.currentUser?.updatePassword(to: password, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update password", defaultMessage: "Your password could not be updated.", error: error)
-                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? ""], error: error)
+                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.currentOrganizationId ?? ""], error: error)
                 } else {
                     self.simpleAlert("Password updated", message: nil)
-                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.current.value?.id ?? ""])
+                    LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.currentOrganizationId ?? ""])
                 }
             })
         }
@@ -282,16 +280,16 @@ extension SettingsViewController: CameraHelperDelegate {
     }
     
     func uploadPhoto(image: UIImage) {
-        guard let org = OrganizationService.shared.current.value else { return }
+        guard let id = OrganizationService.shared.currentOrganizationId else { return }
         showProgress("Saving new logo")
-        print("FirebaseImageService: uploading org photo for \(org.id)")
-        FirebaseImageService.uploadImage(image: image, type: "organization", uid: org.id, progressHandler: { (progress) in
+        print("FirebaseImageService: uploading org photo for \(id)")
+        FirebaseImageService.uploadImage(image: image, type: "organization", uid: id, progressHandler: { (progress) in
             self.updateProgress(percent: progress)
         }) { [weak self] (url) in
             if let url = url {
-                org.photoUrl = url
+                OrganizationService.shared.updatePhoto(url)
                 print("FirebaseImageService: uploading org photo complete with url \(url)")
-                LoggingService.log(event: .updateOrganizationLogo, info: ["title": org.id])
+                LoggingService.log(event: .updateOrganizationLogo, info: ["title": id])
             } else {
                 // failure
                 self?.simpleAlert("Upload failed", message: "There was an error uploading a new logo.")

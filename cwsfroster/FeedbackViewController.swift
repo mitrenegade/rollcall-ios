@@ -77,9 +77,9 @@ class FeedbackViewController: UIViewController {
         }
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
         params["version"] = version
-        let org = OrganizationService.shared.current.value?.name ?? ""
+        let org = OrganizationService.shared.currentOrganizationName ?? ""
         params["organization"] = org
-        let orgId = OrganizationService.shared.current.value?.id ?? ""
+        let orgId = OrganizationService.shared.currentOrganizationId ?? ""
         params["organizationId"] = orgId
 
         cancelInput()

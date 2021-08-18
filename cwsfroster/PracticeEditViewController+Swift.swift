@@ -53,10 +53,10 @@ extension PracticeEditViewController {
     fileprivate func createPractice(_ completion: @escaping ((FirebaseEvent)->Void)) {
         guard let name = createPracticeInfo?["title"] as? String else { return }
         guard let date = createPracticeInfo?["date"] as? Date else { return }
-        guard let org = OrganizationService.shared.current.value else { return }
+        guard let orgId = OrganizationService.shared.currentOrganizationId else { return }
         let details = createPracticeInfo?["details"] as? String
         let notes = createPracticeInfo?["notes"] as? String
-        EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: org.id) { [weak self] (event, error) in
+        EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: orgId) { [weak self] (event, error) in
             if let event = event {
                 LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
                 self?.delegate.didCreatePractice()
@@ -292,7 +292,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.current.value?.id ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
+        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
