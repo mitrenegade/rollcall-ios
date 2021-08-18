@@ -65,7 +65,9 @@ class SplashViewController: UIViewController {
     func goHome() {
         disposeBag = DisposeBag() // stops listening
         if presentedViewController != nil {
-            dismiss(animated: true, completion: nil)
+            dismiss(animated: true) { [weak self] in
+                self?.goHome()
+            }
         } else {
             if AuthService.isLoggedIn {
                 let shellViewController = ShellViewController()
