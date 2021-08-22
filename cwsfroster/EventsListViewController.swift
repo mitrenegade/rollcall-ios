@@ -25,11 +25,11 @@ class EventsListViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "toNewEvent" {
             let nav = segue.destination as? UINavigationController
-            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            let controller = nav?.viewControllers.first as? EventEditViewController
             controller?.delegate = self
         } else if segue.identifier == "EventListToDetail" {
             let nav = segue.destination as? UINavigationController
-            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            let controller = nav?.viewControllers.first as? EventEditViewController
             if let indexPath = tableView.indexPathForSelectedRow {
                 controller?.practice = practice(for: indexPath.row)
             }

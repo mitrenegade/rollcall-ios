@@ -1,15 +1,118 @@
 //
-//  PracticeEditViewController+Swift.swift
+//  EventEditViewController.swift
 //  rollcall
 //
-//  Created by Bobby Ren on 2/5/17.
+//  Created by Bobby Ren on 8/21/21.
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import MessageUI
 
-extension PracticeEditViewController {
+fileprivate let FUTURE_DAYS = 14
+
+protocol PracticeEditDelegate: class {
+
+    func didCreatePractice()
+    func didEditPractice()
+
+}
+
+class EventEditViewController: UIViewController {
+
+    var dateForDateString: [String: Date] = [:]
+    private lazy var datesForPicker: [String] = {
+        generatePickerDates()
+    }()
+    var drawn: [Bool] = []
+
+    var practice: FirebaseEvent?
+    private var createPracticeInfo = [String: Any]()
+
+    weak var delegate: PracticeEditDelegate?
+
+    @IBOutlet var labelTitle: UILabel!
+    @IBOutlet var inputDate: UITextField!
+    @IBOutlet var inputDetails: UITextField!
+    @IBOutlet var inputNotes: UITextView!
+
+    @IBOutlet var buttonAttendees: UIButton!
+    @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint!
+    @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint!
+
+    var originalDescription: String?
+
+    @IBOutlet var buttonEmail: UIButton!
+    @IBOutlet var buttonDrawing: UIButton!
+
+    private var currentRow: Int = -1
+    var lastInputDate: String?
+    var emailFrom: String?
+    var emailTo: String?
+
+    @IBOutlet var activityOverlay: UIView!
+
+    @IBOutlet var viewInfo: UIView!
+
+    private lazy var pickerView: UIPickerView = {
+        let view = UIPickerView()
+        view.delegate = self
+        view.dataSource = self
+        return view
+    }()
+
+    private lazy var keyboardDoneButtonView: UIToolbar = {
+        let view = UIToolbar()
+        view.barStyle = .black
+        view.isTranslucent = true
+        view.sizeToFit()
+
+        let button1 = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(selectDate))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let button2 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(cancelSelectDate))
+        view.tintColor = .white
+        return view
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        inputDate.inputView = pickerView
+        inputDate.inputAccessoryView = keyboardDoneButtonView
+
+        setupTextView()
+        configureForPractice()
+
+        setupPicker()
+
+        emailTo = UserDefaults.standard.object(forKey: "email:to") as? String
+    }
+
+    private func setupPicker() {
+        let defaultTitle = practice?.title ?? title(for: Date())
+
+        for i in 0 ..< datesForPicker.count { // todo: map
+            if defaultTitle == datesForPicker[i] {
+                currentRow = i
+                break
+            }
+
+            let selectedDate = dateOnly(dateForDateString[datesForPicker[i]] ?? Date()) // TODO: compactMap
+            let practiceDate = practice?.dateOnly()
+            if selectedDate == practiceDate {
+                currentRow = i
+                break
+            }
+        }
+    }
+
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -29,7 +132,7 @@ extension PracticeEditViewController {
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
     
-    @objc func configureForPractice() {
+    private func configureForPractice() {
         if practice == nil {
             self.title = "New event";
             self.constraintButtonEmailHeight.constant = 0
@@ -41,9 +144,9 @@ extension PracticeEditViewController {
         }
         else {
             self.title = "Edit event"
-            self.inputDate.text = self.practice.title
-            self.inputDetails.text = self.practice.details
-            self.inputNotes.text = self.practice.notes
+            self.inputDate.text = self.practice?.title
+            self.inputDetails.text = self.practice?.details
+            self.inputNotes.text = self.practice?.notes
             
             self.navigationItem.rightBarButtonItem = nil
         }
@@ -51,15 +154,15 @@ extension PracticeEditViewController {
     }
     
     fileprivate func createPractice(_ completion: @escaping ((FirebaseEvent)->Void)) {
-        guard let name = createPracticeInfo?["title"] as? String else { return }
-        guard let date = createPracticeInfo?["date"] as? Date else { return }
+        guard let name = createPracticeInfo["title"] as? String else { return }
+        guard let date = createPracticeInfo["date"] as? Date else { return }
         guard let orgId = OrganizationService.shared.currentOrganizationId else { return }
-        let details = createPracticeInfo?["details"] as? String
-        let notes = createPracticeInfo?["notes"] as? String
+        let details = createPracticeInfo["details"] as? String
+        let notes = createPracticeInfo["notes"] as? String
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: orgId) { [weak self] (event, error) in
             if let event = event {
                 LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
-                self?.delegate.didCreatePractice()
+                self?.delegate?.didCreatePractice()
                 completion(event)
             } else {
                 print("Create practice error \(error.debugDescription)")
@@ -69,7 +172,7 @@ extension PracticeEditViewController {
 }
 
 // MARK: Navigation
-extension PracticeEditViewController {
+extension EventEditViewController {
     @IBAction func didClickClose(_ sender: AnyObject?) {
         if practice != nil {
             self.view.endEditing(true)
@@ -139,10 +242,10 @@ extension PracticeEditViewController {
 }
 
 // Notes
-extension PracticeEditViewController: UITextViewDelegate {
+extension EventEditViewController: UITextViewDelegate {
     public func textViewDidEndEditing(_ textView: UITextView) {
         practice?.notes = self.inputNotes.text
-        createPracticeInfo?["notes"] = self.inputNotes.text
+        createPracticeInfo["notes"] = self.inputNotes.text
     }
     
     @objc func dismissKeyboard() {
@@ -162,8 +265,9 @@ extension PracticeEditViewController: UITextViewDelegate {
     
 }
 
+
 // MARK: UITextFieldDelegate
-extension PracticeEditViewController: UITextFieldDelegate {
+extension EventEditViewController: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == inputDate {
             lastInputDate = textField.text
@@ -171,8 +275,8 @@ extension PracticeEditViewController: UITextFieldDelegate {
                 currentRow = FUTURE_DAYS - 1
             }
             if let pickerView = textField.inputView as? UIPickerView {
-                pickerView.selectRow(Int(currentRow), inComponent: 0, animated: true)
-                self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
+                pickerView.selectRow(currentRow, inComponent: 0, animated: true)
+                self.pickerView(pickerView, didSelectRow: currentRow, inComponent: 0)
             }
         }
     }
@@ -180,11 +284,11 @@ extension PracticeEditViewController: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == inputDate {
             practice?.title = textField.text
-            createPracticeInfo?["title"] = textField.text
+            createPracticeInfo["title"] = textField.text
             
-            if let text = inputDate.text, let date = dateForDateString[text] as? Date {
+            if let text = inputDate.text, let date = dateForDateString[text] {
                 practice?.date = date
-                createPracticeInfo?["date"] = date
+                createPracticeInfo["date"] = date
                 if let practice = practice {
                     LoggingService.log(type: "PracticeDateChanged", info: ["id": practice.id, "date": text])
                 }
@@ -193,7 +297,7 @@ extension PracticeEditViewController: UITextFieldDelegate {
         }
         else if textField == inputDetails {
             practice?.details = textField.text
-            createPracticeInfo?["details"] = textField.text
+            createPracticeInfo["details"] = textField.text
         }
         
         textField.resignFirstResponder()
@@ -206,8 +310,8 @@ extension PracticeEditViewController: UITextFieldDelegate {
 }
 
 // MARK: Email
-extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
-    func didClickEmail(_ sender: AnyObject?) {
+extension EventEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
+    @IBAction func didClickEmail(_ sender: AnyObject?) {
         let alert = UIAlertController(title: "To:", message: nil, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.text = self.emailTo
@@ -216,7 +320,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action) in
             if let textField = alert.textFields?.first {
                 self.emailTo = textField.text
-                guard !self.emailTo.isEmpty else {
+                guard let email = self.emailTo, !email.isEmpty else {
                     self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
                     return
                 }
@@ -244,9 +348,9 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
 
         UserDefaults.standard.set(self.emailTo, forKey: "email:to")
         
-        let eventName = self.practice.title ?? "practice"
+        let eventName = self.practice?.title ?? "practice"
         let title = "Event attendance for \(eventName)"
-        let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
+        let dateString = Util.simpleDateFormat(self.practice?.date ?? Date(), local: true) ?? "n/a"
         var message = "Date: \(dateString)\n"
         
         let attendees = practice.attendees
@@ -277,7 +381,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
             self.activityOverlay.isHidden = true
             return
         }
-        guard !emailTo.isEmpty else {
+        guard let emailTo = emailTo, !emailTo.isEmpty else {
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
             self.activityOverlay.isHidden = true
             return
@@ -292,7 +396,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
+        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice?.id, "subject": title, "body": message])
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -305,4 +409,68 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
             }
         }
     }
+}
+
+extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        datesForPicker.count
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        datesForPicker[row]
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let title = self.pickerView(pickerView, titleForRow: row, forComponent: component)
+        inputDate.text = title
+        currentRow = row
+    }
+
+    // MARK: - Helpers for picker
+
+    private func generatePickerDates() -> [String] {
+        var dates = [String]()
+        dateForDateString = [:]
+
+        let futureDays = FUTURE_DAYS // allow 2 weeks into the future
+        for row in 0 ..< 31 + futureDays {
+
+            let secs = TimeInterval(-24*3600*(row-futureDays))
+            let date = Date().addingTimeInterval(secs)
+            if let title = self.title(for: date) {
+                dates.insert(title, at: 0)
+                dateForDateString[title] = date
+            }
+        }
+        return dates
+    }
+
+    private func title(for date: Date) -> String? {
+        guard let dayString = Util.weekdayString(from: date, localTimeZone: true),
+              let dateString = Util.simpleDateFormat(date) else {
+            return nil
+        }
+        return "\(dayString) \(dateString)"
+    }
+
+    @objc private func selectDate() {
+        inputDate.resignFirstResponder()
+    }
+
+    @objc private func cancelSelectDate() {
+        inputDate.text = lastInputDate
+        inputDate.resignFirstResponder()
+    }
+
+    func dateOnly(_ date: Date) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents(Set([.year, .month, .day]), from: date)
+        return calendar.date(from: components)
+    }
+
 }

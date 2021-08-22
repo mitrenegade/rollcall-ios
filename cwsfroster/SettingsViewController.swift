@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RACameraHelper
+import MessageUI
 
 class SettingsViewController: UITableViewController {
     var cameraHelper: CameraHelper?

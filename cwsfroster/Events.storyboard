@@ -304,7 +304,7 @@
         <!--PracticeEdit-->
         <scene sceneID="Ic2-IM-HvV">
             <objects>
-                <viewController title="PracticeEdit" id="ol8-CI-xXO" customClass="PracticeEditViewController" sceneMemberID="viewController">
+                <viewController title="PracticeEdit" id="ol8-CI-xXO" customClass="EventEditViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4bV-X5-Zsj"/>
                         <viewControllerLayoutGuide type="bottom" id="tjG-E0-paZ"/>
@@ -405,7 +405,7 @@
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="didClickEmail:" destination="ol8-CI-xXO" eventType="touchUpInside" id="68t-k6-pus"/>
+                                    <action selector="didClickEmail:" destination="ol8-CI-xXO" eventType="touchUpInside" id="Lfv-ne-xOZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0K-I0-4VP">
