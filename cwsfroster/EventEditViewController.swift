@@ -46,7 +46,7 @@ class EventEditViewController: UIViewController {
     @IBOutlet var buttonEmail: UIButton!
     @IBOutlet var buttonDrawing: UIButton!
 
-    var currentRow: Int = -1
+    private var currentRow: Int = -1
     var lastInputDate: String?
     var emailFrom: String?
     var emailTo: String?
@@ -89,7 +89,6 @@ class EventEditViewController: UIViewController {
 
         setupTextView()
         configureForPractice()
-        currentRow = -1 // todo
 
         setupPicker()
 
@@ -279,8 +278,8 @@ extension EventEditViewController: UITextFieldDelegate {
                 currentRow = FUTURE_DAYS - 1
             }
             if let pickerView = textField.inputView as? UIPickerView {
-                pickerView.selectRow(Int(currentRow), inComponent: 0, animated: true)
-                self.pickerView(pickerView, didSelectRow: Int(currentRow), inComponent: 0)
+                pickerView.selectRow(currentRow, inComponent: 0, animated: true)
+                self.pickerView(pickerView, didSelectRow: currentRow, inComponent: 0)
             }
         }
     }
@@ -290,7 +289,7 @@ extension EventEditViewController: UITextFieldDelegate {
             practice?.title = textField.text
             createPracticeInfo?["title"] = textField.text
             
-            if let text = inputDate.text, let date = dateForDateString[text] as? Date {
+            if let text = inputDate.text, let date = dateForDateString[text] {
                 practice?.date = date
                 createPracticeInfo?["date"] = date
                 if let practice = practice {
