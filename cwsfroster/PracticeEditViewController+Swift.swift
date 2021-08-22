@@ -9,6 +9,15 @@
 import Foundation
 import UIKit
 
+//fileprivate let  FUTURE_DAYS = 14
+//
+//protocol PracticeEditDelegate {
+//
+//    func didCreatePractice()
+//    func didEditPractice()
+//
+//}
+
 extension PracticeEditViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -162,6 +171,7 @@ extension PracticeEditViewController: UITextViewDelegate {
     
 }
 
+
 // MARK: UITextFieldDelegate
 extension PracticeEditViewController: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -304,5 +314,32 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
                 self.simpleAlert("Attendance record sent", message: nil)
             }
         }
+    }
+}
+
+extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if self.datesForPicker == nil { // todo lazy var
+            generatePickerDates()
+        }
+        return datesForPicker.count
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if self.datesForPicker == nil { // todo lazy var
+            generatePickerDates()
+        }
+        return datesForPicker[row] as? String
+    }
+
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let title = self.pickerView(pickerView, titleForRow: row, forComponent: component)
+        inputDate.text = title
+        currentRow = Int32(row) // TODO
     }
 }

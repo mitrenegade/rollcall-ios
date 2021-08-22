@@ -19,7 +19,7 @@
 @end
 
 @class FirebaseEvent;
-@interface PracticeEditViewController : UIViewController < UIPickerViewDelegate, UIPickerViewDataSource>
+@interface PracticeEditViewController : UIViewController
 {
 }
 

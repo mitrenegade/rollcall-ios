@@ -123,28 +123,6 @@
     return title;
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (!self.datesForPicker)
-        [self generatePickerDates];
-    return self.datesForPicker.count;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if (!self.datesForPicker)
-        [self generatePickerDates];
-    return self.datesForPicker[row];
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSString * title = [self pickerView:pickerView titleForRow:row forComponent:component];
-    [self.inputDate setText:title];
-    self.currentRow = row;
-}
-
 -(void)selectDate:(id)sender {
     [self.inputDate resignFirstResponder];
 }
