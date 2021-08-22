@@ -9,16 +9,50 @@
 import Foundation
 import UIKit
 
-//fileprivate let  FUTURE_DAYS = 14
-//
-//protocol PracticeEditDelegate {
-//
-//    func didCreatePractice()
-//    func didEditPractice()
-//
-//}
+fileprivate let  FUTURE_DAYS = 14
 
-extension PracticeEditViewController {
+protocol PracticeEditDelegate {
+
+    func didCreatePractice()
+    func didEditPractice()
+
+}
+
+class PracticeEditViewController: UIViewController {
+
+    var dateForDateString: [String: Date] = [:]
+    var datesForPicker: [String] = []
+    var drawn: [Bool] = []
+
+    var practice: FirebaseEvent?
+    var createPracticeInfo: [String: String] = [:]
+
+    weak var delegate: PracticeEditDelegate?
+
+    @IBOutlet var labelTitle: UILabel!
+    @IBOutlet var inputDate: UITextField!
+    @IBOutlet var inputDetails: UITextField!
+    @IBOutlet var inputNotes: UITextView!
+
+    @IBOutlet var buttonAttendance: UIButton!
+    @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint
+    @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint
+
+    var originalDescription: String?
+
+    @IBOutlet var viewEmail: UIView!
+    @IBOutlet var inputTo: UITextField!
+    @IBOutlet var buttonEmail: UIButton!
+    @IBOutlet var buttonDrawing: UIButton!
+
+    var currentRow: Int = -1
+    var lastInputDate: String?
+    var emailFrom: String?
+    var emailTo: String?
+
+    @IBOutlet var activityOverlay: UIView!
+
+    @IBOutlet var viewInfo: UIView!
 
     private lazy var pickerView: UIPickerView = {
         let view = UIPickerView()
