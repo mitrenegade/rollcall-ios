@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 var _practices: [FirebaseEvent]?
-extension PracticesTableViewController {
+class PracticesTableViewController: UITableViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
