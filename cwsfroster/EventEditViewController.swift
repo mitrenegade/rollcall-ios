@@ -28,7 +28,7 @@ class EventEditViewController: UIViewController {
     var drawn: [Bool] = []
 
     var practice: FirebaseEvent?
-    var createPracticeInfo: [String: Any]?
+    private var createPracticeInfo = [String: Any]()
 
     weak var delegate: PracticeEditDelegate?
 
@@ -93,9 +93,6 @@ class EventEditViewController: UIViewController {
         setupPicker()
 
         emailTo = UserDefaults.standard.object(forKey: "email:to") as? String
-        if practice == nil {
-            createPracticeInfo = [:]
-        }
     }
 
     private func setupPicker() {
@@ -135,7 +132,7 @@ class EventEditViewController: UIViewController {
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
     
-    @objc func configureForPractice() {
+    private func configureForPractice() {
         if practice == nil {
             self.title = "New event";
             self.constraintButtonEmailHeight.constant = 0
@@ -157,11 +154,11 @@ class EventEditViewController: UIViewController {
     }
     
     fileprivate func createPractice(_ completion: @escaping ((FirebaseEvent)->Void)) {
-        guard let name = createPracticeInfo?["title"] as? String else { return }
-        guard let date = createPracticeInfo?["date"] as? Date else { return }
+        guard let name = createPracticeInfo["title"] as? String else { return }
+        guard let date = createPracticeInfo["date"] as? Date else { return }
         guard let orgId = OrganizationService.shared.currentOrganizationId else { return }
-        let details = createPracticeInfo?["details"] as? String
-        let notes = createPracticeInfo?["notes"] as? String
+        let details = createPracticeInfo["details"] as? String
+        let notes = createPracticeInfo["notes"] as? String
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: orgId) { [weak self] (event, error) in
             if let event = event {
                 LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
@@ -248,7 +245,7 @@ extension EventEditViewController {
 extension EventEditViewController: UITextViewDelegate {
     public func textViewDidEndEditing(_ textView: UITextView) {
         practice?.notes = self.inputNotes.text
-        createPracticeInfo?["notes"] = self.inputNotes.text
+        createPracticeInfo["notes"] = self.inputNotes.text
     }
     
     @objc func dismissKeyboard() {
@@ -287,11 +284,11 @@ extension EventEditViewController: UITextFieldDelegate {
     public func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == inputDate {
             practice?.title = textField.text
-            createPracticeInfo?["title"] = textField.text
+            createPracticeInfo["title"] = textField.text
             
             if let text = inputDate.text, let date = dateForDateString[text] {
                 practice?.date = date
-                createPracticeInfo?["date"] = date
+                createPracticeInfo["date"] = date
                 if let practice = practice {
                     LoggingService.log(type: "PracticeDateChanged", info: ["id": practice.id, "date": text])
                 }
@@ -300,7 +297,7 @@ extension EventEditViewController: UITextFieldDelegate {
         }
         else if textField == inputDetails {
             practice?.details = textField.text
-            createPracticeInfo?["details"] = textField.text
+            createPracticeInfo["details"] = textField.text
         }
         
         textField.resignFirstResponder()
