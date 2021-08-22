@@ -91,7 +91,7 @@
                                             <constraint firstAttribute="height" constant="30" id="Tlt-rt-VIQ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" enablesReturnKeyAutomatically="YES"/>
                                         <connections>
                                             <outlet property="delegate" destination="c3o-bq-UFD" id="zte-ep-DI9"/>
                                         </connections>
