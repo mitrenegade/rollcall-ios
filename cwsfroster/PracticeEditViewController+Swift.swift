@@ -422,4 +422,11 @@ extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSour
         inputDate.text = lastInputDate
         inputDate.resignFirstResponder()
     }
+
+    func dateOnly(_ date: Date) -> Date? {
+        let calendar = Calendar(identifier: .gregorian)
+        let components = calendar.dateComponents(Set([.year, .month, .day]), from: date)
+        return calendar.date(from: components)
+    }
+
 }
