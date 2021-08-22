@@ -1,8 +1,8 @@
 //
-//  PracticeEditViewController+Swift.swift
+//  EventEditViewController.swift
 //  rollcall
 //
-//  Created by Bobby Ren on 2/5/17.
+//  Created by Bobby Ren on 8/21/21.
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
@@ -19,7 +19,7 @@ protocol PracticeEditDelegate: class {
 
 }
 
-class PracticeEditViewController: UIViewController {
+class EventEditViewController: UIViewController {
 
     var dateForDateString: [String: Date] = [:]
     var datesForPicker: [String] = []
@@ -41,8 +41,6 @@ class PracticeEditViewController: UIViewController {
 
     var originalDescription: String?
 
-    @IBOutlet var viewEmail: UIView!
-    @IBOutlet var inputTo: UITextField!
     @IBOutlet var buttonEmail: UIButton!
     @IBOutlet var buttonDrawing: UIButton!
 
@@ -177,7 +175,7 @@ class PracticeEditViewController: UIViewController {
 }
 
 // MARK: Navigation
-extension PracticeEditViewController {
+extension EventEditViewController {
     @IBAction func didClickClose(_ sender: AnyObject?) {
         if practice != nil {
             self.view.endEditing(true)
@@ -247,7 +245,7 @@ extension PracticeEditViewController {
 }
 
 // Notes
-extension PracticeEditViewController: UITextViewDelegate {
+extension EventEditViewController: UITextViewDelegate {
     public func textViewDidEndEditing(_ textView: UITextView) {
         practice?.notes = self.inputNotes.text
         createPracticeInfo?["notes"] = self.inputNotes.text
@@ -272,7 +270,7 @@ extension PracticeEditViewController: UITextViewDelegate {
 
 
 // MARK: UITextFieldDelegate
-extension PracticeEditViewController: UITextFieldDelegate {
+extension EventEditViewController: UITextFieldDelegate {
     public func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == inputDate {
             lastInputDate = textField.text
@@ -315,8 +313,8 @@ extension PracticeEditViewController: UITextFieldDelegate {
 }
 
 // MARK: Email
-extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
-    func didClickEmail(_ sender: AnyObject?) {
+extension EventEditViewController: MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
+    @IBAction func didClickEmail(_ sender: AnyObject?) {
         let alert = UIAlertController(title: "To:", message: nil, preferredStyle: .alert)
         alert.addTextField { (textField) in
             textField.text = self.emailTo
@@ -416,7 +414,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
     }
 }
 
-extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1

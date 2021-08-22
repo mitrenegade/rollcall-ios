@@ -18,7 +18,7 @@
 		8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D992F20B1A84B005E4186 /* Date+Utils.swift */; };
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
-		8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */; };
+		8E1F64011E47816F004E8723 /* EventEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64001E47816F004E8723 /* EventEditViewController.swift */; };
 		8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64021E478627004E8723 /* EventsListViewController.swift */; };
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
@@ -122,7 +122,7 @@
 		8E1D992F20B1A84B005E4186 /* Date+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
-		8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticeEditViewController+Swift.swift"; sourceTree = "<group>"; };
+		8E1F64001E47816F004E8723 /* EventEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventEditViewController.swift; sourceTree = "<group>"; };
 		8E1F64021E478627004E8723 /* EventsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListViewController.swift; sourceTree = "<group>"; };
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
@@ -343,7 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				8E1F64021E478627004E8723 /* EventsListViewController.swift */,
-				8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */,
+				8E1F64001E47816F004E8723 /* EventEditViewController.swift */,
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
@@ -765,7 +765,7 @@
 				8E9D891F20CB130900AD382F /* EventService.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
-				8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */,
+				8E1F64011E47816F004E8723 /* EventEditViewController.swift in Sources */,
 				8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */,
 				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
