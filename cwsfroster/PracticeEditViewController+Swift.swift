@@ -8,8 +8,9 @@
 
 import Foundation
 import UIKit
+import MessageUI
 
-fileprivate let  FUTURE_DAYS = 14
+fileprivate let FUTURE_DAYS = 14
 
 protocol PracticeEditDelegate: class {
 
@@ -34,7 +35,7 @@ class PracticeEditViewController: UIViewController {
     @IBOutlet var inputDetails: UITextField!
     @IBOutlet var inputNotes: UITextView!
 
-    @IBOutlet var buttonAttendance: UIButton!
+    @IBOutlet var buttonAttendees: UIButton!
     @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint!
     @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint!
 

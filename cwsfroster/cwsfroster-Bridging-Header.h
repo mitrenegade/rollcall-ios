@@ -10,7 +10,6 @@
 #define cwsfroster_Bridging_Header_h
 
 #import "AppDelegate.h"
-#import "PracticeEditViewController.h"
 #import "TutorialScrollView.h"
 #import "Util.h"
 
