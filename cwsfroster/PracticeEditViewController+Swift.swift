@@ -11,7 +11,7 @@ import UIKit
 
 fileprivate let  FUTURE_DAYS = 14
 
-protocol PracticeEditDelegate {
+protocol PracticeEditDelegate: class {
 
     func didCreatePractice()
     func didEditPractice()
@@ -25,7 +25,7 @@ class PracticeEditViewController: UIViewController {
     var drawn: [Bool] = []
 
     var practice: FirebaseEvent?
-    var createPracticeInfo: [String: String] = [:]
+    var createPracticeInfo: [String: Any]?
 
     weak var delegate: PracticeEditDelegate?
 
@@ -35,8 +35,8 @@ class PracticeEditViewController: UIViewController {
     @IBOutlet var inputNotes: UITextView!
 
     @IBOutlet var buttonAttendance: UIButton!
-    @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint
-    @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint
+    @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint!
+    @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint!
 
     var originalDescription: String?
 
@@ -80,7 +80,7 @@ class PracticeEditViewController: UIViewController {
         return view
     }()
 
-    open override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         inputDate.inputView = pickerView
@@ -91,7 +91,30 @@ class PracticeEditViewController: UIViewController {
         currentRow = -1 // todo
         generatePickerDates() // todo use lazy
 
-        setupViews()
+        setupPicker()
+
+        emailTo = UserDefaults.standard.object(forKey: "email:to") as? String
+        if practice == nil {
+            createPracticeInfo = [:]
+        }
+    }
+
+    private func setupPicker() {
+        let defaultTitle = practice?.title ?? title(for: Date())
+
+        for i in 0 ..< datesForPicker.count { // todo: map
+            if defaultTitle == datesForPicker[i] {
+                currentRow = i
+                break
+            }
+
+            let selectedDate = dateOnly(dateForDateString[datesForPicker[i]] ?? Date()) // TODO: compactMap
+            let practiceDate = practice?.dateOnly()
+            if selectedDate == practiceDate {
+                currentRow = i
+                break
+            }
+        }
     }
 
     override open func viewWillAppear(_ animated: Bool) {
@@ -125,9 +148,9 @@ class PracticeEditViewController: UIViewController {
         }
         else {
             self.title = "Edit event"
-            self.inputDate.text = self.practice.title
-            self.inputDetails.text = self.practice.details
-            self.inputNotes.text = self.practice.notes
+            self.inputDate.text = self.practice?.title
+            self.inputDetails.text = self.practice?.details
+            self.inputNotes.text = self.practice?.notes
             
             self.navigationItem.rightBarButtonItem = nil
         }
@@ -143,7 +166,7 @@ class PracticeEditViewController: UIViewController {
         EventService.shared.createEvent(name, date: date, notes: notes, details: details, organization: orgId) { [weak self] (event, error) in
             if let event = event {
                 LoggingService.log(type: "PracticeCreated", info: ["id":event.id])
-                self?.delegate.didCreatePractice()
+                self?.delegate?.didCreatePractice()
                 completion(event)
             } else {
                 print("Create practice error \(error.debugDescription)")
@@ -301,7 +324,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { (action) in
             if let textField = alert.textFields?.first {
                 self.emailTo = textField.text
-                guard !self.emailTo.isEmpty else {
+                guard let email = self.emailTo, !email.isEmpty else {
                     self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
                     return
                 }
@@ -329,9 +352,9 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
 
         UserDefaults.standard.set(self.emailTo, forKey: "email:to")
         
-        let eventName = self.practice.title ?? "practice"
+        let eventName = self.practice?.title ?? "practice"
         let title = "Event attendance for \(eventName)"
-        let dateString = Util.simpleDateFormat(self.practice.date ?? Date(), local: true) ?? "n/a"
+        let dateString = Util.simpleDateFormat(self.practice?.date ?? Date(), local: true) ?? "n/a"
         var message = "Date: \(dateString)\n"
         
         let attendees = practice.attendees
@@ -362,7 +385,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
             self.activityOverlay.isHidden = true
             return
         }
-        guard !emailTo.isEmpty else {
+        guard let emailTo = emailTo, !emailTo.isEmpty else {
             self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
             self.activityOverlay.isHidden = true
             return
@@ -377,7 +400,7 @@ extension PracticeEditViewController: MFMailComposeViewControllerDelegate, UINav
         self.present(composer, animated: true, completion: nil)
         
         self.activityOverlay.isHidden = true
-        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice.id, "subject": title, "body": message])
+        LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice?.id, "subject": title, "body": message])
     }
     
     public func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
@@ -415,7 +438,7 @@ extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSour
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let title = self.pickerView(pickerView, titleForRow: row, forComponent: component)
         inputDate.text = title
-        currentRow = Int32(row) // TODO
+        currentRow = row
     }
 
     // MARK: - Helpers for picker
@@ -434,7 +457,7 @@ extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSour
             let secs = TimeInterval(-24*3600*(row-futureDays))
             let date = Date().addingTimeInterval(secs)
             if let title = self.title(for: date) {
-                datesForPicker.addObjects(from: [title])
+                datesForPicker.append(title)
                 dateForDateString[title] = date
             }
         }

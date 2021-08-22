@@ -25,30 +25,5 @@
     return self;
 }
 
-- (void)setupViews {
-
-    NSString *defaultTitle = self.practice.title ? : [self titleForDate:[NSDate date]];
-    for (int i=0; i<[self.datesForPicker count]; i++) {
-        if ([defaultTitle isEqualToString:self.datesForPicker[i]]) {
-            self.currentRow = i;
-            break;
-        }
-        NSDate *selectedDate = [self dateOnly:self.dateForDateString[self.datesForPicker[i]]];
-        NSDate *practiceDate = [self.practice dateOnly];
-        //NSLog(@"Date: %@ %@", selectedDate, practiceDate);
-
-        if (selectedDate == practiceDate) {
-            self.currentRow = i;
-            break;
-        }
-    }
-
-
-    self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
-
-    if (self.practice == nil) {
-        self.createPracticeInfo = [[NSDictionary alloc] init];
-    }
-}
 
 @end
