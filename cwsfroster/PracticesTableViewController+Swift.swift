@@ -11,6 +11,33 @@ import UIKit
 
 var _practices: [FirebaseEvent]?
 extension PracticesTableViewController {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupSettingsNavButton()
+        setupPlusNavButton()
+        reloadPractices()
+        listenFor("practice:info:updated", action: #selector(reloadPractices), object: nil)
+    }
+
+    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "toNewEvent" {
+            let nav = segue.destination as? UINavigationController
+            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            controller?.delegate = self
+        } else if segue.identifier == "EventListToDetail" {
+            let nav = segue.destination as? UINavigationController
+            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                controller?.practice = practice(for: indexPath.row)
+            }
+            controller?.delegate = self
+        }
+    }
+
     @objc func setupSettingsNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         button.setImage(UIImage(named: "hamburger4-square"), for: .normal)
