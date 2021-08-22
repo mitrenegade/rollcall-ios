@@ -22,7 +22,9 @@ protocol PracticeEditDelegate: class {
 class EventEditViewController: UIViewController {
 
     var dateForDateString: [String: Date] = [:]
-    var datesForPicker: [String] = []
+    private lazy var datesForPicker: [String] = {
+        generatePickerDates()
+    }()
     var drawn: [Bool] = []
 
     var practice: FirebaseEvent?
@@ -88,7 +90,6 @@ class EventEditViewController: UIViewController {
         setupTextView()
         configureForPractice()
         currentRow = -1 // todo
-        generatePickerDates() // todo use lazy
 
         setupPicker()
 
@@ -421,17 +422,11 @@ extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource 
     }
 
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if self.datesForPicker == nil { // todo lazy var
-            generatePickerDates()
-        }
-        return datesForPicker.count
+        datesForPicker.count
     }
 
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if self.datesForPicker == nil { // todo lazy var
-            generatePickerDates()
-        }
-        return datesForPicker[row] as? String
+        datesForPicker[row]
     }
 
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -442,12 +437,8 @@ extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 
     // MARK: - Helpers for picker
 
-    private func generatePickerDates() {
-        guard datesForPicker == nil else {
-            return
-        }
-
-        datesForPicker = []
+    private func generatePickerDates() -> [String] {
+        var dates = [String]()
         dateForDateString = [:]
 
         let futureDays = FUTURE_DAYS // allow 2 weeks into the future
@@ -456,10 +447,11 @@ extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource 
             let secs = TimeInterval(-24*3600*(row-futureDays))
             let date = Date().addingTimeInterval(secs)
             if let title = self.title(for: date) {
-                datesForPicker.append(title)
+                dates.append(title)
                 dateForDateString[title] = date
             }
         }
+        return dates
     }
 
     private func title(for date: Date) -> String? {
