@@ -1,16 +1,42 @@
 //
-//  PracticesTableViewController+Swift.swift
+//  EventsListViewController.swift
 //  rollcall
 //
-//  Created by Bobby Ren on 2/5/17.
-//  Copyright © 2017 Bobby Ren. All rights reserved.
+//  Created by Bobby Ren on 8/21/2021.
 //
 
 import Foundation
 import UIKit
 
 var _practices: [FirebaseEvent]?
-extension PracticesTableViewController {
+class EventsListViewController: UITableViewController {
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupSettingsNavButton()
+        setupPlusNavButton()
+        reloadPractices()
+        listenFor("practice:info:updated", action: #selector(reloadPractices), object: nil)
+    }
+
+    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        // Get the new view controller using [segue destinationViewController].
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "toNewEvent" {
+            let nav = segue.destination as? UINavigationController
+            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            controller?.delegate = self
+        } else if segue.identifier == "EventListToDetail" {
+            let nav = segue.destination as? UINavigationController
+            let controller = nav?.viewControllers.first as? PracticeEditViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                controller?.practice = practice(for: indexPath.row)
+            }
+            controller?.delegate = self
+        }
+    }
+
     @objc func setupSettingsNavButton() {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         button.setImage(UIImage(named: "hamburger4-square"), for: .normal)
@@ -33,7 +59,7 @@ extension PracticesTableViewController {
         performSegue(withIdentifier: "toNewEvent", sender: nil)
     }
 }
-extension PracticesTableViewController {
+extension EventsListViewController {
     var practices: [FirebaseEvent] {
         return _practices ?? []
     }
@@ -83,7 +109,7 @@ extension PracticesTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-extension PracticesTableViewController {
+extension EventsListViewController {
     @objc func reloadPractices() {
         OrganizationService.shared.events { [weak self] (events, error) in
             if let error = error as NSError?, let reason = error.userInfo["reason"] as? String, reason == "no org" {
@@ -107,7 +133,7 @@ extension PracticesTableViewController {
     }
 }
 
-extension PracticesTableViewController: PracticeEditDelegate {
+extension EventsListViewController: PracticeEditDelegate {
     public func didCreatePractice() {
         // query from web
         self.reloadPractices()
@@ -143,7 +169,7 @@ extension PracticesTableViewController: PracticeEditDelegate {
 }
 
 // MARK: - Power user feedback
-extension PracticesTableViewController {
+extension EventsListViewController {
     func promptForPowerUserFeedback() {
         let alert = UIAlertController(title: "Congratulations, Power User", message: "Thanks for using RollCall! You have created at least 5 events. As a Power User, your feedback is really important to us. How can we improve?", preferredStyle: .alert)
         alert.addTextField { (textField) in

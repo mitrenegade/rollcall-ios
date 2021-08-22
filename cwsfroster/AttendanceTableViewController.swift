@@ -19,6 +19,7 @@ class AttendanceTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
+        self.listenFor("member:created", action: #selector(reloadData), object: nil)
         reloadData()
     }
     

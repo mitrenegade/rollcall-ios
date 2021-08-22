@@ -11,7 +11,6 @@
 
 #import "AppDelegate.h"
 #import "PracticeEditViewController.h"
-#import "PracticesTableViewController.h"
 #import "TutorialScrollView.h"
 #import "Util.h"
 

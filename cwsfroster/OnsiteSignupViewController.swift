@@ -81,12 +81,7 @@ class OnsiteSignupViewController: UIViewController {
                 if let photo = self?.addedPhoto {
                     member.photo = photo
                     print("FirebaseImageService: uploading member photo for \(member.id)")
-//                    let alert = UIAlertController(title: "Uploading...", message: nil, preferredStyle: .alert)
-//                    alert.addAction(UIAlertAction(title: "Close", style: .cancel) { (action) in
-//                    })
-//                    self?.present(alert, animated: true, completion: nil)
                     FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id,  progressHandler: { (percent) in
-//                        alert.title =
                         print("Upload progress: \(Int(percent*100))%")
                     }, completion: { (url) in
 //                        alert.dismiss(animated: true, completion: nil)
@@ -135,6 +130,8 @@ class OnsiteSignupViewController: UIViewController {
         self.buttonPhoto.setImage(UIImage.init(named: "add_user"), for: .normal)
         self.buttonPhoto.layer.cornerRadius = 0
         self.buttonSave.isEnabled = true
+
+        inputName.becomeFirstResponder()
     }
 }
 
