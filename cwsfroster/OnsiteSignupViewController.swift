@@ -131,7 +131,7 @@ class OnsiteSignupViewController: UIViewController {
         self.buttonPhoto.layer.cornerRadius = 0
         self.buttonSave.isEnabled = true
 
-        inputEmail.becomeFirstResponder()
+        inputName.becomeFirstResponder()
     }
 }
 
