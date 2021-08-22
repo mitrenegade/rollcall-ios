@@ -438,12 +438,12 @@ extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource 
         dateForDateString = [:]
 
         let futureDays = FUTURE_DAYS // allow 2 weeks into the future
-        for row in 31 + futureDays ... 0 {
+        for row in 0 ..< 31 + futureDays {
 
             let secs = TimeInterval(-24*3600*(row-futureDays))
             let date = Date().addingTimeInterval(secs)
             if let title = self.title(for: date) {
-                dates.append(title)
+                dates.insert(title, at: 0)
                 dateForDateString[title] = date
             }
         }
