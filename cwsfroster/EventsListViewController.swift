@@ -1,16 +1,15 @@
 //
-//  PracticesTableViewController+Swift.swift
+//  EventsListViewController.swift
 //  rollcall
 //
-//  Created by Bobby Ren on 2/5/17.
-//  Copyright © 2017 Bobby Ren. All rights reserved.
+//  Created by Bobby Ren on 8/21/2021.
 //
 
 import Foundation
 import UIKit
 
 var _practices: [FirebaseEvent]?
-class PracticesTableViewController: UITableViewController {
+class EventsListViewController: UITableViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -60,7 +59,7 @@ class PracticesTableViewController: UITableViewController {
         performSegue(withIdentifier: "toNewEvent", sender: nil)
     }
 }
-extension PracticesTableViewController {
+extension EventsListViewController {
     var practices: [FirebaseEvent] {
         return _practices ?? []
     }
@@ -110,7 +109,7 @@ extension PracticesTableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-extension PracticesTableViewController {
+extension EventsListViewController {
     @objc func reloadPractices() {
         OrganizationService.shared.events { [weak self] (events, error) in
             if let error = error as NSError?, let reason = error.userInfo["reason"] as? String, reason == "no org" {
@@ -134,7 +133,7 @@ extension PracticesTableViewController {
     }
 }
 
-extension PracticesTableViewController: PracticeEditDelegate {
+extension EventsListViewController: PracticeEditDelegate {
     public func didCreatePractice() {
         // query from web
         self.reloadPractices()
@@ -170,7 +169,7 @@ extension PracticesTableViewController: PracticeEditDelegate {
 }
 
 // MARK: - Power user feedback
-extension PracticesTableViewController {
+extension EventsListViewController {
     func promptForPowerUserFeedback() {
         let alert = UIAlertController(title: "Congratulations, Power User", message: "Thanks for using RollCall! You have created at least 5 events. As a Power User, your feedback is really important to us. How can we improve?", preferredStyle: .alert)
         alert.addTextField { (textField) in

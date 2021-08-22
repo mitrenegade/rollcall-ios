@@ -77,7 +77,7 @@ class ShellViewController: UITabBarController {
         guard let membersViewController = UIStoryboard(name: "Members", bundle: nil)
                 .instantiateInitialViewController() as? MembersTableViewController,
               let eventsViewController = UIStoryboard(name: "Events", bundle: nil)
-                .instantiateInitialViewController() as? PracticesTableViewController else {
+                .instantiateInitialViewController() as? EventsListViewController else {
             return
         }
         viewControllers = [UINavigationController(rootViewController: eventsViewController),

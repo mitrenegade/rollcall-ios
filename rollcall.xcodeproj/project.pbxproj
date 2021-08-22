@@ -19,7 +19,7 @@
 		8E1D993420B20C78005E4186 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1D993320B20C78005E4186 /* AuthService.swift */; };
 		8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */; };
 		8E1F64011E47816F004E8723 /* PracticeEditViewController+Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */; };
-		8E1F64031E478627004E8723 /* PracticesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64021E478627004E8723 /* PracticesTableViewController.swift */; };
+		8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64021E478627004E8723 /* EventsListViewController.swift */; };
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
@@ -124,7 +124,7 @@
 		8E1D993320B20C78005E4186 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		8E1F63EF1E46CCC2004E8723 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
 		8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PracticeEditViewController+Swift.swift"; sourceTree = "<group>"; };
-		8E1F64021E478627004E8723 /* PracticesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PracticesTableViewController.swift; sourceTree = "<group>"; };
+		8E1F64021E478627004E8723 /* EventsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsListViewController.swift; sourceTree = "<group>"; };
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
@@ -345,7 +345,7 @@
 		8EE551501E3E611D001FB0C4 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				8E1F64021E478627004E8723 /* PracticesTableViewController.swift */,
+				8E1F64021E478627004E8723 /* EventsListViewController.swift */,
 				9E6CC8D4199A90D200AB1CB8 /* PracticeEditViewController.h */,
 				9E6CC8D5199A90D200AB1CB8 /* PracticeEditViewController.m */,
 				8E1F64001E47816F004E8723 /* PracticeEditViewController+Swift.swift */,
@@ -746,7 +746,7 @@
 				8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
-				8E1F64031E478627004E8723 /* PracticesTableViewController.swift in Sources */,
+				8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */,
 				9E6CC8D6199A90D200AB1CB8 /* PracticeEditViewController.m in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
