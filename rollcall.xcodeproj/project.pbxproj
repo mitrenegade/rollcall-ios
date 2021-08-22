@@ -587,10 +587,9 @@
 			};
 			buildConfigurationList = 9E80084716196883003E9B16 /* Build configuration list for PBXProject "rollcall" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
