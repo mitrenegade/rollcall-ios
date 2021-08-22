@@ -61,5 +61,6 @@
     
 -(NSString *)titleForDate:(NSDate *)date;
 -(void)generatePickerDates;
+-(void)setupViews;
 
 @end

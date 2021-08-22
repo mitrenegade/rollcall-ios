@@ -25,38 +25,8 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)setupViews {
 
-    UIPickerView * pickerView = [[UIPickerView alloc] init];
-    [pickerView setDelegate:self];
-    [pickerView setDataSource:self];
-    [pickerView setShowsSelectionIndicator:YES];
-
-    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
-    keyboardDoneButtonView.barStyle = UIBarStyleBlack;
-    keyboardDoneButtonView.translucent = YES;
-    keyboardDoneButtonView.tintColor = nil;
-    [keyboardDoneButtonView sizeToFit];
-    UIBarButtonItem* button1 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", @"Done") style:UIBarButtonItemStyleBordered target:self action:@selector(selectDate:)];
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem* button2 = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelSelectDate:)];
-    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:button2, flex, button1, nil]];
-
-    if (IS_ABOVE_IOS6) {
-        [keyboardDoneButtonView setTintColor:[UIColor whiteColor]];
-    }
-    self.inputDate.inputView = pickerView;
-    self.inputDate.inputAccessoryView = keyboardDoneButtonView;
-    
-    [self setupTextView];
-    [self configureForPractice];
-    
-    self.currentRow = -1;
-    [self generatePickerDates];
-    
     NSString *defaultTitle = self.practice.title ? : [self titleForDate:[NSDate date]];
     for (int i=0; i<[self.datesForPicker count]; i++) {
         if ([defaultTitle isEqualToString:self.datesForPicker[i]]) {
@@ -66,13 +36,13 @@
         NSDate *selectedDate = [self dateOnly:self.dateForDateString[self.datesForPicker[i]]];
         NSDate *practiceDate = [self.practice dateOnly];
         //NSLog(@"Date: %@ %@", selectedDate, practiceDate);
-        
+
         if (selectedDate == practiceDate) {
             self.currentRow = i;
             break;
         }
     }
-    
+
 
     self.emailTo = [[NSUserDefaults standardUserDefaults] objectForKey:@"email:to"];
 
@@ -80,7 +50,6 @@
         self.createPracticeInfo = [[NSDictionary alloc] init];
     }
 }
-
 
 #pragma mark Picker DataSource/Delegate
 

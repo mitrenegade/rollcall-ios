@@ -19,6 +19,47 @@ import UIKit
 //}
 
 extension PracticeEditViewController {
+
+    private lazy var pickerView: UIPickerView = {
+        let view = UIPickerView()
+        view.delegate = self
+        view.dataSource = self
+        return view
+    }()
+
+    private lazy var keyboardDoneButtonView: UIToolbar = {
+        let view = UIToolbar()
+        view.barStyle = .black
+        view.isTranslucent = true
+        view.sizeToFit()
+
+        let button1 = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(selectDate))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let button2 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(cancelSelectDate))
+        view.tintColor = .white
+        return view
+    }()
+
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+
+        inputDate.inputView = pickerView
+        inputDate.inputAccessoryView = keyboardDoneButtonView
+
+        setupTextView()
+        configureForPractice()
+        currentRow = -1 // todo
+        generatePickerDates() // todo use lazy
+
+        setupViews()
+    }
+
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -373,13 +414,12 @@ extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSour
         return "\(dayString) \(dateString)"
     }
 
-//    -(void)selectDate:(id)sender {
-//        [self.inputDate resignFirstResponder];
-//    }
-//
-//    -(void)cancelSelectDate:(id)sender {
-//        // revert to old date
-//        self.inputDate.text = self.lastInputDate;
-//        [self.inputDate resignFirstResponder];
-//    }
+    @objc private func selectDate() {
+        inputDate.resignFirstResponder()
+    }
+
+    @objc private func cancelSelectDate() {
+        inputDate.text = lastInputDate
+        inputDate.resignFirstResponder()
+    }
 }
