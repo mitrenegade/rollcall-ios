@@ -82,56 +82,8 @@
 }
 
 
--(void)didCloseRating {
-    // don't need
-}
-
 #pragma mark Picker DataSource/Delegate
--(void)generatePickerDates {
-    if (!self.datesForPicker) {
-        self.datesForPicker = [NSMutableArray array];
-        self.dateForDateString = [NSMutableDictionary dictionary];
-        
-        int futureDays = FUTURE_DAYS; // allow 2 weeks into the future
-        for (int row = 31 + futureDays; row > 0; row--) {
-            NSDate * date = [NSDate dateWithTimeIntervalSinceNow:-24*3600*(row-futureDays)];
-            NSString *title = [self titleForDate:date];
-            if (title) {
-                [self.datesForPicker addObject:title];
-                self.dateForDateString[title] = date;
-            }
-        }
-    }
-}
 
--(NSString *)titleForDate:(NSDate *)date {
-    NSString *dayString = [Util weekdayStringFromDate:date localTimeZone:YES]; // use local timezone because date has a timezone on it
-    NSString *dateString = [Util simpleDateFormat:date];
-    NSString *title = [NSString stringWithFormat:@"%@ %@", dayString, dateString];
-    NSLog(@"practice: %@", self.practice);
-    /*
-    if ([dateString isEqualToString:self.practice.title]) {
-        // current practice is allowed to be shown
-        return title;
-    }
-    else {
-        NSArray *practices = [[[Organization current] practices] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K == %@", @"title", dateString]];
-        if ([practices count])
-            return nil;
-    }
-     */
-    return title;
-}
-
--(void)selectDate:(id)sender {
-    [self.inputDate resignFirstResponder];
-}
-
--(void)cancelSelectDate:(id)sender {
-    // revert to old date
-    self.inputDate.text = self.lastInputDate;
-    [self.inputDate resignFirstResponder];
-}
 
 #pragma mark MessageController delegate
 - (void)mailComposeController:(MFMailComposeViewController*)controller

@@ -342,4 +342,44 @@ extension PracticeEditViewController: UIPickerViewDelegate, UIPickerViewDataSour
         inputDate.text = title
         currentRow = Int32(row) // TODO
     }
+
+    // MARK: - Helpers for picker
+
+    private func generatePickerDates() {
+        guard datesForPicker == nil else {
+            return
+        }
+
+        datesForPicker = []
+        dateForDateString = [:]
+
+        let futureDays = FUTURE_DAYS // allow 2 weeks into the future
+        for row in 31 + futureDays ... 0 {
+
+            let secs = TimeInterval(-24*3600*(row-futureDays))
+            let date = Date().addingTimeInterval(secs)
+            if let title = self.title(for: date) {
+                datesForPicker.addObjects(from: [title])
+                dateForDateString[title] = date
+            }
+        }
+    }
+
+    private func title(for date: Date) -> String? {
+        guard let dayString = Util.weekdayString(from: date, localTimeZone: true),
+              let dateString = Util.simpleDateFormat(date) else {
+            return nil
+        }
+        return "\(dayString) \(dateString)"
+    }
+
+//    -(void)selectDate:(id)sender {
+//        [self.inputDate resignFirstResponder];
+//    }
+//
+//    -(void)cancelSelectDate:(id)sender {
+//        // revert to old date
+//        self.inputDate.text = self.lastInputDate;
+//        [self.inputDate resignFirstResponder];
+//    }
 }
