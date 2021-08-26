@@ -38,6 +38,9 @@
 		8E9D891F20CB130900AD382F /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D891E20CB130900AD382F /* EventService.swift */; };
 		8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */; };
 		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
+		8EBB0BE826D6248D00BAB1A5 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */; };
+		8EBB0BEB26D624E700BAB1A5 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */; };
+		8EBB0BEF26D72A7B00BAB1A5 /* subscriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */; };
 		8EC44E0721D33F01008189DA /* Stripe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC44E0621D33F01008189DA /* Stripe.storyboard */; };
 		8EC44E0A21D33F62008189DA /* StripeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC44E0921D33F62008189DA /* StripeViewController.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
@@ -142,6 +145,10 @@
 		8E9D891E20CB130900AD382F /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
 		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
+		8EBB0BE626D6233500BAB1A5 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
+		8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
+		8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
+		8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subscriptions.plist; sourceTree = "<group>"; };
 		8EC44E0621D33F01008189DA /* Stripe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stripe.storyboard; sourceTree = "<group>"; };
 		8EC44E0921D33F62008189DA /* StripeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewController.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -436,6 +443,7 @@
 			children = (
 				8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */,
 				8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */,
+				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
 				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
@@ -457,6 +465,9 @@
 				C6D9631320C21CA700317C0C /* ShellViewController.swift */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */,
 				9E649FE919B608C300334B34 /* Tutorials */,
+				8EBB0BE626D6233500BAB1A5 /* Configuration.storekit */,
+				8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */,
+				8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */,
 			);
 			path = cwsfroster;
 			sourceTree = "<group>";
@@ -603,6 +614,7 @@
 				8EC44E0721D33F01008189DA /* Stripe.storyboard in Resources */,
 				9E649FEB19B608EC00334B34 /* IntroTutorial0.xib in Resources */,
 				9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */,
+				8EBB0BEF26D72A7B00BAB1A5 /* subscriptions.plist in Resources */,
 				9E80085C16196883003E9B16 /* InfoPlist.strings in Resources */,
 				8E3FFF5921D6CB4200B831B3 /* TheNounProject in Resources */,
 				C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */,
@@ -622,6 +634,7 @@
 				ACF58F8F1C266A0B0087EE70 /* add_user.png in Resources */,
 				9E649FF119B60F1D00334B34 /* IntroTutorial3.xib in Resources */,
 				9E649FE219B6040A00334B34 /* icon58.png in Resources */,
+				8EBB0BE826D6248D00BAB1A5 /* StoreKitTestCertificate.cer in Resources */,
 				9E98DB4919B2E421006D81FC /* icon-users@2x.png in Resources */,
 				9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */,
 				9E649FE319B6040A00334B34 /* icon80.png in Resources */,
@@ -782,6 +795,7 @@
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */,
 				8E1D993420B20C78005E4186 /* AuthService.swift in Sources */,
+				8EBB0BEB26D624E700BAB1A5 /* StoreKitManager.swift in Sources */,
 				8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */,
 				9EC5F31C1936D2410056140F /* UIImage+Alpha.m in Sources */,
 				9EC5F31D1936D2410056140F /* UIImage+Resize.m in Sources */,
