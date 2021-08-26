@@ -6,9 +6,21 @@
 //  Copyright © 2021 Bobby Ren. All rights reserved.
 //
 
-import Foundation
+import RxSwift
+import RxCocoa
+import SnapKit
 
 final class SubscriptionViewController: UIViewController {
+
+    // MARK: - Properties
+
+    private let disposeBag = DisposeBag()
+
+    lazy var titleLabel: UILabel = {
+        UILabel()
+    }()
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,10 +41,43 @@ final class SubscriptionViewController: UIViewController {
 
     private func setupViews() {
         navigationItem.title = "Your Subscription"
+
+        view.backgroundColor = .bgBlue
+
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(40)
+        }
+        titleLabel.font = .systemFont(ofSize: 20)
+        titleLabel.textColor = .white
     }
 
     private func setupBindings() {
+        OrganizationService.shared.currentObservable
+            .subscribe(onNext: { [weak self] organization in
+                self?.update(for: organization)
+            })
+            .disposed(by: disposeBag)
+    }
 
+    func update(for organization: FirebaseOrganization?) {
+        guard let organization = organization else {
+            AuthService.logout()
+            notify(.LogoutSuccess, object: nil, userInfo: nil)
+            didClickClose()
+            return
+        }
+
+        switch organization.subscription {
+        case .standard:
+            titleLabel.text = "Standard"
+        case .plus:
+            titleLabel.text = "Plus"
+        case .premium:
+            titleLabel.text = "Premium"
+        }
     }
 
     // MARK: - Navigation

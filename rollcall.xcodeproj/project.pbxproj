@@ -42,6 +42,7 @@
 		8EBB0BEB26D624E700BAB1A5 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */; };
 		8EBB0BEF26D72A7B00BAB1A5 /* subscriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */; };
 		8EBB0C2426D736FE00BAB1A5 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */; };
+		8EBB0C2726D744D500BAB1A5 /* SubscriptionTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0C2626D744D500BAB1A5 /* SubscriptionTier.swift */; };
 		8EC44E0721D33F01008189DA /* Stripe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC44E0621D33F01008189DA /* Stripe.storyboard */; };
 		8EC44E0A21D33F62008189DA /* StripeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC44E0921D33F62008189DA /* StripeViewController.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
@@ -151,6 +152,7 @@
 		8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subscriptions.plist; sourceTree = "<group>"; };
 		8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
+		8EBB0C2626D744D500BAB1A5 /* SubscriptionTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTier.swift; sourceTree = "<group>"; };
 		8EC44E0621D33F01008189DA /* Stripe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stripe.storyboard; sourceTree = "<group>"; };
 		8EC44E0921D33F62008189DA /* StripeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewController.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */,
 				8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */,
 				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
+				8EBB0C2626D744D500BAB1A5 /* SubscriptionTier.swift */,
 				8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */,
 				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
@@ -710,6 +713,7 @@
 				"${BUILT_PRODUCTS_DIR}/RxOptional/RxOptional.framework",
 				"${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -734,6 +738,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxOptional.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRelay.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -792,6 +797,7 @@
 				8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */,
 				C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */,
 				8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */,
+				8EBB0C2726D744D500BAB1A5 /* SubscriptionTier.swift in Sources */,
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
