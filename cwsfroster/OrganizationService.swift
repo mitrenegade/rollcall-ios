@@ -59,7 +59,8 @@ class OrganizationService: NSObject {
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             self?.loadingRelay.accept(false)
             guard snapshot.exists() else {
-                self?.currentRelay.accept(nil)
+                AuthService.logout()
+                self?.loadingRelay.accept(false)
                 return
             }
             if let data =  snapshot.children.allObjects.first as? DataSnapshot {
