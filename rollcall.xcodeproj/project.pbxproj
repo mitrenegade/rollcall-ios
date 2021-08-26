@@ -41,6 +41,7 @@
 		8EBB0BE826D6248D00BAB1A5 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */; };
 		8EBB0BEB26D624E700BAB1A5 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */; };
 		8EBB0BEF26D72A7B00BAB1A5 /* subscriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */; };
+		8EBB0C2426D736FE00BAB1A5 /* SubscriptionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */; };
 		8EC44E0721D33F01008189DA /* Stripe.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EC44E0621D33F01008189DA /* Stripe.storyboard */; };
 		8EC44E0A21D33F62008189DA /* StripeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC44E0921D33F62008189DA /* StripeViewController.swift */; };
 		8EE005A91E3D83F500272DC0 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8EE005A81E3D83F500272DC0 /* Login.storyboard */; };
@@ -149,6 +150,7 @@
 		8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
 		8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subscriptions.plist; sourceTree = "<group>"; };
+		8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionViewController.swift; sourceTree = "<group>"; };
 		8EC44E0621D33F01008189DA /* Stripe.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Stripe.storyboard; sourceTree = "<group>"; };
 		8EC44E0921D33F62008189DA /* StripeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeViewController.swift; sourceTree = "<group>"; };
 		8EE005A81E3D83F500272DC0 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 				8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */,
 				8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */,
 				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
+				8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */,
 				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
@@ -750,6 +753,7 @@
 				8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */,
 				8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */,
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
+				8EBB0C2426D736FE00BAB1A5 /* SubscriptionViewController.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
