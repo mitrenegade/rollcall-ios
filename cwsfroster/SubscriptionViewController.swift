@@ -20,6 +20,10 @@ final class SubscriptionViewController: UIViewController {
         UILabel()
     }()
 
+    lazy var detailsLabel: UILabel = {
+        UILabel()
+    }()
+
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -43,6 +47,15 @@ final class SubscriptionViewController: UIViewController {
         navigationItem.title = "Your Subscription"
 
         view.backgroundColor = .bgBlue
+
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.snp.topMargin).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(40)
+        }
+        titleLabel.font = .systemFont(ofSize: 20)
+        titleLabel.textColor = .white
 
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints {
