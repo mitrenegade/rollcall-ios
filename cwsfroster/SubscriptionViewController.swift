@@ -77,8 +77,7 @@ final class SubscriptionViewController: UIViewController {
 
     func update(for organization: FirebaseOrganization?) {
         guard let organization = organization else {
-            UserService.logout()
-            notify(.LogoutSuccess, object: nil, userInfo: nil)
+            UserService.shared.logout()
             didClickClose()
             return
         }

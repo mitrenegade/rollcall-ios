@@ -44,6 +44,9 @@ enum LoggingEvent: String {
 
     // subscriptions
     case subscriptionViewed
+
+    // logout
+    case logout
     
     case unknown
 }
@@ -66,7 +69,7 @@ class LoggingService: NSObject {
         var params = info ?? [:]
         params["title"] = eventString
         params["timestamp"] = Date().timeIntervalSince1970
-        if let userId = UserService.currentUser?.uid {
+        if let userId = UserService.shared.currentUserID {
             params["userId"] = userId
         }
         if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] {

@@ -51,7 +51,7 @@ class OrganizationService: NSObject {
         
         guard let userId = firAuth.currentUser?.uid else {
             print("UserId doesn't exist while observing org; logging out")
-            UserService.logout()
+            UserService.shared.logout()
             loadingRelay.accept(false)
             return
         }
@@ -59,7 +59,7 @@ class OrganizationService: NSObject {
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             self?.loadingRelay.accept(false)
             guard snapshot.exists() else {
-                UserService.logout()
+                UserService.shared.logout()
                 self?.loadingRelay.accept(false)
                 return
             }
