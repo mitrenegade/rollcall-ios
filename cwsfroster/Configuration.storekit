@@ -1,0 +1,67 @@
+{
+  "products" : [
+
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "CB26011E",
+      "localizations" : [
+
+      ],
+      "name" : "Premium Tools",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "0.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "38181B26",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "rollcall.subscription.tier1",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Advanced Event Management",
+          "subscriptionGroupID" : "CB26011E",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "B1DEE09C",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "rollcall.subscription.tier2",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Advanced Organization Management",
+          "subscriptionGroupID" : "CB26011E",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 0
+  }
+}

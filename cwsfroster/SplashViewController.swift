@@ -105,7 +105,8 @@ class SplashViewController: UIViewController {
                     self?.goHome()
                 }
             }).disposed(by: disposeBag)
-        
+
+        // create org for users without orgs
         OrganizationService.shared
             .currentObservable
             .skip(1)

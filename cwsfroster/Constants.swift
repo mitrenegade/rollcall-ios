@@ -66,3 +66,7 @@ enum Globals {
                                                            logger: nil)
     static var stripePaymentService: StripePaymentService = StripePaymentService(apiService: Globals.apiService)
 }
+
+extension UIColor {
+    static let bgBlue = UIColor(red: 24.0/256.0, green: 123.0/256.0, blue: 158.0/256.0, alpha: 1)
+}

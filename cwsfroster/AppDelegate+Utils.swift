@@ -43,4 +43,8 @@ extension AppDelegate {
         }
 
     }
+
+    @objc func startup() {
+        StoreKitManager.shared.loadProducts()
+    }
 }

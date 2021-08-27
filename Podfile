@@ -17,6 +17,7 @@ target 'rollcall' do
   pod 'Balizinha', :git => 'https://bitbucket.org/renderapps/balizinha-pod'
   pod 'RenderCloud', :git => 'git@bitbucket.org:renderapps/RenderCloud.git'
   pod 'Stripe', '~>14.0.0'
+  pod 'SnapKit'
 end
 
 post_install do |installer|

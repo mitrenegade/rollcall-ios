@@ -20,11 +20,12 @@ class SettingsViewController: UITableViewController {
         case about = "About"
         case organization = "My organization"
         case profile = "My profile"
+        case subscription = "Manage subscription"
         case payment = "Payment settings"
         case feedback = "Feedback"
         case logout = "Logout"
     }
-    let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .payment, .feedback, .logout]
+    let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .subscription, .feedback, .logout]
 
     func notifyForLogoutInSuccess() {
         self.notify(.LogoutSuccess, object: nil, userInfo: nil)
@@ -39,6 +40,7 @@ class SettingsViewController: UITableViewController {
             navigationItem.leftBarButtonItem = closeButtonItem
         } else {
             // Fallback on earlier versions
+            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(didClickClose))
         }
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
@@ -118,6 +120,8 @@ extension SettingsViewController {
             goToPayments()
         case .feedback:
             goToFeedback()
+        case .subscription:
+            goToSubscription()
             
         case .logout:
             AuthService.logout()
@@ -135,6 +139,14 @@ extension SettingsViewController {
     func goToPayments() {
         guard let nav = UIStoryboard(name: "Stripe", bundle: nil).instantiateInitialViewController() as? UINavigationController, let _ = nav.viewControllers.first as? StripeViewController else { return }
         present(nav, animated: true, completion: nil)
+    }
+
+    func goToSubscription() {
+        let viewController = SubscriptionViewController()
+        let nav = UINavigationController(rootViewController: viewController)
+        present(nav, animated: true) {
+            LoggingService.log(event: .subscriptionViewed, message: nil, info: nil, error: nil)
+        }
     }
 
     func goToUpdateOrganizationName() {
