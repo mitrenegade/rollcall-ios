@@ -1,5 +1,5 @@
 //
-//  AuthService.swift
+//  UserService.swift
 //  rollcall
 //
 //  Created by Bobby Ren on 5/20/18.
@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class AuthService: NSObject {
+class UserService: NSObject {
     class func logout() {
         try! firAuth.signOut()
         

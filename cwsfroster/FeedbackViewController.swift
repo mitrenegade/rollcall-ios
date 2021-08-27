@@ -28,7 +28,7 @@ class FeedbackViewController: UIViewController {
 
         navigationItem.title = "Feedback"
         
-        if let email = AuthService.currentUser?.email {
+        if let email = UserService.currentUser?.email {
             inputEmail.text = email
         }
         
@@ -70,7 +70,7 @@ class FeedbackViewController: UIViewController {
             return
         }
 
-        guard let userId = AuthService.currentUser?.uid else { return }
+        guard let userId = UserService.currentUser?.uid else { return }
         var params: [String: Any] = ["subject": subject, "userId": userId, "email": email]
         if let details = inputDetails.text, !details.isEmpty {
             params["details"] = details

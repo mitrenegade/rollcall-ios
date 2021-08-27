@@ -66,7 +66,7 @@ class LoggingService: NSObject {
         var params = info ?? [:]
         params["title"] = eventString
         params["timestamp"] = Date().timeIntervalSince1970
-        if let userId = AuthService.currentUser?.uid {
+        if let userId = UserService.currentUser?.uid {
             params["userId"] = userId
         }
         if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] {

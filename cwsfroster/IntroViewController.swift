@@ -64,7 +64,7 @@ class IntroViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !AuthService.isLoggedIn {
+        if !UserService.isLoggedIn {
             loadTutorial()
         }
         
@@ -171,10 +171,10 @@ extension IntroViewController {
                 }
             } else if let user = result?.user {
                 self.goToPractices()
-                AuthService.createFirebaseUser(id: user.uid)
+                UserService.createFirebaseUser(id: user.uid)
             } else {
                 self.simpleAlert("Unknown login error", message: "No user was found")
-                AuthService.logout()
+                UserService.logout()
             }
         })
     }
@@ -228,7 +228,7 @@ extension IntroViewController {
                         self.promptForNewOrgName(completion: { (name) in
                             let userId = user.uid
                             let orgName = name ?? user.email ?? "unnamed"
-                            AuthService.createFirebaseUser(id: user.uid)
+                            UserService.createFirebaseUser(id: user.uid)
                             OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                             
                             self.goToPractices()
@@ -237,7 +237,7 @@ extension IntroViewController {
                 } else {
                     LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email])
                     self.goToPractices()
-                    AuthService.createFirebaseUser(id: user.uid)
+                    UserService.createFirebaseUser(id: user.uid)
                 }
             }
         })

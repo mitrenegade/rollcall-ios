@@ -27,7 +27,7 @@ class FirebaseOfflineParser: NSObject {
     }
     
     func offlineOrganization() -> FirebaseOrganization? {
-        guard let user = AuthService.currentUser else { return nil }
+        guard let user = UserService.currentUser else { return nil }
         guard let organizations = offlineDict["organizations"] as? [String: Any] else { return nil }
         guard let organizationDict = organizations.filter({ (key, value) -> Bool in
             guard let dict = value as? [String: Any] else { return false }
