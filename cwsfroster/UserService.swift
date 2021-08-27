@@ -33,7 +33,15 @@ class UserService {
             fatalError("Logout failed! \(error)")
         }
     }
-    
+
+    func updateEmail(_ email: String, completion: ((Error?)->Void)?) {
+        firAuth.currentUser?.updateEmail(to: email, completion: completion)
+    }
+
+    func updatePassword(_ password: String, completion: ((Error?)->Void)?) {
+        firAuth.currentUser?.updatePassword(to: password, completion: completion)
+    }
+
     // TODO: use loginState
     var isLoggedIn: Bool {
         return firAuth.currentUser != nil
