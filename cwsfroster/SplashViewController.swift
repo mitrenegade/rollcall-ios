@@ -28,14 +28,16 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listenFor(.LoginSuccess, action: #selector(didLogin(_:)), object: nil)
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
         
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
 
-        UserService.shared.start()
+        // calls start()
+        let _ = UserService.shared
+
+        setupBindings()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -45,15 +47,13 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        guard UserService.shared.isLoggedIn else {
-            goHome()
-            return
-        }
-        
-        guard firAuth.currentUser != nil else { return }
+    }
+
+    func setupBindings() {
+        // listen for changes in org
         OrganizationService.shared
             .currentObservable
-            .take(1)
+            .distinctUntilChanged()
             .subscribe(onNext: { [weak self] org in
                 if org != nil {
                     self?.goHome()
@@ -82,7 +82,13 @@ class SplashViewController: UIViewController {
     
     @objc func didLogin(_ notification: NSNotification?) {
         // update firebase object
-        OrganizationService.shared.startObservingOrganization()
+        guard let userId = UserService.shared.currentUserID else {
+            print("UserId doesn't exist while observing org; logging out")
+            UserService.shared.logout()
+            return
+        }
+
+        OrganizationService.shared.startObservingOrganization(for: userId)
         OrganizationService.shared
             .loadingObservable
             .subscribe( onNext: { [weak self] loading in
@@ -137,7 +143,6 @@ class SplashViewController: UIViewController {
     }
 
     deinit {
-        stopListeningFor(.LoginSuccess)
         stopListeningFor(.LogoutSuccess)
     }
 }

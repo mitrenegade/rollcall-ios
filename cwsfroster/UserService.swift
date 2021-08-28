@@ -41,18 +41,16 @@ class UserService {
 
     private var userHandle: DatabaseHandle?
 
-    /// On app launch
-    func start() {
+    init() {
         // if app is already logged in, trigger listeners to store the user details object
         if let userID = currentUserID {
             startObservingUser(userID)
         }
-
-        // if app is not logged in,
     }
 
     /// On login, observe the user/id endpoint for user details
     private func startObservingUser(_ userID: String) {
+        print("\(self) - startObservingUser \(userID)")
         let ref = firRef.child("users").child(userID)
         userHandle = ref.observe(.value, with: { [weak self] snapshot in
             guard snapshot.exists() else {
@@ -64,6 +62,7 @@ class UserService {
 
     /// On logout, stop observing the user endpoint
     private func stopObservingUser() {
+        print("\(self) - stopObservingUser")
         if let handle = userHandle {
             firRef.child("users").removeObserver(withHandle: handle)
         }

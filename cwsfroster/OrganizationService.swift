@@ -12,7 +12,7 @@ import RxOptional
 import RxSwift
 import RxCocoa
 
-class OrganizationService: NSObject {
+class OrganizationService {
     static let shared = OrganizationService()
     
     fileprivate var disposeBag: DisposeBag!
@@ -38,7 +38,8 @@ class OrganizationService: NSObject {
         currentRelay.value?.id
     }
 
-    func startObservingOrganization() {
+    func startObservingOrganization(for userId: String) {
+        print("\(self) - startObservingOrganization userID \(userId)")
         loadingRelay.accept(true)
         guard !OFFLINE_MODE else {
             let org = FirebaseOfflineParser.shared.offlineOrganization()
@@ -46,15 +47,8 @@ class OrganizationService: NSObject {
             loadingRelay.accept(false)
             return
         }
-        print("Start observing organization")
         disposeBag = DisposeBag() // clear previous listeners
         
-        guard let userId = firAuth.currentUser?.uid else {
-            print("UserId doesn't exist while observing org; logging out")
-            UserService.shared.logout()
-            loadingRelay.accept(false)
-            return
-        }
         let ref = firRef.child("organizations")
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             self?.loadingRelay.accept(false)
@@ -72,9 +66,9 @@ class OrganizationService: NSObject {
     }
     
     func onLogout() {
+        print("\(self) - stopObservingOrganization")
         // stop observing organizer ref
         if let handle = organizerRefHandle {
-            print("Start observing organization ended")
             organizerRef?.removeObserver(withHandle: handle)
         }
         organizerRef = nil
