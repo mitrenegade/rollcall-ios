@@ -14,6 +14,11 @@ fileprivate var singleton: LoggingService?
 fileprivate var loggingRef: DatabaseReference = firRef.child("logs")
 
 enum LoggingEvent: String {
+
+    // login/logout
+    case login
+    case logout
+
     // first time user
     case createEmailUser
     case migrateSynchronizeParse
@@ -45,9 +50,6 @@ enum LoggingEvent: String {
     // subscriptions
     case subscriptionViewed
 
-    // logout
-    case logout
-    
     case unknown
 }
 

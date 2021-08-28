@@ -149,29 +149,35 @@ extension IntroViewController {
         }
         enableButtons(false)
         showProgress("Logging in...")
-        firAuth.signIn(withEmail: email, password: password, completion: { (result, error) in
-            if let error = error as NSError? {
-                print("Error: \(error)")
-                if error.code == 17011 {
-                    // invalid user. firebase error message is too wordy
+        UserService.shared.loginWithEmail(email, password: password) { result in
+            switch result {
+            case .success:
+                self.goToPractices()
+            case .failure(let error):
+                switch error {
+                case .invalidUser:
                     self.hideProgress() {
                         self.simpleAlert("Could not login", message: "Please try again")
                         self.enableButtons(true)
                     }
-                } else if error.code == 17008 { // not an email address
+                case .invalidFormat:
                     self.hideProgress() {
                         self.simpleAlert("Could not login", message: "Login must be an email address.")
                         self.enableButtons(true)
                     }
-                } else { // unknown error
+                case .unknown(let errorCode):
                     self.hideProgress() {
-                        self.simpleAlert("Could not login", defaultMessage: "Unknown error", error: error)
+                        self.simpleAlert("Could not login", defaultMessage: "Unknown error with code \(errorCode)")
                         self.enableButtons(true)
                     }
                 }
+            }
+        }
+        firAuth.signIn(withEmail: email, password: password, completion: { (result, error) in
+            if let error = error as NSError? {
+                print("Error: \(error)")
+
             } else if let user = result?.user {
-                self.goToPractices()
-                UserService.shared.createOrUpdateFirebaseUser(id: user.uid)
             } else {
                 self.simpleAlert("Unknown login error", message: "No user was found")
                 UserService.shared.logout()

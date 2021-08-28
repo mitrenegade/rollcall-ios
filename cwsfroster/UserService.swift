@@ -13,9 +13,47 @@ import RxCocoa
 
 /// Manages Firebase Auth as well as the /user table
 class UserService {
+    enum LoginError: Error {
+        case invalidUser
+        case invalidFormat
+        case unknown(Int)
+    }
+    enum SignupError: Error {
+        case invalidUser
+        case invalidFormat
+        case unknown(Int)
+    }
+
     static let shared = UserService()
 
     // MARK: - FirAuth
+
+    /// Login in using email and password
+    /// - Returns: Success if login worked, or a UserService.LoginError
+    func loginWithEmail(_ email: String, password: String, completion: ((Result<Void, LoginError>)->Void)?) {
+        firAuth.signIn(withEmail: email, password: password) { [weak self] auth, error in
+            if let auth = auth {
+                self?.createOrUpdateFirebaseUser(id: auth.user.uid)
+                completion?(.success(()))
+            } else if let error = error as NSError? {
+                switch error.code {
+                case 17011:
+                    completion?(.failure(.invalidUser))
+                case 17008:
+                    completion?(.failure(.invalidFormat))
+                default:
+                    completion?(.failure(.unknown(error.code)))
+                }
+            }
+        }
+    }
+
+    /// Sign up using email and password
+    /// - Returns: Success if signup worked, or a UserService.SignupError
+    func createEmailUser(_ email: String, password: String, completion: ((Result<Void, SignupError>)->Void)? ) {
+
+    }
+
     func logout() {
         do {
             LoggingService.log(event: .logout, message: "Logout")
@@ -93,7 +131,6 @@ class UserService {
 
     // MARK: - FirebaseUser (User details)
     func createOrUpdateFirebaseUser(id: String) {
-        // TODO: does this need to be a user? can it be in the organization?
         let ref = firRef.child("users").child(id)
         let params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]
         ref.updateChildValues(params)
