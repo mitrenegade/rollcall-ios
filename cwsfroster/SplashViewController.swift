@@ -70,8 +70,8 @@ class SplashViewController: UIViewController {
             }
         } else {
             if UserService.shared.isLoggedIn {
-                let shellViewController = ShellViewController()
-                present(shellViewController, animated: true, completion: nil)
+                let mainViewController = MainViewController()
+                present(mainViewController, animated: true, completion: nil)
             } else {
                 performSegue(withIdentifier: "toLogin", sender: nil)
             }

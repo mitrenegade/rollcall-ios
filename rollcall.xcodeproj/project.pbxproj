@@ -112,7 +112,7 @@
 		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
 		C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */; };
 		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
-		C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* ShellViewController.swift */; };
+		C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -239,7 +239,7 @@
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
 		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
 		C6D9631120C2181900317C0C /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
-		C6D9631320C21CA700317C0C /* ShellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellViewController.swift; sourceTree = "<group>"; };
+		C6D9631320C21CA700317C0C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.debug.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -471,7 +471,7 @@
 				8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */,
 				8E09584321ACE0960037DA17 /* Feedback */,
 				8EC44E0821D33F48008189DA /* Payments */,
-				C6D9631320C21CA700317C0C /* ShellViewController.swift */,
+				C6D9631320C21CA700317C0C /* MainViewController.swift */,
 				8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */,
 				9E649FE919B608C300334B34 /* Tutorials */,
 				8EBB0BE626D6233500BAB1A5 /* Configuration.storekit */,
@@ -772,7 +772,7 @@
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
 				C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */,
 				9E649FE819B606A800334B34 /* TutorialScrollView.m in Sources */,
-				C6D9631420C21CA700317C0C /* ShellViewController.swift in Sources */,
+				C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */,
 				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
