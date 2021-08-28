@@ -29,8 +29,6 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
-
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
@@ -47,14 +45,26 @@ class SplashViewController: UIViewController {
         listenForLogout()
     }
 
+    private func resetDisposeBag() {
+        print("BOBBYTEST resetDisposeBag")
+        disposeBag = DisposeBag() // stops listening
+    }
+
     func listenForLogout() {
         // listen for logged out state
         print("BOBBYTEST \(self) -> listenForLogout")
         UserService.shared.loginStateObserver
             .filter { $0 == .loggedOut }
+            .subscribe(onNext: { _ in
+                print("BOBBYTEST \(self) --> logged out")
+            })
+            .disposed(by: disposeBag)
+
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedOut }
             .take(1)
             .subscribe(onNext: { [weak self] _ in
-                self?.goHome()
+                self?.goToLogin()
             })
             .disposed(by: disposeBag)
     }
@@ -86,29 +96,39 @@ class SplashViewController: UIViewController {
                 if org != nil {
                     self?.goHome()
                 } else {
-                    self?.didLogin(nil)
+                    self?.didLoginWithoutOrg()
                 }
             }).disposed(by: disposeBag)
     }
 
     func goHome() {
-        disposeBag = DisposeBag() // stops listening
+        resetDisposeBag()
         if presentedViewController != nil {
             dismiss(animated: true) { [weak self] in
                 self?.goHome()
             }
         } else {
-            if UserService.shared.isLoggedIn {
-                let mainViewController = MainViewController()
-                present(mainViewController, animated: true, completion: nil)
-            } else {
-                listenForLogin()
-                performSegue(withIdentifier: "toLogin", sender: nil)
-            }
+            let mainViewController = MainViewController()
+            present(mainViewController, animated: true, completion: nil)
+
+            // listen for a logout
+            listenForLogout()
         }
     }
-    
-    @objc func didLogin(_ notification: NSNotification?) {
+
+    func goToLogin() {
+        resetDisposeBag()
+        if presentedViewController != nil {
+            dismiss(animated: true) { [weak self] in
+                self?.goToLogin()
+            }
+        } else {
+            listenForLogin()
+            performSegue(withIdentifier: "toLogin", sender: nil)
+        }
+    }
+
+    private func didLoginWithoutOrg() {
         // update firebase object
         guard let userId = UserService.shared.currentUserID else {
             print("UserId doesn't exist while observing org; logging out")
@@ -154,10 +174,6 @@ class SplashViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
     
-    @objc func didLogout() {
-        goHome()
-    }
-
     private func updateLoading(_ loading: Bool) {
         if loading {
             activityIndicator.startAnimating()

@@ -152,11 +152,6 @@ class UserService {
             try firAuth.signOut()
             stopObservingUser()
 
-            // notify logout success
-            NotificationCenter.default.post(name: NotificationType.LogoutSuccess.name(),
-                                            object: nil,
-                                            userInfo: nil)
-
             OrganizationService.shared.onLogout()
             userRelay.accept(nil)
         } catch let error {
