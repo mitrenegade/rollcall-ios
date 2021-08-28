@@ -7,7 +7,6 @@
 //
 
 import Foundation
-var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 extension Date {
     func dateString() -> String {
@@ -16,7 +15,7 @@ extension Date {
         let month = calendar.component(.month, from: self)
         let year = calendar.component(.year, from: self)
         //return "\((self as NSDate).day()) \(months[(self as NSDate).month() - 1]) \((self as NSDate).year())"
-        return "\(day) \(months[month - 1]) \(year)"
+        return "\(day) \(Date.months[month - 1].rawValue) \(year)"
     }
     
     // date picker

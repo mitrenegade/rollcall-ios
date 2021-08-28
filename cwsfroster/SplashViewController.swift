@@ -34,11 +34,19 @@ class SplashViewController: UIViewController {
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
-
-        listenForUser()
     }
 
-    func listenForUser() {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        activityIndicator.stopAnimating()
+        labelInfo.isHidden = true
+        labelInfo.text = nil
+
+        listenForLoginState()
+    }
+
+    func listenForLoginState() {
         // listen for login
         print("BOBBYTEST \(self) -> listenForUser")
         UserService.shared.startup()
@@ -56,7 +64,10 @@ class SplashViewController: UIViewController {
 
     func listenForOrganization() {
         print("BOBBYTEST \(self) -> listenForOrganization")
-        OrganizationService.shared.startObservingOrganization()
+        guard let userId = UserService.shared.currentUserID else {
+            fatalError("No userId")
+        }
+        OrganizationService.shared.startObservingOrganization(for: userId)
 
         // listen for orgganization
         OrganizationService.shared.currentObservable
@@ -69,15 +80,6 @@ class SplashViewController: UIViewController {
             }).disposed(by: disposeBag)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        activityIndicator.stopAnimating()
-        labelInfo.isHidden = true
-        labelInfo.text = nil
-
-    }
-    
     func goHome() {
         disposeBag = DisposeBag() // stops listening
         if presentedViewController != nil {
