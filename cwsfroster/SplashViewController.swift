@@ -34,8 +34,10 @@ class SplashViewController: UIViewController {
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
+
+        UserService.shared.start()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -119,7 +121,6 @@ class SplashViewController: UIViewController {
     }
     
     @objc func didLogout() {
-        print("logged out")
         goHome()
     }
 

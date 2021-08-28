@@ -27,6 +27,48 @@ class UserService {
 
     static let shared = UserService()
 
+    private let userRelay: BehaviorRelay<FirebaseUser?> = BehaviorRelay<FirebaseUser?>(value: nil)
+
+    var currentUser: FirebaseUser? {
+        userRelay.value
+    }
+
+    var userObservable: Observable<FirebaseUser> {
+        userRelay
+            .filterNil()
+            .distinctUntilChanged()
+    }
+
+    private var userHandle: DatabaseHandle?
+
+    /// On app launch
+    func start() {
+        // if app is already logged in, trigger listeners to store the user details object
+        if let userID = currentUserID {
+            startObservingUser(userID)
+        }
+
+        // if app is not logged in,
+    }
+
+    /// On login, observe the user/id endpoint for user details
+    private func startObservingUser(_ userID: String) {
+        let ref = firRef.child("users").child(userID)
+        userHandle = ref.observe(.value, with: { [weak self] snapshot in
+            guard snapshot.exists() else {
+                return
+            }
+            self?.userRelay.accept(FirebaseUser(snapshot: snapshot))
+        })
+    }
+
+    /// On logout, stop observing the user endpoint
+    private func stopObservingUser() {
+        if let handle = userHandle {
+            firRef.child("users").removeObserver(withHandle: handle)
+        }
+    }
+
     // MARK: - FirAuth
 
     /// Login in using email and password
@@ -34,6 +76,7 @@ class UserService {
     func loginWithEmail(_ email: String, password: String, completion: ((Result<Void, LoginSignupError>)->Void)?) {
         firAuth.signIn(withEmail: email, password: password) { [weak self] auth, error in
             if let auth = auth {
+                self?.startObservingUser(auth.user.uid)
                 self?.createOrUpdateFirebaseUser(id: auth.user.uid)
                 completion?(.success(()))
             } else if let error = error as NSError? {
@@ -91,6 +134,7 @@ class UserService {
                                             userInfo: nil)
 
             OrganizationService.shared.onLogout()
+            userRelay.accept(nil)
         } catch let error {
             LoggingService.log(event: .logout, message: "Logout failure", info: nil, error: error as NSError)
             fatalError("Logout failed! \(error)")
@@ -125,38 +169,6 @@ class UserService {
         }
 
         return user.email
-    }
-
-    private let userRelay: BehaviorRelay<FirebaseUser?> = BehaviorRelay<FirebaseUser?>(value: nil)
-    var currentUser: FirebaseUser? {
-        userRelay.value
-    }
-    var userObservable: Observable<FirebaseUser> {
-        userRelay
-            .filterNil()
-            .distinctUntilChanged()
-    }
-
-    private var userHandle: DatabaseHandle?
-    func startObservingUser() {
-        guard let userID = currentUserID else {
-            return
-        }
-
-        let ref = firRef.child("users").child(userID)
-        userHandle = ref.observe(.value, with: { [weak self] snapshot in
-            guard snapshot.exists() else {
-                return
-            }
-            self?.userRelay.accept(FirebaseUser(snapshot: snapshot))
-        })
-    }
-
-    /// On logout, stop observing the user endpoint
-    func stopObservingUser() {
-        if let handle = userHandle {
-            firRef.child("users").removeObserver(withHandle: handle)
-        }
     }
 
     // MARK: - FirebaseUser (User details)

@@ -32,15 +32,9 @@ class MainViewController: UITabBarController {
         listenForOrganization()
     }
     
-    deinit {
-        // FIXME: for some reason, presenting MainViewController on SplashViewController causes ShellViewController to never deallocate. maybe it's because of the mix of objc and swift classes? As a result, disposeBag is never deallocated, and listeners and observers never stop observing. We have to force that to happen on logout
-        print("deinit succeess")
-    }
-    
     @objc func didLogout() {
         // this causes listenForOrganization to be successfully cleared even if ShellViewController is not actually correctly deallocated on logout (corner case)
         disposeBag = DisposeBag()
-        print("here didlogout")
         stopListeningFor("organization:name:changed")
         stopListeningFor("goToSettings")
         stopListeningFor(.LogoutSuccess)
