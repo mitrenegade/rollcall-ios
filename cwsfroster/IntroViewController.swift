@@ -163,7 +163,9 @@ extension IntroViewController {
                 self.hideProgress() {
                     switch error {
                     case .invalidUser:
-                        self.simpleAlert("Could not login", message: "Please try again")
+                        self.simpleAlert("Could not login", message: "Could not find a user with that email")
+                    case .invalidPassword:
+                        self.simpleAlert("Could not login", message: "Invalid password. Please try again.")
                     case .invalidFormat:
                         self.simpleAlert("Could not login", message: "Login must be an email address.")
                     case .unreachable:
@@ -216,6 +218,8 @@ extension IntroViewController {
                     switch error {
                     case .invalidUser:
                         self.simpleAlert("Could not sign up", message: "There is already an account with that email.")
+                    case .invalidPassword:
+                        self.simpleAlert("Could not login", message: "Invalid password. Please try again with a strong password.")
                     case .invalidFormat:
                         self.simpleAlert("Could not sign up", message: "Please enter a valid email address.")
                     case .unreachable:

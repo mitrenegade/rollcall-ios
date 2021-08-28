@@ -21,6 +21,7 @@ class UserService {
         case invalidUser
         case invalidFormat
         case unreachable
+        case invalidPassword
         case unknown(Int)
     }
 
@@ -38,7 +39,9 @@ class UserService {
             } else if let error = error as NSError? {
                 LoggingService.log(event: .login, error: error)
                 switch error.code {
-                case 17009, 17011:
+                case 17009:
+                    completion?(.failure(.invalidPassword))
+                case 17011:
                     completion?(.failure(.invalidUser))
                 case 17008:
                     completion?(.failure(.invalidFormat))
@@ -67,6 +70,8 @@ class UserService {
                     completion?(.failure(.invalidFormat))
                 case 17020:
                     completion?(.failure(.unreachable))
+                case 17026:
+                    completion?(.failure(.invalidPassword)) // weak password
                 default:
                     completion?(.failure(.unknown(error.code)))
                 }
