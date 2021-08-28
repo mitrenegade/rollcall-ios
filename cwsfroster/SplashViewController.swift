@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxOptional
 import Firebase
 
@@ -29,15 +30,43 @@ class SplashViewController: UIViewController {
         super.viewDidLoad()
         
         listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
-        
+
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
 
-        // calls start()
-        let _ = UserService.shared
+        listenForUser()
+    }
 
-        setupBindings()
+    func listenForUser() {
+        // listen for login
+        print("BOBBYTEST \(self) -> listenForUser")
+        UserService.shared.startup()
+
+        // listen for logged in state
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedIn }
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.listenForOrganization()
+            })
+            .disposed(by: disposeBag)
+
+    }
+
+    func listenForOrganization() {
+        print("BOBBYTEST \(self) -> listenForOrganization")
+        OrganizationService.shared.startObservingOrganization()
+
+        // listen for orgganization
+        OrganizationService.shared.currentObservable
+            .subscribe(onNext: { [weak self] org in
+                if org != nil {
+                    self?.goHome()
+                } else {
+                    self?.didLogin(nil)
+                }
+            }).disposed(by: disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -47,21 +76,6 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-    }
-
-    func setupBindings() {
-        // listen for changes in org
-        OrganizationService.shared
-            .currentObservable
-            .distinctUntilChanged()
-            .subscribe(onNext: { [weak self] org in
-                if org != nil {
-                    self?.goHome()
-                } else {
-                    self?.didLogin(nil)
-                }
-            })
-            .disposed(by: disposeBag)
     }
     
     func goHome() {

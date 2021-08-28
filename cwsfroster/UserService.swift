@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import RxSwift
 import RxCocoa
+import Balizinha
 
 /// Manages Firebase Auth as well as the /user table
 class UserService {
@@ -26,6 +27,15 @@ class UserService {
     }
 
     static let shared = UserService()
+
+    private let disposeBag = DisposeBag()
+
+    private let loginStateRelay: BehaviorRelay<LoginState> = BehaviorRelay<LoginState>(value: .loggedOut)
+
+    var loginStateObserver: Observable<LoginState> {
+        loginStateRelay
+            .distinctUntilChanged()
+    }
 
     private let userRelay: BehaviorRelay<FirebaseUser?> = BehaviorRelay<FirebaseUser?>(value: nil)
 
@@ -69,6 +79,21 @@ class UserService {
     }
 
     // MARK: - FirAuth
+    func startup() {
+        print("BOBBYTEST \(self) startup")
+        AuthService.shared.startup()
+        AuthService.shared.loginState
+            .asDriver()
+            .drive(loginStateRelay)
+            .disposed(by: disposeBag)
+
+        AuthService.shared.loginState
+            .subscribe(onNext: { state in
+                print("BOBBYTEST \(self) loginState \(state)")
+            })
+            .disposed(by: disposeBag)
+    }
+
 
     /// Login in using email and password
     /// - Returns: Success if login worked, or a UserService.LoginError

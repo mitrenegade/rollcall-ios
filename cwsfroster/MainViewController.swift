@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import Firebase
+import Balizinha
 
 class MainViewController: UITabBarController {
     var disposeBag: DisposeBag = DisposeBag()
@@ -28,8 +29,7 @@ class MainViewController: UITabBarController {
         setupViews()
         
         updateTabBarIcons()
-        
-        listenForOrganization()
+
     }
     
     @objc func didLogout() {
@@ -58,14 +58,14 @@ class MainViewController: UITabBarController {
         UpgradeService().promptForUpgradeIfNeeded(from: self)
     }
 
-    func listenForOrganization() {
-        print("Listening for organization")
-        OrganizationService.shared
-            .currentObservable
-            .subscribe(onNext: { (org) in
-                print("Listening for organization -> title: \(String(describing: org?.name))")
-            }).disposed(by: disposeBag)
-    }
+//    func listenForOrganization() {
+//        print("Listening for organization")
+//        OrganizationService.shared
+//            .currentObservable
+//            .subscribe(onNext: { (org) in
+//                print("Listening for organization -> title: \(String(describing: org?.name))")
+//            }).disposed(by: disposeBag)
+//    }
 
     private func setupViews() {
         guard let membersViewController = UIStoryboard(name: "Members", bundle: nil)
