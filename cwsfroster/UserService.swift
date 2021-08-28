@@ -92,7 +92,7 @@ class UserService {
     }
 
     // MARK: - FirebaseUser (User details)
-    func createFirebaseUser(id: String) {
+    func createOrUpdateFirebaseUser(id: String) {
         // TODO: does this need to be a user? can it be in the organization?
         let ref = firRef.child("users").child(id)
         let params: [String: Any] = ["createdAt": Date().timeIntervalSince1970]

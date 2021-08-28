@@ -171,7 +171,7 @@ extension IntroViewController {
                 }
             } else if let user = result?.user {
                 self.goToPractices()
-                UserService.shared.createFirebaseUser(id: user.uid)
+                UserService.shared.createOrUpdateFirebaseUser(id: user.uid)
             } else {
                 self.simpleAlert("Unknown login error", message: "No user was found")
                 UserService.shared.logout()
