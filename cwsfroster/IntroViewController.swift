@@ -148,21 +148,29 @@ extension IntroViewController {
         }
         enableButtons(false)
         showProgress("Logging in...")
-        UserService.shared.loginWithEmail(email, password: password) { result in
-            self.hideProgress()
+        UserService.shared.loginWithEmail(email, password: password) { [weak self] result in
+            guard let self = self else {
+                return
+            }
             self.enableButtons(true)
 
             switch result {
             case .success:
-                self.goToPractices()
+                self.hideProgress() {
+                    self.goToPractices()
+                }
             case .failure(let error):
-                switch error {
-                case .invalidUser:
-                    self.simpleAlert("Could not login", message: "Please try again")
-                case .invalidFormat:
-                    self.simpleAlert("Could not login", message: "Login must be an email address.")
-                case .unknown(let errorCode):
-                    self.simpleAlert("Could not login", message: "Unknown error with code \(errorCode)")
+                self.hideProgress() {
+                    switch error {
+                    case .invalidUser:
+                        self.simpleAlert("Could not login", message: "Please try again")
+                    case .invalidFormat:
+                        self.simpleAlert("Could not login", message: "Login must be an email address.")
+                    case .unreachable:
+                        self.simpleAlert("Could not sign up", message: "Network error. Please try again later.")
+                    case .unknown(let errorCode):
+                        self.simpleAlert("Could not login", message: "Unknown error with code \(errorCode)")
+                    }
                 }
             }
         }
@@ -179,8 +187,10 @@ extension IntroViewController {
             return
         }
 
-        UserService.shared.createEmailUser(email, password: password) { result in
-            self.hideProgress()
+        UserService.shared.createEmailUser(email, password: password) { [weak self] result in
+            guard let self = self else {
+                return
+            }
             self.enableButtons(true)
             switch result {
             case .success(let (userId, email)):
@@ -188,25 +198,31 @@ extension IntroViewController {
                     // create org
                     LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["userId": userId, "email": email])
                     self.hideProgress() {
-                        self.promptForNewOrgName(completion: { name in
+                        self.promptForNewOrgName(completion: { [weak self] name in
                             let orgName = name ?? email
                             OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
 
-                            self.goToPractices()
+                            self?.goToPractices()
                         })
                     }
                 } else {
                     LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["userId": userId, "email": email])
-                    self.goToPractices()
+                    self.hideProgress() {
+                        self.goToPractices()
+                    }
                 }
             case .failure(let error):
-                switch error {
-                case .invalidUser:
-                    self.simpleAlert("Could not sign up", message: "There is already an account with that email.")
-                case .invalidFormat:
-                    self.simpleAlert("Could not sign up", message: "Please enter a valid email address.")
-                case .unknown(let errorCode):
-                    self.simpleAlert("Could not sign up", message: "Unknown error with code \(errorCode)")
+                self.hideProgress() {
+                    switch error {
+                    case .invalidUser:
+                        self.simpleAlert("Could not sign up", message: "There is already an account with that email.")
+                    case .invalidFormat:
+                        self.simpleAlert("Could not sign up", message: "Please enter a valid email address.")
+                    case .unreachable:
+                        self.simpleAlert("Could not sign up", message: "Network error. Please try again later.")
+                    case .unknown(let errorCode):
+                        self.simpleAlert("Could not sign up", message: "Unknown error with code \(errorCode)")
+                    }
                 }
             }
         }
