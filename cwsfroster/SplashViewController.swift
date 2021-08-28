@@ -112,7 +112,7 @@ class SplashViewController: UIViewController {
             .skip(1)
             .subscribe(onNext: { (org) in
                 if org == nil, let userId = UserService.shared.currentUserID, let orgName = UserService.shared.currentUserEmail {
-                    UserService.shared.createFirebaseUser(id: userId)
+                    UserService.shared.createOrUpdateFirebaseUser(id: userId)
                     OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                 }
             }).disposed(by: disposeBag)
