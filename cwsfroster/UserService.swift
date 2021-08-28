@@ -36,6 +36,7 @@ class UserService {
                 self?.createOrUpdateFirebaseUser(id: auth.user.uid)
                 completion?(.success(()))
             } else if let error = error as NSError? {
+                LoggingService.log(event: .login, error: error)
                 switch error.code {
                 case 17011:
                     completion?(.failure(.invalidUser))
@@ -49,9 +50,24 @@ class UserService {
     }
 
     /// Sign up using email and password
-    /// - Returns: Success if signup worked, or a UserService.SignupError
-    func createEmailUser(_ email: String, password: String, completion: ((Result<Void, SignupError>)->Void)? ) {
-
+    /// - Returns: User's UID and email if signup worked, or a UserService.SignupError
+    func createEmailUser(_ email: String, password: String, completion: ((Result<(String, String), SignupError>)->Void)? ) {
+        firAuth.createUser(withEmail: email, password: password) { [weak self] auth, error in
+            if let auth = auth {
+                self?.createOrUpdateFirebaseUser(id: auth.user.uid)
+                completion?(.success((auth.user.uid, auth.user.email ?? "unknown")))
+            } else if let error = error as NSError? {
+                LoggingService.log(event: .createEmailUser, info: ["email": email], error: error)
+                switch error.code {
+                case 17007:
+                    completion?(.failure(.invalidUser))
+                case 17008:
+                    completion?(.failure(.invalidFormat))
+                default:
+                    completion?(.failure(.unknown(error.code)))
+                }
+            }
+        }
     }
 
     func logout() {
