@@ -43,29 +43,32 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        listenForLoginState()
+        listenForLogin()
+        listenForLogout()
     }
 
-    func listenForLoginState() {
-        // listen for login
-        print("BOBBYTEST \(self) -> listenForUser")
-        UserService.shared.startup()
-
-        // listen for logged in state
-        UserService.shared.loginStateObserver
-            .filter { $0 == .loggedIn }
-            .take(1)
-            .subscribe(onNext: { [weak self] _ in
-                self?.listenForOrganization()
-            })
-            .disposed(by: disposeBag)
-
+    func listenForLogout() {
         // listen for logged out state
+        print("BOBBYTEST \(self) -> listenForLogout")
         UserService.shared.loginStateObserver
             .filter { $0 == .loggedOut }
             .take(1)
             .subscribe(onNext: { [weak self] _ in
                 self?.goHome()
+            })
+            .disposed(by: disposeBag)
+    }
+
+    func listenForLogin() {
+        UserService.shared.startup()
+
+        // listen for logged in state
+        print("BOBBYTEST \(self) -> listenForLogout")
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedIn }
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.listenForOrganization()
             })
             .disposed(by: disposeBag)
     }
@@ -99,6 +102,7 @@ class SplashViewController: UIViewController {
                 let mainViewController = MainViewController()
                 present(mainViewController, animated: true, completion: nil)
             } else {
+                listenForLogin()
                 performSegue(withIdentifier: "toLogin", sender: nil)
             }
         }

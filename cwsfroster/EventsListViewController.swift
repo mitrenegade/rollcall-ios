@@ -114,7 +114,7 @@ extension EventsListViewController {
         OrganizationService.shared.events { [weak self] (events, error) in
             if let error = error as NSError?, let reason = error.userInfo["reason"] as? String, reason == "no org" {
                 // this can happen on first login when the user is transitioned over to firebase and the org listener has not completed
-                print("uh oh this shouldn't happen")
+                print("uh oh this shouldn't happen. org must be loaded before loading events")
             } else {
                 _practices = events.sorted(by: { (p1, p2) -> Bool in
                     guard let t1 = p1.date else { return false }
