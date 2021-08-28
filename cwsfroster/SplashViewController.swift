@@ -60,6 +60,14 @@ class SplashViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        // listen for logged out state
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedOut }
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.goHome()
+            })
+            .disposed(by: disposeBag)
     }
 
     func listenForOrganization() {
@@ -69,7 +77,7 @@ class SplashViewController: UIViewController {
         }
         OrganizationService.shared.startObservingOrganization(for: userId)
 
-        // listen for orgganization
+        // listen for organization
         OrganizationService.shared.currentObservable
             .subscribe(onNext: { [weak self] org in
                 if org != nil {
