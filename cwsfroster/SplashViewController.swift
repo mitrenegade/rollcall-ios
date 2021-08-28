@@ -22,8 +22,9 @@ class SplashViewController: UIViewController {
     
     var first: Bool = true
     
-    fileprivate var disposeBag = DisposeBag()
-    
+    fileprivate let disposeBag = DisposeBag()
+    fileprivate var sessionDisposeBag = DisposeBag()
+
     var alert: UIAlertController?
     
     override func viewDidLoad() {
@@ -32,6 +33,13 @@ class SplashViewController: UIViewController {
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
+
+        OrganizationService.shared
+            .loadingObservable
+            .subscribe( onNext: { [weak self] loading in
+                self?.updateLoading(loading)
+            })
+            .disposed(by: disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -45,11 +53,6 @@ class SplashViewController: UIViewController {
         listenForLogout()
     }
 
-    private func resetDisposeBag() {
-        print("BOBBYTEST resetDisposeBag")
-        disposeBag = DisposeBag() // stops listening
-    }
-
     func listenForLogout() {
         // listen for logged out state
         print("BOBBYTEST \(self) -> listenForLogout")
@@ -58,7 +61,7 @@ class SplashViewController: UIViewController {
             .subscribe(onNext: { _ in
                 print("BOBBYTEST \(self) --> logged out")
             })
-            .disposed(by: disposeBag)
+            .disposed(by: sessionDisposeBag)
 
         UserService.shared.loginStateObserver
             .filter { $0 == .loggedOut }
@@ -66,7 +69,7 @@ class SplashViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.goToLogin()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: sessionDisposeBag)
     }
 
     func listenForLogin() {
@@ -80,8 +83,14 @@ class SplashViewController: UIViewController {
             .subscribe(onNext: { [weak self] _ in
                 self?.listenForOrganization()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: sessionDisposeBag)
     }
+
+    private func resetSessionDisposeBag() {
+        sessionDisposeBag = DisposeBag() // stops listening
+    }
+
+    // MARK: -
 
     func listenForOrganization() {
         print("BOBBYTEST \(self) -> listenForOrganization")
@@ -98,11 +107,11 @@ class SplashViewController: UIViewController {
                 } else {
                     self?.didLoginWithoutOrg()
                 }
-            }).disposed(by: disposeBag)
+            }).disposed(by: sessionDisposeBag)
     }
 
     func goHome() {
-        resetDisposeBag()
+        resetSessionDisposeBag()
         if presentedViewController != nil {
             dismiss(animated: true) { [weak self] in
                 self?.goHome()
@@ -117,7 +126,7 @@ class SplashViewController: UIViewController {
     }
 
     func goToLogin() {
-        resetDisposeBag()
+        resetSessionDisposeBag()
         if presentedViewController != nil {
             dismiss(animated: true) { [weak self] in
                 self?.goToLogin()
@@ -129,21 +138,6 @@ class SplashViewController: UIViewController {
     }
 
     private func didLoginWithoutOrg() {
-        // update firebase object
-        guard let userId = UserService.shared.currentUserID else {
-            print("UserId doesn't exist while observing org; logging out")
-            UserService.shared.logout()
-            return
-        }
-
-        OrganizationService.shared.startObservingOrganization(for: userId)
-        OrganizationService.shared
-            .loadingObservable
-            .subscribe( onNext: { [weak self] loading in
-                self?.updateLoading(loading)
-            })
-            .disposed(by: disposeBag)
-
         OrganizationService.shared
             .currentObservable
             .filterNil()
@@ -160,7 +154,7 @@ class SplashViewController: UIViewController {
                     self?.constraintLogoHeight.constant = 0
                     self?.goHome()
                 }
-            }).disposed(by: disposeBag)
+            }).disposed(by: sessionDisposeBag)
 
         // create org for users without orgs
         OrganizationService.shared
@@ -171,7 +165,7 @@ class SplashViewController: UIViewController {
                     UserService.shared.createOrUpdateFirebaseUser(id: userId)
                     OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                 }
-            }).disposed(by: disposeBag)
+            }).disposed(by: sessionDisposeBag)
     }
     
     private func updateLoading(_ loading: Bool) {
@@ -184,10 +178,6 @@ class SplashViewController: UIViewController {
             labelInfo.isHidden = true
             labelInfo.text = nil
         }
-    }
-
-    deinit {
-        stopListeningFor(.LogoutSuccess)
     }
 }
 
