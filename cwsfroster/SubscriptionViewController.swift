@@ -68,28 +68,22 @@ final class SubscriptionViewController: UIViewController {
     }
 
     private func setupBindings() {
-        OrganizationService.shared.currentObservable
-            .subscribe(onNext: { [weak self] organization in
-                self?.update(for: organization)
+        UserService.shared.userObservable
+            .subscribe(onNext: { [weak self] user in
+                self?.update(for: user)
             })
             .disposed(by: disposeBag)
     }
 
-    func update(for organization: FirebaseOrganization?) {
-        guard let organization = organization else {
-            UserService.shared.logout()
-            didClickClose()
-            return
+    func update(for user: FirebaseUser) {
+        switch user.subscription {
+        case .standard:
+            titleLabel.text = "Standard"
+        case .plus:
+            titleLabel.text = "Plus"
+        case .premium:
+            titleLabel.text = "Premium"
         }
-
-//        switch organization.subscription {
-//        case .standard:
-//            titleLabel.text = "Standard"
-//        case .plus:
-//            titleLabel.text = "Plus"
-//        case .premium:
-//            titleLabel.text = "Premium"
-//        }
     }
 
     // MARK: - Navigation

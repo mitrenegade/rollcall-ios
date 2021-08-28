@@ -131,6 +131,11 @@ class UserService {
     var currentUser: FirebaseUser? {
         userRelay.value
     }
+    var userObservable: Observable<FirebaseUser> {
+        userRelay
+            .filterNil()
+            .distinctUntilChanged()
+    }
 
     private var userHandle: DatabaseHandle?
     func startObservingUser() {
