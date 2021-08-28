@@ -14,6 +14,11 @@ fileprivate var singleton: LoggingService?
 fileprivate var loggingRef: DatabaseReference = firRef.child("logs")
 
 enum LoggingEvent: String {
+
+    // login/logout
+    case login
+    case logout
+
     // first time user
     case createEmailUser
     case migrateSynchronizeParse
@@ -44,7 +49,7 @@ enum LoggingEvent: String {
 
     // subscriptions
     case subscriptionViewed
-    
+
     case unknown
 }
 
@@ -66,7 +71,7 @@ class LoggingService: NSObject {
         var params = info ?? [:]
         params["title"] = eventString
         params["timestamp"] = Date().timeIntervalSince1970
-        if let userId = AuthService.currentUser?.uid {
+        if let userId = UserService.shared.currentUserID {
             params["userId"] = userId
         }
         if let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] {

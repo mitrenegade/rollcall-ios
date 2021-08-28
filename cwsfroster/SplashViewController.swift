@@ -43,7 +43,7 @@ class SplashViewController: UIViewController {
         labelInfo.isHidden = true
         labelInfo.text = nil
 
-        guard AuthService.isLoggedIn else {
+        guard UserService.shared.isLoggedIn else {
             goHome()
             return
         }
@@ -69,9 +69,9 @@ class SplashViewController: UIViewController {
                 self?.goHome()
             }
         } else {
-            if AuthService.isLoggedIn {
-                let shellViewController = ShellViewController()
-                present(shellViewController, animated: true, completion: nil)
+            if UserService.shared.isLoggedIn {
+                let mainViewController = MainViewController()
+                present(mainViewController, animated: true, completion: nil)
             } else {
                 performSegue(withIdentifier: "toLogin", sender: nil)
             }
@@ -111,8 +111,8 @@ class SplashViewController: UIViewController {
             .currentObservable
             .skip(1)
             .subscribe(onNext: { (org) in
-                if org == nil, let userId = AuthService.currentUser?.uid, let orgName = AuthService.currentUser?.email {
-                    AuthService.createFirebaseUser(id: userId)
+                if org == nil, let userId = UserService.shared.currentUserID, let orgName = UserService.shared.currentUserEmail {
+                    UserService.shared.createOrUpdateFirebaseUser(id: userId)
                     OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                 }
             }).disposed(by: disposeBag)

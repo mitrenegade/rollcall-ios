@@ -27,10 +27,6 @@ class SettingsViewController: UITableViewController {
     }
     let SECTION_TITLES: [Sections] = [.about, .organization, .profile, .subscription, .feedback, .logout]
 
-    func notifyForLogoutInSuccess() {
-        self.notify(.LogoutSuccess, object: nil, userInfo: nil)
-    }
-    
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -124,8 +120,7 @@ extension SettingsViewController {
             goToSubscription()
             
         case .logout:
-            AuthService.logout()
-            notifyForLogoutInSuccess()
+            UserService.shared.logout()
         }
     }
 }
@@ -165,12 +160,12 @@ extension SettingsViewController {
     }
     
     func goToUpdateEmail() {
-        guard let email = AuthService.currentUser?.email else { return }
+        guard let email = UserService.shared.currentUserEmail else { return }
         let title = "Your current login is \(email)"
         let message = "Please enter new login email"
         inputPrompt(title: title, message: message, placeholder: email) { (newEmail) in
             guard let newEmail = newEmail else { return }
-            AuthService.currentUser?.updateEmail(to: newEmail, completion: { (error) in
+            UserService.shared.updateEmail(newEmail, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update login", defaultMessage: "Your login could not be updated to \(newEmail)", error: error)
                     LoggingService.log(event: .updateOrganizationEmail, info: ["id": OrganizationService.shared.currentOrganizationId ?? ""], error: error)
@@ -196,7 +191,7 @@ extension SettingsViewController {
                 LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.currentOrganizationId ?? "", "error": "Password confirmation did not match"])
                 return
             }
-            AuthService.currentUser?.updatePassword(to: password, completion: { (error) in
+            UserService.shared.updatePassword(password, completion: { (error) in
                 if let error = error as NSError? {
                     self.simpleAlert("Could not update password", defaultMessage: "Your password could not be updated.", error: error)
                     LoggingService.log(event: .updateOrganizationPassword, info: ["id": OrganizationService.shared.currentOrganizationId ?? ""], error: error)

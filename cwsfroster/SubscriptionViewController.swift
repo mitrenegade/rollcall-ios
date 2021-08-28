@@ -77,20 +77,19 @@ final class SubscriptionViewController: UIViewController {
 
     func update(for organization: FirebaseOrganization?) {
         guard let organization = organization else {
-            AuthService.logout()
-            notify(.LogoutSuccess, object: nil, userInfo: nil)
+            UserService.shared.logout()
             didClickClose()
             return
         }
 
-        switch organization.subscription {
-        case .standard:
-            titleLabel.text = "Standard"
-        case .plus:
-            titleLabel.text = "Plus"
-        case .premium:
-            titleLabel.text = "Premium"
-        }
+//        switch organization.subscription {
+//        case .standard:
+//            titleLabel.text = "Standard"
+//        case .plus:
+//            titleLabel.text = "Plus"
+//        case .premium:
+//            titleLabel.text = "Premium"
+//        }
     }
 
     // MARK: - Navigation

@@ -40,12 +40,4 @@ class FirebaseOrganization: FirebaseBaseModel {
         }
     }
 
-    var subscription: SubscriptionTier {
-        get {
-            guard let subscription = dict["subscription"] as? String else {
-                return .standard
-            }
-            return SubscriptionTier(rawValue: subscription) ?? .standard
-        }
-    }
 }

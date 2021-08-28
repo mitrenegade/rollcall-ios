@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Firebase
 
 class IntroViewController: UIViewController {
     @IBOutlet weak var inputLogin: UITextField!
@@ -64,7 +63,7 @@ class IntroViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !AuthService.isLoggedIn {
+        if !UserService.shared.isLoggedIn {
             loadTutorial()
         }
         
@@ -149,34 +148,34 @@ extension IntroViewController {
         }
         enableButtons(false)
         showProgress("Logging in...")
-        firAuth.signIn(withEmail: email, password: password, completion: { (result, error) in
-            if let error = error as NSError? {
-                print("Error: \(error)")
-                if error.code == 17011 {
-                    // invalid user. firebase error message is too wordy
-                    self.hideProgress() {
-                        self.simpleAlert("Could not login", message: "Please try again")
-                        self.enableButtons(true)
-                    }
-                } else if error.code == 17008 { // not an email address
-                    self.hideProgress() {
+        UserService.shared.loginWithEmail(email, password: password) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            self.enableButtons(true)
+
+            switch result {
+            case .success:
+                self.hideProgress() {
+                    self.goToPractices()
+                }
+            case .failure(let error):
+                self.hideProgress() {
+                    switch error {
+                    case .invalidUser:
+                        self.simpleAlert("Could not login", message: "Could not find a user with that email")
+                    case .invalidPassword:
+                        self.simpleAlert("Could not login", message: "Invalid password. Please try again.")
+                    case .invalidFormat:
                         self.simpleAlert("Could not login", message: "Login must be an email address.")
-                        self.enableButtons(true)
-                    }
-                } else { // unknown error
-                    self.hideProgress() {
-                        self.simpleAlert("Could not login", defaultMessage: "Unknown error", error: error)
-                        self.enableButtons(true)
+                    case .unreachable:
+                        self.simpleAlert("Could not login", message: "Network error. Please try again later.")
+                    case .unknown(let errorCode):
+                        self.simpleAlert("Could not login", message: "Unknown error with code \(errorCode)")
                     }
                 }
-            } else if let user = result?.user {
-                self.goToPractices()
-                AuthService.createFirebaseUser(id: user.uid)
-            } else {
-                self.simpleAlert("Unknown login error", message: "No user was found")
-                AuthService.logout()
             }
-        })
+        }
     }
     
     func createEmailUser(email: String) {
@@ -190,57 +189,47 @@ extension IntroViewController {
             return
         }
 
-        firAuth.createUser(withEmail: email, password: password, completion: { (result, error) in
-            if let error = error as NSError? {
-                print("Error: \(error)")
-                if error.code == 17007 {
-                    // email already taken
-                    self.simpleAlert("Could not sign up", defaultMessage: nil, error: error)
-                    self.hideProgress()
-                    LoggingService.log(event: .createEmailUser, message: "create user failed", info: ["email": email], error: error)
-                } else {
-                    var message: String?
-                    var displayError: NSError?
-                    if error.code == 17006 {
-                        // project not set up with email login. this should not happen anymore
-                        message = "Please contact us and let us know this error code: \(error.code)"
-                        displayError = nil
-                    } else if error.code == 17007 { // email already taken
-                        message = nil
-                        displayError = error
-                    } else if error.code == 17008 {
-                        message = "Please enter a valid email address."
-                        displayError = nil
-                    }
-                    self.hideProgress() {
-                        self.simpleAlert("Could not sign up", defaultMessage: message, error: displayError)
-                        LoggingService.log(event: .createEmailUser, message: "other signup error", info: ["email": email], error: error)
-                    }
-                }
-                self.enableButtons(true)
+        UserService.shared.createEmailUser(email, password: password) { [weak self] result in
+            guard let self = self else {
+                return
             }
-            else if let user = result?.user {
-                print("createUser results: \(String(describing: user))")
+            self.enableButtons(true)
+            switch result {
+            case .success(let (userId, email)):
                 if self.isSignup {
                     // create org
-                    LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["email": email])
+                    LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["userId": userId, "email": email])
                     self.hideProgress() {
-                        self.promptForNewOrgName(completion: { (name) in
-                            let userId = user.uid
-                            let orgName = name ?? user.email ?? "unnamed"
-                            AuthService.createFirebaseUser(id: user.uid)
+                        self.promptForNewOrgName(completion: { [weak self] name in
+                            let orgName = name ?? email
                             OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-                            
-                            self.goToPractices()
+
+                            self?.goToPractices()
                         })
                     }
                 } else {
-                    LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["email": email])
-                    self.goToPractices()
-                    AuthService.createFirebaseUser(id: user.uid)
+                    LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["userId": userId, "email": email])
+                    self.hideProgress() {
+                        self.goToPractices()
+                    }
+                }
+            case .failure(let error):
+                self.hideProgress() {
+                    switch error {
+                    case .invalidUser:
+                        self.simpleAlert("Could not sign up", message: "There is already an account with that email.")
+                    case .invalidPassword:
+                        self.simpleAlert("Could not sign up", message: "Please try again with a strong password.")
+                    case .invalidFormat:
+                        self.simpleAlert("Could not sign up", message: "Please enter a valid email address.")
+                    case .unreachable:
+                        self.simpleAlert("Could not sign up", message: "Network error. Please try again later.")
+                    case .unknown(let errorCode):
+                        self.simpleAlert("Could not sign up", message: "Unknown error with code \(errorCode)")
+                    }
                 }
             }
-        })
+        }
     }
 
     func promptForNewOrgName(completion: ((String?)->Void)?) {

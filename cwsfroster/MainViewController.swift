@@ -1,5 +1,5 @@
 //
-//  ShellViewController.swift
+//  MainViewController.swift
 //  rollcall
 //
 //  Created by Ren, Bobby on 6/1/18.
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import Firebase
 
-class ShellViewController: UITabBarController {
+class MainViewController: UITabBarController {
     var disposeBag: DisposeBag = DisposeBag()
     fileprivate var upgradeShown: Bool = false
 
@@ -33,7 +33,7 @@ class ShellViewController: UITabBarController {
     }
     
     deinit {
-        // FIXME: for some reason, presenting ShellViewController on SplashViewController causes ShellViewController to never deallocate. maybe it's because of the mix of objc and swift classes? As a result, disposeBag is never deallocated, and listeners and observers never stop observing. We have to force that to happen on logout
+        // FIXME: for some reason, presenting MainViewController on SplashViewController causes ShellViewController to never deallocate. maybe it's because of the mix of objc and swift classes? As a result, disposeBag is never deallocated, and listeners and observers never stop observing. We have to force that to happen on logout
         print("deinit succeess")
     }
     
