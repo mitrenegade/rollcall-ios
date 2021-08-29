@@ -149,21 +149,18 @@ extension EventsListViewController: PracticeEditDelegate {
             self.tableView.reloadData()
             return
         }
-        let practice = practices[indexPath.row] as FirebaseEvent
-        // BOBBY TODO DELETE EVENT
-//        practice.deleteInBackground { (success, error) in
-//            if success {
-//                Organization.queryForPractices(completion: { (practices, error) in
-//                    self.tableView.reloadData()
-//                    self.notify("practice:deleted", object: nil, userInfo: nil)
-//                    LoggingService.log(typeString: "PracticeDeleted", title: practice.objectId, message: nil, params: nil, error: nil)
-//                })
-//            }
-//            else {
-//                self.tableView.reloadData()
-//                LoggingService.log(typeString: "PracticeDeletionFailed", title: practice.objectId, message: nil, params: nil, error: error as? NSError)
-//            }
-//        }
+        let event = practices[indexPath.row] as FirebaseEvent
+        EventService.shared.deleteEvent(event) { [weak self] result in
+            switch result {
+            case .failure(let error):
+                print("BOBBYTEST event delete failed \(error)")
+                self?.tableView.reloadData()
+                LoggingService.log(event: .deleteEvent, error: error as NSError)
+            case .success:
+                self?.tableView.reloadData()
+                LoggingService.log(event: .deleteEvent)
+            }
+        }
     }
 
 }

@@ -161,9 +161,8 @@ class UserService {
         firAuth.currentUser?.updatePassword(to: password, completion: completion)
     }
 
-    // TODO: use loginState
     var isLoggedIn: Bool {
-        return firAuth.currentUser != nil
+        loginStateRelay.value == .loggedIn
     }
     
     // MARK: - FirebaseUser (User details)

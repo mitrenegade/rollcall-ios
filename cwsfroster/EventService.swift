@@ -56,4 +56,18 @@ class EventService: NSObject {
             }
         }
     }
+
+    func deleteEvent(_ event: FirebaseEvent, completion:@escaping (Result<Void, Error>) -> Void) {
+        guard UserService.shared.isLoggedIn else { return }
+
+        let ref = firRef.child("events").child(event.id)
+        ref.setValue(nil) { (error, ref) in
+            if let error = error {
+                print(error)
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
 }
