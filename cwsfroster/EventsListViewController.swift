@@ -151,13 +151,12 @@ extension EventsListViewController: PracticeEditDelegate {
         }
         let event = practices[indexPath.row] as FirebaseEvent
         EventService.shared.deleteEvent(event) { [weak self] result in
+            self?.reloadPractices()
             switch result {
             case .failure(let error):
                 print("BOBBYTEST event delete failed \(error)")
-                self?.tableView.reloadData()
                 LoggingService.log(event: .deleteEvent, error: error as NSError)
             case .success:
-                self?.tableView.reloadData()
                 LoggingService.log(event: .deleteEvent)
             }
         }

@@ -69,15 +69,17 @@ class EventEditViewController: UIViewController {
         view.sizeToFit()
 
         let button1 = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""),
-                                      style: .plain,
+                                      style: .done,
                                       target: self,
                                       action: #selector(selectDate))
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let button2 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
-                                      style: .plain,
+                                      style: .done,
                                       target: self,
                                       action: #selector(cancelSelectDate))
+        view.setItems([button1, flex, button2], animated: false)
         view.tintColor = .white
+
         return view
     }()
 
