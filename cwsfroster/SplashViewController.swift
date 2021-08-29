@@ -105,6 +105,7 @@ class SplashViewController: UIViewController {
                 if org != nil {
                     self?.goHome()
                 } else {
+                    // do nothing; wait for org
                     self?.didLoginWithoutOrg()
                 }
             }).disposed(by: sessionDisposeBag)
@@ -153,17 +154,6 @@ class SplashViewController: UIViewController {
                 } else {
                     self?.constraintLogoHeight.constant = 0
                     self?.goHome()
-                }
-            }).disposed(by: sessionDisposeBag)
-
-        // create org for users without orgs
-        OrganizationService.shared
-            .currentObservable
-            .skip(1)
-            .subscribe(onNext: { (org) in
-                if org == nil, let userId = UserService.shared.currentUserID, let orgName = UserService.shared.currentUserEmail {
-                    UserService.shared.createOrUpdateFirebaseUser(id: userId)
-                    OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                 }
             }).disposed(by: sessionDisposeBag)
     }

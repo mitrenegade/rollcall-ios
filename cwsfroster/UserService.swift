@@ -51,13 +51,6 @@ class UserService {
 
     private var userHandle: DatabaseHandle?
 
-//    func startup() {
-//        // if app is already logged in, trigger listeners to store the user details object
-//        if let userID = currentUserID {
-//            startObservingUser(userID)
-//        }
-//    }
-
     /// On login, observe the user/id endpoint for user details
     private func startObservingUser(_ userID: String) {
         print("\(self) - startObservingUser \(userID)")

@@ -53,8 +53,12 @@ class OrganizationService {
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             self?.loadingRelay.accept(false)
             guard snapshot.exists() else {
-                UserService.shared.logout()
-                self?.loadingRelay.accept(false)
+                if let orgName = UserService.shared.currentUserEmail {
+                    self?.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
+                } else {
+                    UserService.shared.logout()
+                    self?.loadingRelay.accept(false)
+                }
                 return
             }
             if let data =  snapshot.children.allObjects.first as? DataSnapshot {
