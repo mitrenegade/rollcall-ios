@@ -98,6 +98,9 @@ class SplashViewController: UIViewController {
             .filter { $0 == .loggedIn }
             .take(1)
             .subscribe(onNext: { [weak self] _ in
+                if let userId = UserService.shared.currentUserID {
+                    UserService.shared.startObservingUser(userId)
+                }
                 self?.listenForOrganization()
             })
             .disposed(by: sessionDisposeBag)

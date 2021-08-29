@@ -47,6 +47,9 @@ enum LoggingEvent: String {
     case contactsPermissionSettings
     case contactsAdded
 
+    // event
+    case deleteEvent
+
     // subscriptions
     case subscriptionViewed
 

@@ -10,7 +10,6 @@ import Foundation
 import Firebase
 
 class FirebaseUser: FirebaseBaseModel {
-    // TODO This should be part of the user
     var subscription: SubscriptionTier {
         get {
             guard let subscription = dict["subscription"] as? String else {

@@ -62,22 +62,45 @@ class EventEditViewController: UIViewController {
         return view
     }()
 
-    private lazy var keyboardDoneButtonView: UIToolbar = {
+    private lazy var pickerKeyboardDoneButtonView: UIToolbar = {
         let view = UIToolbar()
         view.barStyle = .black
         view.isTranslucent = true
         view.sizeToFit()
 
-        let button1 = UIBarButtonItem(title: NSLocalizedString("Done", comment: ""),
-                                      style: .plain,
-                                      target: self,
-                                      action: #selector(selectDate))
-        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let button2 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
-                                      style: .plain,
+        let button1 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
+                                      style: .done,
                                       target: self,
                                       action: #selector(cancelSelectDate))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let button2 = UIBarButtonItem(title: NSLocalizedString("Next", comment: ""),
+                                      style: .done,
+                                      target: self,
+                                      action: #selector(selectDate))
+        view.setItems([button1, flex, button2], animated: false)
         view.tintColor = .white
+
+        return view
+    }()
+
+    private lazy var detailsKeyboardDoneButtonView: UIToolbar = {
+        let view = UIToolbar()
+        view.barStyle = .black
+        view.isTranslucent = true
+        view.sizeToFit()
+
+        let button1 = UIBarButtonItem(title: NSLocalizedString("Cancel", comment: ""),
+                                      style: .done,
+                                      target: self,
+                                      action: #selector(dismissKeyboard))
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let button2 = UIBarButtonItem(title: NSLocalizedString("Next", comment: ""),
+                                      style: .done,
+                                      target: self,
+                                      action: #selector(saveDetails))
+        view.setItems([button1, flex, button2], animated: false)
+        view.tintColor = .white
+
         return view
     }()
 
@@ -85,7 +108,8 @@ class EventEditViewController: UIViewController {
         super.viewDidLoad()
 
         inputDate.inputView = pickerView
-        inputDate.inputAccessoryView = keyboardDoneButtonView
+        inputDate.inputAccessoryView = pickerKeyboardDoneButtonView
+        inputDetails.inputAccessoryView = detailsKeyboardDoneButtonView
 
         setupTextView()
         configureForPractice()
@@ -127,8 +151,9 @@ class EventEditViewController: UIViewController {
         keyboardDoneButtonView.sizeToFit()
         keyboardDoneButtonView.barStyle = UIBarStyle.black
         keyboardDoneButtonView.tintColor = UIColor.white
-        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Update", style: UIBarButtonItem.Style.done, target: self, action: #selector(dismissKeyboard))
-        keyboardDoneButtonView.setItems([saveButton], animated: true)
+        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let saveButton: UIBarButtonItem = UIBarButtonItem(title: "Save", style: UIBarButtonItem.Style.done, target: self, action: #selector(dismissKeyboard))
+        keyboardDoneButtonView.setItems([flex, saveButton], animated: true)
         self.inputNotes.inputAccessoryView = keyboardDoneButtonView
     }
     
@@ -460,11 +485,17 @@ extension EventEditViewController: UIPickerViewDelegate, UIPickerViewDataSource 
 
     @objc private func selectDate() {
         inputDate.resignFirstResponder()
+        inputDetails.becomeFirstResponder()
     }
 
     @objc private func cancelSelectDate() {
         inputDate.text = lastInputDate
         inputDate.resignFirstResponder()
+    }
+
+    @objc private func saveDetails() {
+        inputDetails.resignFirstResponder()
+        inputNotes.becomeFirstResponder()
     }
 
     func dateOnly(_ date: Date) -> Date? {
