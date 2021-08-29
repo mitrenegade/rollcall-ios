@@ -124,8 +124,11 @@ extension IntroViewController {
             print("Invalid password")
             return
         }
-        showProgress("Creating account...")
-        createEmailUser(email: email)
+        self.promptForNewOrgName() { [weak self] name in
+            let orgName = name ?? email
+            self?.showProgress("Creating account...")
+            self?.createEmailUser(email: email, orgName: orgName)
+        }
     }
     
     func tryFirebaseLogin() {
@@ -168,7 +171,7 @@ extension IntroViewController {
         }
     }
     
-    func createEmailUser(email: String) {
+    func createEmailUser(email: String, orgName: String) {
         guard let password = self.inputPassword.text, !password.isEmpty else {
             self.simpleAlert("Please enter your password", message: nil)
             self.hideProgress()
@@ -190,10 +193,7 @@ extension IntroViewController {
                     // create org
                     LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["userId": userId, "email": email])
                     self.hideProgress() {
-                        self.promptForNewOrgName(completion: { [weak self] name in
-                            let orgName = name ?? email
-                            OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-                        })
+                        OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                     }
                 } else {
                     LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["userId": userId, "email": email])
