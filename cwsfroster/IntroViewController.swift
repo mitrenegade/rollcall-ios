@@ -77,10 +77,6 @@ class IntroViewController: UIViewController {
         buttonSwitchMode.isEnabled = enabled
     }
     
-    func notifyForLogInSuccess() {
-        self.notify(.LoginSuccess, object: nil, userInfo: nil)
-    }
-    
     @IBAction func didClickButton(_ sender: AnyObject?) {
         if sender as? UIButton == self.buttonLoginSignup {
             if self.isSignup {
@@ -102,16 +98,12 @@ class IntroViewController: UIViewController {
     }
     
     func offlineLogin() {
-        self.goToPractices()
+        // TODO this is usually triggered by a firebase user object
     }
 
-    func goToPractices() {
+    deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(showProgress(_:)), object: nil)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideProgress), object: nil)
-        
-        hideProgress {
-            self.notifyForLogInSuccess()
-        }
     }
 }
 
@@ -132,8 +124,11 @@ extension IntroViewController {
             print("Invalid password")
             return
         }
-        showProgress("Creating account...")
-        createEmailUser(email: email)
+        self.promptForNewOrgName() { [weak self] name in
+            let orgName = name ?? email
+            self?.showProgress("Creating account...")
+            self?.createEmailUser(email: email, orgName: orgName)
+        }
     }
     
     func tryFirebaseLogin() {
@@ -156,9 +151,7 @@ extension IntroViewController {
 
             switch result {
             case .success:
-                self.hideProgress() {
-                    self.goToPractices()
-                }
+                self.hideProgress()
             case .failure(let error):
                 self.hideProgress() {
                     switch error {
@@ -178,7 +171,7 @@ extension IntroViewController {
         }
     }
     
-    func createEmailUser(email: String) {
+    func createEmailUser(email: String, orgName: String) {
         guard let password = self.inputPassword.text, !password.isEmpty else {
             self.simpleAlert("Please enter your password", message: nil)
             self.hideProgress()
@@ -200,18 +193,11 @@ extension IntroViewController {
                     // create org
                     LoggingService.log(event: .createEmailUser, message: "create email user success on signup", info: ["userId": userId, "email": email])
                     self.hideProgress() {
-                        self.promptForNewOrgName(completion: { [weak self] name in
-                            let orgName = name ?? email
-                            OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
-
-                            self?.goToPractices()
-                        })
+                        OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                     }
                 } else {
                     LoggingService.log(event: .createEmailUser, message: "create email user success on migration", info: ["userId": userId, "email": email])
-                    self.hideProgress() {
-                        self.goToPractices()
-                    }
+                    self.hideProgress()
                 }
             case .failure(let error):
                 self.hideProgress() {

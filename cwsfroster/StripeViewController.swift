@@ -90,9 +90,9 @@ class StripeViewController: UIViewController {
         super.viewDidLoad()
         
         OrganizationService.shared
-            .currentObservable
+            .organizationObservable
             .filterNil()
-            .subscribe(onNext: { [weak self] (org) in
+            .subscribe(onNext: { [weak self] org in
                 // start updating StripeService/s accountStatus
                 self?.stripeConnectService.startListeningForAccount(userId: org.id)
                 self?.disposeBag = DisposeBag()

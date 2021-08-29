@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import Firebase
+import Balizinha
 
 class MainViewController: UITabBarController {
     var disposeBag: DisposeBag = DisposeBag()
@@ -28,19 +29,12 @@ class MainViewController: UITabBarController {
         setupViews()
         
         updateTabBarIcons()
-        
-        listenForOrganization()
-    }
-    
-    deinit {
-        // FIXME: for some reason, presenting MainViewController on SplashViewController causes ShellViewController to never deallocate. maybe it's because of the mix of objc and swift classes? As a result, disposeBag is never deallocated, and listeners and observers never stop observing. We have to force that to happen on logout
-        print("deinit succeess")
+
     }
     
     @objc func didLogout() {
         // this causes listenForOrganization to be successfully cleared even if ShellViewController is not actually correctly deallocated on logout (corner case)
         disposeBag = DisposeBag()
-        print("here didlogout")
         stopListeningFor("organization:name:changed")
         stopListeningFor("goToSettings")
         stopListeningFor(.LogoutSuccess)
@@ -64,14 +58,14 @@ class MainViewController: UITabBarController {
         UpgradeService().promptForUpgradeIfNeeded(from: self)
     }
 
-    func listenForOrganization() {
-        print("Listening for organization")
-        OrganizationService.shared
-            .currentObservable
-            .subscribe(onNext: { (org) in
-                print("Listening for organization -> title: \(String(describing: org?.name))")
-            }).disposed(by: disposeBag)
-    }
+//    func listenForOrganization() {
+//        print("Listening for organization")
+//        OrganizationService.shared
+//            .currentObservable
+//            .subscribe(onNext: { (org) in
+//                print("Listening for organization -> title: \(String(describing: org?.name))")
+//            }).disposed(by: disposeBag)
+//    }
 
     private func setupViews() {
         guard let membersViewController = UIStoryboard(name: "Members", bundle: nil)

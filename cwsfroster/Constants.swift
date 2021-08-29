@@ -34,7 +34,6 @@ let APP_STORE_URL = "itms-apps://itunes.apple.com/app/id" + Constants.APP_ID
 
 enum NotificationType: String {
     case LogoutSuccess
-    case LoginSuccess
     
     func name() -> Notification.Name {
         return Notification.Name(self.rawValue)

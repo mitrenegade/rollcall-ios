@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import RxSwift
 import RxCocoa
+import Balizinha
 
 /// Manages Firebase Auth as well as the /user table
 class UserService {
@@ -27,13 +28,72 @@ class UserService {
 
     static let shared = UserService()
 
+    private let disposeBag = DisposeBag()
+
+    private let loginStateRelay: BehaviorRelay<LoginState> = BehaviorRelay<LoginState>(value: .loggedOut)
+
+    var loginStateObserver: Observable<LoginState> {
+        loginStateRelay
+            .distinctUntilChanged()
+    }
+
+    private let userRelay: BehaviorRelay<FirebaseUser?> = BehaviorRelay<FirebaseUser?>(value: nil)
+
+    var currentUser: FirebaseUser? {
+        userRelay.value
+    }
+
+    var userObservable: Observable<FirebaseUser> {
+        userRelay
+            .filterNil()
+            .distinctUntilChanged()
+    }
+
+    private var userHandle: DatabaseHandle?
+
+    /// On login, observe the user/id endpoint for user details
+    private func startObservingUser(_ userID: String) {
+        print("\(self) - startObservingUser \(userID)")
+        let ref = firRef.child("users").child(userID)
+        userHandle = ref.observe(.value, with: { [weak self] snapshot in
+            guard snapshot.exists() else {
+                return
+            }
+            self?.userRelay.accept(FirebaseUser(snapshot: snapshot))
+        })
+    }
+
+    /// On logout, stop observing the user endpoint
+    private func stopObservingUser() {
+        print("\(self) - stopObservingUser")
+        if let handle = userHandle {
+            firRef.child("users").removeObserver(withHandle: handle)
+        }
+    }
+
     // MARK: - FirAuth
+    func startup() {
+        print("BOBBYTEST \(self) startup")
+        AuthService.shared.startup()
+        AuthService.shared.loginState
+            .asDriver()
+            .drive(loginStateRelay)
+            .disposed(by: disposeBag)
+
+        AuthService.shared.loginState
+            .subscribe(onNext: { state in
+                print("BOBBYTEST \(self) loginState \(state)")
+            })
+            .disposed(by: disposeBag)
+    }
+
 
     /// Login in using email and password
     /// - Returns: Success if login worked, or a UserService.LoginError
     func loginWithEmail(_ email: String, password: String, completion: ((Result<Void, LoginSignupError>)->Void)?) {
         firAuth.signIn(withEmail: email, password: password) { [weak self] auth, error in
             if let auth = auth {
+                self?.startObservingUser(auth.user.uid)
                 self?.createOrUpdateFirebaseUser(id: auth.user.uid)
                 completion?(.success(()))
             } else if let error = error as NSError? {
@@ -85,12 +145,8 @@ class UserService {
             try firAuth.signOut()
             stopObservingUser()
 
-            // notify logout success
-            NotificationCenter.default.post(name: NotificationType.LogoutSuccess.name(),
-                                            object: nil,
-                                            userInfo: nil)
-
             OrganizationService.shared.onLogout()
+            userRelay.accept(nil)
         } catch let error {
             LoggingService.log(event: .logout, message: "Logout failure", info: nil, error: error as NSError)
             fatalError("Logout failed! \(error)")
@@ -125,33 +181,6 @@ class UserService {
         }
 
         return user.email
-    }
-
-    private let userRelay: BehaviorRelay<FirebaseUser?> = BehaviorRelay<FirebaseUser?>(value: nil)
-    var currentUser: FirebaseUser? {
-        userRelay.value
-    }
-
-    private var userHandle: DatabaseHandle?
-    func startObservingUser() {
-        guard let userID = currentUserID else {
-            return
-        }
-
-        let ref = firRef.child("users").child(userID)
-        userHandle = ref.observe(.value, with: { [weak self] snapshot in
-            guard snapshot.exists() else {
-                return
-            }
-            self?.userRelay.accept(FirebaseUser(snapshot: snapshot))
-        })
-    }
-
-    /// On logout, stop observing the user endpoint
-    func stopObservingUser() {
-        if let handle = userHandle {
-            firRef.child("users").removeObserver(withHandle: handle)
-        }
     }
 
     // MARK: - FirebaseUser (User details)

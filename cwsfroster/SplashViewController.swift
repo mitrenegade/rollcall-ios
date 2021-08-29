@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
 import RxOptional
 import Firebase
 
@@ -21,66 +22,19 @@ class SplashViewController: UIViewController {
     
     var first: Bool = true
     
-    fileprivate var disposeBag = DisposeBag()
-    
+    fileprivate let disposeBag = DisposeBag()
+    fileprivate var sessionDisposeBag = DisposeBag()
+
     var alert: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        listenFor(.LoginSuccess, action: #selector(didLogin(_:)), object: nil)
-        listenFor(.LogoutSuccess, action: #selector(didLogout), object: nil)
-        
         SettingsService.shared.observedSettings?.take(1).subscribe(onNext: {_ in
             print("Settings updated")
         }).disposed(by: disposeBag)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        activityIndicator.stopAnimating()
-        labelInfo.isHidden = true
-        labelInfo.text = nil
 
-        guard UserService.shared.isLoggedIn else {
-            goHome()
-            return
-        }
-        
-        guard firAuth.currentUser != nil else { return }
-        OrganizationService.shared
-            .currentObservable
-            .take(1)
-            .subscribe(onNext: { [weak self] org in
-                if org != nil {
-                    self?.goHome()
-                } else {
-                    self?.didLogin(nil)
-                }
-            })
-            .disposed(by: disposeBag)
-    }
-    
-    func goHome() {
-        disposeBag = DisposeBag() // stops listening
-        if presentedViewController != nil {
-            dismiss(animated: true) { [weak self] in
-                self?.goHome()
-            }
-        } else {
-            if UserService.shared.isLoggedIn {
-                let mainViewController = MainViewController()
-                present(mainViewController, animated: true, completion: nil)
-            } else {
-                performSegue(withIdentifier: "toLogin", sender: nil)
-            }
-        }
-    }
-    
-    @objc func didLogin(_ notification: NSNotification?) {
-        // update firebase object
-        OrganizationService.shared.startObservingOrganization()
+        // always update loading indicator
         OrganizationService.shared
             .loadingObservable
             .subscribe( onNext: { [weak self] loading in
@@ -88,39 +42,113 @@ class SplashViewController: UIViewController {
             })
             .disposed(by: disposeBag)
 
+        // always update organization image
         OrganizationService.shared
-            .currentObservable
-            .filterNil()
-            .subscribe(onNext: { [weak self] (org) in
-                if let url = org.photoUrl {
+            .organizationObservable
+            .map { $0?.photoUrl }
+            .subscribe(onNext: { [weak self] url in
+                if let url = url, OrganizationService.shared.current?.photoUrl == url {
                     self?.constraintLogoHeight.constant = 500
                     self?.logo.imageUrl = url
                     UIView.animate(withDuration: 0.25, animations: {
                         self?.logo.alpha = 1
-                    }, completion: { (success) in
-                        self?.goHome()
                     })
                 } else {
                     self?.constraintLogoHeight.constant = 0
-                    self?.goHome()
-                }
-            }).disposed(by: disposeBag)
-
-        // create org for users without orgs
-        OrganizationService.shared
-            .currentObservable
-            .skip(1)
-            .subscribe(onNext: { (org) in
-                if org == nil, let userId = UserService.shared.currentUserID, let orgName = UserService.shared.currentUserEmail {
-                    UserService.shared.createOrUpdateFirebaseUser(id: userId)
-                    OrganizationService.shared.createOrUpdateOrganization(orgId: userId, ownerId: userId, name: orgName, leftPowerUserFeedback: false)
                 }
             }).disposed(by: disposeBag)
     }
-    
-    @objc func didLogout() {
-        print("logged out")
-        goHome()
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        activityIndicator.stopAnimating()
+        labelInfo.isHidden = true
+        labelInfo.text = nil
+
+        listenForLogin()
+        listenForLogout()
+    }
+
+    func listenForLogout() {
+        // listen for logged out state
+        print("BOBBYTEST \(self) -> listenForLogout")
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedOut }
+            .subscribe(onNext: { _ in
+                print("BOBBYTEST \(self) --> logged out")
+            })
+            .disposed(by: sessionDisposeBag)
+
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedOut }
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.goToLogin()
+            })
+            .disposed(by: sessionDisposeBag)
+    }
+
+    func listenForLogin() {
+        UserService.shared.startup()
+
+        // listen for logged in state
+        print("BOBBYTEST \(self) -> listenForLogout")
+        UserService.shared.loginStateObserver
+            .filter { $0 == .loggedIn }
+            .take(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.listenForOrganization()
+            })
+            .disposed(by: sessionDisposeBag)
+    }
+
+    private func resetSessionDisposeBag() {
+        sessionDisposeBag = DisposeBag() // stops listening
+    }
+
+    // MARK: -
+
+    func listenForOrganization() {
+        print("BOBBYTEST \(self) -> listenForOrganization")
+        guard let userId = UserService.shared.currentUserID else {
+            fatalError("No userId")
+        }
+        OrganizationService.shared.startObservingOrganization(for: userId)
+
+        // listen for organization
+        OrganizationService.shared.organizationObservable
+            .filterNil()
+            .subscribe(onNext: { [weak self] _ in
+                self?.goHome()
+            }).disposed(by: sessionDisposeBag)
+    }
+
+    func goHome() {
+        resetSessionDisposeBag()
+        if presentedViewController != nil {
+            dismiss(animated: true) { [weak self] in
+                self?.goHome()
+            }
+        } else {
+            let mainViewController = MainViewController()
+            present(mainViewController, animated: true, completion: nil)
+
+            // listen for a logout
+            listenForLogout()
+        }
+    }
+
+    func goToLogin() {
+        resetSessionDisposeBag()
+        if presentedViewController != nil {
+            dismiss(animated: true) { [weak self] in
+                self?.goToLogin()
+            }
+        } else {
+            listenForLogin()
+            performSegue(withIdentifier: "toLogin", sender: nil)
+        }
     }
 
     private func updateLoading(_ loading: Bool) {
@@ -133,11 +161,6 @@ class SplashViewController: UIViewController {
             labelInfo.isHidden = true
             labelInfo.text = nil
         }
-    }
-
-    deinit {
-        stopListeningFor(.LoginSuccess)
-        stopListeningFor(.LogoutSuccess)
     }
 }
 
