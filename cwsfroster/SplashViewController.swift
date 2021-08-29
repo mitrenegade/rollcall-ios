@@ -34,12 +34,29 @@ class SplashViewController: UIViewController {
             print("Settings updated")
         }).disposed(by: disposeBag)
 
+        // always update loading indicator
         OrganizationService.shared
             .loadingObservable
             .subscribe( onNext: { [weak self] loading in
                 self?.updateLoading(loading)
             })
             .disposed(by: disposeBag)
+
+        // always update organization image
+        OrganizationService.shared
+            .organizationObservable
+            .map { $0?.photoUrl }
+            .subscribe(onNext: { [weak self] url in
+                if let url = url, OrganizationService.shared.current?.photoUrl == url {
+                    self?.constraintLogoHeight.constant = 500
+                    self?.logo.imageUrl = url
+                    UIView.animate(withDuration: 0.25, animations: {
+                        self?.logo.alpha = 1
+                    })
+                } else {
+                    self?.constraintLogoHeight.constant = 0
+                }
+            }).disposed(by: disposeBag)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -100,14 +117,10 @@ class SplashViewController: UIViewController {
         OrganizationService.shared.startObservingOrganization(for: userId)
 
         // listen for organization
-        OrganizationService.shared.currentObservable
-            .subscribe(onNext: { [weak self] org in
-                if org != nil {
-                    self?.goHome()
-                } else {
-                    // do nothing; wait for org
-                    self?.didLoginWithoutOrg()
-                }
+        OrganizationService.shared.organizationObservable
+            .filterNil()
+            .subscribe(onNext: { [weak self] _ in
+                self?.goHome()
             }).disposed(by: sessionDisposeBag)
     }
 
@@ -138,26 +151,6 @@ class SplashViewController: UIViewController {
         }
     }
 
-    private func didLoginWithoutOrg() {
-        OrganizationService.shared
-            .currentObservable
-            .filterNil()
-            .subscribe(onNext: { [weak self] (org) in
-                if let url = org.photoUrl {
-                    self?.constraintLogoHeight.constant = 500
-                    self?.logo.imageUrl = url
-                    UIView.animate(withDuration: 0.25, animations: {
-                        self?.logo.alpha = 1
-                    }, completion: { (success) in
-                        self?.goHome()
-                    })
-                } else {
-                    self?.constraintLogoHeight.constant = 0
-                    self?.goHome()
-                }
-            }).disposed(by: sessionDisposeBag)
-    }
-    
     private func updateLoading(_ loading: Bool) {
         if loading {
             activityIndicator.startAnimating()
