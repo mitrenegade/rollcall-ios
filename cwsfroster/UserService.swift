@@ -52,7 +52,7 @@ class UserService {
     private var userHandle: DatabaseHandle?
 
     /// On login, observe the user/id endpoint for user details
-    private func startObservingUser(_ userID: String) {
+    func startObservingUser(_ userID: String) {
         print("\(self) - startObservingUser \(userID)")
         let ref = firRef.child("users").child(userID)
         userHandle = ref.observe(.value, with: { [weak self] snapshot in
