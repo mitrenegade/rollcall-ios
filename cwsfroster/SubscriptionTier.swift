@@ -13,8 +13,19 @@ enum Tier: String, Equatable, Codable {
 }
 
 struct SubscriptionTier: Codable, Equatable {
-    let name: Tier
+    let tier: Tier
     let productId: String
 
-    static let standard = SubscriptionTier(name: .standard, productId: "")
+    static let standard = SubscriptionTier(tier: .standard, productId: "")
+
+    var description: String {
+        switch self.tier {
+        case .standard:
+            return "Basic member and event management tools for a single organization."
+        case .plus:
+            return "Advanced membership management including member pre-signup, payment, and vaccination status."
+        case .premium:
+            return "Advanced event management including recurring events and statistics. Multiple organizations."
+        }
+    }
 }

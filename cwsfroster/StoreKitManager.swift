@@ -53,7 +53,7 @@ final class StoreKitManager: NSObject {
     /// - Returns:
     ///     - a `SubscriptionTier` or Standard, if no Tiers were loaded in the `subscriptions.plist`
     func subscriptionTier(for tier: Tier) -> SubscriptionTier {
-        tiers.first { $0.name == tier.rawValue } ?? .standard
+        tiers.first { $0.tier == tier } ?? .standard
     }
 }
 

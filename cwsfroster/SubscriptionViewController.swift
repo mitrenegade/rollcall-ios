@@ -44,10 +44,35 @@ final class SubscriptionViewController: UIViewController {
     }
 
     private func viewForTier(_ tier: SubscriptionTier) -> UIView {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .white
-        label.text = tier.name.rawValue.uppercased()
+        let view = UIView()
+
+        let title = UILabel()
+        title.font = .systemFont(ofSize: 16)
+        title.textColor = .white
+        title.text = tier.tier.rawValue.uppercased()
+
+        view.addSubview(title)
+        title.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(Layout.topOffset)
+            $0.height.equalTo(30)
+        }
+
+        let description = UILabel()
+        description.font = .systemFont(ofSize: 16)
+        description.textColor = .white
+        description.text = tier.description
+        description.numberOfLines = 0
+
+        view.addSubview(description)
+        description.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(title.snp.bottom).offset(Layout.topOffset)
+            $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+            $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+        }
+
+        return view
     }
 
     private func setupViews() {
@@ -91,7 +116,7 @@ final class SubscriptionViewController: UIViewController {
     }
 
     func update(for user: FirebaseUser) {
-        subscriptionLabel.text = user.subscription.rawValue.uppercased()
+        subscriptionLabel.text = user.subscription.tier.rawValue.uppercased()
 
     }
 
