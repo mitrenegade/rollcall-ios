@@ -59,7 +59,7 @@ final class SubscriptionViewController: UIViewController {
         }
 
         let description = UILabel()
-        description.font = .systemFont(ofSize: 16)
+        description.font = .systemFont(ofSize: 14)
         description.textColor = .white
         description.text = tier.description
         description.numberOfLines = 0
@@ -70,6 +70,7 @@ final class SubscriptionViewController: UIViewController {
             $0.top.equalTo(title.snp.bottom).offset(Layout.topOffset)
             $0.leading.equalToSuperview().offset(Layout.leadingOffset)
             $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+            $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
         }
 
         view.layer.cornerRadius = 10
@@ -102,19 +103,31 @@ final class SubscriptionViewController: UIViewController {
         subscriptionLabel.font = .systemFont(ofSize: 20)
         subscriptionLabel.textColor = .white
 
-        let stackView = UIStackView()
-        view.addSubview(stackView)
-        stackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(Layout.leadingOffset)
-            $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
-            $0.top.equalTo(subscriptionLabel.snp.bottom)
-            $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
+        var lastView: UIView = subscriptionLabel
+
+        // add plus tier
+        if let plus = StoreKitManager.shared.subscriptionTier(for: .plus) {
+            let plusView = viewForTier(plus)
+            view.addSubview(plusView)
+            plusView.snp.makeConstraints {
+                $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+                $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+                $0.top.equalTo(lastView.snp.bottom).offset(Layout.topOffset)
+            }
+            lastView = plusView
         }
 
-        let views = StoreKitManager.shared.tiers
-            .sorted(by: { $0.id < $1.id })
-            .map( viewForTier(_:) )
-        views.forEach { stackView.addArrangedSubview($0) }
+        // add premium tier
+        if let premium = StoreKitManager.shared.subscriptionTier(for: .premium) {
+            let premiumView = viewForTier(premium)
+            view.addSubview(premiumView)
+            premiumView.snp.makeConstraints {
+                $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+                $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+                $0.top.equalTo(lastView.snp.bottom).offset(Layout.topOffset)
+            }
+        }
+
     }
 
     private func setupBindings() {
@@ -141,8 +154,8 @@ final class SubscriptionViewController: UIViewController {
 extension SubscriptionViewController {
     enum Layout {
         static let leadingOffset: CGFloat = 16.0
-        static let trailingOffset: CGFloat = 16.0
+        static let trailingOffset: CGFloat = -16.0
         static let topOffset: CGFloat = 8.0
-        static let bottomOffset: CGFloat = 16.0
+        static let bottomOffset: CGFloat = -16.0
     }
 }

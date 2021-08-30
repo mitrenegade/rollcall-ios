@@ -53,8 +53,11 @@ final class StoreKitManager: NSObject {
     /// Maps to the SubscriptionTier, including a productId, for a given tier (Plus or Premium)
     /// - Returns:
     ///     - a `SubscriptionTier` or Standard, if no Tiers were loaded in the `subscriptions.plist`
-    func subscriptionTier(for tier: Tier) -> SubscriptionTier {
-        tiers.first { $0.tier == tier } ?? .standard
+    func subscriptionTier(for tier: Tier) -> SubscriptionTier? {
+        if tier == .standard {
+            return .standard
+        }
+        return tiers.first { $0.tier == tier }
     }
 }
 

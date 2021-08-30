@@ -16,7 +16,7 @@ class FirebaseUser: FirebaseBaseModel {
                   let tier = Tier(rawValue: subscription) else {
                 return .standard
             }
-            return StoreKitManager.shared.subscriptionTier(for: tier)
+            return StoreKitManager.shared.subscriptionTier(for: tier) ?? .standard
         }
     }
 
