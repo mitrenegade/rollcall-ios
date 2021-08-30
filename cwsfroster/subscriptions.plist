@@ -3,15 +3,19 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>id</key>
+		<integer>1</integer>
 		<key>productId</key>
 		<string>rollcall.subscription.plus</string>
-		<key>name</key>
+		<key>tier</key>
 		<string>plus</string>
 	</dict>
 	<dict>
+		<key>id</key>
+		<integer>2</integer>
 		<key>productId</key>
 		<string>rollcall.subscription.premium</string>
-		<key>name</key>
+		<key>tier</key>
 		<string>premium</string>
 	</dict>
 </array>

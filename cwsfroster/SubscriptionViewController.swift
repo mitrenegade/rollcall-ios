@@ -72,6 +72,10 @@ final class SubscriptionViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
         }
 
+        view.layer.cornerRadius = 10
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.white.cgColor
+
         return view
     }
 
@@ -99,12 +103,18 @@ final class SubscriptionViewController: UIViewController {
         subscriptionLabel.textColor = .white
 
         let stackView = UIStackView()
+        view.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(Layout.leadingOffset)
             $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
             $0.top.equalTo(subscriptionLabel.snp.bottom)
             $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
         }
+
+        let views = StoreKitManager.shared.tiers
+            .sorted(by: { $0.id < $1.id })
+            .map( viewForTier(_:) )
+        views.forEach { stackView.addArrangedSubview($0) }
     }
 
     private func setupBindings() {

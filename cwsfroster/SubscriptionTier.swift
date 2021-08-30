@@ -6,17 +6,18 @@
 //  Copyright © 2021 Bobby Ren. All rights reserved.
 //
 
-enum Tier: String, Equatable, Codable {
+enum Tier: String, Codable, Hashable {
     case standard
     case plus
     case premium
 }
 
-struct SubscriptionTier: Codable, Equatable {
+struct SubscriptionTier: Codable, Hashable {
+    let id: Int // also the order
     let tier: Tier
     let productId: String
 
-    static let standard = SubscriptionTier(tier: .standard, productId: "")
+    static let standard = SubscriptionTier(id: 0, tier: .standard, productId: "")
 
     var description: String {
         switch self.tier {

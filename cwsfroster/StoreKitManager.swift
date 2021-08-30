@@ -18,26 +18,27 @@ final class StoreKitManager: NSObject {
 
     private (set) var products = [SKProduct]()
 
-    var tiers: [SubscriptionTier] = []
+    var tiers: Set<SubscriptionTier> = Set<SubscriptionTier>()
 
     func loadProducts() {
         guard let url = Bundle.main.url(forResource: "subscriptions", withExtension: "plist") else { fatalError("Unable to resolve url for in the bundle.") }
         do {
             let data = try Data(contentsOf: url)
-            tiers = try PropertyListDecoder().decode([SubscriptionTier].self, from: data)
+            let loadedTiers = try PropertyListDecoder().decode([SubscriptionTier].self, from: data)
+            loadedTiers.forEach { tiers.insert($0) }
 
-            requestProductsFromStore(from: tiers)
+            requestProductsFromStore()
         } catch let error as NSError {
             print("\(error.localizedDescription)")
         }
     }
 
-    private func requestProductsFromStore(from subscriptionTiers: [SubscriptionTier]) {
-        let productIdentifiers = Set(subscriptionTiers.compactMap { $0.productId })
+    private func requestProductsFromStore() {
+        let productIdentifiers = Set(tiers.compactMap { $0.productId })
 
-         request = SKProductsRequest(productIdentifiers: productIdentifiers)
-         request.delegate = self
-         request.start()
+        request = SKProductsRequest(productIdentifiers: productIdentifiers)
+        request.delegate = self
+        request.start()
     }
 
     /// Maps to the SKProduct for a given SubscriptionTier, using its productId
