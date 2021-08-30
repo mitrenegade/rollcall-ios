@@ -18,26 +18,43 @@ final class StoreKitManager: NSObject {
 
     private (set) var products = [SKProduct]()
 
+    var tiers: [SubscriptionTier] = []
+
     func loadProducts() {
         guard let url = Bundle.main.url(forResource: "subscriptions", withExtension: "plist") else { fatalError("Unable to resolve url for in the bundle.") }
         do {
             let data = try Data(contentsOf: url)
-            let productIdentifiers = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: nil) as? [String] ?? []
+            tiers = try PropertyListDecoder().decode([SubscriptionTier].self, from: data)
 
-            requestProductsFromStore(productIdentifiers)
+            requestProductsFromStore(from: tiers)
         } catch let error as NSError {
             print("\(error.localizedDescription)")
         }
     }
 
-    private func requestProductsFromStore(_ productIDs: [String]) {
-         let productIdentifiers = Set(productIDs)
+    private func requestProductsFromStore(from subscriptionTiers: [SubscriptionTier]) {
+        let productIdentifiers = Set(subscriptionTiers.compactMap { $0.productId })
 
          request = SKProductsRequest(productIdentifiers: productIdentifiers)
          request.delegate = self
          request.start()
     }
 
+    /// Maps to the SKProduct for a given SubscriptionTier, using its productId
+    /// - Returns:
+    ///     - a `SKProduct` if the SubscriptionTier has a matching productId, or nil
+    func product(for tier: SubscriptionTier) -> SKProduct? {
+        products.first { product -> Bool in
+            tier.productId == product.productIdentifier
+        }
+    }
+
+    /// Maps to the SubscriptionTier, including a productId, for a given tier (Plus or Premium)
+    /// - Returns:
+    ///     - a `SubscriptionTier` or Standard, if no Tiers were loaded in the `subscriptions.plist`
+    func subscriptionTier(for tier: Tier) -> SubscriptionTier {
+        tiers.first { $0.name == tier.rawValue } ?? .standard
+    }
 }
 
 extension StoreKitManager: SKProductsRequestDelegate {

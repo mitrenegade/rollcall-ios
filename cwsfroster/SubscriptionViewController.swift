@@ -16,7 +16,7 @@ final class SubscriptionViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    lazy var titleLabel: UILabel = {
+    lazy var subscriptionLabel: UILabel = {
         UILabel()
     }()
 
@@ -43,28 +43,43 @@ final class SubscriptionViewController: UIViewController {
         }
     }
 
+    private func viewForTier(_ tier: SubscriptionTier) -> UIView {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .white
+        label.text = tier.name.rawValue.uppercased()
+    }
+
     private func setupViews() {
         navigationItem.title = "Your Subscription"
 
         view.backgroundColor = .bgBlue
 
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+        view.addSubview(subscriptionLabel)
+        subscriptionLabel.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(20)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
         }
-        titleLabel.font = .systemFont(ofSize: 20)
-        titleLabel.textColor = .white
+        subscriptionLabel.font = .systemFont(ofSize: 20)
+        subscriptionLabel.textColor = .white
+        view.addSubview(subscriptionLabel)
 
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints {
+        subscriptionLabel.snp.makeConstraints {
             $0.top.equalTo(view.snp.topMargin).offset(20)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
         }
-        titleLabel.font = .systemFont(ofSize: 20)
-        titleLabel.textColor = .white
+        subscriptionLabel.font = .systemFont(ofSize: 20)
+        subscriptionLabel.textColor = .white
+
+        let stackView = UIStackView()
+        stackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+            $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+            $0.top.equalTo(subscriptionLabel.snp.bottom)
+            $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
+        }
     }
 
     private func setupBindings() {
@@ -76,14 +91,8 @@ final class SubscriptionViewController: UIViewController {
     }
 
     func update(for user: FirebaseUser) {
-        switch user.subscription {
-        case .standard:
-            titleLabel.text = "Standard"
-        case .plus:
-            titleLabel.text = "Plus"
-        case .premium:
-            titleLabel.text = "Premium"
-        }
+        subscriptionLabel.text = user.subscription.rawValue.uppercased()
+
     }
 
     // MARK: - Navigation
@@ -92,4 +101,13 @@ final class SubscriptionViewController: UIViewController {
         navigationController?.dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension SubscriptionViewController {
+    enum Layout {
+        static let leadingOffset: CGFloat = 16.0
+        static let trailingOffset: CGFloat = 16.0
+        static let topOffset: CGFloat = 8.0
+        static let bottomOffset: CGFloat = 16.0
+    }
 }

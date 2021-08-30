@@ -45,6 +45,6 @@ extension AppDelegate {
     }
 
     @objc func startup() {
-//        StoreKitManager.shared.loadProducts()
+        StoreKitManager.shared.loadProducts()
     }
 }
