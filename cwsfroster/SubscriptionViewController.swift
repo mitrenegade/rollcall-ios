@@ -17,11 +17,19 @@ final class SubscriptionViewController: UIViewController {
     private let disposeBag = DisposeBag()
 
     lazy var subscriptionLabel: UILabel = {
-        UILabel()
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.textColor = .white
+        return label
     }()
 
     lazy var detailsLabel: UILabel = {
-        UILabel()
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
     }()
 
     // MARK: - Lifecycle
@@ -91,8 +99,6 @@ final class SubscriptionViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
         }
-        subscriptionLabel.font = .systemFont(ofSize: 20)
-        subscriptionLabel.textColor = .white
         view.addSubview(subscriptionLabel)
 
         subscriptionLabel.snp.makeConstraints {
@@ -100,10 +106,17 @@ final class SubscriptionViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(40)
         }
-        subscriptionLabel.font = .systemFont(ofSize: 20)
-        subscriptionLabel.textColor = .white
 
-        var lastView: UIView = subscriptionLabel
+        view.addSubview(detailsLabel)
+        detailsLabel.snp.makeConstraints {
+            $0.top.equalTo(subscriptionLabel.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+            $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+        }
+
+        var lastView: UIView = detailsLabel
+        var offset = Layout.subscriptionTopOffset
 
         // add plus tier
         if let plus = StoreKitManager.shared.subscriptionTier(for: .plus) {
@@ -112,9 +125,10 @@ final class SubscriptionViewController: UIViewController {
             plusView.snp.makeConstraints {
                 $0.leading.equalToSuperview().offset(Layout.leadingOffset)
                 $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
-                $0.top.equalTo(lastView.snp.bottom).offset(Layout.topOffset)
+                $0.top.equalTo(lastView.snp.bottom).offset(offset)
             }
             lastView = plusView
+            offset = Layout.subscriptionSpacing
         }
 
         // add premium tier
@@ -140,7 +154,7 @@ final class SubscriptionViewController: UIViewController {
 
     func update(for user: FirebaseUser) {
         subscriptionLabel.text = user.subscription.tier.rawValue.uppercased()
-
+        detailsLabel.text = user.subscription.description
     }
 
     // MARK: - Navigation
@@ -157,5 +171,8 @@ extension SubscriptionViewController {
         static let trailingOffset: CGFloat = -16.0
         static let topOffset: CGFloat = 8.0
         static let bottomOffset: CGFloat = -16.0
+
+        static let subscriptionTopOffset: CGFloat = 24.0
+        static let subscriptionSpacing: CGFloat = 16.0
     }
 }
