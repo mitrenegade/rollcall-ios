@@ -16,6 +16,8 @@ final class SubscriptionViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
+    private var tierToButton: [SubscriptionTier: UIButton] = [:]
+
     lazy var subscriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20)
@@ -78,12 +80,36 @@ final class SubscriptionViewController: UIViewController {
             $0.top.equalTo(title.snp.bottom).offset(Layout.topOffset)
             $0.leading.equalToSuperview().offset(Layout.leadingOffset)
             $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
-            $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
         }
 
         view.layer.cornerRadius = 10
         view.layer.borderWidth = 2
         view.layer.borderColor = UIColor.white.cgColor
+
+        let button: UIButton
+        if #available(iOS 14.0, *) {
+            let action = UIAction(title: NSLocalizedString("Subscribe", comment: ""), image: nil) { action in
+                self.didSelectTier(tier)
+            }
+            button = UIButton(primaryAction: action)
+        } else {
+            button = UIButton()
+            button.setTitle(NSLocalizedString("Subscribe", comment: ""), for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 14)
+            button.addTarget(self, action: #selector(didClickButton(_:)), for: .touchUpInside)
+            tierToButton[tier] = button
+        }
+        button.backgroundColor = .lightGray
+        button.setTitleColor(.white, for: .normal)
+        view.addSubview(button)
+        button.layer.cornerRadius = 5
+        button.snp.makeConstraints {
+            $0.top.equalTo(description.snp.bottom).offset(Layout.topOffset)
+            $0.bottom.equalToSuperview().offset(Layout.bottomOffset)
+            $0.leading.equalToSuperview().offset(Layout.leadingOffset)
+            $0.trailing.equalToSuperview().offset(Layout.trailingOffset)
+            $0.height.equalTo(50)
+        }
 
         return view
     }
@@ -155,6 +181,20 @@ final class SubscriptionViewController: UIViewController {
     func update(for user: FirebaseUser) {
         subscriptionLabel.text = user.subscription.tier.rawValue.uppercased()
         detailsLabel.text = user.subscription.description
+    }
+
+    /// only available for iOS 14 because button uses a UIAction
+    func didSelectTier(_ tier: SubscriptionTier) {
+        print("Tier pressed \(tier)")
+    }
+
+    /// for ios 13 and below
+    @objc func didClickButton(_ sender: UIButton) {
+        for (tier, button) in tierToButton {
+            if button == sender {
+                print("Tier pressed (\(tier)")
+            }
+        }
     }
 
     // MARK: - Navigation
