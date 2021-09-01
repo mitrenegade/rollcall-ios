@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!--
-   subscriptions.plist
-   rollcall
-
-   Created by Bobby Ren on 8/25/21.
-   Copyright (c) 2021 Bobby Ren. All rights reserved.
--->
 <plist version="1.0">
-    <array>
-        <string>rollcall.subscription.tier1</string>
-        <string>rollcall.subscription.tier2</string>
-    </array>
+<array>
+	<dict>
+		<key>id</key>
+		<integer>1</integer>
+		<key>productId</key>
+		<string>rollcall.subscription.plus</string>
+		<key>tier</key>
+		<string>plus</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>2</integer>
+		<key>productId</key>
+		<string>rollcall.subscription.premium</string>
+		<key>tier</key>
+		<string>premium</string>
+	</dict>
+</array>
 </plist>

@@ -18,26 +18,47 @@ final class StoreKitManager: NSObject {
 
     private (set) var products = [SKProduct]()
 
+    var tiers: Set<SubscriptionTier> = Set<SubscriptionTier>()
+
     func loadProducts() {
         guard let url = Bundle.main.url(forResource: "subscriptions", withExtension: "plist") else { fatalError("Unable to resolve url for in the bundle.") }
         do {
             let data = try Data(contentsOf: url)
-            let productIdentifiers = try PropertyListSerialization.propertyList(from: data, options: .mutableContainersAndLeaves, format: nil) as? [String] ?? []
+            let loadedTiers = try PropertyListDecoder().decode([SubscriptionTier].self, from: data)
+            loadedTiers.forEach { tiers.insert($0) }
 
-            requestProductsFromStore(productIdentifiers)
+            requestProductsFromStore()
         } catch let error as NSError {
             print("\(error.localizedDescription)")
         }
     }
 
-    private func requestProductsFromStore(_ productIDs: [String]) {
-         let productIdentifiers = Set(productIDs)
+    private func requestProductsFromStore() {
+        let productIdentifiers = Set(tiers.compactMap { $0.productId })
 
-         request = SKProductsRequest(productIdentifiers: productIdentifiers)
-         request.delegate = self
-         request.start()
+        request = SKProductsRequest(productIdentifiers: productIdentifiers)
+        request.delegate = self
+        request.start()
     }
 
+    /// Maps to the SKProduct for a given SubscriptionTier, using its productId
+    /// - Returns:
+    ///     - a `SKProduct` if the SubscriptionTier has a matching productId, or nil
+    func product(for tier: SubscriptionTier) -> SKProduct? {
+        products.first { product -> Bool in
+            tier.productId == product.productIdentifier
+        }
+    }
+
+    /// Maps to the SubscriptionTier, including a productId, for a given tier (Plus or Premium)
+    /// - Returns:
+    ///     - a `SubscriptionTier` or Standard, if no Tiers were loaded in the `subscriptions.plist`
+    func subscriptionTier(for tier: Tier) -> SubscriptionTier? {
+        if tier == .standard {
+            return .standard
+        }
+        return tiers.first { $0.tier == tier }
+    }
 }
 
 extension StoreKitManager: SKProductsRequestDelegate {

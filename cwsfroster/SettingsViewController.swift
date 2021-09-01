@@ -31,13 +31,8 @@ class SettingsViewController: UITableViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
         title = "Settings"
-        if #available(iOS 13.0, *) {
-            let closeButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didClickClose))
-            navigationItem.leftBarButtonItem = closeButtonItem
-        } else {
-            // Fallback on earlier versions
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(didClickClose))
-        }
+        let closeButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didClickClose))
+        navigationItem.leftBarButtonItem = closeButtonItem
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
 

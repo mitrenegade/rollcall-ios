@@ -29,9 +29,9 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "rollcall.subscription.tier1",
+          "productID" : "rollcall.subscription.plus",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Advanced Event Management",
+          "referenceName" : "Advanced Membership Management",
           "subscriptionGroupID" : "CB26011E",
           "type" : "RecurringSubscription"
         },
@@ -51,9 +51,9 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "rollcall.subscription.tier2",
+          "productID" : "rollcall.subscription.premium",
           "recurringSubscriptionPeriod" : "P1Y",
-          "referenceName" : "Advanced Organization Management",
+          "referenceName" : "Advanced Event and Organization Management",
           "subscriptionGroupID" : "CB26011E",
           "type" : "RecurringSubscription"
         }

@@ -6,8 +6,27 @@
 //  Copyright © 2021 Bobby Ren. All rights reserved.
 //
 
-enum SubscriptionTier: String {
+enum Tier: String, Codable, Hashable {
     case standard
     case plus
     case premium
+}
+
+struct SubscriptionTier: Codable, Hashable {
+    let id: Int // also the order
+    let tier: Tier
+    let productId: String
+
+    static let standard = SubscriptionTier(id: 0, tier: .standard, productId: "")
+
+    var description: String {
+        switch self.tier {
+        case .standard:
+            return "Basic member and event management tools for a single organization."
+        case .plus:
+            return "Advanced membership management including member pre-signup, payment, and vaccination status."
+        case .premium:
+            return "Advanced event management including recurring events and statistics. Multiple organizations."
+        }
+    }
 }

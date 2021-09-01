@@ -12,10 +12,11 @@ import Firebase
 class FirebaseUser: FirebaseBaseModel {
     var subscription: SubscriptionTier {
         get {
-            guard let subscription = dict["subscription"] as? String else {
+            guard let subscription = dict["subscription"] as? String,
+                  let tier = Tier(rawValue: subscription) else {
                 return .standard
             }
-            return SubscriptionTier(rawValue: subscription) ?? .standard
+            return StoreKitManager.shared.subscriptionTier(for: tier) ?? .standard
         }
     }
 
