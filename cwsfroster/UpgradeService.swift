@@ -81,11 +81,7 @@ extension UpgradeService {
         if let url = URL(string: APP_STORE_URL), UIApplication.shared.canOpenURL(url)
         {
             alert.addAction(UIAlertAction(title: "Open in App Store", style: .default, handler: { (action) in
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    UIApplication.shared.openURL(url)
-                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 LoggingService.log(event: .softUpgradeDismissed, info: ["action": "appStore"])
                 self.softUpgradeDismissed(neverShowAgain: false)
             }))

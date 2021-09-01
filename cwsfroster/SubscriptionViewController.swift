@@ -45,12 +45,8 @@ final class SubscriptionViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        if #available(iOS 13.0, *) {
-            let closeButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didClickClose))
-            navigationItem.leftBarButtonItem = closeButtonItem
-        } else {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(didClickClose))
-        }
+        let closeButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(didClickClose))
+        navigationItem.leftBarButtonItem = closeButtonItem
     }
 
     private func viewForTier(_ tier: SubscriptionTier) -> UIView {
