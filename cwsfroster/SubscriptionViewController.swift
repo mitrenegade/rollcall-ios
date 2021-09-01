@@ -180,15 +180,27 @@ final class SubscriptionViewController: UIViewController {
     }
 
     /// only available for iOS 14 because button uses a UIAction
-    func didSelectTier(_ tier: SubscriptionTier) {
-        print("Tier pressed \(tier)")
+    private func didSelectTier(_ tier: SubscriptionTier) {
+        purchase(tier)
     }
 
     /// for ios 13 and below
-    @objc func didClickButton(_ sender: UIButton) {
+    @objc private func didClickButton(_ sender: UIButton) {
         for (tier, button) in tierToButton {
             if button == sender {
-                print("Tier pressed (\(tier)")
+                purchase(tier)
+                return
+            }
+        }
+    }
+
+    private func purchase(_ tier: SubscriptionTier) {
+        StoreKitManager.shared.subscribe(to: tier) { result in
+            switch result {
+            case .success:
+                print("Success")
+            case .failure(let error):
+                print("Error \(error)")
             }
         }
     }

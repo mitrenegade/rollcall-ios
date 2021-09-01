@@ -11,6 +11,10 @@ import StoreKit
 
 final class StoreKitManager: NSObject {
 
+    enum Error: Swift.Error {
+        case invalidProduct
+    }
+
     static let shared = StoreKitManager()
 
     // Keep a strong reference to the product request.
@@ -19,6 +23,12 @@ final class StoreKitManager: NSObject {
     private (set) var products = [SKProduct]()
 
     var tiers: Set<SubscriptionTier> = Set<SubscriptionTier>()
+
+    override init() {
+        super.init()
+
+        SKPaymentQueue.default().add(self)
+    }
 
     func loadProducts() {
         guard let url = Bundle.main.url(forResource: "subscriptions", withExtension: "plist") else { fatalError("Unable to resolve url for in the bundle.") }
@@ -74,5 +84,23 @@ extension StoreKitManager: SKProductsRequestDelegate {
            // Handle any invalid product identifiers as appropriate.
             print("Error: invalid subscription products: \(response.invalidProductIdentifiers)")
         }
+    }
+}
+
+// MARK: - Purchase
+extension StoreKitManager: SKPaymentTransactionObserver {
+    func subscribe(to tier: SubscriptionTier, completion:((Result<Bool, Error>) -> Void)?) {
+        print("Tier pressed \(tier)")
+
+        guard let product = product(for: tier) else {
+            completion?(.failure(StoreKitManager.Error.invalidProduct))
+            return
+        }
+        let payment = SKPayment(product: product)
+        SKPaymentQueue.default().add(payment)
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+        print("\(self) -> Updated transactions \(transactions)")
     }
 }
