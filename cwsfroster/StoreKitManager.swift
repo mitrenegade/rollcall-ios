@@ -44,6 +44,7 @@ final class StoreKitManager: NSObject {
     }
 
     private func requestProductsFromStore() {
+        request?.cancel()
         let productIdentifiers = Set(tiers.compactMap { $0.productId })
 
         request = SKProductsRequest(productIdentifiers: productIdentifiers)
@@ -102,5 +103,54 @@ extension StoreKitManager: SKPaymentTransactionObserver {
 
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         print("\(self) -> Updated transactions \(transactions)")
+
+        // https://www.raywenderlich.com/5456-in-app-purchase-tutorial-getting-started
+        for transaction in transactions {
+            switch transaction.transactionState {
+            case .purchased:
+                complete(transaction: transaction)
+                break
+            case .failed:
+//                fail(transaction: transaction)
+                break
+            case .restored:
+//                restore(transaction: transaction)
+                break
+            case .deferred:
+                break
+            case .purchasing:
+                break
+            @unknown default:
+                fatalError("Unknown transaction state")
+            }
+
+        }
+    }
+
+    private func complete(transaction: SKPaymentTransaction) {
+        SKPaymentQueue.default().finishTransaction(transaction)
+
+        // Temporary: update user transaction via device
+        if let newTier = tiers.first(where: { tier in
+            tier.productId == transaction.payment.productIdentifier
+        }) {
+            UserService.shared.updateUserSubscription(newTier)
+        }
+
+        // validate receipt: https://savvyapps.com/blog/how-setup-test-auto-renewable-subscription-ios-app
+        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+           FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+                let receiptString = receiptData.base64EncodedString(options: [])
+                print(receiptString)
+
+                // TODO: Read receiptData and validate with backend
+                
+            }
+            catch {
+                print("Couldn't read receipt data with error: " + error.localizedDescription)
+            }
+        }
     }
 }

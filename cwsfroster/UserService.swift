@@ -189,5 +189,12 @@ class UserService {
         ref.updateChildValues(params)
     }
 
-    
+    func updateUserSubscription(_ subscriptionTier: SubscriptionTier) {
+        guard let userId = currentUserID else {
+            return
+        }
+        let ref = firRef.child("users").child(userId)
+        let params: [String: Any] = ["subscription": subscriptionTier.tier.rawValue]
+        ref.updateChildValues(params)
+    }
 }
