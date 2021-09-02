@@ -1,5 +1,5 @@
 //
-//  SubscriptionTier.swift
+//  SubscriptionProduct.swift
 //  rollcall
 //
 //  Created by Bobby Ren on 8/25/21.
@@ -12,12 +12,12 @@ enum Tier: String, Codable, Hashable {
     case premium
 }
 
-struct SubscriptionTier: Codable, Hashable {
+struct SubscriptionProduct: Codable, Hashable {
     let id: Int // also the order
     let tier: Tier
     let productId: String
 
-    static let standard = SubscriptionTier(id: 0, tier: .standard, productId: "")
+    static let standard = SubscriptionProduct(id: 0, tier: .standard, productId: "")
 
     var description: String {
         switch self.tier {

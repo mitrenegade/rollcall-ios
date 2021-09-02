@@ -22,7 +22,7 @@ final class StoreKitManager: NSObject {
 
     private (set) var products = [SKProduct]()
 
-    var tiers: Set<SubscriptionTier> = Set<SubscriptionTier>()
+    var tiers: Set<SubscriptionProduct> = Set<SubscriptionProduct>()
 
     override init() {
         super.init()
@@ -34,7 +34,7 @@ final class StoreKitManager: NSObject {
         guard let url = Bundle.main.url(forResource: "subscriptions", withExtension: "plist") else { fatalError("Unable to resolve url for in the bundle.") }
         do {
             let data = try Data(contentsOf: url)
-            let loadedTiers = try PropertyListDecoder().decode([SubscriptionTier].self, from: data)
+            let loadedTiers = try PropertyListDecoder().decode([SubscriptionProduct].self, from: data)
             loadedTiers.forEach { tiers.insert($0) }
 
             requestProductsFromStore()
@@ -52,19 +52,19 @@ final class StoreKitManager: NSObject {
         request.start()
     }
 
-    /// Maps to the SKProduct for a given SubscriptionTier, using its productId
+    /// Maps to the SKProduct for a given SubscriptionProduct, using its productId
     /// - Returns:
-    ///     - a `SKProduct` if the SubscriptionTier has a matching productId, or nil
-    func product(for tier: SubscriptionTier) -> SKProduct? {
+    ///     - a `SKProduct` if the SubscriptionProduct has a matching productId, or nil
+    func product(for tier: SubscriptionProduct) -> SKProduct? {
         products.first { product -> Bool in
             tier.productId == product.productIdentifier
         }
     }
 
-    /// Maps to the SubscriptionTier, including a productId, for a given tier (Plus or Premium)
+    /// Maps to the SubscriptionProduct, including a productId, for a given tier (Plus or Premium)
     /// - Returns:
-    ///     - a `SubscriptionTier` or Standard, if no Tiers were loaded in the `subscriptions.plist`
-    func subscriptionTier(for tier: Tier) -> SubscriptionTier? {
+    ///     - a `SubscriptionProduct` or Standard, if no Tiers were loaded in the `subscriptions.plist`
+    func subscriptionTier(for tier: Tier) -> SubscriptionProduct? {
         if tier == .standard {
             return .standard
         }
@@ -90,7 +90,7 @@ extension StoreKitManager: SKProductsRequestDelegate {
 
 // MARK: - Purchase
 extension StoreKitManager: SKPaymentTransactionObserver {
-    func subscribe(to tier: SubscriptionTier, completion:((Result<Bool, Error>) -> Void)?) {
+    func subscribe(to tier: SubscriptionProduct, completion:((Result<Bool, Error>) -> Void)?) {
         print("Tier pressed \(tier)")
 
         guard let product = product(for: tier) else {
@@ -134,6 +134,7 @@ extension StoreKitManager: SKPaymentTransactionObserver {
         if let newTier = tiers.first(where: { tier in
             tier.productId == transaction.payment.productIdentifier
         }) {
+            // Need to handle upgrades and downgrades
             UserService.shared.updateUserSubscription(newTier)
         }
 

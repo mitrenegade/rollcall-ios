@@ -189,7 +189,7 @@ class UserService {
         ref.updateChildValues(params)
     }
 
-    func updateUserSubscription(_ subscriptionTier: SubscriptionTier) {
+    func updateUserSubscription(_ subscriptionTier: SubscriptionProduct) {
         guard let userId = currentUserID else {
             return
         }
