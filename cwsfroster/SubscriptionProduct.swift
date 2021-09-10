@@ -6,10 +6,26 @@
 //  Copyright © 2021 Bobby Ren. All rights reserved.
 //
 
-enum Tier: String, Codable, Hashable {
+enum Tier: String, Codable, Hashable, Comparable, CaseIterable {
     case standard
     case plus
     case premium
+
+    private var level: Int {
+        switch self {
+        case .standard:
+            return 0
+        case .plus:
+            return 1
+        case .premium:
+            return 2
+        }
+    }
+
+    static func < (lhs: Tier, rhs: Tier) -> Bool {
+        lhs.level < rhs.level
+    }
+
 }
 
 struct SubscriptionProduct: Codable, Hashable {
@@ -28,5 +44,12 @@ struct SubscriptionProduct: Codable, Hashable {
         case .premium:
             return "Advanced event management including recurring events and statistics. Multiple organizations."
         }
+    }
+}
+
+// MARK: - features
+extension SubscriptionProduct {
+    var hasEventReminders: Bool {
+        tier > .standard
     }
 }

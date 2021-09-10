@@ -54,6 +54,7 @@
 		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
 		8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
+		8EFBA50326EC21CC00C2AAD6 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
 		9E649FE019B6040A00334B34 /* icon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDA19B6040A00334B34 /* icon29.png */; };
@@ -166,6 +167,7 @@
 		8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
+		8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
 		9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-paddle@2x.png"; sourceTree = "<group>"; };
 		9E649FDA19B6040A00334B34 /* icon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29.png; sourceTree = "<group>"; };
@@ -293,6 +295,8 @@
 				8E9D891E20CB130900AD382F /* EventService.swift */,
 				8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */,
 				8E800D301E3E94770085EC4D /* LoggingService.swift */,
+				8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */,
+				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -450,7 +454,6 @@
 			children = (
 				8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */,
 				8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */,
-				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
 				8EBB0C2626D744D500BAB1A5 /* SubscriptionProduct.swift */,
 				8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */,
 				8E1D993520B20C86005E4186 /* Services */,
@@ -764,6 +767,7 @@
 				8EBB0C2426D736FE00BAB1A5 /* SubscriptionViewController.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */,
+				8EFBA50326EC21CC00C2AAD6 /* FeatureManager.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
 				8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */,
