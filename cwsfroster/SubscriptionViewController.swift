@@ -16,7 +16,7 @@ final class SubscriptionViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
 
-    private var tierToButton: [SubscriptionTier: UIButton] = [:]
+    private var tierToButton: [SubscriptionProduct: UIButton] = [:]
 
     lazy var subscriptionLabel: UILabel = {
         let label = UILabel()
@@ -49,7 +49,7 @@ final class SubscriptionViewController: UIViewController {
         navigationItem.leftBarButtonItem = closeButtonItem
     }
 
-    private func viewForTier(_ tier: SubscriptionTier) -> UIView {
+    private func viewForTier(_ tier: SubscriptionProduct) -> UIView {
         let view = UIView()
 
         let title = UILabel()
@@ -180,15 +180,27 @@ final class SubscriptionViewController: UIViewController {
     }
 
     /// only available for iOS 14 because button uses a UIAction
-    func didSelectTier(_ tier: SubscriptionTier) {
-        print("Tier pressed \(tier)")
+    private func didSelectTier(_ tier: SubscriptionProduct) {
+        purchase(tier)
     }
 
     /// for ios 13 and below
-    @objc func didClickButton(_ sender: UIButton) {
+    @objc private func didClickButton(_ sender: UIButton) {
         for (tier, button) in tierToButton {
             if button == sender {
-                print("Tier pressed (\(tier)")
+                purchase(tier)
+                return
+            }
+        }
+    }
+
+    private func purchase(_ tier: SubscriptionProduct) {
+        StoreKitManager.shared.subscribe(to: tier) { result in
+            switch result {
+            case .success:
+                print("Success")
+            case .failure(let error):
+                print("Error \(error)")
             }
         }
     }

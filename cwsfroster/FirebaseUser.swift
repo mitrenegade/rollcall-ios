@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 class FirebaseUser: FirebaseBaseModel {
-    var subscription: SubscriptionTier {
+    var subscription: SubscriptionProduct {
         get {
             guard let subscription = dict["subscription"] as? String,
                   let tier = Tier(rawValue: subscription) else {
