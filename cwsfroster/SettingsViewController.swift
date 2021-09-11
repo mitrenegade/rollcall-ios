@@ -6,7 +6,7 @@
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
-import Foundation
+import Balizinha
 import UIKit
 import RACameraHelper
 import MessageUI
@@ -286,7 +286,10 @@ extension SettingsViewController: CameraHelperDelegate {
         guard let id = OrganizationService.shared.currentOrganizationId else { return }
         showProgress("Saving new logo")
         print("FirebaseImageService: uploading org photo for \(id)")
-        FirebaseImageService.uploadImage(image: image, type: "organization", uid: id, progressHandler: { (progress) in
+        FirebaseImageService.uploadImage(image: image,
+                                         type: FirebaseImageService.RollCallImageType.organization,
+                                         uid: id,
+                                         progressHandler: { (progress) in
             self.updateProgress(percent: progress)
         }) { [weak self] (url) in
             if let url = url {

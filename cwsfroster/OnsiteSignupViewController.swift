@@ -8,6 +8,7 @@
 
 import UIKit
 import RACameraHelper
+import Balizinha
 
 class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var inputName: UITextField!
@@ -81,7 +82,10 @@ class OnsiteSignupViewController: UIViewController {
                 if let photo = self?.addedPhoto {
                     member.photo = photo
                     print("FirebaseImageService: uploading member photo for \(member.id)")
-                    FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id,  progressHandler: { (percent) in
+                    FirebaseImageService.uploadImage(image: photo,
+                                                     type: FirebaseImageService.RollCallImageType.member,
+                                                     uid: member.id,
+                                                     progressHandler: { (percent) in
                         print("Upload progress: \(Int(percent*100))%")
                     }, completion: { (url) in
 //                        alert.dismiss(animated: true, completion: nil)

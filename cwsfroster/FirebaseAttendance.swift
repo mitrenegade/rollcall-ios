@@ -6,7 +6,7 @@
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
-import UIKit
+import Balizinha
 
 enum AttendanceStatus: String {
     case attended

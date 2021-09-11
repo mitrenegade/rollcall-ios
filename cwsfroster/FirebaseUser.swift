@@ -6,11 +6,11 @@
 //  Copyright © 2021 Bobby Ren. All rights reserved.
 //
 
-import Foundation
 import Firebase
+import Balizinha
 
 class FirebaseUser: FirebaseBaseModel {
-    static let none = FirebaseUser()
+    static let none = FirebaseUser(key: "none", dict: [:])
 
     var subscription: SubscriptionProduct {
         get {

@@ -34,7 +34,7 @@ class FirebaseOfflineParser: NSObject {
             return dict["owner"] as? String == UserService.shared.currentUserID
         }).first else { return nil }
         guard let dict = organizationDict.value as? [String: Any] else { return nil }
-        return FirebaseOrganization(id: organizationDict.key, dict: dict)
+        return FirebaseOrganization(key: organizationDict.key, dict: dict)
     }
     
     func offlineEvents() -> [FirebaseEvent] {
@@ -46,7 +46,7 @@ class FirebaseOfflineParser: NSObject {
         })
         let mapped = filtered.compactMap({ (key, value) -> FirebaseEvent? in
             guard let dict = value as? [String: Any] else { return nil }
-            return FirebaseEvent(id: key, dict: dict)
+            return FirebaseEvent(key: key, dict: dict)
         })
         return mapped
     }
@@ -55,7 +55,7 @@ class FirebaseOfflineParser: NSObject {
         guard let membersDict = offlineDict["members"] as? [String: Any] else { return [] }
         return membersDict.compactMap({ (key, val) -> FirebaseMember? in
             guard let dict = val as? [String: Any] else { return nil }
-            return FirebaseMember(id: key, dict: dict)
+            return FirebaseMember(key: key, dict: dict)
         })
     }
     

@@ -6,15 +6,14 @@
 //  Copyright © 2016 Bobby Ren. All rights reserved.
 //
 
-import UIKit
+import Balizinha
 import Firebase
 
 fileprivate let formatter = DateFormatter()
 
 class FirebaseEvent: FirebaseBaseModel {
-//    var service = EventService.shared
-    
-    @objc var title: String? {
+
+    var title: String? {
         get {
             return self.dict["title"] as? String
         }
@@ -24,7 +23,7 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
 
-    @objc var date: Date? {
+    var date: Date? {
         get {
             if let val = self.dict["date"] as? TimeInterval {
                 return Date(timeIntervalSince1970: val)
