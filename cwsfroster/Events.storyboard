@@ -328,7 +328,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Select Event Date" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2qW-tF-W4p">
-                                        <rect key="frame" x="20" y="20" width="189" height="30"/>
+                                        <rect key="frame" x="20" y="20" width="193" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="kMR-Lg-9Dt"/>
                                         </constraints>
@@ -363,16 +363,16 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C44-Xz-9zp">
-                                        <rect key="frame" x="217" y="19" width="120" height="32"/>
+                                        <rect key="frame" x="213" y="19" width="124" height="32"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recurring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wux-K9-LoR">
-                                                <rect key="frame" x="4" y="9" width="55" height="14.5"/>
+                                                <rect key="frame" x="8" y="9" width="55" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dd0-oq-Ds8">
-                                                <rect key="frame" x="67" y="0.5" width="51" height="31"/>
+                                                <rect key="frame" x="71" y="0.5" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="didToggleRecurrenceWithSender:" destination="ol8-CI-xXO" eventType="valueChanged" id="NDq-Pm-Pih"/>
                                                 </connections>
@@ -382,11 +382,11 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="dd0-oq-Ds8" secondAttribute="trailing" constant="4" id="FiK-3D-wTx"/>
                                             <constraint firstItem="dd0-oq-Ds8" firstAttribute="leading" secondItem="wux-K9-LoR" secondAttribute="trailing" constant="8" id="G18-5F-ian"/>
-                                            <constraint firstItem="wux-K9-LoR" firstAttribute="leading" secondItem="C44-Xz-9zp" secondAttribute="leading" constant="4" id="IUA-77-g5S"/>
+                                            <constraint firstItem="wux-K9-LoR" firstAttribute="leading" secondItem="C44-Xz-9zp" secondAttribute="leading" constant="8" id="IUA-77-g5S"/>
                                             <constraint firstItem="dd0-oq-Ds8" firstAttribute="centerY" secondItem="C44-Xz-9zp" secondAttribute="centerY" id="K25-2F-ucg"/>
                                             <constraint firstItem="wux-K9-LoR" firstAttribute="centerY" secondItem="C44-Xz-9zp" secondAttribute="centerY" id="c1u-LJ-1L0"/>
                                             <constraint firstAttribute="height" constant="32" id="hMh-Lp-erg"/>
-                                            <constraint firstAttribute="width" constant="120" id="tR8-E3-pQV"/>
+                                            <constraint firstAttribute="width" constant="124" id="tR8-E3-pQV"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -397,7 +397,7 @@
                                     <constraint firstItem="xgO-To-O34" firstAttribute="top" secondItem="C44-Xz-9zp" secondAttribute="bottom" constant="8" symbolic="YES" id="Gew-Qo-4hP"/>
                                     <constraint firstAttribute="trailing" secondItem="xgO-To-O34" secondAttribute="trailing" constant="20" id="MnG-I6-sNl"/>
                                     <constraint firstItem="iXR-Vb-XZ3" firstAttribute="leading" secondItem="suy-d0-Vvj" secondAttribute="leading" constant="20" id="OXx-X8-z53"/>
-                                    <constraint firstItem="C44-Xz-9zp" firstAttribute="leading" secondItem="2qW-tF-W4p" secondAttribute="trailing" constant="8" symbolic="YES" id="QbL-gs-5Yl"/>
+                                    <constraint firstItem="C44-Xz-9zp" firstAttribute="leading" secondItem="2qW-tF-W4p" secondAttribute="trailing" id="QbL-gs-5Yl"/>
                                     <constraint firstItem="enr-5c-egg" firstAttribute="leading" secondItem="suy-d0-Vvj" secondAttribute="leading" constant="16" id="aIT-20-x9I"/>
                                     <constraint firstItem="C44-Xz-9zp" firstAttribute="centerY" secondItem="2qW-tF-W4p" secondAttribute="centerY" id="aRV-2w-AUF"/>
                                     <constraint firstAttribute="trailing" secondItem="enr-5c-egg" secondAttribute="trailing" constant="16" id="d17-tI-yNP"/>
