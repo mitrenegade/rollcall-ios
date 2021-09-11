@@ -7,21 +7,36 @@
 //
 
 import UIKit
+import SnapKit
 
 class AttendanceCell: UITableViewCell {
 
-//    @IBOutlet var nameLabel: UILabel!
-//    @IBOutlet var photoView: RAImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    private let nameLabel = UILabel()
+    private let photoView = RAImageView()
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        contentView.addSubview(photoView)
+        photoView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(30)
+            $0.height.equalTo(30)
+        }
+
+        contentView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints {
+            $0.leading.equalTo(photoView.snp.trailing).offset(8)
+            $0.top.equalToSuperview().offset(8)
+            $0.trailing.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.height.equalTo(30)
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func configure(member: FirebaseMember, attendance: AttendedStatus, row: Int) {

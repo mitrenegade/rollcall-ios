@@ -17,7 +17,10 @@ class AttendanceTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        tableView.register(AttendanceCell.self, forCellReuseIdentifier: "AttendanceCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "OnSiteSignupCell")
+
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
         self.listenFor("member:created", action: #selector(reloadData), object: nil)
         reloadData()
@@ -65,6 +68,8 @@ extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnSiteSignupCell", for: indexPath)
+            cell.textLabel?.text = "Sign up new members"
+            cell.accessoryType = .detailButton
             return cell
         }
         else {

@@ -255,6 +255,7 @@ extension EventEditViewController {
         } else {
             controller.currentPractice = practice
         }
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
