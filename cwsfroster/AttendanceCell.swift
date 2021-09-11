@@ -10,8 +10,8 @@ import UIKit
 
 class AttendanceCell: UITableViewCell {
 
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var photoView: RAImageView!
+//    @IBOutlet var nameLabel: UILabel!
+//    @IBOutlet var photoView: RAImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

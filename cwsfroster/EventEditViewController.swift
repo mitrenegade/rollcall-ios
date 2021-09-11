@@ -226,35 +226,39 @@ extension EventEditViewController {
         if practice != nil {
             performSegue(withIdentifier: "ToOnsiteSignup", sender: nil)
         } else {
-            createPractice { newPractice in
-                self.navigationItem.leftBarButtonItem?.title = "Close"
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
+            createPractice { [weak self] newPractice in
+                self?.navigationItem.leftBarButtonItem?.title = "Close"
+                self?.editAttendees(for: newPractice)
+//                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
             }
         }
     }
     
     func goToAttendees() {
         if practice != nil {
-            performSegue(withIdentifier: "ToEditAttendees", sender: nil)
+            editAttendees(for: nil)
+//            performSegue(withIdentifier: "ToEditAttendees", sender: nil)
         } else {
-            createPractice { newPractice in
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
+            createPractice { [weak self] newPractice in
+                self?.editAttendees(for: newPractice)
+//                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
             }
+        }
+    }
+
+    private func editAttendees(for newEvent: FirebaseEvent?) {
+        let controller = AttendanceTableViewController()
+        controller.delegate = delegate
+        if let newEvent = newEvent {
+            controller.currentPractice = newEvent
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
+        } else {
+            controller.currentPractice = practice
         }
     }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "ToEditAttendees", let controller = segue.destination as? AttendanceTableViewController {
-            controller.delegate = delegate
-            if let practice = practice {
-                controller.currentPractice = practice
-            } else if let newPractice = sender as? FirebaseEvent {
-                controller.currentPractice = newPractice
-                controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
-            }
-        } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
+        if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
             if let practice = practice {
                 controller.practice = practice
             }
