@@ -27,4 +27,12 @@ internal struct FeatureManager {
     var hasEventReminders: Bool {
         userRelay.value.subscription.hasEventReminders
     }
+
+    var hasPaidEvents: Bool {
+        userRelay.value.subscription.hasPaidEvents
+    }
+
+    var hasRecurringEvents: Bool {
+        userRelay.value.subscription.hasRecurringEvents
+    }
 }
