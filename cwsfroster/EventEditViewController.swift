@@ -51,8 +51,6 @@ class EventEditViewController: UIViewController {
     var emailFrom: String?
     var emailTo: String?
 
-    @IBOutlet var activityOverlay: UIView!
-
     @IBOutlet var viewInfo: UIView!
 
     private lazy var pickerView: UIPickerView = {
@@ -104,6 +102,8 @@ class EventEditViewController: UIViewController {
         return view
     }()
 
+    fileprivate let activityOverlay = ActivityIndicatorOverlay()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -117,6 +117,8 @@ class EventEditViewController: UIViewController {
         setupPicker()
 
         emailTo = UserDefaults.standard.object(forKey: "email:to") as? String
+
+        view.addSubview(activityOverlay)
     }
 
     private func setupPicker() {
@@ -349,7 +351,7 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
                     self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
                     return
                 }
-                self.activityOverlay.isHidden = false
+                self.activityOverlay.hide()
                 
                 if self.practice != nil {
                     self.composeEmail()
@@ -369,7 +371,7 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
             simpleAlert("Could not compose email", message: "The event was not saved correctly. Please save the event first then try sending a summary again.")
             return
         }
-        self.activityOverlay.isHidden = true
+        activityOverlay.hide()
 
         UserDefaults.standard.set(self.emailTo, forKey: "email:to")
         
@@ -379,6 +381,7 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
         var message = "Date: \(dateString)\n"
         
         let attendees = practice.attendees
+        activityOverlay.show()
         OrganizationService.shared.members { [weak self] (members, error) in
             let attended = members.filter({ (member) -> Bool in
                 attendees.contains(member.id)
@@ -402,13 +405,13 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
     
     func sendEmail(title: String, message: String) {
         guard MFMailComposeViewController.canSendMail() else {
-            self.simpleAlert("Cannot send email", message: "Your device is unable to send email.")
-            self.activityOverlay.isHidden = true
+            simpleAlert("Cannot send email", message: "Your device is unable to send email.")
+            activityOverlay.hide()
             return
         }
         guard let emailTo = emailTo, !emailTo.isEmpty else {
-            self.simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
-            self.activityOverlay.isHidden = true
+            simpleAlert("Invalid recipient", message: "Please enter a valid email recipient")
+            activityOverlay.hide()
             return
         }
         
@@ -418,9 +421,9 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
         composer.setMessageBody(message, isHTML: false)
         composer.setToRecipients([emailTo])
         
-        self.present(composer, animated: true, completion: nil)
+        present(composer, animated: true, completion: nil)
         
-        self.activityOverlay.isHidden = true
+        activityOverlay.hide()
         LoggingService.log(type: "EmailEventDetails", info: ["org": OrganizationService.shared.currentOrganizationId ?? "unknown", "event": self.practice?.id, "subject": title, "body": message])
     }
     

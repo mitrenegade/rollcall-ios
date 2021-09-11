@@ -24,6 +24,7 @@
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
 		8E2BB0C726EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */; };
+		8E2BB1A226EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB1A126EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift */; };
 		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
 		8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CF20DA826B0075548C /* SettingsService.swift */; };
 		8E3FFF5921D6CB4200B831B3 /* TheNounProject in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FFF5821D6CB4200B831B3 /* TheNounProject */; };
@@ -149,6 +150,7 @@
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
 		8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseImageService+Extensions.swift"; sourceTree = "<group>"; };
+		8E2BB1A126EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorOverlay.swift; sourceTree = "<group>"; };
 		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
 		8E3DD1CF20DA826B0075548C /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
 		8E3FFF5821D6CB4200B831B3 /* TheNounProject */ = {isa = PBXFileReference; lastKnownFileType = text; path = TheNounProject; sourceTree = "<group>"; };
@@ -338,6 +340,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		8E2BB1A026EC829C00BA3A92 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E2BB1A126EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		8EC44E0821D33F48008189DA /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,6 +504,7 @@
 				8EBB0C2626D744D500BAB1A5 /* SubscriptionProduct.swift */,
 				8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */,
 				8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */,
+				8E2BB1A026EC829C00BA3A92 /* Views */,
 				8E1D993520B20C86005E4186 /* Services */,
 				9EC5F2F61936D2410056140F /* Utils */,
 				9E80086016196883003E9B16 /* AppDelegate.h */,
@@ -902,6 +913,7 @@
 				8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */,
 				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
+				8E2BB1A226EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
 				8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */,
