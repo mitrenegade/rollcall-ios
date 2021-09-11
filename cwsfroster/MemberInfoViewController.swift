@@ -145,7 +145,10 @@ class MemberInfoViewController: UIViewController {
                         })
                         print("FirebaseImageService: uploading member photo for \(member.id)")
                         self?.present(alert, animated: true, completion: nil)
-                        FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                        FirebaseImageService.uploadImage(image: photo,
+                                                         type: FirebaseImageService.RollCallImageType.member,
+                                                         uid: member.id,
+                                                         progressHandler: { (percent) in
                             alert.title = "Upload progress: \(Int(percent*100))%"
                         }, completion: { (url) in
                             alert.dismiss(animated: true, completion: nil)
@@ -182,7 +185,10 @@ class MemberInfoViewController: UIViewController {
 
                 print("FirebaseImageService: uploading member photo for \(member.id)")
                 present(alert, animated: true, completion: nil)
-                FirebaseImageService.uploadImage(image: photo, type: "member", uid: member.id, progressHandler: { (percent) in
+                FirebaseImageService.uploadImage(image: photo,
+                                                 type: FirebaseImageService.RollCallImageType.member,
+                                                 uid: member.id,
+                                                 progressHandler: { (percent) in
                     alert.title = "Upload progress: \(Int(percent*100))%"
                 }, completion: { [weak self] (url) in
                     alert.dismiss(animated: true, completion: nil)

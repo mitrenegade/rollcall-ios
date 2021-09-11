@@ -155,7 +155,7 @@ PODS:
   - Stripe (14.0.2)
 
 DEPENDENCIES:
-  - Balizinha (from `https://bitbucket.org/renderapps/balizinha-pod`)
+  - Balizinha (from `../balizinha-pod`)
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -201,7 +201,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Balizinha:
-    :git: https://bitbucket.org/renderapps/balizinha-pod
+    :path: "../balizinha-pod"
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
     :tag: 0.1.5
@@ -211,9 +211,6 @@ EXTERNAL SOURCES:
     :git: "git@bitbucket.org:renderapps/renderpay.git"
 
 CHECKOUT OPTIONS:
-  Balizinha:
-    :commit: 5671d0b67bd02e698ae7efb09990731f1941f040
-    :git: https://bitbucket.org/renderapps/balizinha-pod
   RACameraHelper:
     :git: https://github.com/bobbyren/RACameraHelper
     :tag: 0.1.5
@@ -254,6 +251,6 @@ SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   Stripe: 25c07000e7e86ffc53da0e41a5dd1bce30470fe0
 
-PODFILE CHECKSUM: 94302df7fe6a59a9165a3eb99ec1647094e5717d
+PODFILE CHECKSUM: 28586ee763961f41a4c74608472b677abc321a0a
 
 COCOAPODS: 1.10.1
