@@ -9,7 +9,11 @@
 import Balizinha
 
 enum AttendanceStatus: String {
+    case notSignedUp
+    case signedUp
+    case notAttending
     case attended
+    case noShow
 }
 
 class FirebaseAttendance: FirebaseBaseModel {
@@ -26,13 +30,17 @@ class FirebaseAttendance: FirebaseBaseModel {
         }
     }
 
-    var status: String? {
+    var status: AttendanceStatus? {
         get {
-            return self.dict["status"] as? String
+            if let statusString = dict["status"] as? String,
+               let attendance = AttendanceStatus(rawValue: statusString) {
+                return attendance
+            } else {
+                return .none
+            }
         }
         set {
-            self.dict["status"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "status", value: (newValue ?? .none))
         }
     }
     
