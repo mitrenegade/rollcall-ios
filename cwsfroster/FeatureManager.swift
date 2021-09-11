@@ -13,15 +13,13 @@ internal struct FeatureManager {
 
     static let shared = FeatureManager(userService: UserService.shared)
 
-    private static let noUser = FirebaseUser()
-
-    private let userRelay: BehaviorRelay<FirebaseUser> = BehaviorRelay<FirebaseUser>(value: noUser)
+    private let userRelay: BehaviorRelay<FirebaseUser> = BehaviorRelay<FirebaseUser>(value: .none)
 
     private let disposeBag = DisposeBag()
 
-    init(userService: UserService) {
+    init(userService: UserServiceProtocol) {
         userService.userObservable
-            .asDriver(onErrorJustReturn: FeatureManager.noUser)
+            .asDriver(onErrorJustReturn: .none)
             .drive(userRelay)
             .disposed(by: disposeBag)
     }

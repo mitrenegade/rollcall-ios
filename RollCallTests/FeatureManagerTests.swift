@@ -11,16 +11,33 @@ import XCTest
 
 class FeatureManagerTests: XCTestCase {
 
-    var userService: UserService!
+    var userService: MockUserService!
+    var featureManager: FeatureManager!
 
     override func setUp() {
     }
 
     override func tearDown() {
+        featureManager = nil
+        userService = nil
     }
 
     func testStandardFeaturesAvailable() {
+        userService = MockUserService(mockUser: FirebaseUser.standard)
+        featureManager = FeatureManager(userService: userService)
+        XCTAssertFalse(featureManager.hasEventReminders)
+    }
 
+    func testPlusFeaturesAvailable() {
+        userService = MockUserService(mockUser: FirebaseUser.plus)
+        featureManager = FeatureManager(userService: userService)
+        XCTAssertTrue(featureManager.hasEventReminders)
+    }
+
+    func testPremiumFeaturesAvailable() {
+        userService = MockUserService(mockUser: FirebaseUser.premium)
+        featureManager = FeatureManager(userService: userService)
+        XCTAssertTrue(featureManager.hasEventReminders)
     }
 
 }
