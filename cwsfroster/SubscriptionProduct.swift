@@ -50,6 +50,14 @@ struct SubscriptionProduct: Codable, Hashable {
 // MARK: - features
 extension SubscriptionProduct {
     var hasEventReminders: Bool {
-        tier > .standard
+        tier == .plus || tier == .premium
+    }
+
+    var hasPaidEvents: Bool {
+        tier == .premium
+    }
+
+    var hasRecurringEvents: Bool {
+        tier == .plus || tier == .premium
     }
 }

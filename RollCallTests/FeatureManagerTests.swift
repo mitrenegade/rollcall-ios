@@ -26,18 +26,24 @@ class FeatureManagerTests: XCTestCase {
         userService = MockUserService(mockUser: FirebaseUser.standard)
         featureManager = FeatureManager(userService: userService)
         XCTAssertFalse(featureManager.hasEventReminders)
+        XCTAssertFalse(featureManager.hasPaidEvents)
+        XCTAssertFalse(featureManager.hasRecurringEvents)
     }
 
     func testPlusFeaturesAvailable() {
         userService = MockUserService(mockUser: FirebaseUser.plus)
         featureManager = FeatureManager(userService: userService)
         XCTAssertTrue(featureManager.hasEventReminders)
+        XCTAssertFalse(featureManager.hasPaidEvents)
+        XCTAssertTrue(featureManager.hasRecurringEvents)
     }
 
     func testPremiumFeaturesAvailable() {
         userService = MockUserService(mockUser: FirebaseUser.premium)
         featureManager = FeatureManager(userService: userService)
         XCTAssertTrue(featureManager.hasEventReminders)
+        XCTAssertTrue(featureManager.hasPaidEvents)
+        XCTAssertTrue(featureManager.hasRecurringEvents)
     }
 
 }

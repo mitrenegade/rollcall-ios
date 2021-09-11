@@ -19,7 +19,13 @@ var _events: [FirebaseEvent]?
 class EventService: NSObject {
     static let shared: EventService = EventService()
 
-    func createEvent(_ name: String, date: Date, notes: String? = nil, details: String? = nil, organization: String, completion:@escaping (FirebaseEvent?, NSError?) -> Void) {
+    func createEvent(_ name: String,
+                     date: Date,
+                     notes: String? = nil,
+                     details: String? = nil,
+                     organization: String,
+                     cost: Double? = nil,
+                     completion:@escaping (FirebaseEvent?, NSError?) -> Void) {
         
         print ("Create events")
 
@@ -33,6 +39,9 @@ class EventService: NSObject {
         }
         if let details = details {
             params["details"] = details
+        }
+        if let cost = cost {
+            params["cost"] = cost
         }
 
         newEventRef.setValue(params) { (error, ref) in

@@ -67,6 +67,16 @@ class FirebaseEvent: FirebaseBaseModel {
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
+
+    var cost: Double? {
+        get {
+            return self.dict["cost"] as? Double
+        }
+        set {
+            self.dict["cost"] = newValue
+            self.firebaseRef?.updateChildValues(self.dict)
+        }
+    }
     
     fileprivate var attendeesReadWriteQueue = DispatchQueue(label: "attendees")
     var attendees: [String] {
