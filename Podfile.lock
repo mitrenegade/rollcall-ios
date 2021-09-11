@@ -1,5 +1,5 @@
 PODS:
-  - Balizinha (1.3.1):
+  - Balizinha (1.3.2):
     - RenderCloud
     - RenderPay
   - Firebase (8.5.0):
@@ -222,7 +222,7 @@ CHECKOUT OPTIONS:
     :git: "git@bitbucket.org:renderapps/renderpay.git"
 
 SPEC CHECKSUMS:
-  Balizinha: cc64bf77aa417c9b6bffdf41f726bbd2c069ae94
+  Balizinha: a31f4e5443ec458b5bc012d93b3f365505e10ca6
   Firebase: ff8c73105b90e33e1dc6c8e5445d7adc2ccdc7c1
   FirebaseABTesting: f7cb3fbed1c5bd3e733a79d9955447be3f3b06a5
   FirebaseAnalytics: 96325c1e0acbd2bb805c6a613028b1fe599d6a37
