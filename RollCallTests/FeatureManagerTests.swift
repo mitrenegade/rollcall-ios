@@ -9,7 +9,7 @@
 import XCTest
 @testable import RollCall
 
-class RollCallTests: XCTestCase {
+class FeatureManagerTests: XCTestCase {
 
     var userService: UserService!
 
