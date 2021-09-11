@@ -25,6 +25,8 @@ class EventService: NSObject {
                      details: String? = nil,
                      organization: String,
                      cost: Double? = nil,
+                     recurrence: Date.Recurrence = .none,
+                     recurrenceEndDate: Date? = nil,
                      completion:@escaping (FirebaseEvent?, NSError?) -> Void) {
         
         print ("Create events")
@@ -33,7 +35,11 @@ class EventService: NSObject {
         
         let newEventRef = firRef.child("events").child(FirebaseAPIService.uniqueId())
         
-        var params: [String: Any] = ["title": name, "date": date.timeIntervalSince1970, "organization": organization, "createdAt": Date().timeIntervalSince1970]
+        var params: [String: Any] = ["title": name,
+                                     "date": date.timeIntervalSince1970,
+                                     "organization": organization,
+                                     "createdAt": Date().timeIntervalSince1970,
+                                     "recurrence": recurrence.rawValue]
         if let notes = notes {
             params["notes"] = notes
         }
@@ -42,6 +48,9 @@ class EventService: NSObject {
         }
         if let cost = cost {
             params["cost"] = cost
+        }
+        if recurrence != .none, let recurrenceEndDate = recurrenceEndDate {
+            params["recurrenceEndDate"] = recurrenceEndDate.timeIntervalSince1970
         }
 
         newEventRef.setValue(params) { (error, ref) in
