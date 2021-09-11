@@ -43,13 +43,6 @@ class AttendanceTableViewController: UITableViewController {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ToOnSiteSignup" {
-            if let controller = segue.destination as? OnsiteSignupViewController {
-                controller.practice = currentPractice
-            }
-        }
-    }
 }
 
 // MARK: - Table view data source
@@ -69,7 +62,7 @@ extension AttendanceTableViewController {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnSiteSignupCell", for: indexPath)
             cell.textLabel?.text = "Sign up new members"
-            cell.accessoryType = .detailButton
+            cell.accessoryType = .disclosureIndicator
             return cell
         }
         else {
@@ -93,7 +86,12 @@ extension AttendanceTableViewController {
         guard self.currentPractice != nil else { return }
 
         if indexPath.section == 0 {
-            performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+            guard let controller = UIStoryboard(name: "Events", bundle: nil)
+                .instantiateViewController(identifier: "OnsiteSignupViewController") as? OnsiteSignupViewController else {
+                    return
+                }
+            controller.practice = currentPractice
+            navigationController?.pushViewController(controller, animated: true)
             LoggingService.log(type: "OnsiteSignupClicked")
             return
         }

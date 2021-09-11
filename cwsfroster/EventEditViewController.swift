@@ -212,41 +212,34 @@ extension EventEditViewController {
     }
     
     @IBAction func didClickNext(_ sender: AnyObject?) {
-        self.view.endEditing(true)
-        self.goToAttendees()
+        view.endEditing(true)
+        if practice != nil {
+            goToAttendees(for: nil)
+        } else {
+            createPractice { [weak self] newPractice in
+                self?.goToAttendees(for: newPractice)
+            }
+        }
     }
     
     // MARK: - Attendees
     @IBAction func didClickAttendees(_ sender: Any?) {
-        goToAttendees()
+        didClickNext(nil)
     }
     
     // MARK: - Onsite signup
     @IBAction func didClickOnsiteSignup(_ sender: Any?) {
         if practice != nil {
-            performSegue(withIdentifier: "ToOnsiteSignup", sender: nil)
+            goToOnsiteSignup()
         } else {
             createPractice { [weak self] newPractice in
                 self?.navigationItem.leftBarButtonItem?.title = "Close"
-                self?.editAttendees(for: newPractice)
-//                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
+                self?.goToAttendees(for: newPractice)
             }
         }
     }
     
-    func goToAttendees() {
-        if practice != nil {
-            editAttendees(for: nil)
-//            performSegue(withIdentifier: "ToEditAttendees", sender: nil)
-        } else {
-            createPractice { [weak self] newPractice in
-                self?.editAttendees(for: newPractice)
-//                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
-            }
-        }
-    }
-
-    private func editAttendees(for newEvent: FirebaseEvent?) {
+    private func goToAttendees(for newEvent: FirebaseEvent?) {
         let controller = AttendanceTableViewController()
         controller.delegate = delegate
         if let newEvent = newEvent {
@@ -257,13 +250,17 @@ extension EventEditViewController {
         }
         navigationController?.pushViewController(controller, animated: true)
     }
+
+    private func goToOnsiteSignup() {
+        guard let controller = UIStoryboard(name: "Events", bundle: nil)
+            .instantiateViewController(identifier: "OnsiteSignupViewController") as? OnsiteSignupViewController else {
+                return
+            }
+        controller.practice = practice
+    }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
-            if let practice = practice {
-                controller.practice = practice
-            }
-        } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
+        if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
             if let practice = practice {
                 controller.practice = practice
             }
