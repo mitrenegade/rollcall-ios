@@ -6,7 +6,7 @@
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
-import Foundation
+import Balizinha
 import UIKit
 import RACameraHelper
 import MessageUI

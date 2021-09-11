@@ -6,8 +6,8 @@
 //  Copyright © 2018 RenderApps LLC. All rights reserved.
 //
 
-import UIKit
 import Firebase
+import Balizinha
 
 class FirebaseOrganization: FirebaseBaseModel {
     var name: String? {

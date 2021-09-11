@@ -37,7 +37,6 @@
 		8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* LoggingService.swift */; };
 		8E9D891F20CB130900AD382F /* EventService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D891E20CB130900AD382F /* EventService.swift */; };
 		8E9D892320CB17C800AD382F /* FirebaseAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */; };
-		8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EA070BE20C342B000EF478F /* FirebaseImageService.swift */; };
 		8EBB0BE826D6248D00BAB1A5 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */; };
 		8EBB0BEB26D624E700BAB1A5 /* StoreKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */; };
 		8EBB0BEF26D72A7B00BAB1A5 /* subscriptions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EBB0BEE26D72A7B00BAB1A5 /* subscriptions.plist */; };
@@ -108,7 +107,6 @@
 		C645B9001E5A7D040001A119 /* RandomDrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */; };
 		C68338F120A3FFE500080BCE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F020A3FFE500080BCE /* GoogleService-Info.plist */; };
 		C68338F320A401DD00080BCE /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */; };
-		C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */; };
 		C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F520A42AEC00080BCE /* FirebaseMember.swift */; };
 		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
 		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
@@ -163,7 +161,6 @@
 		8E800D301E3E94770085EC4D /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
 		8E9D891E20CB130900AD382F /* EventService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventService.swift; sourceTree = "<group>"; };
 		8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAPIService.swift; sourceTree = "<group>"; };
-		8EA070BE20C342B000EF478F /* FirebaseImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseImageService.swift; sourceTree = "<group>"; };
 		8EBB0BE626D6233500BAB1A5 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		8EBB0BE726D6248D00BAB1A5 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
@@ -255,7 +252,6 @@
 		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		C68338F020A3FFE500080BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
-		C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseBaseModel.swift; sourceTree = "<group>"; };
 		C68338F520A42AEC00080BCE /* FirebaseMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMember.swift; sourceTree = "<group>"; };
 		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
@@ -319,7 +315,6 @@
 				8E3DD1CD20DA81670075548C /* UpgradeService.swift */,
 				8E1D993320B20C78005E4186 /* UserService.swift */,
 				C6D9631120C2181900317C0C /* OrganizationService.swift */,
-				8EA070BE20C342B000EF478F /* FirebaseImageService.swift */,
 				8E9D891E20CB130900AD382F /* EventService.swift */,
 				8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */,
 				8E800D301E3E94770085EC4D /* LoggingService.swift */,
@@ -332,7 +327,6 @@
 		8E1F63F71E46D852004E8723 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C68338F420A42AEB00080BCE /* FirebaseBaseModel.swift */,
 				C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */,
 				8EBB0C4A26D97E5100BAB1A5 /* FirebaseUser.swift */,
 				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
@@ -886,9 +880,7 @@
 				C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */,
 				8EE005B01E3D951900272DC0 /* SplashViewController.swift in Sources */,
 				8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */,
-				C68338F820A42AEC00080BCE /* FirebaseBaseModel.swift in Sources */,
 				8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */,
-				8EA070BF20C342B000EF478F /* FirebaseImageService.swift in Sources */,
 				8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */,
 				8EC44E0A21D33F62008189DA /* StripeViewController.swift in Sources */,
 				8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */,

@@ -8,6 +8,7 @@
 
 import UIKit
 import RACameraHelper
+import Balizinha
 
 class OnsiteSignupViewController: UIViewController {
     @IBOutlet weak var inputName: UITextField!
