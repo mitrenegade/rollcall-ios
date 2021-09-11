@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 
 class FirebaseUser: FirebaseBaseModel {
+    static let none = FirebaseUser()
+
     var subscription: SubscriptionProduct {
         get {
             guard let subscription = dict["subscription"] as? String,

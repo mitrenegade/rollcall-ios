@@ -54,6 +54,9 @@
 		8EE005B51E3D955200272DC0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B31E3D955200272DC0 /* Constants.swift */; };
 		8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */; };
 		8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */; };
+		8EFBA50326EC21CC00C2AAD6 /* FeatureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */; };
+		8EFBA57E26EC29C400C2AAD6 /* FeatureManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBA57D26EC29C400C2AAD6 /* FeatureManagerTests.swift */; };
+		8EFBA5BA26EC2E3700C2AAD6 /* MockUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFBA5B926EC2E3700C2AAD6 /* MockUserService.swift */; };
 		9E156178199269B500A31398 /* icon-tkd-helmet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */; };
 		9E15617A199269C300A31398 /* icon-tkd-paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */; };
 		9E649FE019B6040A00334B34 /* icon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 9E649FDA19B6040A00334B34 /* icon29.png */; };
@@ -113,11 +116,24 @@
 		C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */; };
 		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
 		C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* MainViewController.swift */; };
+		FF4D2EEFBE00955C543651EB /* Pods_RollCallTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD8FBC69E18A563B93C18377 /* Pods_RollCallTests.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8EFBA58026EC29C400C2AAD6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E80084416196883003E9B16 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9E80084C16196883003E9B16;
+			remoteInfo = rollcall;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rollcall.release.xcconfig"; path = "Pods/Target Support Files/Pods-rollcall/Pods-rollcall.release.xcconfig"; sourceTree = "<group>"; };
 		3DEBB361C23414764499094E /* Pods_rollcall.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_rollcall.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FFD2102C675536658191B02 /* Pods-RollCallTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RollCallTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RollCallTests/Pods-RollCallTests.release.xcconfig"; sourceTree = "<group>"; };
+		785B46BB807462B0F1AB4EC9 /* Pods-RollCallTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RollCallTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RollCallTests/Pods-RollCallTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
 		8E09574021ACE00D0037DA17 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +182,11 @@
 		8EE005B61E3DA07A00272DC0 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8EE5514D1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfigurableNavigationController.swift; path = ../ConfigurableNavigationController.swift; sourceTree = "<group>"; };
+		8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManager.swift; sourceTree = "<group>"; };
+		8EFBA57B26EC29C400C2AAD6 /* RollCallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RollCallTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8EFBA57D26EC29C400C2AAD6 /* FeatureManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureManagerTests.swift; sourceTree = "<group>"; };
+		8EFBA57F26EC29C400C2AAD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8EFBA5B926EC2E3700C2AAD6 /* MockUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserService.swift; sourceTree = "<group>"; };
 		9E156177199269B500A31398 /* icon-tkd-helmet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-helmet@2x.png"; sourceTree = "<group>"; };
 		9E156179199269C300A31398 /* icon-tkd-paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-tkd-paddle@2x.png"; sourceTree = "<group>"; };
 		9E649FDA19B6040A00334B34 /* icon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon29.png; sourceTree = "<group>"; };
@@ -230,6 +251,7 @@
 		AC950F131B371EAA005C3998 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		AC950F141B371EAA005C3998 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		ACF58F8E1C266A0B0087EE70 /* add_user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_user.png; sourceTree = "<group>"; };
+		BD8FBC69E18A563B93C18377 /* Pods_RollCallTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RollCallTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C645B8FF1E5A7D040001A119 /* RandomDrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomDrawingViewController.swift; sourceTree = "<group>"; };
 		C68338F020A3FFE500080BCE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C68338F220A401DD00080BCE /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
@@ -245,6 +267,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8EFBA57826EC29C400C2AAD6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF4D2EEFBE00955C543651EB /* Pods_RollCallTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9E80084A16196883003E9B16 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -293,6 +323,8 @@
 				8E9D891E20CB130900AD382F /* EventService.swift */,
 				8E9D892220CB17C800AD382F /* FirebaseAPIService.swift */,
 				8E800D301E3E94770085EC4D /* LoggingService.swift */,
+				8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */,
+				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -365,6 +397,16 @@
 			name = Events;
 			sourceTree = "<group>";
 		};
+		8EFBA57C26EC29C400C2AAD6 /* RollCallTests */ = {
+			isa = PBXGroup;
+			children = (
+				8EFBA57D26EC29C400C2AAD6 /* FeatureManagerTests.swift */,
+				8EFBA5B926EC2E3700C2AAD6 /* MockUserService.swift */,
+				8EFBA57F26EC29C400C2AAD6 /* Info.plist */,
+			);
+			path = RollCallTests;
+			sourceTree = "<group>";
+		};
 		9E15616F1992661200A31398 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				9E80085716196883003E9B16 /* cwsfroster */,
+				8EFBA57C26EC29C400C2AAD6 /* RollCallTests */,
 				9E80085016196883003E9B16 /* Frameworks */,
 				9E80084E16196883003E9B16 /* Products */,
 				9F64229EE2D42E2F7D0777F5 /* Pods */,
@@ -413,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				9E80084D16196883003E9B16 /* RollCall.app */,
+				8EFBA57B26EC29C400C2AAD6 /* RollCallTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -441,6 +485,7 @@
 				9E80085516196883003E9B16 /* CoreGraphics.framework */,
 				CC1B0653011D1ABC9965C2DF /* Pods.framework */,
 				3DEBB361C23414764499094E /* Pods_rollcall.framework */,
+				BD8FBC69E18A563B93C18377 /* Pods_RollCallTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -450,7 +495,6 @@
 			children = (
 				8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */,
 				8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */,
-				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
 				8EBB0C2626D744D500BAB1A5 /* SubscriptionProduct.swift */,
 				8EBB0C2326D736FE00BAB1A5 /* SubscriptionViewController.swift */,
 				8E1D993520B20C86005E4186 /* Services */,
@@ -538,6 +582,8 @@
 			children = (
 				DAC80517595162FDD7B92501 /* Pods-rollcall.debug.xcconfig */,
 				069FC515249129F2CAA291A6 /* Pods-rollcall.release.xcconfig */,
+				785B46BB807462B0F1AB4EC9 /* Pods-RollCallTests.debug.xcconfig */,
+				3FFD2102C675536658191B02 /* Pods-RollCallTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -553,6 +599,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8EFBA57A26EC29C400C2AAD6 /* RollCallTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8EFBA58426EC29C400C2AAD6 /* Build configuration list for PBXNativeTarget "RollCallTests" */;
+			buildPhases = (
+				DF70FF39380BE635010BF450 /* [CP] Check Pods Manifest.lock */,
+				8EFBA57726EC29C400C2AAD6 /* Sources */,
+				8EFBA57826EC29C400C2AAD6 /* Frameworks */,
+				8EFBA57926EC29C400C2AAD6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8EFBA58126EC29C400C2AAD6 /* PBXTargetDependency */,
+			);
+			name = RollCallTests;
+			productName = RollCallTests;
+			productReference = 8EFBA57B26EC29C400C2AAD6 /* RollCallTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		9E80084C16196883003E9B16 /* rollcall */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9E80086B16196884003E9B16 /* Build configuration list for PBXNativeTarget "rollcall" */;
@@ -579,10 +644,16 @@
 		9E80084416196883003E9B16 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 1240;
 				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Bobby Ren";
 				TargetAttributes = {
+					8EFBA57A26EC29C400C2AAD6 = {
+						CreatedOnToolsVersion = 12.4;
+						DevelopmentTeam = H799H8B8DD;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 9E80084C16196883003E9B16;
+					};
 					9E80084C16196883003E9B16 = {
 						DevelopmentTeam = H799H8B8DD;
 						LastSwiftMigration = 1240;
@@ -609,11 +680,19 @@
 			projectRoot = "";
 			targets = (
 				9E80084C16196883003E9B16 /* rollcall */,
+				8EFBA57A26EC29C400C2AAD6 /* RollCallTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8EFBA57926EC29C400C2AAD6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9E80084B16196883003E9B16 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -691,6 +770,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DF70FF39380BE635010BF450 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RollCallTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FB5E515399E86F07FCB3C8CB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -754,6 +855,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8EFBA57726EC29C400C2AAD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8EFBA5BA26EC2E3700C2AAD6 /* MockUserService.swift in Sources */,
+				8EFBA57E26EC29C400C2AAD6 /* FeatureManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9E80084916196883003E9B16 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -764,6 +874,7 @@
 				8EBB0C2426D736FE00BAB1A5 /* SubscriptionViewController.swift in Sources */,
 				9E80085E16196883003E9B16 /* main.m in Sources */,
 				8EE005B71E3DA07A00272DC0 /* IntroViewController.swift in Sources */,
+				8EFBA50326EC21CC00C2AAD6 /* FeatureManager.swift in Sources */,
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
 				8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */,
@@ -818,6 +929,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8EFBA58126EC29C400C2AAD6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9E80084C16196883003E9B16 /* rollcall */;
+			targetProxy = 8EFBA58026EC29C400C2AAD6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		9E80085A16196883003E9B16 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -830,6 +949,79 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8EFBA58226EC29C400C2AAD6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 785B46BB807462B0F1AB4EC9 /* Pods-RollCallTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = H799H8B8DD;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = RollCallTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.realmTest.RollCallTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RollCall.app/RollCall";
+			};
+			name = Debug;
+		};
+		8EFBA58326EC29C400C2AAD6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3FFD2102C675536658191B02 /* Pods-RollCallTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = H799H8B8DD;
+				ENABLE_NS_ASSERTIONS = NO;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = RollCallTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.renderapps.realmTest.RollCallTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RollCall.app/RollCall";
+			};
+			name = Release;
+		};
 		9E80086916196884003E9B16 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -998,6 +1190,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8EFBA58426EC29C400C2AAD6 /* Build configuration list for PBXNativeTarget "RollCallTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8EFBA58226EC29C400C2AAD6 /* Debug */,
+				8EFBA58326EC29C400C2AAD6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9E80084716196883003E9B16 /* Build configuration list for PBXProject "rollcall" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

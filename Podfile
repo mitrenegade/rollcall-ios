@@ -18,6 +18,10 @@ target 'rollcall' do
   pod 'RenderCloud', :git => 'git@bitbucket.org:renderapps/RenderCloud.git'
   pod 'Stripe', '~>14.0.0'
   pod 'SnapKit'
+
+  target 'RollCallTests' do
+    inherit! :search_paths
+  end
 end
 
 post_install do |installer|

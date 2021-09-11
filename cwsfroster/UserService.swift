@@ -12,8 +12,14 @@ import RxSwift
 import RxCocoa
 import Balizinha
 
+protocol UserServiceProtocol {
+    var isLoggedIn: Bool { get }
+    var currentSubscription: SubscriptionProduct? { get }
+    var userObservable: Observable<FirebaseUser> { get }
+}
+
 /// Manages Firebase Auth as well as the /user table
-class UserService {
+class UserService: UserServiceProtocol {
 
     /// Firebase error codes:
     /// https://firebase.google.com/docs/reference/ios/firebaseauth/api/reference/Enums/FIRAuthErrorCode
@@ -180,6 +186,10 @@ class UserService {
         }
 
         return user.email
+    }
+
+    var currentSubscription: SubscriptionProduct? {
+        currentUser?.subscription
     }
 
     // MARK: - FirebaseUser (User details)

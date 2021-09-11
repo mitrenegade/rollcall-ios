@@ -131,6 +131,8 @@ extension StoreKitManager: SKPaymentTransactionObserver {
         SKPaymentQueue.default().finishTransaction(transaction)
 
         // Temporary: update user transaction via device
+        // TODO: call validateReceipt on backend; when it completes successfully,
+        // the response should include a new user tier
         if let newTier = tiers.first(where: { tier in
             tier.productId == transaction.payment.productIdentifier
         }) {
