@@ -101,7 +101,8 @@ class FirebaseEvent: FirebaseBaseModel {
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
-    
+
+    // Old attendance format where the memberId is just stored as an array in the event
     func attendance(for userId: String) -> AttendedStatus {
         if attendees.contains(userId) {
             return .Present
@@ -110,24 +111,34 @@ class FirebaseEvent: FirebaseBaseModel {
     }
     
     func addAttendance(for member: FirebaseMember) {
+        addAttendance(for: member.id)
+    }
+
+    func addAttendance(for memberId: String) {
         var attendances = attendees
-        if !attendances.contains(member.id) {
+        if !attendances.contains(memberId) {
             attendeesReadWriteQueue.sync {
-                attendances.append(member.id)
+                attendances.append(memberId)
                 attendees = attendances
             }
         }
     }
 
     func removeAttendance(for member: FirebaseMember) {
+        removeAttendance(for: member.id)
+    }
+
+    func removeAttendance(for memberId: String) {
         var attendances = attendees
-        if attendances.contains(member.id), let index = attendees.firstIndex(of: member.id) {
+        if attendances.contains(memberId),
+           let index = attendees.firstIndex(of: memberId) {
             attendeesReadWriteQueue.sync {
                 attendances.remove(at: index)
                 attendees = attendances
             }
         }
     }
+
 }
 
 // Utils

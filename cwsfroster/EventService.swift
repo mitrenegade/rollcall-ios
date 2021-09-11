@@ -19,6 +19,11 @@ var _events: [FirebaseEvent]?
 class EventService: NSObject {
     static let shared: EventService = EventService()
 
+    /// Fetches a cached event with given id
+    func with(id: String) -> FirebaseEvent? {
+        _events?.first { $0.id == id }
+    }
+
     func createEvent(_ name: String,
                      date: Date,
                      notes: String? = nil,
@@ -80,29 +85,4 @@ class EventService: NSObject {
         }
     }
 
-    enum EventError: Error {
-        case invalidEvent
-    }
-
-    func attendances(for event: FirebaseEvent, completion: @escaping  (Result<[FirebaseAttendance], Error>) -> Void) {
-        guard UserService.shared.isLoggedIn else { return }
-
-        let ref = firRef.child("eventAttendances").child(event.id)
-        ref.observe(.value) { snapshot in
-            guard snapshot.exists() else {
-                completion(.failure(EventError.invalidEvent))
-                return
-            }
-
-            var results: [FirebaseAttendance] = []
-            if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
-                for dict: DataSnapshot in allObjects {
-                    let object = FirebaseAttendance(snapshot: dict)
-                    results.append(object)
-                }
-            }
-            completion(.success(results))
-        }
-
-    }
 }

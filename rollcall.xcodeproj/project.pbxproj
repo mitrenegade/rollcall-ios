@@ -23,6 +23,7 @@
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
+		8E2AF36426ED627000DED73B /* AttendanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2AF36326ED627000DED73B /* AttendanceService.swift */; };
 		8E2BB0C726EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */; };
 		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
 		8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CF20DA826B0075548C /* SettingsService.swift */; };
@@ -148,6 +149,7 @@
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
+		8E2AF36326ED627000DED73B /* AttendanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceService.swift; sourceTree = "<group>"; };
 		8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseImageService+Extensions.swift"; sourceTree = "<group>"; };
 		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
 		8E3DD1CF20DA826B0075548C /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				8E800D301E3E94770085EC4D /* LoggingService.swift */,
 				8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */,
 				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
+				8E2AF36326ED627000DED73B /* AttendanceService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
 				8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */,
+				8E2AF36426ED627000DED73B /* AttendanceService.swift in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				8EBB0C4B26D97E5100BAB1A5 /* FirebaseUser.swift in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,

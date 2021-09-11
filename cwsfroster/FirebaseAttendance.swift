@@ -44,35 +44,22 @@ class FirebaseAttendance: FirebaseBaseModel {
         }
     }
     
-    var organization: String? {
-        // if user is nil, then it should be a system message
+    var memberId: String? {
         get {
-            return self.dict["organization"] as? String
+            return self.dict["memberId"] as? String
         }
         set {
-            self.dict["organization"] = newValue
+            self.dict["memberId"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
     
-    var user: String? {
-        // if user is nil, then it should be a system message
+    var eventId: String? {
         get {
-            return self.dict["user"] as? String
+            return self.dict["eventId"] as? String
         }
         set {
-            self.dict["user"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
-        }
-    }
-    
-    var event: String? {
-        // if user is nil, then it should be a system message
-        get {
-            return self.dict["event"] as? String
-        }
-        set {
-            self.dict["event"] = newValue
+            self.dict["eventId"] = newValue
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
