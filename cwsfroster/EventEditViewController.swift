@@ -41,6 +41,9 @@ class EventEditViewController: UIViewController {
     @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint!
     @IBOutlet var constraintButtonEmailHeight: NSLayoutConstraint!
 
+    // Recurrence
+    @IBOutlet var constraintRecurrence: NSLayoutConstraint!
+
     var originalDescription: String?
 
     @IBOutlet var buttonEmail: UIButton!
@@ -119,6 +122,10 @@ class EventEditViewController: UIViewController {
         emailTo = UserDefaults.standard.object(forKey: "email:to") as? String
 
         view.addSubview(activityOverlay)
+
+        if !FeatureManager.shared.hasRecurringEvents {
+            constraintRecurrence.constant = 0
+        }
     }
 
     private func setupPicker() {
@@ -292,6 +299,12 @@ extension EventEditViewController: UITextViewDelegate {
     
 }
 
+// Recurrence
+extension EventEditViewController {
+    @IBAction func didToggleRecurrence(sender: UISwitch) {
+        print("BOBBYTEST recurrence \(sender.isOn)")
+    }
+}
 
 // MARK: UITextFieldDelegate
 extension EventEditViewController: UITextFieldDelegate {
