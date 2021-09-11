@@ -23,6 +23,7 @@
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
+		8E2AF35A26EC88F900DED73B /* RecurrenceHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2AF35926EC88F900DED73B /* RecurrenceHelper.swift */; };
 		8E2BB0C726EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */; };
 		8E2BB1A226EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB1A126EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift */; };
 		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
@@ -149,6 +150,7 @@
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
+		8E2AF35926EC88F900DED73B /* RecurrenceHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceHelper.swift; sourceTree = "<group>"; };
 		8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseImageService+Extensions.swift"; sourceTree = "<group>"; };
 		8E2BB1A126EC82AE00BA3A92 /* ActivityIndicatorOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorOverlay.swift; sourceTree = "<group>"; };
 		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
+				8E2AF35926EC88F900DED73B /* RecurrenceHelper.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -905,6 +908,7 @@
 				C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */,
 				8EE005B51E3D955200272DC0 /* Constants.swift in Sources */,
 				9EC5F3161936D2410056140F /* UIActionSheet+MKBlockAdditions.m in Sources */,
+				8E2AF35A26EC88F900DED73B /* RecurrenceHelper.swift in Sources */,
 				8E1BC50F2106D9F1004192F3 /* ContactCell.swift in Sources */,
 				8E9D891F20CB130900AD382F /* EventService.swift in Sources */,
 				8E1F63F01E46CCC2004E8723 /* MemberInfoViewController.swift in Sources */,
