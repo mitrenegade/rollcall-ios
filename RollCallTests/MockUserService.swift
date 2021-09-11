@@ -30,10 +30,10 @@ internal struct MockUserService: UserServiceProtocol {
 }
 
 extension FirebaseUser {
-    static let standard: FirebaseUser = FirebaseUser(id: "1",
+    static let standard: FirebaseUser = FirebaseUser(key: "1",
                                                      dict: ["subscription": "standard"])
-    static let plus: FirebaseUser = FirebaseUser(id: "1",
+    static let plus: FirebaseUser = FirebaseUser(key: "1",
                                                  dict: ["subscription": "plus"])
-    static let premium: FirebaseUser = FirebaseUser(id: "1",
+    static let premium: FirebaseUser = FirebaseUser(key: "1",
                                                     dict: ["subscription": "premium"])
 }
