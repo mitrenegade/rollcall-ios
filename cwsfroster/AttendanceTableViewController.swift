@@ -10,6 +10,14 @@ import UIKit
 
 class AttendanceTableViewController: UITableViewController {
 
+    private enum Section {
+        case onsiteSignup
+        case attendances
+        case members
+    }
+
+    private let sections: [Section]
+
     private let event: FirebaseEvent?
 
     fileprivate var members: [FirebaseMember] = []
@@ -22,6 +30,12 @@ class AttendanceTableViewController: UITableViewController {
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
         self.delegate = delegate
+
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            sections = [.onsiteSignup, .attendances, .members]
+        } else {
+            sections = [.onsiteSignup, .members]
+        }
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,25 +88,34 @@ class AttendanceTableViewController: UITableViewController {
 // MARK: - Table view data source
 extension AttendanceTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
+        guard section < sections.count else {
+            fatalError("Invalid section")
         }
-
-        return members.count
+        if sections[section] == .onsiteSignup {
+            return 1
+        } else if sections[section] == .members {
+            // TODO: check feature
+            return members.count
+        } else if sections[section] == .attendances {
+            return attendances.count
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        guard indexPath.section < sections.count else {
+            fatalError("Invalid section")
+        }
+        if sections[indexPath.section] == .onsiteSignup {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnSiteSignupCell", for: indexPath)
             cell.textLabel?.text = "Sign up new members"
             cell.accessoryType = .disclosureIndicator
             return cell
-        }
-        else {
+        } else if sections[indexPath.section] == .members {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
@@ -101,6 +124,9 @@ extension AttendanceTableViewController {
             let member = members[indexPath.row]
             let attendance = event.attendance(for: member.id)
             attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
+            return cell
+        } else { //if sections[indexPath.section] == .attendances {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
             return cell
         }
     }
