@@ -130,6 +130,26 @@ extension AttendanceTableViewController {
             return cell
         }
     }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard FeatureManager.shared.hasPrepopulateAttendance else {
+            return nil
+        }
+
+        guard section < sections.count else {
+            fatalError("Invalid section")
+        }
+
+        if sections[section] == .onsiteSignup {
+            return "Onsite Signup"
+        } else if sections[section] == .members {
+            // TODO: check feature
+            return "All members"
+        } else if sections[section] == .attendances {
+            return "Current Attendees"
+        }
+        return nil
+    }
 }
 
 // MARK: Table view delegate
