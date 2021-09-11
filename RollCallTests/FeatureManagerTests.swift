@@ -28,6 +28,7 @@ class FeatureManagerTests: XCTestCase {
         XCTAssertFalse(featureManager.hasEventReminders)
         XCTAssertFalse(featureManager.hasPaidEvents)
         XCTAssertFalse(featureManager.hasRecurringEvents)
+        XCTAssertFalse(featureManager.hasPrepopulateAttendance)
     }
 
     func testPlusFeaturesAvailable() {
@@ -36,6 +37,7 @@ class FeatureManagerTests: XCTestCase {
         XCTAssertTrue(featureManager.hasEventReminders)
         XCTAssertFalse(featureManager.hasPaidEvents)
         XCTAssertTrue(featureManager.hasRecurringEvents)
+        XCTAssertTrue(featureManager.hasPrepopulateAttendance)
     }
 
     func testPremiumFeaturesAvailable() {
@@ -44,6 +46,7 @@ class FeatureManagerTests: XCTestCase {
         XCTAssertTrue(featureManager.hasEventReminders)
         XCTAssertTrue(featureManager.hasPaidEvents)
         XCTAssertTrue(featureManager.hasRecurringEvents)
+        XCTAssertTrue(featureManager.hasPrepopulateAttendance)
     }
 
 }

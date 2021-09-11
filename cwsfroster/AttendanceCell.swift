@@ -13,6 +13,8 @@ class AttendanceCell: UITableViewCell {
 
     private let nameLabel = UILabel()
     private let photoView = RAImageView()
+    private lazy var attendanceView = UIImageView()
+    private lazy var attendanceLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -32,6 +34,27 @@ class AttendanceCell: UITableViewCell {
             $0.trailing.equalToSuperview().offset(-8)
             $0.bottom.equalToSuperview().offset(-8)
             $0.height.equalTo(30)
+        }
+
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            contentView.addSubview(attendanceLabel)
+            attendanceLabel.snp.makeConstraints {
+                $0.leading.equalTo(nameLabel.snp.trailing).offset(8)
+                $0.top.equalToSuperview().offset(8)
+                $0.trailing.equalToSuperview().offset(-8)
+                $0.bottom.equalToSuperview().offset(-8)
+                $0.height.equalTo(30)
+            }
+        } else {
+            contentView.addSubview(attendanceView)
+            attendanceView.snp.makeConstraints {
+                $0.leading.equalTo(nameLabel.snp.trailing).offset(8)
+                $0.top.equalToSuperview().offset(8)
+                $0.trailing.equalToSuperview().offset(-8)
+                $0.bottom.equalToSuperview().offset(-8)
+                $0.height.equalTo(30)
+                $0.width.equalTo(30)
+            }
         }
     }
 

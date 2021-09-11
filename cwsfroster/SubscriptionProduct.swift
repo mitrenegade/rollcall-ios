@@ -60,4 +60,8 @@ extension SubscriptionProduct {
     var hasRecurringEvents: Bool {
         tier == .plus || tier == .premium
     }
+
+    var hasPrepopulateAttendance: Bool {
+        tier == .plus || tier == .premium
+    }
 }
