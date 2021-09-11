@@ -67,6 +67,7 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
 
+    // MARK: - Payment
     var cost: Double? {
         get {
             return self.dict["cost"] as? Double
@@ -76,7 +77,40 @@ class FirebaseEvent: FirebaseBaseModel {
             self.firebaseRef?.updateChildValues(self.dict)
         }
     }
-    
+
+    // MARK: - Recurrence
+    public var recurrence: Date.Recurrence {
+        get {
+            guard let str = self.dict["recurrence"] as? String else { return .none }
+            return Date.Recurrence(rawValue: str) ?? .none
+        }
+        set {
+            update(key: "recurrence", value: newValue.rawValue)
+        }
+    }
+
+    // date on which this event will end. This should be a generated timestamp that is inclusive, so this should always be greater than the start time of the original date
+    public var recurrenceEndDate: Date? {
+        get {
+            if let val = dict["recurrenceEndDate"] as? TimeInterval {
+                return Date(timeIntervalSince1970: val)
+            }
+            return nil
+        }
+        set {
+            update(key: "recurrenceEndDate", value: newValue?.timeIntervalSince1970)
+        }
+    }
+    // ID of event that originally created this event
+    public var recurrenceId: String? {
+        get {
+            return self.dict["recurrenceId"] as? String
+        }
+        set {
+            update(key: "recurrenceId", value: newValue)
+        }
+    }
+
     fileprivate var attendeesReadWriteQueue = DispatchQueue(label: "attendees")
     var attendees: [String] {
         get {
