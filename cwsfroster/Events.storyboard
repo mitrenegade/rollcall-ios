@@ -59,7 +59,7 @@
         <!--Onsite Signup View Controller-->
         <scene sceneID="5g2-0c-sfE">
             <objects>
-                <viewController storyboardIdentifier="OnsiteSignupViewController" id="c3o-bq-UFD" customClass="OnsiteSignupViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="c3o-bq-UFD" customClass="OnsiteSignupViewController" customModule="RollCall" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MjY-4z-9To"/>
                         <viewControllerLayoutGuide type="bottom" id="7s1-S2-y11"/>
@@ -592,7 +592,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="NE7-e5-kCb"/>
+        <segue reference="c2W-3u-KTk"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="add_user.png" width="20.803611755371094" height="20.803611755371094"/>

@@ -10,11 +10,26 @@ import UIKit
 
 class AttendanceTableViewController: UITableViewController {
 
-    var currentPractice: FirebaseEvent?
+    private let event: FirebaseEvent?
+
     fileprivate var members: [FirebaseMember] = []
 
-    var delegate: PracticeEditDelegate?
+    /// Used for preset attendances
+    private var attendances: [FirebaseAttendance] = []
+
+    private weak var delegate: PracticeEditDelegate?
+
+    init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
+        self.event = event
+        self.delegate = delegate
+
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,6 +56,17 @@ class AttendanceTableViewController: UITableViewController {
             }
             self?.tableView.reloadData()
         }
+
+        if let event = event {
+            AttendanceService.shared.attendances(for: event) { [weak self] result in
+                switch result {
+                case .success(let attendances):
+                    self?.attendances = attendances
+                case .failure(let error):
+                    print("Error \(error)")
+                }
+            }
+        }
     }
     
 }
@@ -55,6 +81,7 @@ extension AttendanceTableViewController {
         if section == 0 {
             return 1
         }
+
         return members.count
     }
 
@@ -70,9 +97,9 @@ extension AttendanceTableViewController {
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard indexPath.row < members.count, let practice = currentPractice else { return cell }
+            guard indexPath.row < members.count, let event = event else { return cell }
             let member = members[indexPath.row]
-            let attendance = practice.attendance(for: member.id)
+            let attendance = event.attendance(for: member.id)
             attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
             return cell
         }
@@ -83,14 +110,14 @@ extension AttendanceTableViewController {
 extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard self.currentPractice != nil else { return }
+        guard let event = event else { return }
 
         if indexPath.section == 0 {
             guard let controller = UIStoryboard(name: "Events", bundle: nil)
                 .instantiateViewController(identifier: "OnsiteSignupViewController") as? OnsiteSignupViewController else {
                     return
                 }
-            controller.practice = currentPractice
+            controller.practice = event
             navigationController?.pushViewController(controller, animated: true)
             LoggingService.log(type: "OnsiteSignupClicked")
             return
@@ -98,10 +125,10 @@ extension AttendanceTableViewController {
         
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        if currentPractice?.attendance(for: member.id) == .Present {
-            currentPractice?.removeAttendance(for: member)
+        if event.attendance(for: member.id) == .Present {
+            event.removeAttendance(for: member)
         } else {
-            currentPractice?.addAttendance(for: member)
+            event.addAttendance(for: member)
         }
 
         tableView.reloadData()

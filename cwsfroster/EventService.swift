@@ -13,8 +13,8 @@ import UIKit
 import Firebase
 import RxSwift
 
-var _usersForEvents: [String: AnyObject]?
-var _events: [FirebaseEvent]?
+private var _usersForEvents: [String: AnyObject]?
+private var _events: [FirebaseEvent]?
 
 class EventService: NSObject {
     static let shared: EventService = EventService()

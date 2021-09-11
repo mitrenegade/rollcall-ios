@@ -240,13 +240,10 @@ extension EventEditViewController {
     }
     
     private func goToAttendees(for newEvent: FirebaseEvent?) {
-        let controller = AttendanceTableViewController()
-        controller.delegate = delegate
-        if let newEvent = newEvent {
-            controller.currentPractice = newEvent
+        let controller = AttendanceTableViewController(event: newEvent ?? practice,
+                                                       delegate: delegate)
+        if newEvent != nil {
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
-        } else {
-            controller.currentPractice = practice
         }
         navigationController?.pushViewController(controller, animated: true)
     }

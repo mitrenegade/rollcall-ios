@@ -18,7 +18,8 @@ class AttendanceService: NSObject {
         case updateFailed
     }
 
-
+    /// Fetches attendances for an event from Firebase.
+    /// No caching now to ensure accuracy
     func attendances(for event: FirebaseEvent, completion: @escaping  (Result<[FirebaseAttendance], Error>) -> Void) {
         guard UserService.shared.isLoggedIn else { return }
 
