@@ -27,6 +27,8 @@ class AttendanceTableViewController: UITableViewController {
 
     private weak var delegate: PracticeEditDelegate?
 
+    private let viewModel = AttendanceCellViewModel()
+
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
         self.delegate = delegate
@@ -172,19 +174,21 @@ extension AttendanceTableViewController {
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
 
-        updateAttendance(for: member, event: event)
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            promptForUpdateAttendance(for: member, event: event)
+        } else {
+            toggleAttendance(for: member, event: event)
+        }
         tableView.reloadData()
     }
 
-    private func updateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
-        if FeatureManager.shared.hasPrepopulateAttendance {
-            // TODO
-        } else {
-            if event.attended(for: member.id) == .Present {
-                event.removeAttendance(for: member)
-            } else {
-                event.addAttendance(for: member)
-            }
-        }
+    // MARK: - Plus
+    private func promptForUpdateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+        // TODO: show action sheet, then call viewModel
+    }
+
+    // MARK: - Standard
+    private func toggleAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+        viewModel.toggleAttendance()
     }
 }

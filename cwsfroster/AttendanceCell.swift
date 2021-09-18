@@ -83,11 +83,11 @@ class AttendanceCell: UITableViewCell {
             nameLabel.alpha = 1;
         }
 
-        let viewModel = AttendanceCellViewModel(event: event, member: member)
+        let viewModel = AttendanceViewModel()
         if FeatureManager.shared.hasPrepopulateAttendance {
             // TODO
         } else {
-            attendanceView.image = viewModel.attendedStatusImage
+            attendanceView.image = viewModel.attendedStatusImage(for: member, event: event)
         }
     }
 }

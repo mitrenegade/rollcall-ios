@@ -109,10 +109,6 @@ class FirebaseEvent: FirebaseBaseModel {
         }
         return .None
     }
-    
-    func addAttendance(for member: FirebaseMember) {
-        addAttendance(for: member.id)
-    }
 
     func addAttendance(for memberId: String) {
         var attendances = attendees
@@ -124,10 +120,6 @@ class FirebaseEvent: FirebaseBaseModel {
         }
     }
 
-    func removeAttendance(for member: FirebaseMember) {
-        removeAttendance(for: member.id)
-    }
-
     func removeAttendance(for memberId: String) {
         var attendances = attendees
         if attendances.contains(memberId),
@@ -137,6 +129,20 @@ class FirebaseEvent: FirebaseBaseModel {
                 attendees = attendances
             }
         }
+    }
+
+    // MARK: - Plus tier
+    func addAttendance(for member: FirebaseMember) {
+        addAttendance(for: member.id)
+
+        AttendanceService.shared.createAttendance(for: self, member: member, status: .attended) { Result in
+            // no op
+        }
+    }
+
+    func removeAttendance(for member: FirebaseMember) {
+        removeAttendance(for: member.id)
+
     }
 
 }
