@@ -8,12 +8,20 @@
 
 import Balizinha
 
+// new UI: includes presignup
 enum AttendanceStatus: String {
     case notSignedUp
     case signedUp
     case notAttending
     case attended
     case noShow
+}
+
+// old UI: attended or not
+@objc enum AttendedStatus: Int {
+    case None = 0
+    case Present = 1
+    case Freebie = 2
 }
 
 class FirebaseAttendance: FirebaseBaseModel {

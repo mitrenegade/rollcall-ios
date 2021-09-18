@@ -62,17 +62,8 @@ class AttendanceCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(member: FirebaseMember, attendance: AttendedStatus, row: Int) {
+    func configure(member: FirebaseMember, event: FirebaseEvent, row: Int) {
         nameLabel.text = member.displayName
-        
-        let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        unchecked.image = UIImage(named: "unchecked")
-        self.accessoryView = unchecked
-        if attendance != AttendedStatus.None {
-            let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            checked.image = UIImage(named: "checked")
-            self.accessoryView = checked
-        }
         
         self.tag = row; // make sure photo loads for correct cell
 
@@ -90,6 +81,22 @@ class AttendanceCell: UITableViewCell {
         }
         else {
             nameLabel.alpha = 1;
+        }
+
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            // TODO
+        } else {
+            let attendance = event.attended(for: member.id)
+            let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+            unchecked.image = UIImage(named: "unchecked")
+            self.accessoryView = unchecked
+            if attendance != AttendedStatus.None {
+                let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+                checked.image = UIImage(named: "checked")
+                self.accessoryView = checked
+            }
+
+
         }
     }
 }

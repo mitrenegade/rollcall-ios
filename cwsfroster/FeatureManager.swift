@@ -37,7 +37,7 @@ internal struct FeatureManager {
     }
 
     var hasPrepopulateAttendance: Bool {
-//        false
-        userRelay.value.subscription.hasPrepopulateAttendance
+        false
+//        userRelay.value.subscription.hasPrepopulateAttendance
     }
 }

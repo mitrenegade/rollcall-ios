@@ -103,7 +103,7 @@ class FirebaseEvent: FirebaseBaseModel {
     }
 
     // Old attendance format where the memberId is just stored as an array in the event
-    func attendance(for userId: String) -> AttendedStatus {
+    func attended(for userId: String) -> AttendedStatus {
         if attendees.contains(userId) {
             return .Present
         }

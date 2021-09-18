@@ -20,7 +20,7 @@ class AttendanceTableViewController: UITableViewController {
 
     private let event: FirebaseEvent?
 
-    fileprivate var members: [FirebaseMember] = []
+    private var members: [FirebaseMember] = []
 
     /// Used for preset attendances
     private var attendances: [FirebaseAttendance] = []
@@ -122,8 +122,8 @@ extension AttendanceTableViewController {
             // Configure the cell...
             guard indexPath.row < members.count, let event = event else { return cell }
             let member = members[indexPath.row]
-            let attendance = event.attendance(for: member.id)
-            attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
+
+            attendanceCell.configure(member: member, event: event, row: indexPath.row)
             return cell
         } else { //if sections[indexPath.section] == .attendances {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
@@ -171,12 +171,20 @@ extension AttendanceTableViewController {
         
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        if event.attendance(for: member.id) == .Present {
-            event.removeAttendance(for: member)
-        } else {
-            event.addAttendance(for: member)
-        }
 
+        updateAttendance(for: member, event: event)
         tableView.reloadData()
+    }
+
+    private func updateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            // TODO
+        } else {
+            if event.attended(for: member.id) == .Present {
+                event.removeAttendance(for: member)
+            } else {
+                event.addAttendance(for: member)
+            }
+        }
     }
 }

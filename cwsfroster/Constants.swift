@@ -40,12 +40,6 @@ enum NotificationType: String {
     }
 }
 
-@objc enum AttendedStatus: Int {
-    case None = 0
-    case Present = 1
-    case Freebie = 2
-}
-
 enum MemberStatus: String {
     case inactive
     case active
