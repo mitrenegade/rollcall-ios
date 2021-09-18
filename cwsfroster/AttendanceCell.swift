@@ -13,8 +13,8 @@ class AttendanceCell: UITableViewCell {
 
     private let nameLabel = UILabel()
     private let photoView = RAImageView()
-    private lazy var attendanceView = UIImageView()
-    private lazy var attendanceLabel = UILabel()
+    private let attendanceView = UIImageView()
+    private let attendanceLabel = UILabel()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -83,20 +83,11 @@ class AttendanceCell: UITableViewCell {
             nameLabel.alpha = 1;
         }
 
+        let viewModel = AttendanceCellViewModel(event: event, member: member)
         if FeatureManager.shared.hasPrepopulateAttendance {
             // TODO
         } else {
-            let attendance = event.attended(for: member.id)
-            let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            unchecked.image = UIImage(named: "unchecked")
-            self.accessoryView = unchecked
-            if attendance != AttendedStatus.None {
-                let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-                checked.image = UIImage(named: "checked")
-                self.accessoryView = checked
-            }
-
-
+            attendanceView.image = viewModel.attendedStatusImage
         }
     }
 }
