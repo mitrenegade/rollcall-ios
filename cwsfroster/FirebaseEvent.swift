@@ -110,6 +110,7 @@ class FirebaseEvent: FirebaseBaseModel {
         return .None
     }
 
+    // MARK: - Old attendance that has userId: bool
     func addAttendance(for memberId: String) {
         var attendances = attendees
         if !attendances.contains(memberId) {
@@ -130,21 +131,6 @@ class FirebaseEvent: FirebaseBaseModel {
             }
         }
     }
-
-    // MARK: - Plus tier
-    func addAttendance(for member: FirebaseMember) {
-        addAttendance(for: member.id)
-
-        AttendanceService.shared.createAttendance(for: self, member: member, status: .attended) { Result in
-            // no op
-        }
-    }
-
-    func removeAttendance(for member: FirebaseMember) {
-        removeAttendance(for: member.id)
-
-    }
-
 }
 
 // Utils

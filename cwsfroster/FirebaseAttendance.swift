@@ -9,7 +9,7 @@
 import Balizinha
 
 // new UI: includes presignup
-enum AttendanceStatus: String {
+enum AttendanceStatus: String, CaseIterable {
     case notSignedUp
     case signedUp
     case notAttending

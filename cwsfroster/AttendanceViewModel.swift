@@ -19,11 +19,28 @@ internal struct AttendanceViewModel {
 
     func toggleAttendance(for member: FirebaseMember, event: FirebaseEvent) {
         if event.attended(for: member.id) == .Present {
-            event.removeAttendance(for: member)
+            // old attendance format. Updates events/id/attendees
+            event.removeAttendance(for: member.id)
+
+            // new attendances format
+            AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .notSignedUp) { result in
+                // no op
+            }
         } else {
-            event.addAttendance(for: member)
+            // old attendance format. Updates events/id/attendees
+            event.addAttendance(for: member.id)
+
+            // new attendances format
+            AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .attended) { result in
+                // no op
+            }
         }
     }
 
     // MARK: Plus
+    func updateAttendance(for member: FirebaseMember, event: FirebaseEvent, status: AttendanceStatus) {
+        AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: status) { result in
+            // no op
+        }
+    }
 }

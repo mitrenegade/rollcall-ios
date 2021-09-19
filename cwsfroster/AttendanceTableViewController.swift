@@ -23,11 +23,11 @@ class AttendanceTableViewController: UITableViewController {
     private var members: [FirebaseMember] = []
 
     /// Used for preset attendances
-    private var attendances: [FirebaseAttendance] = []
+    private var attendances: [String: AttendanceStatus] = [:]
 
     private weak var delegate: PracticeEditDelegate?
 
-    private let viewModel = AttendanceCellViewModel()
+    private let viewModel = AttendanceViewModel()
 
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
@@ -177,18 +177,29 @@ extension AttendanceTableViewController {
         if FeatureManager.shared.hasPrepopulateAttendance {
             promptForUpdateAttendance(for: member, event: event)
         } else {
-            toggleAttendance(for: member, event: event)
+            viewModel.toggleAttendance(for: member, event: event)
         }
         tableView.reloadData()
     }
 
     // MARK: - Plus
     private func promptForUpdateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
-        // TODO: show action sheet, then call viewModel
+        // show action sheet to select attendance status, then call viewModel to update it
+        let title = "Update attendance"
+        let message = "Please select from the following options"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        for status in AttendanceStatus.allCases {
+            alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
+                self.viewModel.updateAttendance(for: member, event: event, status: status)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        if (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad)
+//        {
+//            alert.popoverPresentationController?.sourceView = tableView
+//            alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
+//        }
+        present(alert, animated: true, completion: nil)
     }
 
-    // MARK: - Standard
-    private func toggleAttendance(for member: FirebaseMember, event: FirebaseEvent) {
-        viewModel.toggleAttendance()
-    }
 }

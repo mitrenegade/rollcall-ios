@@ -20,21 +20,20 @@ class AttendanceService: NSObject {
 
     /// Fetches attendances for an event from Firebase.
     /// No caching now to ensure accuracy
-    func attendances(for event: FirebaseEvent, completion: @escaping  (Result<[FirebaseAttendance], Error>) -> Void) {
+    func attendances(for event: FirebaseEvent, completion: @escaping  (Result<[String: AttendanceStatus], Error>) -> Void) {
         guard UserService.shared.isLoggedIn else { return }
 
-        let ref = firRef.child("attendances").queryEqual(toValue: event.id, childKey: "eventId")
+        let ref = firRef.child("events").child(event.id).child("attendances")
         ref.observe(.value) { snapshot in
             guard snapshot.exists() else {
                 completion(.failure(AttendanceError.invalidEvent))
                 return
             }
 
-            var results: [FirebaseAttendance] = []
+            var results: [String: AttendanceStatus] = [:]
             if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
-                for dict: DataSnapshot in allObjects {
-                    let object = FirebaseAttendance(snapshot: dict)
-                    results.append(object)
+                for object in allObjects {
+                    results[object.key] = AttendanceStatus(rawValue: object.value as! String)
                 }
             }
             completion(.success(results))
@@ -42,56 +41,18 @@ class AttendanceService: NSObject {
     }
 
     /// Creates a new attendance for an event and member
-    func createAttendance(for event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<FirebaseAttendance, Error>) -> Void) {
+    func createOrUpdateAttendance(for event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<FirebaseAttendance, Error>) -> Void) {
         guard UserService.shared.isLoggedIn else { return }
 
-        // old attendance format.
-        // needed to support the standard tier UI
-        event.addAttendance(for: member)
+        // new attendance format. Updates events/id/attendances
+        let eventRef = firRef.child("events").child(event.id).child("attendances").child(member.id)
+        eventRef.setValue(status.rawValue)
 
-        // new attendance format: create an actual Attendance object
-        let newRef = firRef.child("attendances").child(FirebaseAPIService.uniqueId())
-        var params: [String: Any] = [
-            "status": status.rawValue,
-            "eventId": event.id,
-            "memberId": member.id
-            ]
-        if let date = event.date {
-            params["date"] = date
-        }
-        newRef.setValue(params) { error, ref in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                ref.observe(.value) { snapshot in
-                    guard snapshot.exists() else {
-                        completion(.failure(AttendanceError.createFailed))
-                        return
-                    }
-                    let attendance = FirebaseAttendance(snapshot: snapshot)
-                    completion(.success(attendance))
-                }
-            }
-        }
+        // also updates memberEvents/id
+        let memberEventsRef = firRef.child("memberEvents")
+            .child(member.id)
+            .child(event.id)
+        memberEventsRef.setValue(status.rawValue)
     }
 
-    /// Change the attending status for an existing attendance
-    func updateAttendanceStatus(for attendance: FirebaseAttendance, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
-        guard let memberId = attendance.memberId,
-              let eventId = attendance.eventId,
-              let event = EventService.shared.with(id: eventId) else {
-            completion(.failure(AttendanceError.updateFailed))
-            return
-        }
-
-        // old attendance format
-        if status == .attended || status == .signedUp {
-            event.addAttendance(for: memberId)
-        } else if status == .noShow, status == .notAttending, status == .notSignedUp {
-            event.removeAttendance(for: memberId)
-        }
-
-        // new attendance format
-        attendance.status = status
-    }
 }
