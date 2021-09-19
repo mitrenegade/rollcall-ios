@@ -62,6 +62,7 @@ class AttendanceCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Standard
     func configure(member: FirebaseMember, event: FirebaseEvent, row: Int) {
         nameLabel.text = member.displayName
         
@@ -84,10 +85,17 @@ class AttendanceCell: UITableViewCell {
         }
 
         let viewModel = AttendanceViewModel()
-        if FeatureManager.shared.hasPrepopulateAttendance {
-            // TODO
-        } else {
+        if !FeatureManager.shared.hasPrepopulateAttendance {
             attendanceView.image = viewModel.attendedStatusImage(for: member, event: event)
         }
+    }
+
+    // MARK: - Plus
+    func configure(status: AttendanceStatus) {
+        guard FeatureManager.shared.hasPrepopulateAttendance else {
+            return
+        }
+        let viewModel = AttendanceViewModel()
+        attendanceLabel.text = viewModel.attendanceStatusText(for: status)
     }
 }

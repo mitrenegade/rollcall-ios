@@ -64,27 +64,58 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     @objc func reloadData() {
+        let group = DispatchGroup()
+        var count = 0
+
+        group.enter()
+        count = count + 1
+        print("BOBBYTEST group count \(count)")
         OrganizationService.shared.members { [weak self] (members, error) in
             self?.members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }
                 guard let n2 = $1.name?.uppercased() else { return true }
                 return n1 < n2
             }
-            self?.tableView.reloadData()
+            count = count - 1
+            print("BOBBYTEST group count \(count)")
+            group.leave()
         }
 
-        if let event = event {
+        if let event = event,
+           FeatureManager.shared.hasPrepopulateAttendance {
+            group.enter()
+            count = count + 1
+            print("BOBBYTEST group count \(count)")
             AttendanceService.shared.attendances(for: event) { [weak self] result in
                 switch result {
                 case .success(let attendances):
                     self?.attendances = attendances
                 case .failure(let error):
                     print("Error \(error)")
+                    if let error = error as? AttendanceService.AttendanceError,
+                       error != .invalidEvent {
+                        // Any error that is not an invalidEvent error should be logged
+                        LoggingService.log(event: .fetchAttendancesError, message: nil, info: ["error": error.localizedDescription], error: nil)
+                    }
                 }
+                count = count - 1
+                print("BOBBYTEST group count \(count)")
+                group.leave()
             }
         }
+
+        group.notify(queue: DispatchQueue.main) { [weak self] in
+            print("BOBBYTEST group notify count \(count)")
+            guard let self = self else {
+                return
+            }
+            if let event = self.event {
+                self.viewModel.migrateAttendances(event: event, members: self.members, attendances: self.attendances)
+            }
+            self.tableView.reloadData()
+        }
     }
-    
+
 }
 
 // MARK: - Table view data source
@@ -127,9 +158,22 @@ extension AttendanceTableViewController {
 
             attendanceCell.configure(member: member, event: event, row: indexPath.row)
             return cell
-        } else { //if sections[indexPath.section] == .attendances {
+        } else if sections[indexPath.section] == .attendances {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
+
+            guard let attendanceCell = cell as? AttendanceCell else { return cell }
+
+            // Standard
+            guard indexPath.row < members.count, let event = event else { return cell }
+            let member = members[indexPath.row]
+            attendanceCell.configure(member: member, event: event, row: indexPath.row)
+
+            // Plus
+            guard let attendance = attendances[member.id] as? AttendanceStatus else { return cell }
+            attendanceCell.configure(status: attendance)
             return cell
+        } else {
+            fatalError("Invalid section")
         }
     }
 
