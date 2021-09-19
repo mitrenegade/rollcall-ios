@@ -7,34 +7,63 @@
 //
 
 import UIKit
+import SnapKit
 
 class AttendanceCell: UITableViewCell {
 
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var photoView: RAImageView!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
+    private let nameLabel = UILabel()
+    private let photoView = RAImageView()
+    private let attendanceView = UIImageView()
+    private let attendanceLabel = UILabel()
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        // Configure the view for the selected state
-    }
-
-    func configure(member: FirebaseMember, attendance: AttendedStatus, row: Int) {
-        nameLabel.text = member.displayName
-        
-        let unchecked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        unchecked.image = UIImage(named: "unchecked")
-        self.accessoryView = unchecked
-        if attendance != AttendedStatus.None {
-            let checked = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-            checked.image = UIImage(named: "checked")
-            self.accessoryView = checked
+        contentView.addSubview(photoView)
+        photoView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(30)
+            $0.height.equalTo(30)
         }
+
+        contentView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints {
+            $0.leading.equalTo(photoView.snp.trailing).offset(8)
+            $0.top.equalToSuperview().offset(8)
+            $0.trailing.equalToSuperview().offset(-8)
+            $0.bottom.equalToSuperview().offset(-8)
+            $0.height.equalTo(30)
+        }
+
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            contentView.addSubview(attendanceLabel)
+            attendanceLabel.snp.makeConstraints {
+                $0.leading.equalTo(nameLabel.snp.trailing).offset(8)
+                $0.top.equalToSuperview().offset(8)
+                $0.trailing.equalToSuperview().offset(-8)
+                $0.bottom.equalToSuperview().offset(-8)
+                $0.height.equalTo(30)
+            }
+        } else {
+            contentView.addSubview(attendanceView)
+            attendanceView.snp.makeConstraints {
+                $0.leading.equalTo(nameLabel.snp.trailing).offset(8)
+                $0.top.equalToSuperview().offset(8)
+                $0.trailing.equalToSuperview().offset(-8)
+                $0.bottom.equalToSuperview().offset(-8)
+                $0.height.equalTo(30)
+                $0.width.equalTo(30)
+            }
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(member: FirebaseMember, event: FirebaseEvent, row: Int) {
+        nameLabel.text = member.displayName
         
         self.tag = row; // make sure photo loads for correct cell
 
@@ -52,6 +81,13 @@ class AttendanceCell: UITableViewCell {
         }
         else {
             nameLabel.alpha = 1;
+        }
+
+        let viewModel = AttendanceViewModel()
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            // TODO
+        } else {
+            attendanceView.image = viewModel.attendedStatusImage(for: member, event: event)
         }
     }
 }

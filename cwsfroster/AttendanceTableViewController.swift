@@ -10,14 +10,48 @@ import UIKit
 
 class AttendanceTableViewController: UITableViewController {
 
-    var currentPractice: FirebaseEvent?
-    fileprivate var members: [FirebaseMember] = []
+    private enum Section {
+        case onsiteSignup
+        case attendances
+        case members
+    }
 
-    var delegate: PracticeEditDelegate?
+    private let sections: [Section]
+
+    private let event: FirebaseEvent?
+
+    private var members: [FirebaseMember] = []
+
+    /// Used for preset attendances
+    private var attendances: [String: AttendanceStatus] = [:]
+
+    private weak var delegate: PracticeEditDelegate?
+
+    private let viewModel = AttendanceViewModel()
+
+    init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
+        self.event = event
+        self.delegate = delegate
+
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            sections = [.onsiteSignup, .attendances, .members]
+        } else {
+            sections = [.onsiteSignup, .members]
+        }
+
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        tableView.register(AttendanceCell.self, forCellReuseIdentifier: "AttendanceCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "OnSiteSignupCell")
+
         self.listenFor("member:updated", action: #selector(reloadData), object: nil)
         self.listenFor("member:created", action: #selector(reloadData), object: nil)
         reloadData()
@@ -38,46 +72,85 @@ class AttendanceTableViewController: UITableViewController {
             }
             self?.tableView.reloadData()
         }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ToOnSiteSignup" {
-            if let controller = segue.destination as? OnsiteSignupViewController {
-                controller.practice = currentPractice
+
+        if let event = event {
+            AttendanceService.shared.attendances(for: event) { [weak self] result in
+                switch result {
+                case .success(let attendances):
+                    self?.attendances = attendances
+                case .failure(let error):
+                    print("Error \(error)")
+                }
             }
         }
     }
+    
 }
 
 // MARK: - Table view data source
 extension AttendanceTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
+        guard section < sections.count else {
+            fatalError("Invalid section")
         }
-        return members.count
+        if sections[section] == .onsiteSignup {
+            return 1
+        } else if sections[section] == .members {
+            // TODO: check feature
+            return members.count
+        } else if sections[section] == .attendances {
+            return attendances.count
+        }
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "OnSiteSignupCell", for: indexPath)
-            return cell
+        guard indexPath.section < sections.count else {
+            fatalError("Invalid section")
         }
-        else {
+        if sections[indexPath.section] == .onsiteSignup {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OnSiteSignupCell", for: indexPath)
+            cell.textLabel?.text = "Sign up new members"
+            cell.accessoryType = .disclosureIndicator
+            return cell
+        } else if sections[indexPath.section] == .members {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
             // Configure the cell...
-            guard indexPath.row < members.count, let practice = currentPractice else { return cell }
+            guard indexPath.row < members.count, let event = event else { return cell }
             let member = members[indexPath.row]
-            let attendance = practice.attendance(for: member.id)
-            attendanceCell.configure(member: member, attendance: attendance, row: indexPath.row)
+
+            attendanceCell.configure(member: member, event: event, row: indexPath.row)
+            return cell
+        } else { //if sections[indexPath.section] == .attendances {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
             return cell
         }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard FeatureManager.shared.hasPrepopulateAttendance else {
+            return nil
+        }
+
+        guard section < sections.count else {
+            fatalError("Invalid section")
+        }
+
+        if sections[section] == .onsiteSignup {
+            return "Onsite Signup"
+        } else if sections[section] == .members {
+            // TODO: check feature
+            return "All members"
+        } else if sections[section] == .attendances {
+            return "Current Attendees"
+        }
+        return nil
     }
 }
 
@@ -85,22 +158,48 @@ extension AttendanceTableViewController {
 extension AttendanceTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard self.currentPractice != nil else { return }
+        guard let event = event else { return }
 
         if indexPath.section == 0 {
-            performSegue(withIdentifier: "ToOnSiteSignup", sender: nil)
+            guard let controller = UIStoryboard(name: "Events", bundle: nil)
+                .instantiateViewController(identifier: "OnsiteSignupViewController") as? OnsiteSignupViewController else {
+                    return
+                }
+            controller.practice = event
+            navigationController?.pushViewController(controller, animated: true)
             LoggingService.log(type: "OnsiteSignupClicked")
             return
         }
         
         guard indexPath.row < members.count else { return }
         let member = members[indexPath.row]
-        if currentPractice?.attendance(for: member.id) == .Present {
-            currentPractice?.removeAttendance(for: member)
-        } else {
-            currentPractice?.addAttendance(for: member)
-        }
 
+        if FeatureManager.shared.hasPrepopulateAttendance {
+            promptForUpdateAttendance(for: member, event: event)
+        } else {
+            viewModel.toggleAttendance(for: member, event: event)
+        }
         tableView.reloadData()
     }
+
+    // MARK: - Plus
+    private func promptForUpdateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+        // show action sheet to select attendance status, then call viewModel to update it
+        let title = "Update attendance"
+        let message = "Please select from the following options"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        for status in AttendanceStatus.allCases {
+            alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
+                self.viewModel.updateAttendance(for: member, event: event, status: status)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        if (UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad)
+//        {
+//            alert.popoverPresentationController?.sourceView = tableView
+//            alert.popoverPresentationController?.sourceRect = tableView.rectForRow(at: indexPath)
+//        }
+        present(alert, animated: true, completion: nil)
+    }
+
 }

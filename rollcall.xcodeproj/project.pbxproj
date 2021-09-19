@@ -11,6 +11,7 @@
 		8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */; };
 		8E09574121ACE00E0037DA17 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E09574021ACE00D0037DA17 /* Feedback.storyboard */; };
 		8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */; };
+		8E0F615426F68702007EDCAF /* AttendanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */; };
 		8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0932106A79D00E02558 /* AddMembersViewController.swift */; };
 		8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */; };
 		8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */; };
@@ -23,6 +24,7 @@
 		8E1F64051E47B85B004E8723 /* AttendanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */; };
 		8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F64061E4A03D3004E8723 /* String+Utils.swift */; };
 		8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */; };
+		8E2AF36426ED627000DED73B /* AttendanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2AF36326ED627000DED73B /* AttendanceService.swift */; };
 		8E2BB0C726EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */; };
 		8E3DD1CE20DA81680075548C /* UpgradeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CD20DA81670075548C /* UpgradeService.swift */; };
 		8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3DD1CF20DA826B0075548C /* SettingsService.swift */; };
@@ -111,7 +113,6 @@
 		C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F520A42AEC00080BCE /* FirebaseMember.swift */; };
 		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
 		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
-		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
 		C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */; };
 		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
 		C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* MainViewController.swift */; };
@@ -136,6 +137,7 @@
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
 		8E09574021ACE00D0037DA17 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceViewModel.swift; sourceTree = "<group>"; };
 		8E18B0932106A79D00E02558 /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNameInputCell.swift; sourceTree = "<group>"; };
 		8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttendanceTableViewController.swift; sourceTree = "<group>"; };
 		8E1F64061E4A03D3004E8723 /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		8E279EEE1E44B82C005AA3F6 /* AppDelegate+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Utils.swift"; sourceTree = "<group>"; };
+		8E2AF36326ED627000DED73B /* AttendanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceService.swift; sourceTree = "<group>"; };
 		8E2BB0C626EC7C7100BA3A92 /* FirebaseImageService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseImageService+Extensions.swift"; sourceTree = "<group>"; };
 		8E3DD1CD20DA81670075548C /* UpgradeService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeService.swift; sourceTree = "<group>"; };
 		8E3DD1CF20DA826B0075548C /* SettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
@@ -257,7 +260,6 @@
 		C68338F520A42AEC00080BCE /* FirebaseMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMember.swift; sourceTree = "<group>"; };
 		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
-		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
 		C6D9631120C2181900317C0C /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
 		C6D9631320C21CA700317C0C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +324,7 @@
 				8E800D301E3E94770085EC4D /* LoggingService.swift */,
 				8EFBA50226EC21CC00C2AAD6 /* FeatureManager.swift */,
 				8EBB0BEA26D624E700BAB1A5 /* StoreKitManager.swift */,
+				8E2AF36326ED627000DED73B /* AttendanceService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -333,7 +336,6 @@
 				8EBB0C4A26D97E5100BAB1A5 /* FirebaseUser.swift */,
 				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
 				C68338F720A42AEC00080BCE /* FirebaseEvent.swift */,
-				C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -389,6 +391,7 @@
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
+				8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				9E80086216196883003E9B16 /* AppDelegate.m in Sources */,
 				C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */,
 				8E1F64031E478627004E8723 /* EventsListViewController.swift in Sources */,
+				8E2AF36426ED627000DED73B /* AttendanceService.swift in Sources */,
 				8EE5514E1E3E60FD001FB0C4 /* ConfigurableNavigationController.swift in Sources */,
 				8EBB0C4B26D97E5100BAB1A5 /* FirebaseUser.swift in Sources */,
 				9EC5F3171936D2410056140F /* UIAlertView+MKBlockAdditions.m in Sources */,
@@ -900,7 +904,6 @@
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				8E1F64011E47816F004E8723 /* EventEditViewController.swift in Sources */,
 				8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */,
-				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
@@ -912,6 +915,7 @@
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
+				8E0F615426F68702007EDCAF /* AttendanceViewModel.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */,

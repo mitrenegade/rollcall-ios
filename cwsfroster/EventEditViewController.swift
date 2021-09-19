@@ -212,53 +212,52 @@ extension EventEditViewController {
     }
     
     @IBAction func didClickNext(_ sender: AnyObject?) {
-        self.view.endEditing(true)
-        self.goToAttendees()
+        view.endEditing(true)
+        if practice != nil {
+            goToAttendees(for: nil)
+        } else {
+            createPractice { [weak self] newPractice in
+                self?.goToAttendees(for: newPractice)
+            }
+        }
     }
     
     // MARK: - Attendees
     @IBAction func didClickAttendees(_ sender: Any?) {
-        goToAttendees()
+        didClickNext(nil)
     }
     
     // MARK: - Onsite signup
     @IBAction func didClickOnsiteSignup(_ sender: Any?) {
         if practice != nil {
-            performSegue(withIdentifier: "ToOnsiteSignup", sender: nil)
+            goToOnsiteSignup()
         } else {
-            createPractice { newPractice in
-                self.navigationItem.leftBarButtonItem?.title = "Close"
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
+            createPractice { [weak self] newPractice in
+                self?.navigationItem.leftBarButtonItem?.title = "Close"
+                self?.goToAttendees(for: newPractice)
             }
         }
     }
     
-    func goToAttendees() {
-        if practice != nil {
-            performSegue(withIdentifier: "ToEditAttendees", sender: nil)
-        } else {
-            createPractice { newPractice in
-                self.performSegue(withIdentifier: "ToEditAttendees", sender: newPractice)
-            }
+    private func goToAttendees(for newEvent: FirebaseEvent?) {
+        let controller = AttendanceTableViewController(event: newEvent ?? practice,
+                                                       delegate: delegate)
+        if newEvent != nil {
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
         }
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+    private func goToOnsiteSignup() {
+        guard let controller = UIStoryboard(name: "Events", bundle: nil)
+            .instantiateViewController(identifier: "OnsiteSignupViewController") as? OnsiteSignupViewController else {
+                return
+            }
+        controller.practice = practice
     }
     
     open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-        if segue.identifier == "ToEditAttendees", let controller = segue.destination as? AttendanceTableViewController {
-            controller.delegate = delegate
-            if let practice = practice {
-                controller.currentPractice = practice
-            } else if let newPractice = sender as? FirebaseEvent {
-                controller.currentPractice = newPractice
-                controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: nil, style: .done, target: nil, action: nil) // hide/disable back button
-            }
-        } else if segue.identifier == "ToOnsiteSignup", let controller = segue.destination as? OnsiteSignupViewController {
-            if let practice = practice {
-                controller.practice = practice
-            }
-        } else if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
+        if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
             if let practice = practice {
                 controller.practice = practice
             }

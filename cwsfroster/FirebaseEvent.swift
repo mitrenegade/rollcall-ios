@@ -18,8 +18,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["title"] as? String
         }
         set {
-            self.dict["title"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "title", value: newValue)
         }
     }
 
@@ -31,8 +30,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return nil // what is a valid date equivalent of TBD?
         }
         set {
-            self.dict["date"] = newValue?.timeIntervalSince1970
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "date", value: newValue?.timeIntervalSince1970)
         }
     }
 
@@ -41,8 +39,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["notes"] as? String
         }
         set {
-            self.dict["notes"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "notes", value: newValue)
         }
         
     }
@@ -52,8 +49,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["details"] as? String
         }
         set {
-            self.dict["details"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "details", value: newValue)
         }
     }
 
@@ -62,8 +58,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["organization"] as? String
         }
         set {
-            self.dict["organization"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "organization", value: newValue)
         }
     }
 
@@ -72,8 +67,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["cost"] as? Double
         }
         set {
-            self.dict["cost"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "cost", value: newValue)
         }
     }
     
@@ -81,8 +75,8 @@ class FirebaseEvent: FirebaseBaseModel {
     var attendees: [String] {
         get {
             var result: [String] = []
-            guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
             attendeesReadWriteQueue.sync {
+                let attendances = self.dict["attendees"] as? [String: Bool] ?? [:]
                 result = attendances.compactMap({ (key, val) -> String? in
                     if val {
                         return key
@@ -97,31 +91,33 @@ class FirebaseEvent: FirebaseBaseModel {
             for memberId in newValue {
                 newAttendees[memberId] = true
             }
-            self.dict["attendees"] = newAttendees
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "attendees", value: newAttendees)
         }
     }
-    
-    func attendance(for userId: String) -> AttendedStatus {
+
+    // Old attendance format where the memberId is just stored as an array in the event
+    func attended(for userId: String) -> AttendedStatus {
         if attendees.contains(userId) {
             return .Present
         }
         return .None
     }
-    
-    func addAttendance(for member: FirebaseMember) {
+
+    // MARK: - Old attendance that has userId: bool
+    func addAttendance(for memberId: String) {
         var attendances = attendees
-        if !attendances.contains(member.id) {
+        if !attendances.contains(memberId) {
             attendeesReadWriteQueue.sync {
-                attendances.append(member.id)
+                attendances.append(memberId)
                 attendees = attendances
             }
         }
     }
 
-    func removeAttendance(for member: FirebaseMember) {
+    func removeAttendance(for memberId: String) {
         var attendances = attendees
-        if attendances.contains(member.id), let index = attendees.firstIndex(of: member.id) {
+        if attendances.contains(memberId),
+           let index = attendees.firstIndex(of: memberId) {
             attendeesReadWriteQueue.sync {
                 attendances.remove(at: index)
                 attendees = attendances

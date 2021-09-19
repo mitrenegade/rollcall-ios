@@ -101,8 +101,12 @@ class OnsiteSignupViewController: UIViewController {
                 LoggingService.log(type: "OnsiteSignup", info: ["id": member.id, "photo": self?.addedPhoto != nil])
                 
                 // add attendance
-                self?.practice?.addAttendance(for: member)
-                
+                if let event = self?.practice {
+                    AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .signedUp) { result in
+                        // no op
+                    }
+                }
+
                 // enable button and reset form
                 self?.buttonSave.isEnabled = true
                 self?.addedAttendees.insert(member, at: 0)

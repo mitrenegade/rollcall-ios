@@ -13,11 +13,16 @@ import UIKit
 import Firebase
 import RxSwift
 
-var _usersForEvents: [String: AnyObject]?
-var _events: [FirebaseEvent]?
+private var _usersForEvents: [String: AnyObject]?
+private var _events: [FirebaseEvent]?
 
 class EventService: NSObject {
     static let shared: EventService = EventService()
+
+    /// Fetches a cached event with given id
+    func with(id: String) -> FirebaseEvent? {
+        _events?.first { $0.id == id }
+    }
 
     func createEvent(_ name: String,
                      date: Date,
@@ -79,4 +84,5 @@ class EventService: NSObject {
             }
         }
     }
+
 }

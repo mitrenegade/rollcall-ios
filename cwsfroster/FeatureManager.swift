@@ -35,4 +35,9 @@ internal struct FeatureManager {
     var hasRecurringEvents: Bool {
         userRelay.value.subscription.hasRecurringEvents
     }
+
+    var hasPrepopulateAttendance: Bool {
+        false
+//        userRelay.value.subscription.hasPrepopulateAttendance
+    }
 }
