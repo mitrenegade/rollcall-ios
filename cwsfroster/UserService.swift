@@ -79,17 +79,10 @@ class UserService: UserServiceProtocol {
 
     // MARK: - FirAuth
     func startup() {
-        print("BOBBYTEST \(self) startup")
         AuthService.shared.startup()
         AuthService.shared.loginState
             .asDriver()
             .drive(loginStateRelay)
-            .disposed(by: disposeBag)
-
-        AuthService.shared.loginState
-            .subscribe(onNext: { state in
-                print("BOBBYTEST \(self) loginState \(state)")
-            })
             .disposed(by: disposeBag)
     }
 
