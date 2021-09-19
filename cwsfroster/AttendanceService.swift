@@ -9,10 +9,27 @@
 import Firebase
 import RxSwift
 
+// new UI: includes presignup
+enum AttendanceStatus: String, CaseIterable {
+    case notSignedUp
+    case signedUp
+    case notAttending
+    case attended
+    case noShow
+}
+
+// old UI: attended or not
+enum AttendedStatus: Int {
+    case None = 0
+    case Present = 1
+    case Freebie = 2
+}
+
 class AttendanceService: NSObject {
     static let shared: AttendanceService = AttendanceService()
 
     enum AttendanceError: Error {
+        case notAuthenticated
         case invalidEvent
         case createFailed
         case updateFailed
@@ -41,8 +58,11 @@ class AttendanceService: NSObject {
     }
 
     /// Creates a new attendance for an event and member
-    func createOrUpdateAttendance(for event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<FirebaseAttendance, Error>) -> Void) {
-        guard UserService.shared.isLoggedIn else { return }
+    func createOrUpdateAttendance(for event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard UserService.shared.isLoggedIn else {
+            completion(.failure(AttendanceError.notAuthenticated))
+            return
+        }
 
         // new attendance format. Updates events/id/attendances
         let eventRef = firRef.child("events").child(event.id).child("attendances").child(member.id)
@@ -53,6 +73,8 @@ class AttendanceService: NSObject {
             .child(member.id)
             .child(event.id)
         memberEventsRef.setValue(status.rawValue)
+
+        completion(.success(()))
     }
 
 }

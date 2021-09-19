@@ -113,7 +113,6 @@
 		C68338F920A42AEC00080BCE /* FirebaseMember.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F520A42AEC00080BCE /* FirebaseMember.swift */; };
 		C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */; };
 		C68338FB20A42AEC00080BCE /* FirebaseEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338F720A42AEC00080BCE /* FirebaseEvent.swift */; };
-		C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */; };
 		C6990BAD20F6B39E00256A3B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EE005BA1E3DA42200272DC0 /* SettingsViewController.swift */; };
 		C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631120C2181900317C0C /* OrganizationService.swift */; };
 		C6D9631420C21CA700317C0C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6D9631320C21CA700317C0C /* MainViewController.swift */; };
@@ -261,7 +260,6 @@
 		C68338F520A42AEC00080BCE /* FirebaseMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseMember.swift; sourceTree = "<group>"; };
 		C68338F620A42AEC00080BCE /* FirebaseOrganization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseOrganization.swift; sourceTree = "<group>"; };
 		C68338F720A42AEC00080BCE /* FirebaseEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseEvent.swift; sourceTree = "<group>"; };
-		C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAttendance.swift; sourceTree = "<group>"; };
 		C6D9631120C2181900317C0C /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
 		C6D9631320C21CA700317C0C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CC1B0653011D1ABC9965C2DF /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,7 +336,6 @@
 				8EBB0C4A26D97E5100BAB1A5 /* FirebaseUser.swift */,
 				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
 				C68338F720A42AEC00080BCE /* FirebaseEvent.swift */,
-				C68338FD20A42BFD00080BCE /* FirebaseAttendance.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -907,7 +904,6 @@
 				9EC5F31F1936D2410056140F /* Util.m in Sources */,
 				8E1F64011E47816F004E8723 /* EventEditViewController.swift in Sources */,
 				8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */,
-				C68338FE20A42BFD00080BCE /* FirebaseAttendance.swift in Sources */,
 				9EC5F3151936D2410056140F /* NSObject+MKBlockAdditions.m in Sources */,
 				C68338FA20A42AEC00080BCE /* FirebaseOrganization.swift in Sources */,
 				9EC5F31A1936D2410056140F /* NSObject+Notify.m in Sources */,
