@@ -18,6 +18,7 @@ internal struct AttendanceViewModel {
     }
 
     func toggleAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+        print("BOBBYTEST toggle \(member.id) event \(event.id) present? \(event.attended(for: member.id) == .Present)")
         if event.attended(for: member.id) == .Present {
             // old attendance format. Updates events/id/attendees
             event.removeAttendance(for: member.id)

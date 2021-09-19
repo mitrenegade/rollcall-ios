@@ -18,8 +18,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["title"] as? String
         }
         set {
-            self.dict["title"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "title", value: newValue)
         }
     }
 
@@ -31,8 +30,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return nil // what is a valid date equivalent of TBD?
         }
         set {
-            self.dict["date"] = newValue?.timeIntervalSince1970
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "date", value: newValue?.timeIntervalSince1970)
         }
     }
 
@@ -41,8 +39,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["notes"] as? String
         }
         set {
-            self.dict["notes"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "notes", value: newValue)
         }
         
     }
@@ -52,8 +49,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["details"] as? String
         }
         set {
-            self.dict["details"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "details", value: newValue)
         }
     }
 
@@ -62,8 +58,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["organization"] as? String
         }
         set {
-            self.dict["organization"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "organization", value: newValue)
         }
     }
 
@@ -72,8 +67,7 @@ class FirebaseEvent: FirebaseBaseModel {
             return self.dict["cost"] as? Double
         }
         set {
-            self.dict["cost"] = newValue
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "cost", value: newValue)
         }
     }
     
@@ -81,8 +75,8 @@ class FirebaseEvent: FirebaseBaseModel {
     var attendees: [String] {
         get {
             var result: [String] = []
-            guard let attendances = self.dict["attendees"] as? [String: Bool] else { return [] }
             attendeesReadWriteQueue.sync {
+                let attendances = self.dict["attendees"] as? [String: Bool] ?? [:]
                 result = attendances.compactMap({ (key, val) -> String? in
                     if val {
                         return key
@@ -97,8 +91,7 @@ class FirebaseEvent: FirebaseBaseModel {
             for memberId in newValue {
                 newAttendees[memberId] = true
             }
-            self.dict["attendees"] = newAttendees
-            self.firebaseRef?.updateChildValues(self.dict)
+            update(key: "attendees", value: newAttendees)
         }
     }
 

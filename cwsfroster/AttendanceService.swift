@@ -48,6 +48,8 @@ class AttendanceService: NSObject {
         let eventRef = firRef.child("events").child(event.id).child("attendances").child(member.id)
         eventRef.setValue(status.rawValue)
 
+        print("BOBBYTEST -> createOrUpdate event \(event.id) member \(member.id) status \(status.rawValue)")
+
         // also updates memberEvents/id
         let memberEventsRef = firRef.child("memberEvents")
             .child(member.id)
