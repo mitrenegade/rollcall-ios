@@ -29,6 +29,12 @@ class OrganizationService {
     var loadingObservable: Observable<Bool> {
         loadingRelay.distinctUntilChanged()
     }
+
+    private let membersRelay: BehaviorRelay<[FirebaseMember]> = BehaviorRelay(value: [])
+    var membersObservable: Observable<[FirebaseMember]> {
+        membersRelay
+            .distinctUntilChanged()
+    }
     
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
@@ -131,7 +137,8 @@ class OrganizationService {
             completion?(results, nil)
         })
     }
-    
+
+    /// Fetches members from Firebase once
     func members(completion: (([FirebaseMember], Error?) -> Void)?) {
         guard let org = organizationRelay.value else {
             completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))

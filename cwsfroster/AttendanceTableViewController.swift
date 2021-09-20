@@ -65,27 +65,20 @@ class AttendanceTableViewController: UITableViewController {
     
     @objc func reloadData() {
         let group = DispatchGroup()
-        var count = 0
 
         group.enter()
-        count = count + 1
-        print("BOBBYTEST group count \(count)")
         OrganizationService.shared.members { [weak self] (members, error) in
             self?.members = members.sorted{
                 guard let n1 = $0.name?.uppercased() else { return false }
                 guard let n2 = $1.name?.uppercased() else { return true }
                 return n1 < n2
             }
-            count = count - 1
-            print("BOBBYTEST group count \(count)")
             group.leave()
         }
 
         if let event = event,
            FeatureManager.shared.hasPrepopulateAttendance {
             group.enter()
-            count = count + 1
-            print("BOBBYTEST group count \(count)")
             AttendanceService.shared.attendances(for: event) { [weak self] result in
                 switch result {
                 case .success(let attendances):
@@ -98,14 +91,11 @@ class AttendanceTableViewController: UITableViewController {
                         LoggingService.log(event: .fetchAttendancesError, message: nil, info: ["error": error.localizedDescription], error: nil)
                     }
                 }
-                count = count - 1
-                print("BOBBYTEST group count \(count)")
                 group.leave()
             }
         }
 
         group.notify(queue: DispatchQueue.main) { [weak self] in
-            print("BOBBYTEST group notify count \(count)")
             guard let self = self else {
                 return
             }

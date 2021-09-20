@@ -41,7 +41,7 @@ class AttendanceService: NSObject {
         guard UserService.shared.isLoggedIn else { return }
 
         let ref = firRef.child("events").child(event.id).child("attendances")
-        ref.observe(.value) { snapshot in
+        ref.observeSingleEvent(of: .value) { snapshot in
             guard snapshot.exists() else {
                 completion(.failure(AttendanceError.invalidEvent))
                 return
