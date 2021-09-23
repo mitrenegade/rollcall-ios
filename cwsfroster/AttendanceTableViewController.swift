@@ -52,9 +52,7 @@ class AttendanceTableViewController: UITableViewController {
         tableView.register(AttendanceCell.self, forCellReuseIdentifier: "AttendanceCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "OnSiteSignupCell")
 
-        self.listenFor("member:updated", action: #selector(reloadData), object: nil)
-        self.listenFor("member:created", action: #selector(reloadData), object: nil)
-        reloadData()
+        setupBindings()
     }
     
     @IBAction func didClickDone(_ sender: AnyObject?) {
@@ -63,7 +61,11 @@ class AttendanceTableViewController: UITableViewController {
         })
     }
     
-    @objc func reloadData() {
+    private func setupBindings() {
+        let updatedObserver = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+        let createdObserver = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+
+
         let group = DispatchGroup()
 
         group.enter()

@@ -14,8 +14,8 @@ import RxCocoa
 
 class OrganizationService {
     static let shared = OrganizationService()
-    
-    fileprivate var disposeBag: DisposeBag!
+
+    private var organizationDisposeBag = DisposeBag()
 
     private let organizationRelay: BehaviorRelay<FirebaseOrganization?> = BehaviorRelay(value: nil)
     var organizationObservable: Observable<FirebaseOrganization?> {
@@ -30,12 +30,6 @@ class OrganizationService {
         loadingRelay.distinctUntilChanged()
     }
 
-    private let membersRelay: BehaviorRelay<[FirebaseMember]> = BehaviorRelay(value: [])
-    var membersObservable: Observable<[FirebaseMember]> {
-        membersRelay
-            .distinctUntilChanged()
-    }
-    
     var organizerRef: DatabaseReference?
     var organizerRefHandle: UInt?
     
@@ -47,6 +41,24 @@ class OrganizationService {
         organizationRelay.value?.id
     }
 
+    private let membersRelay: BehaviorRelay<[FirebaseMember]> = BehaviorRelay(value: [])
+    var membersObservable: Observable<[FirebaseMember]> {
+        membersRelay
+            .distinctUntilChanged()
+    }
+
+    var memberRef: DatabaseReference?
+    var memberRefHandle: UInt?
+
+    // MARK: -
+
+    func onLogout() {
+        stopObservingOrganization()
+        stopObservingMembers()
+    }
+
+    // MARK: - Rx for Organizations
+
     func startObservingOrganization(for userId: String) {
         print("\(self) - startObservingOrganization userID \(userId)")
         loadingRelay.accept(true)
@@ -56,8 +68,7 @@ class OrganizationService {
             loadingRelay.accept(false)
             return
         }
-        disposeBag = DisposeBag() // clear previous listeners
-        
+
         let ref = firRef.child("organizations")
         organizerRefHandle = ref.queryOrdered(byChild: "owner").queryEqual(toValue: userId).observe(.value, with: { [weak self] (snapshot) in
             self?.loadingRelay.accept(false)
@@ -76,10 +87,20 @@ class OrganizationService {
             }
         })
         organizerRef = ref
+
+        // Start observing mebers for any orgnanization
+        organizationObservable
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] organization in
+                self?.startObservingMembers(for: organization)
+            })
+            .disposed(by: organizationDisposeBag)
+
     }
     
-    func onLogout() {
+    func stopObservingOrganization() {
         print("\(self) - stopObservingOrganization")
+
         // stop observing organizer ref
         if let handle = organizerRefHandle {
             organizerRef?.removeObserver(withHandle: handle)
@@ -87,6 +108,8 @@ class OrganizationService {
         organizerRef = nil
         organizerRefHandle = nil
         organizationRelay.accept(nil)
+
+        organizationDisposeBag = DisposeBag()
     }
 
     func createOrUpdateOrganization(orgId: String, ownerId: String, name: String?, leftPowerUserFeedback: Bool) {
@@ -138,35 +161,78 @@ class OrganizationService {
         })
     }
 
-    /// Fetches members from Firebase once
-    func members(completion: (([FirebaseMember], Error?) -> Void)?) {
+    /// Returns the current members
+    func members(completion: ((Result<[FirebaseMember], Error>) -> Void)?) {
         guard let org = organizationRelay.value else {
-            completion?([], NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"]))
+            completion?(.failure(NSError(domain: "renderapps", code: 0, userInfo: ["reason": "no org"])))
             return
         }
 
         guard !OFFLINE_MODE else {
-            let members = FirebaseOfflineParser.shared.offlineMembers()
-            completion?(members, nil)
+            completion?(.success( FirebaseOfflineParser.shared.offlineMembers()))
             return
         }
-        
+
+        completion?(.success(membersRelay.value))
+    }
+//        
+//        let ref = firRef.child("members")
+//        ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
+//            guard snapshot.exists() else {
+//                completion?([], nil)
+//                return
+//            }
+//            
+//            var results: [FirebaseMember] = []
+//            if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
+//                for eventDict: DataSnapshot in allObjects {
+//                    let event = FirebaseMember(snapshot: eventDict)
+//                    results.append(event)
+//                }
+//            }
+//            completion?(results, nil)
+//        })
+//    }
+
+    // MARK: - Rx for members
+
+    // Start observing members when a new organization is found.
+    private func startObservingMembers(for organization: FirebaseOrganization) {
+        guard !OFFLINE_MODE else {
+            let members = FirebaseOfflineParser.shared.offlineMembers()
+            membersRelay.accept(members)
+            return
+        }
+
         let ref = firRef.child("members")
-        ref.queryOrdered(byChild: "organization").queryEqual(toValue: org.id).observeSingleEvent(of: .value, with: { snapshot in
-            guard snapshot.exists() else {
-                completion?([], nil)
-                return
-            }
-            
-            var results: [FirebaseMember] = []
-            if let allObjects =  snapshot.children.allObjects as? [DataSnapshot] {
-                for eventDict: DataSnapshot in allObjects {
-                    let event = FirebaseMember(snapshot: eventDict)
-                    results.append(event)
+        memberRefHandle = ref.queryOrdered(byChild: "organization")
+            .queryEqual(toValue: organization.id)
+            .observe(.value) { [weak self] snapshot in
+                guard snapshot.exists() else {
+                    self?.membersRelay.accept([])
+                    return
                 }
+
+                let results = (snapshot.children.allObjects as? [DataSnapshot])?
+                    .compactMap { eventDict in
+                        FirebaseMember(snapshot: eventDict)
+                    } ?? []
+
+                self?.membersRelay.accept(results)
             }
-            completion?(results, nil)
-        })
+        memberRef = ref
+    }
+
+    private func stopObservingMembers() {
+        print("\(self) - stopObservingMembers")
+
+        // stop observing organizer ref
+        if let handle = memberRefHandle {
+            memberRef?.removeObserver(withHandle: handle)
+        }
+        memberRef = nil
+        memberRefHandle = nil
+        membersRelay.accept([])
     }
     
     func createMember(email: String? = nil, name: String? = nil, notes: String? = nil, status: MemberStatus, completion:@escaping (FirebaseMember?, NSError?) -> Void) {
