@@ -6,6 +6,8 @@
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
+import RxSwift
+import RxCocoa
 import UIKit
 
 class AttendanceTableViewController: UITableViewController {
@@ -41,7 +43,11 @@ class AttendanceTableViewController: UITableViewController {
 
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Init
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,20 +68,27 @@ class AttendanceTableViewController: UITableViewController {
     }
     
     private func setupBindings() {
-        let updatedObserver = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
-        let createdObserver = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
-
+        // don't need member create and update notifications because members will change
+//        let updatedObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+//        let createdObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+//        let membersObservable = OrganizationService.shared.membersObservable
 
         let group = DispatchGroup()
 
         group.enter()
-        OrganizationService.shared.members { [weak self] (members, error) in
-            self?.members = members.sorted{
-                guard let n1 = $0.name?.uppercased() else { return false }
-                guard let n2 = $1.name?.uppercased() else { return true }
-                return n1 < n2
+        OrganizationService.shared.members { [weak self] result in
+            switch result {
+            case .success(let members):
+                self?.members = members.sorted{
+                    guard let n1 = $0.name?.uppercased() else { return false }
+                    guard let n2 = $1.name?.uppercased() else { return true }
+                    return n1 < n2
+                }
+                group.leave()
+            case .failure:
+                // no op
+                return
             }
-            group.leave()
         }
 
         if let event = event,

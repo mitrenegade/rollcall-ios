@@ -42,13 +42,19 @@ class MembersTableViewController: UITableViewController {
     }
     
     @objc func reloadMembers() {
-        OrganizationService.shared.members { [weak self] (members, error) in
-            self?._members = members.sorted{
-                guard let n1 = $0.name?.uppercased() else { return false }
-                guard let n2 = $1.name?.uppercased() else { return true }
-                return n1 < n2
+        OrganizationService.shared.members { [weak self] result in
+            switch result {
+            case .success(let members):
+                self?._members = members.sorted{
+                    guard let n1 = $0.name?.uppercased() else { return false }
+                    guard let n2 = $1.name?.uppercased() else { return true }
+                    return n1 < n2
+                }
+                self?.tableView.reloadData()
+            case .failure:
+                // no op
+                return
             }
-            self?.tableView.reloadData()
         }
     }
     

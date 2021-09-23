@@ -74,13 +74,13 @@ class AddMembersViewController: UIViewController {
     @objc func didClickSave(_ sender: Any?) {
         dismissKeyboard()
         showProgress("Adding new members")
-        OrganizationService.shared.members { [weak self] (members, error) in
-            if let error = error as NSError? {
+        OrganizationService.shared.members { [weak self] result in
+            switch result {
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.simpleAlert("Could not add members", defaultMessage: "There was an error adding new members.", error: error)
+                    self?.simpleAlert("Could not add members", defaultMessage: "There was an error adding new members.", error: error as NSError)
                 }
-                return
-            } else {
+            case .success(let members):
                 let filtered = self?.names.filter() { name in
                     let existing = members.filter() { return $0.name == name }
                     return existing.isEmpty
