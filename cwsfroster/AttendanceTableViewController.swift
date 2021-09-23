@@ -22,6 +22,8 @@ class AttendanceTableViewController: UITableViewController {
 
     private let event: FirebaseEvent?
 
+    private let attendanceService: AttendanceService?
+
     private var members: [FirebaseMember] = []
 
     /// Used for preset attendances
@@ -39,6 +41,10 @@ class AttendanceTableViewController: UITableViewController {
             sections = [.onsiteSignup, .attendances, .members]
         } else {
             sections = [.onsiteSignup, .members]
+        }
+
+        if let event = event {
+            attendanceService = AttendanceService(event: event)
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -73,9 +79,7 @@ class AttendanceTableViewController: UITableViewController {
 //        let createdObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
 //        let membersObservable = OrganizationService.shared.membersObservable
 
-        let group = DispatchGroup()
-
-        group.enter()
+        if !FeatureManager.shared.hasPrepopulateAttendance {
         OrganizationService.shared.members { [weak self] result in
             switch result {
             case .success(let members):
@@ -84,40 +88,45 @@ class AttendanceTableViewController: UITableViewController {
                     guard let n2 = $1.name?.uppercased() else { return true }
                     return n1 < n2
                 }
-                group.leave()
+                self?.tableView.reloadData()
             case .failure:
                 // no op
                 return
             }
         }
-
-        if let event = event,
-           FeatureManager.shared.hasPrepopulateAttendance {
-            group.enter()
-            AttendanceService.shared.attendances(for: event) { [weak self] result in
-                switch result {
-                case .success(let attendances):
-                    self?.attendances = attendances
-                case .failure(let error):
-                    print("Error \(error)")
-                    if let error = error as? AttendanceService.AttendanceError,
-                       error != .invalidEvent {
-                        // Any error that is not an invalidEvent error should be logged
-                        LoggingService.log(event: .fetchAttendancesError, message: nil, info: ["error": error.localizedDescription], error: nil)
-                    }
-                }
-                group.leave()
-            }
         }
 
-        group.notify(queue: DispatchQueue.main) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            if let event = self.event {
-                self.viewModel.migrateAttendances(event: event, members: self.members, attendances: self.attendances)
-            }
-            self.tableView.reloadData()
+        if FeatureManager.shared.hasPrepopulateAttendance, let attendanceService = attendanceService {
+            // display all attendances
+            attendanceService.attendancesObservable
+                .subscribe(onNext: { [weak self] attendances in
+                    guard let self = self else {
+                        return
+                    }
+                    if let attendances = attendances {
+                        self.attendances = attendances
+                        self.tableView.reloadData()
+                    }
+                })
+                .disposed(by: disposeBag)
+
+            // migrate if necessary. This only gets triggered once
+            Observable.combineLatest(OrganizationService.shared.membersObservable,
+                                     attendanceService.needsAttendanceMigrationObservable)
+                .subscribe(onNext: { [weak self] members, needsAttendances in
+                    guard let self = self else {
+                        return
+                    }
+                    // no attendances exist for the event.
+                    if let event = self.event {
+                        print("BOBBYTEST needs migration for event \(event.id)")
+                        // TODO: self.attendances should be nil at this point; no need to use it
+                        self.viewModel.migrateAttendances(event: event,
+                                                          members: self.members,
+                                                          attendances: self.attendances)
+                    }
+                })
+                .disposed(by: disposeBag)
         }
     }
 

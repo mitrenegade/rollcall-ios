@@ -8,6 +8,7 @@
 
 import Firebase
 import RxSwift
+import RxCocoa
 
 // new UI: includes presignup
 enum AttendanceStatus: String, CaseIterable {
@@ -25,25 +26,67 @@ enum AttendedStatus: Int {
     case Freebie = 2
 }
 
-class AttendanceService: NSObject {
-    static let shared: AttendanceService = AttendanceService()
+enum AttendanceError: Error {
+    case notAuthenticated
+    case invalidEvent
+    case createFailed
+    case updateFailed
+}
 
-    enum AttendanceError: Error {
-        case notAuthenticated
-        case invalidEvent
-        case createFailed
-        case updateFailed
+class AttendanceService: NSObject {
+
+    // MARK: - Properties
+
+    private let event: FirebaseEvent
+
+    // attendances for a given event
+    private let attendancesRelay = BehaviorRelay<[String: AttendanceStatus]?>(value: nil)
+    var attendancesObservable: Observable<[String: AttendanceStatus]?> {
+        attendancesRelay
+            .distinctUntilChanged()
     }
 
-    /// Fetches attendances for an event from Firebase.
-    /// No caching now to ensure accuracy
-    func attendances(for event: FirebaseEvent, completion: @escaping  (Result<[String: AttendanceStatus], Error>) -> Void) {
+    private let needsAttendanceMigrationRelay = BehaviorRelay<Bool>(value: false)
+    // This observable event occurs once if we cannot find the attendances endpoint for an event
+    var needsAttendanceMigrationObservable: Observable<Bool> {
+        needsAttendanceMigrationRelay
+            .filter { $0 }
+            .take(1)
+    }
+
+    // MARK: -
+
+    var attendancesRefHandle: UInt?
+    var attendancesRef: DatabaseReference?
+
+
+    // MARK: - Initialization
+
+    init(event: FirebaseEvent) {
+        self.event = event
+
+        super.init()
+        setupBindings()
+    }
+
+    deinit {
+        stopObservingAttendances()
+    }
+
+    private func setupBindings() {
         guard UserService.shared.isLoggedIn else { return }
 
+        startObservingAttendances()
+    }
+
+    private func startObservingAttendances() {
+        print("BOBBYTEST startObservingAttendances for event \(event.id)")
         let ref = firRef.child("events").child(event.id).child("attendances")
-        ref.observeSingleEvent(of: .value) { snapshot in
+        attendancesRefHandle = ref.observe(.value) { [weak self] snapshot in
             guard snapshot.exists() else {
-                completion(.failure(AttendanceError.invalidEvent))
+                print("BOBBYTEST needsAttendanceMigration for event \(self?.event.id ?? "")")
+                self?.attendancesRelay.accept(nil)
+                self?.needsAttendanceMigrationRelay.accept(true)
                 return
             }
 
@@ -53,12 +96,23 @@ class AttendanceService: NSObject {
                     results[object.key] = AttendanceStatus(rawValue: object.value as! String)
                 }
             }
-            completion(.success(results))
+            print("BOBBYTEST event attendance \(results.count)")
+            self?.attendancesRelay.accept(results)
         }
+        attendancesRef = ref
+    }
+
+    private func stopObservingAttendances() {
+        if let handle = attendancesRefHandle {
+            attendancesRef?.removeObserver(withHandle: handle)
+        }
+        attendancesRef = nil
+        attendancesRefHandle = nil
+        attendancesRelay.accept(nil)
     }
 
     /// Creates a new attendance for an event and member
-    func createOrUpdateAttendance(for event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
+    func createOrUpdateAttendance(for member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
         guard UserService.shared.isLoggedIn else {
             completion(.failure(AttendanceError.notAuthenticated))
             return

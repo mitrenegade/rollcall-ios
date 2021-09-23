@@ -60,7 +60,7 @@ class OrganizationService {
     // MARK: - Rx for Organizations
 
     func startObservingOrganization(for userId: String) {
-        print("\(self) - startObservingOrganization userID \(userId)")
+        print("BOBBYTEST \(self) - startObservingOrganization userID \(userId)")
         loadingRelay.accept(true)
         guard !OFFLINE_MODE else {
             let org = FirebaseOfflineParser.shared.offlineOrganization()
@@ -88,7 +88,7 @@ class OrganizationService {
         })
         organizerRef = ref
 
-        // Start observing mebers for any orgnanization
+        // Start observing mebers for any organization
         organizationObservable
             .compactMap { $0 }
             .subscribe(onNext: { [weak self] organization in
@@ -99,7 +99,7 @@ class OrganizationService {
     }
     
     func stopObservingOrganization() {
-        print("\(self) - stopObservingOrganization")
+        print("BOBBYTEST \(self) - stopObservingOrganization")
 
         // stop observing organizer ref
         if let handle = organizerRefHandle {
@@ -204,6 +204,8 @@ class OrganizationService {
             return
         }
 
+        print("BOBBYTEST startObservingMembers for organization \(organization.id)")
+
         let ref = firRef.child("members")
         memberRefHandle = ref.queryOrdered(byChild: "organization")
             .queryEqual(toValue: organization.id)
@@ -218,6 +220,7 @@ class OrganizationService {
                         FirebaseMember(snapshot: eventDict)
                     } ?? []
 
+                print("BOBBYTEST organization members \(results.count)")
                 self?.membersRelay.accept(results)
             }
         memberRef = ref
