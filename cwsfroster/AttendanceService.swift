@@ -80,7 +80,7 @@ class AttendanceService: NSObject {
     }
 
     private func startObservingAttendances() {
-        print("BOBBYTEST startObservingAttendances for event \(event.id)")
+        print("BOBBYTEST startObservingAttendances \(self) for event \(event.id)")
         let ref = firRef.child("events").child(event.id).child("attendances")
         attendancesRefHandle = ref.observe(.value) { [weak self] snapshot in
             guard snapshot.exists() else {

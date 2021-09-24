@@ -31,7 +31,7 @@ class AttendanceTableViewController: UITableViewController {
 
     private weak var delegate: PracticeEditDelegate?
 
-    private let viewModel = AttendanceViewModel()
+    private let viewModel: AttendanceViewModel?
 
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
@@ -45,6 +45,10 @@ class AttendanceTableViewController: UITableViewController {
 
         if let event = event {
             attendanceService = AttendanceService(event: event)
+            viewModel = AttendanceViewModel(event: event)
+        } else {
+            attendanceService = nil
+            viewModel = nil
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -79,7 +83,6 @@ class AttendanceTableViewController: UITableViewController {
 //        let createdObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
 //        let membersObservable = OrganizationService.shared.membersObservable
 
-        if !FeatureManager.shared.hasPrepopulateAttendance {
         OrganizationService.shared.members { [weak self] result in
             switch result {
             case .success(let members):
@@ -94,19 +97,21 @@ class AttendanceTableViewController: UITableViewController {
                 return
             }
         }
-        }
 
-        if FeatureManager.shared.hasPrepopulateAttendance, let attendanceService = attendanceService {
-            // display all attendances
-            attendanceService.attendancesObservable
-                .subscribe(onNext: { [weak self] attendances in
+        if FeatureManager.shared.hasPrepopulateAttendance,
+           let attendanceService = attendanceService {
+
+            // display all attendances after receiving members and attendances
+            Observable.combineLatest(OrganizationService.shared.membersObservable,
+                                     attendanceService.attendancesObservable)
+                .subscribe(onNext: { [weak self] members, attendances in
                     guard let self = self else {
                         return
                     }
                     if let attendances = attendances {
                         self.attendances = attendances
-                        self.tableView.reloadData()
                     }
+                    self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
 
@@ -118,13 +123,10 @@ class AttendanceTableViewController: UITableViewController {
                         return
                     }
                     // no attendances exist for the event.
-                    if let event = self.event {
-                        print("BOBBYTEST needs migration for event \(event.id)")
-                        // TODO: self.attendances should be nil at this point; no need to use it
-                        self.viewModel.migrateAttendances(event: event,
-                                                          members: self.members,
-                                                          attendances: self.attendances)
-                    }
+                    print("BOBBYTEST needs migration for event")
+                    // TODO: self.attendances should be nil at this point; no need to use it
+                    self.viewModel?.migrateAttendances(members: members,
+                                                      attendances: self.attendances)
                 })
                 .disposed(by: disposeBag)
         }
@@ -177,14 +179,24 @@ extension AttendanceTableViewController {
 
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
 
-            // Standard
-            guard indexPath.row < members.count, let event = event else { return cell }
-            let member = members[indexPath.row]
-            attendanceCell.configure(member: member, event: event, row: indexPath.row)
+            guard indexPath.row < members.count else {
+                return cell
+            }
 
-            // Plus
-            guard let attendance = attendances[member.id] as? AttendanceStatus else { return cell }
-            attendanceCell.configure(status: attendance)
+            // Standard
+            if !FeatureManager.shared.hasPrepopulateAttendance {
+                if let event = event {
+                    let member = members[indexPath.row]
+                    attendanceCell.configure(member: member, event: event, row: indexPath.row)
+                }
+            } else {
+                // Plus
+                let member = members[indexPath.row]
+                if let attendance = attendances[member.id] {
+                    attendanceCell.configure(status: attendance)
+                }
+            }
+
             return cell
         } else {
             fatalError("Invalid section")
@@ -233,22 +245,22 @@ extension AttendanceTableViewController {
         let member = members[indexPath.row]
 
         if FeatureManager.shared.hasPrepopulateAttendance {
-            promptForUpdateAttendance(for: member, event: event)
+            promptForUpdateAttendance(for: member)
         } else {
-            viewModel.toggleAttendance(for: member, event: event)
+            viewModel?.toggleAttendance(for: member)
         }
         tableView.reloadData()
     }
 
     // MARK: - Plus
-    private func promptForUpdateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+    private func promptForUpdateAttendance(for member: FirebaseMember) {
         // show action sheet to select attendance status, then call viewModel to update it
         let title = "Update attendance"
         let message = "Please select from the following options"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for status in AttendanceStatus.allCases {
             alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
-                self.viewModel.updateAttendance(for: member, event: event, status: status)
+                self.viewModel?.updateAttendance(for: member, status: status)
             }))
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

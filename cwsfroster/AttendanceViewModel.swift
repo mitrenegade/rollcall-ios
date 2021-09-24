@@ -8,8 +8,19 @@
 
 internal struct AttendanceViewModel {
 
+    private let attendanceService: AttendanceService
+
+    private let event: FirebaseEvent
+
+    // Creates an AttendanceViewModel for a given event.
+    // This also creates an AttendanceService
+    init(event: FirebaseEvent) {
+        self.event = event
+        attendanceService = AttendanceService(event: event)
+    }
+
     // MARK: Standard
-    func attendedStatusImage(for member: FirebaseMember, event: FirebaseEvent) -> UIImage? {
+    func attendedStatusImage(for member: FirebaseMember) -> UIImage? {
         if event.attended(for: member.id) != AttendedStatus.None {
             return UIImage(named: "checked")
         } else {
@@ -17,14 +28,14 @@ internal struct AttendanceViewModel {
         }
     }
 
-    func toggleAttendance(for member: FirebaseMember, event: FirebaseEvent) {
+    func toggleAttendance(for member: FirebaseMember) {
         print("BOBBYTEST toggle \(member.id) event \(event.id) present? \(event.attended(for: member.id) == .Present)")
         if event.attended(for: member.id) == .Present {
             // old attendance format. Updates events/id/attendees
             event.removeAttendance(for: member.id)
 
             // new attendances format
-            AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .notSignedUp) { result in
+            attendanceService.createOrUpdateAttendance(for: member, status: .notSignedUp) { result in
                 // no op
             }
         } else {
@@ -32,26 +43,22 @@ internal struct AttendanceViewModel {
             event.addAttendance(for: member.id)
 
             // new attendances format
-            AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .attended) { result in
+            attendanceService.createOrUpdateAttendance(for: member, status: .attended) { result in
                 // no op
             }
         }
     }
 
     // MARK: Plus
-    func attendanceStatusText(for status: AttendanceStatus) -> String {
-        status.rawValue
-    }
-
-    func updateAttendance(for member: FirebaseMember, event: FirebaseEvent, status: AttendanceStatus) {
-        AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: status) { result in
+    func updateAttendance(for member: FirebaseMember, status: AttendanceStatus) {
+        attendanceService.createOrUpdateAttendance(for: member, status: status) { result in
             // no op
         }
     }
 
     // MARK: -
     /// Migrate to AttendanceStatus for users who have switched to Plus.
-    func migrateAttendances(event: FirebaseEvent, members: [FirebaseMember], attendances: [String: AttendanceStatus]) {
+    func migrateAttendances(members: [FirebaseMember], attendances: [String: AttendanceStatus]) {
         let membersAttending: [FirebaseMember] = members.filter { member in
             event.attended(for: member.id) == .Present
         }
@@ -65,13 +72,15 @@ internal struct AttendanceViewModel {
         let group = DispatchGroup()
         for member in missingMembers {
             group.enter()
-            AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .signedUp) { _ in
+            attendanceService.createOrUpdateAttendance(for: member, status: .signedUp) { _ in
                 group.leave()
             }
         }
         group.notify(queue: DispatchQueue.main) {
-            let params: [String: Any] = ["event": event.id, "members": missingMembers.map { $0.id }]
-            LoggingService.log(event: .attendancesMigrated, message: nil, info: params, error: nil)
+            if missingMembers.isNotEmpty {
+                let params: [String: Any] = ["event": event.id, "members": missingMembers.map { $0.id }]
+                LoggingService.log(event: .attendancesMigrated, message: nil, info: params, error: nil)
+            }
         }
     }
 }

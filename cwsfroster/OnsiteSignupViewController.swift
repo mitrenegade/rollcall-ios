@@ -24,8 +24,18 @@ class OnsiteSignupViewController: UIViewController {
     var addedAttendees: [FirebaseMember] = []
     @IBOutlet weak var buttonSave: UIButton!
     
-    var practice: FirebaseEvent?
+    var practice: FirebaseEvent? {
+        didSet {
+            if let event = practice {
+                attendanceService = AttendanceService(event: event)
+            } else {
+                attendanceService = nil
+            }
+        }
+    }
     let cameraHelper = CameraHelper()
+
+    private var attendanceService: AttendanceService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,8 +111,8 @@ class OnsiteSignupViewController: UIViewController {
                 LoggingService.log(type: "OnsiteSignup", info: ["id": member.id, "photo": self?.addedPhoto != nil])
                 
                 // add attendance
-                if let event = self?.practice {
-                    AttendanceService.shared.createOrUpdateAttendance(for: event, member: member, status: .signedUp) { result in
+                if self?.practice != nil {
+                    self?.attendanceService?.createOrUpdateAttendance(for: member, status: .signedUp) { result in
                         // no op
                     }
                 }
