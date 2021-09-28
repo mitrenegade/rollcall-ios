@@ -59,6 +59,7 @@ class AttendanceService: NSObject {
     var attendancesRefHandle: UInt?
     var attendancesRef: DatabaseReference?
 
+    let disposeBag = DisposeBag()
 
     // MARK: - Initialization
 
@@ -81,8 +82,9 @@ class AttendanceService: NSObject {
 
     private func startObservingAttendances() {
         guard !OFFLINE_MODE else {
-            let attendances = FirebaseOfflineParser.shared.offlineAttendances(for: event)
-            attendancesRelay.accept(attendances)
+            FirebaseOfflineParser.shared.offlineAttendanceStatusDriver()
+                .drive(attendancesRelay)
+                .disposed(by: disposeBag)
             return
         }
 
@@ -120,7 +122,7 @@ class AttendanceService: NSObject {
     /// Creates a new attendance for an event and member
     func createOrUpdateAttendance(for member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
         guard !OFFLINE_MODE else {
-            FirebaseOfflineParser.shared.offlineUpdateAttendanceStatus(event: event, member: member, status: status)
+            FirebaseOfflineParser.shared.offlineUpdateAttendanceStatus(member: member, status: status)
             completion(.success(()))
             return
         }

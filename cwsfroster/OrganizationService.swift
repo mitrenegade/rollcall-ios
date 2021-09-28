@@ -63,7 +63,8 @@ class OrganizationService {
         print("BOBBYTEST \(self) - startObservingOrganization userID \(userId)")
         loadingRelay.accept(true)
         guard !OFFLINE_MODE else {
-            let org = FirebaseOfflineParser.shared.offlineOrganization()
+            let org = FirebaseOfflineParser.shared.offlineOrganization()!
+            startObservingMembers(for: org)
             organizationRelay.accept(org)
             loadingRelay.accept(false)
             return

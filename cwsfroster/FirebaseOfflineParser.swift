@@ -6,6 +6,8 @@
 //  Copyright © 2018 Bobby Ren. All rights reserved.
 //
 
+import RxSwift
+import RxCocoa
 import UIKit
 
 class FirebaseOfflineParser: NSObject {
@@ -87,26 +89,27 @@ class FirebaseOfflineParser: NSObject {
         })
     }
 
-    var attendanceStatusesForEvent = [String: [String: AttendanceStatus]]()
+    /// A `BehaviorRelay` of attendanceStatuses for member IDs.
+    /// This BehaviorRelay uses the same data for all event IDs, and provides a way
+    /// to observe changes in attendance after updating the attendance string.
+    /// It does not need to match the event's members' offline attended status.
+    var attendanceStatusRelay = BehaviorRelay<[String: AttendanceStatus]>(value: [:])
 
-    // return offline attendance status during offline mode
-    func offlineAttendances(for event: FirebaseEvent) -> [String: AttendanceStatus] {
-        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [:] }
-        guard let eventDict = eventsDict[event.id] as? [String: Any] else { return [:] }
-        guard let attendees = eventDict["attendees"] as? [String: Bool] else { return [:] }
-        var attendanceStatus = [String: AttendanceStatus]()
-        let eventAttendance = attendanceStatusesForEvent[event.id] ?? [:]
-        for attendee in attendees {
-            attendanceStatus[attendee.key] = eventAttendance[attendee.key]
-        }
-        return attendanceStatus
+    /// Returns an observable attendance status
+    func offlineAttendanceStatusObservable() -> Observable<[String: AttendanceStatus]> {
+        return attendanceStatusRelay.asObservable()
     }
 
-    // update offline attendance status during offline mode
-    func offlineUpdateAttendanceStatus(event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus) {
-        var eventAttendance = attendanceStatusesForEvent[event.id] ?? [:]
+    /// Returns a driver for attendance status
+    func offlineAttendanceStatusDriver() -> Driver<[String: AttendanceStatus]> {
+        return attendanceStatusRelay.asDriver()
+    }
+
+    /// update offline attendance status during offline mode
+    func offlineUpdateAttendanceStatus(member: FirebaseMember, status: AttendanceStatus) {
+        var eventAttendance = attendanceStatusRelay.value
         eventAttendance[member.id] = status
-        attendanceStatusesForEvent[event.id] = eventAttendance
+        attendanceStatusRelay.accept(eventAttendance)
     }
 }
 
