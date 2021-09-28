@@ -68,7 +68,6 @@ internal struct AttendanceViewModel {
             }
             return member
         }
-        print("BOBBYTEST \(missingMembers)")
         let group = DispatchGroup()
         for member in missingMembers {
             group.enter()

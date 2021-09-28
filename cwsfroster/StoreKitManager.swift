@@ -78,7 +78,6 @@ extension StoreKitManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         if response.products.isNotEmpty {
             products = response.products
-            print("BOBBYTEST products \(products)")
         }
 
         if response.invalidProductIdentifiers.isNotEmpty {

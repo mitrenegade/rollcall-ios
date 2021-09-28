@@ -31,7 +31,6 @@ class AttendanceCell: UITableViewCell {
         nameLabel.snp.makeConstraints {
             $0.leading.equalTo(photoView.snp.trailing).offset(8)
             $0.top.equalToSuperview().offset(8)
-            $0.trailing.equalToSuperview().offset(-8)
             $0.bottom.equalToSuperview().offset(-8)
             $0.height.equalTo(30)
         }
