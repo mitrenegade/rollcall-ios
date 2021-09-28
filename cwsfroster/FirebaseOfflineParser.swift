@@ -25,6 +25,13 @@ class FirebaseOfflineParser: NSObject {
         }
         super.init()
     }
+
+    func offlineUser() -> FirebaseUser? {
+        guard UserService.shared.isLoggedIn else { return nil }
+        guard let users = offlineDict["users"] as? [String: Any] else { return nil }
+        guard let dict = users.first else { return nil }
+        return FirebaseUser(key: dict.key, dict: dict.value as? [String : Any])
+    }
     
     func offlineOrganization() -> FirebaseOrganization? {
         guard UserService.shared.isLoggedIn else { return nil }
@@ -67,7 +74,7 @@ class FirebaseOfflineParser: NSObject {
         })
     }
     
-    func offlineAttendances(for event: FirebaseEvent) -> [String] {
+    func offlineAttendedStatuses(for event: FirebaseEvent) -> [String] {
         guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [] }
         guard let eventDict = eventsDict[event.id] as? [String: Any] else { return [] }
         guard let attendees = eventDict["attendees"] as? [String: Bool] else { return [] }
@@ -79,6 +86,27 @@ class FirebaseOfflineParser: NSObject {
             }
         })
     }
-    
+
+    var attendanceStatusesForEvent = [String: [String: AttendanceStatus]]()
+
+    // return offline attendance status during offline mode
+    func offlineAttendances(for event: FirebaseEvent) -> [String: AttendanceStatus] {
+        guard let eventsDict = offlineDict["events"] as? [String: Any] else { return [:] }
+        guard let eventDict = eventsDict[event.id] as? [String: Any] else { return [:] }
+        guard let attendees = eventDict["attendees"] as? [String: Bool] else { return [:] }
+        var attendanceStatus = [String: AttendanceStatus]()
+        let eventAttendance = attendanceStatusesForEvent[event.id] ?? [:]
+        for attendee in attendees {
+            attendanceStatus[attendee.key] = eventAttendance[attendee.key]
+        }
+        return attendanceStatus
+    }
+
+    // update offline attendance status during offline mode
+    func offlineUpdateAttendanceStatus(event: FirebaseEvent, member: FirebaseMember, status: AttendanceStatus) {
+        var eventAttendance = attendanceStatusesForEvent[event.id] ?? [:]
+        eventAttendance[member.id] = status
+        attendanceStatusesForEvent[event.id] = eventAttendance
+    }
 }
 

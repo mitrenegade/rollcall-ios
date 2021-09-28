@@ -80,6 +80,12 @@ class AttendanceService: NSObject {
     }
 
     private func startObservingAttendances() {
+        guard !OFFLINE_MODE else {
+            let attendances = FirebaseOfflineParser.shared.offlineAttendances(for: event)
+            attendancesRelay.accept(attendances)
+            return
+        }
+
         print("BOBBYTEST startObservingAttendances \(self) for event \(event.id)")
         let ref = firRef.child("events").child(event.id).child("attendances")
         attendancesRefHandle = ref.observe(.value) { [weak self] snapshot in
@@ -113,6 +119,12 @@ class AttendanceService: NSObject {
 
     /// Creates a new attendance for an event and member
     func createOrUpdateAttendance(for member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard !OFFLINE_MODE else {
+            FirebaseOfflineParser.shared.offlineUpdateAttendanceStatus(event: event, member: member, status: status)
+            completion(.success(()))
+            return
+        }
+
         guard UserService.shared.isLoggedIn else {
             completion(.failure(AttendanceError.notAuthenticated))
             return
