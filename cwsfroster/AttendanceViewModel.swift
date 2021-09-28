@@ -58,26 +58,20 @@ internal struct AttendanceViewModel {
 
     // MARK: -
     /// Migrate to AttendanceStatus for users who have switched to Plus.
-    func migrateAttendances(members: [FirebaseMember], attendances: [String: AttendanceStatus]) {
+    func migrateAttendances(members: [FirebaseMember]) {
         let membersAttending: [FirebaseMember] = members.filter { member in
             event.attended(for: member.id) == .Present
         }
-        let missingMembers: [FirebaseMember] = membersAttending.compactMap { member in
-            if attendances[member.id] != nil {
-                return nil
-            }
-            return member
-        }
         let group = DispatchGroup()
-        for member in missingMembers {
+        for member in membersAttending {
             group.enter()
             attendanceService.createOrUpdateAttendance(for: member, status: .signedUp) { _ in
                 group.leave()
             }
         }
         group.notify(queue: DispatchQueue.main) {
-            if missingMembers.isNotEmpty {
-                let params: [String: Any] = ["event": event.id, "members": missingMembers.map { $0.id }]
+            if membersAttending.isNotEmpty {
+                let params: [String: Any] = ["event": event.id, "members": membersAttending.map { $0.id }]
                 LoggingService.log(event: .attendancesMigrated, message: nil, info: params, error: nil)
             }
         }

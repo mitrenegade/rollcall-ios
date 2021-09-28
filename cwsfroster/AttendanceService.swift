@@ -19,6 +19,22 @@ enum AttendanceStatus: String, CaseIterable {
     case noShow
 }
 
+struct Attendance: Comparable {
+    static func < (lhs: Attendance, rhs: Attendance) -> Bool {
+        guard let lname = lhs.member.name else {
+            return false
+        }
+        guard let rname = rhs.member.name else {
+            return true
+        }
+
+        return lname < rname
+    }
+
+    let member: FirebaseMember
+    let status: AttendanceStatus
+}
+
 // old UI: attended or not
 enum AttendedStatus: Int {
     case None = 0

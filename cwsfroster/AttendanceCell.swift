@@ -90,10 +90,11 @@ class AttendanceCell: UITableViewCell {
     }
 
     // MARK: - Plus
-    func configure(status: AttendanceStatus) {
+    func configure(attendance: Attendance) {
         guard FeatureManager.shared.hasPrepopulateAttendance else {
             return
         }
-        attendanceLabel.text = status.rawValue
+        nameLabel.text = attendance.member.name
+        attendanceLabel.text = attendance.status.rawValue
     }
 }

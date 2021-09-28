@@ -26,8 +26,9 @@ class AttendanceTableViewController: UITableViewController {
 
     private var members: [FirebaseMember] = []
 
-    /// Used for preset attendances
-    private var attendances: [String: AttendanceStatus] = [:]
+    // MARK: - Attendance status, as an array of tuples. Sorted by member name
+
+    private var attendances: [Attendance] = []
 
     private weak var delegate: PracticeEditDelegate?
 
@@ -105,12 +106,18 @@ class AttendanceTableViewController: UITableViewController {
             Observable.combineLatest(OrganizationService.shared.membersObservable,
                                      attendanceService.attendancesObservable)
                 .subscribe(onNext: { [weak self] members, attendances in
-                    guard let self = self else {
+                    guard let self = self,
+                          let attendances = attendances else {
                         return
                     }
-                    if let attendances = attendances {
-                        self.attendances = attendances
-                    }
+                    self.attendances = attendances.compactMap({ (memberId: String, status: AttendanceStatus) in
+                        guard let member = members.first(where: { mem in
+                            mem.id == memberId
+                        }) else {
+                            return nil
+                        }
+                        return Attendance(member: member, status: status)
+                    })
                     self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
@@ -123,10 +130,7 @@ class AttendanceTableViewController: UITableViewController {
                         return
                     }
                     // no attendances exist for the event.
-                    print("BOBBYTEST needs migration for event")
-                    // TODO: self.attendances should be nil at this point; no need to use it
-                    self.viewModel?.migrateAttendances(members: members,
-                                                      attendances: self.attendances)
+                    self.viewModel?.migrateAttendances(members: members)
                 })
                 .disposed(by: disposeBag)
         }
@@ -179,23 +183,13 @@ extension AttendanceTableViewController {
 
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
 
-            guard indexPath.row < members.count else {
+            guard indexPath.row < attendances.count else {
                 return cell
             }
 
-            // Standard
-            if !FeatureManager.shared.hasPrepopulateAttendance {
-                if let event = event {
-                    let member = members[indexPath.row]
-                    attendanceCell.configure(member: member, event: event, row: indexPath.row)
-                }
-            } else {
-                // Plus
-                let member = members[indexPath.row]
-                if let attendance = attendances[member.id] {
-                    attendanceCell.configure(status: attendance)
-                }
-            }
+            // Plus
+            let attendance = attendances[indexPath.row]
+            attendanceCell.configure(attendance: attendance)
 
             return cell
         } else {
