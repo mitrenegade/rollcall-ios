@@ -176,7 +176,7 @@ extension AttendanceTableViewController {
             guard indexPath.row < members.count, let event = event else { return cell }
             let member = members[indexPath.row]
 
-            attendanceCell.configure(member: member, event: event, row: indexPath.row)
+            attendanceCell.configure(member: member, attended: event.attended(for: member.id), row: indexPath.row)
             return cell
         } else if sections[indexPath.section] == .attendances {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
@@ -189,7 +189,7 @@ extension AttendanceTableViewController {
 
             // Plus
             let attendance = attendances[indexPath.row]
-            attendanceCell.configure(attendance: attendance)
+            attendanceCell.configure(attendance: attendance, row: indexPath.row)
 
             return cell
         } else {

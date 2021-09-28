@@ -19,15 +19,6 @@ internal struct AttendanceViewModel {
         attendanceService = AttendanceService(event: event)
     }
 
-    // MARK: Standard
-    func attendedStatusImage(for member: FirebaseMember) -> UIImage? {
-        if event.attended(for: member.id) != AttendedStatus.None {
-            return UIImage(named: "checked")
-        } else {
-            return UIImage(named: "unchecked")
-        }
-    }
-
     func toggleAttendance(for member: FirebaseMember) {
         print("BOBBYTEST toggle \(member.id) event \(event.id) present? \(event.attended(for: member.id) == .Present)")
         if event.attended(for: member.id) == .Present {
