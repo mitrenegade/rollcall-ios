@@ -21,10 +21,10 @@ enum AttendanceStatus: String, CaseIterable {
 
 struct Attendance: Comparable {
     static func < (lhs: Attendance, rhs: Attendance) -> Bool {
-        guard let lname = lhs.member.name else {
+        guard let lname = lhs.member.name?.lowercased() else {
             return false
         }
-        guard let rname = rhs.member.name else {
+        guard let rname = rhs.member.name?.lowercased() else {
             return true
         }
 

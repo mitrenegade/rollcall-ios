@@ -117,7 +117,7 @@ class AttendanceTableViewController: UITableViewController {
                             return nil
                         }
                         return Attendance(member: member, status: status)
-                    })
+                    }).sorted()
                     self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)
