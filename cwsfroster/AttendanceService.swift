@@ -104,29 +104,37 @@ class AttendanceService: NSObject {
     }
 
     /// Creates a new attendance for an event and member
-    func createOrUpdateAttendance(for member: FirebaseMember, status: AttendanceStatus, completion: @escaping (Result<Void, Error>) -> Void) {
+    func createOrUpdateAttendance(for member: FirebaseMember, status: AttendanceStatus, completion: ((Result<Void, Error>) -> Void)?) {
         guard !OFFLINE_MODE else {
             FirebaseOfflineParser.shared.offlineUpdateAttendanceStatus(member: member, status: status)
-            completion(.success(()))
+            completion?(.success(()))
             return
         }
 
         guard UserService.shared.isLoggedIn else {
-            completion(.failure(AttendanceError.notAuthenticated))
+            completion?(.failure(AttendanceError.notAuthenticated))
             return
         }
 
-        // new attendance format. Updates events/id/attendances
+        // new attendance format: Updates events/id/attendances
         let eventRef = firRef.child("events").child(event.id).child("attendances").child(member.id)
         eventRef.setValue(status.rawValue)
 
-        // also updates memberEvents/id
+        // new attendance format. also updates memberEvents/id
         let memberEventsRef = firRef.child("memberEvents")
             .child(member.id)
             .child(event.id)
         memberEventsRef.setValue(status.rawValue)
 
-        completion(.success(()))
+        // old attendance format
+        switch status {
+        case .attended, .signedUp:
+            event.addAttendance(for: member.id)
+        case .noShow, .notAttending, .notSignedUp:
+            event.removeAttendance(for: member.id)
+        }
+
+        completion?(.success(()))
     }
 
     /// Change attendance status for a member
@@ -151,13 +159,6 @@ class AttendanceService: NSObject {
         }
     }
 
-    // MARK: Plus
-    func updateAttendance(for member: FirebaseMember, status: AttendanceStatus) {
-        createOrUpdateAttendance(for: member, status: status) { result in
-            // no op
-        }
-    }
-
     // MARK: -
     /// Migrate to AttendanceStatus for users who have switched to Plus.
     func migrateAttendances(members: [FirebaseMember]) {
@@ -171,9 +172,10 @@ class AttendanceService: NSObject {
                 group.leave()
             }
         }
-        group.notify(queue: DispatchQueue.main) { [weak self] in
+        let eventId = event.id
+        group.notify(queue: DispatchQueue.main) {
             if membersAttending.isNotEmpty {
-                let params: [String: Any] = ["event": self?.event.id, "members": membersAttending.map { $0.id }]
+                let params: [String: Any] = ["event": eventId, "members": membersAttending.map { $0.id }]
                 LoggingService.log(event: .attendancesMigrated, message: nil, info: params, error: nil)
             }
         }

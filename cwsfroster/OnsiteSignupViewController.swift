@@ -112,9 +112,7 @@ class OnsiteSignupViewController: UIViewController {
                 
                 // add attendance
                 if self?.practice != nil {
-                    self?.attendanceService?.createOrUpdateAttendance(for: member, status: .signedUp) { result in
-                        // no op
-                    }
+                    self?.attendanceService?.createOrUpdateAttendance(for: member, status: .signedUp, completion: nil)
                 }
 
                 // enable button and reset form

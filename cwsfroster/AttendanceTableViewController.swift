@@ -249,7 +249,7 @@ extension AttendanceTableViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for status in AttendanceStatus.allCases {
             alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
-                self.attendanceService?.updateAttendance(for: member, status: status)
+                self.attendanceService?.createOrUpdateAttendance(for: member, status: status, completion: nil)
             }))
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
