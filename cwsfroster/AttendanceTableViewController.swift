@@ -82,21 +82,6 @@ class AttendanceTableViewController: UITableViewController {
 //        let createdObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
 //        let membersObservable = OrganizationService.shared.membersObservable
 
-        OrganizationService.shared.members { [weak self] result in
-            switch result {
-            case .success(let members):
-                self?.members = members.sorted{
-                    guard let n1 = $0.name?.uppercased() else { return false }
-                    guard let n2 = $1.name?.uppercased() else { return true }
-                    return n1 < n2
-                }
-                self?.tableView.reloadData()
-            case .failure:
-                // no op
-                return
-            }
-        }
-
         if FeatureManager.shared.hasPrepopulateAttendance,
            let attendanceService = attendanceService {
 
@@ -104,11 +89,12 @@ class AttendanceTableViewController: UITableViewController {
             Observable.combineLatest(OrganizationService.shared.membersObservable,
                                      attendanceService.attendancesObservable)
                 .subscribe(onNext: { [weak self] members, attendances in
-                    guard let self = self,
-                          let attendances = attendances else {
+                    guard let self = self else {
                         return
                     }
-                    self.attendances = attendances.compactMap({ (memberId: String, status: AttendanceStatus) in
+                    self.members = members.sorted()
+
+                    self.attendances = (attendances ?? [:]).compactMap({ (memberId: String, status: AttendanceStatus) in
                         guard let member = members.first(where: { mem in
                             mem.id == memberId
                         }) else {
@@ -116,6 +102,7 @@ class AttendanceTableViewController: UITableViewController {
                         }
                         return Attendance(member: member, status: status)
                     }).sorted()
+
                     self.tableView.reloadData()
                 })
                 .disposed(by: disposeBag)

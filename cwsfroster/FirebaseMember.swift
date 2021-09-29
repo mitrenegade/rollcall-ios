@@ -110,3 +110,10 @@ class FirebaseMember: FirebaseBaseModel {
     }
 }
 
+extension FirebaseMember: Comparable {
+    static func < (lhs: FirebaseMember, rhs: FirebaseMember) -> Bool {
+        guard let n1 = lhs.name?.uppercased() else { return false }
+        guard let n2 = rhs.name?.uppercased() else { return true }
+        return n1 < n2
+    }
+}
