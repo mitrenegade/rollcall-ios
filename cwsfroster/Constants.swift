@@ -15,7 +15,7 @@ import FirebaseDatabase
 import FirebaseAuth
 
 let TESTING = true
-let OFFLINE_MODE = true
+let OFFLINE_MODE = false
 
 let powerUserPromptDeferDate: String = "powerUserPromptDeferDate"
 

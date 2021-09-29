@@ -32,7 +32,7 @@ class AttendanceTableViewController: UITableViewController {
 
     private weak var delegate: PracticeEditDelegate?
 
-    private let viewModel: AttendanceViewModel?
+//    private let attendanceService: AttendanceService?
 
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
@@ -46,10 +46,8 @@ class AttendanceTableViewController: UITableViewController {
 
         if let event = event {
             attendanceService = AttendanceService(event: event)
-            viewModel = AttendanceViewModel(event: event)
         } else {
             attendanceService = nil
-            viewModel = nil
         }
 
         super.init(nibName: nil, bundle: nil)
@@ -126,11 +124,8 @@ class AttendanceTableViewController: UITableViewController {
             Observable.combineLatest(OrganizationService.shared.membersObservable,
                                      attendanceService.needsAttendanceMigrationObservable)
                 .subscribe(onNext: { [weak self] members, needsAttendances in
-                    guard let self = self else {
-                        return
-                    }
                     // no attendances exist for the event.
-                    self.viewModel?.migrateAttendances(members: members)
+                    self?.attendanceService?.migrateAttendances(members: members)
                 })
                 .disposed(by: disposeBag)
         }
@@ -241,20 +236,20 @@ extension AttendanceTableViewController {
         if FeatureManager.shared.hasPrepopulateAttendance {
             promptForUpdateAttendance(for: member)
         } else {
-            viewModel?.toggleAttendance(for: member)
+            attendanceService?.toggleAttendance(for: member)
         }
         tableView.reloadData()
     }
 
     // MARK: - Plus
     private func promptForUpdateAttendance(for member: FirebaseMember) {
-        // show action sheet to select attendance status, then call viewModel to update it
+        // show action sheet to select attendance status, then call attendanceService to update it
         let title = "Update attendance"
         let message = "Please select from the following options"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for status in AttendanceStatus.allCases {
             alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
-                self.viewModel?.updateAttendance(for: member, status: status)
+                self.attendanceService?.updateAttendance(for: member, status: status)
             }))
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

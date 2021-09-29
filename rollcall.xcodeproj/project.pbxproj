@@ -11,7 +11,6 @@
 		8E08531E20CC5A86002A0CC4 /* FirebaseOfflineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */; };
 		8E09574121ACE00E0037DA17 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E09574021ACE00D0037DA17 /* Feedback.storyboard */; };
 		8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */; };
-		8E0F615426F68702007EDCAF /* AttendanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */; };
 		8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0932106A79D00E02558 /* AddMembersViewController.swift */; };
 		8E18B0962106AAB300E02558 /* MemberNameInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */; };
 		8E1BC50D2106CF40004192F3 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */; };
@@ -35,6 +34,7 @@
 		8E4BE96420CCCDD300556771 /* rollcall-and-random-dev-export.json in Resources */ = {isa = PBXBuildFile; fileRef = 8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */; };
 		8E4BE96620CCE74300556771 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4BE96520CCE74300556771 /* MembersTableViewController.swift */; };
 		8E6FF0D320D9F5FB008BAC71 /* RAImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E6FF0D220D9F5FB008BAC71 /* RAImageView.swift */; };
+		8E7333A02702D8B0009DCE2A /* Attendance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E73339F2702D8B0009DCE2A /* Attendance.swift */; };
 		8E800D2C1E3E614A0085EC4D /* Members.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2B1E3E614A0085EC4D /* Members.storyboard */; };
 		8E800D2F1E3E61C10085EC4D /* Events.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E800D2E1E3E61C10085EC4D /* Events.storyboard */; };
 		8E800D311E3E94770085EC4D /* LoggingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E800D301E3E94770085EC4D /* LoggingService.swift */; };
@@ -137,7 +137,6 @@
 		8E08531D20CC5A86002A0CC4 /* FirebaseOfflineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseOfflineParser.swift; sourceTree = "<group>"; };
 		8E09574021ACE00D0037DA17 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Feedback.storyboard; sourceTree = "<group>"; };
 		8E09584421ACE0B20037DA17 /* FeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
-		8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendanceViewModel.swift; sourceTree = "<group>"; };
 		8E18B0932106A79D00E02558 /* AddMembersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		8E18B0952106AAB300E02558 /* MemberNameInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNameInputCell.swift; sourceTree = "<group>"; };
 		8E1BC50C2106CF40004192F3 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
@@ -161,6 +160,7 @@
 		8E4BE96320CCCDD200556771 /* rollcall-and-random-dev-export.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "rollcall-and-random-dev-export.json"; sourceTree = "<group>"; };
 		8E4BE96520CCE74300556771 /* MembersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		8E6FF0D220D9F5FB008BAC71 /* RAImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAImageView.swift; sourceTree = "<group>"; };
+		8E73339F2702D8B0009DCE2A /* Attendance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attendance.swift; sourceTree = "<group>"; };
 		8E800D2B1E3E614A0085EC4D /* Members.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Members.storyboard; sourceTree = "<group>"; };
 		8E800D2E1E3E61C10085EC4D /* Events.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Events.storyboard; sourceTree = "<group>"; };
 		8E800D301E3E94770085EC4D /* LoggingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggingService.swift; sourceTree = "<group>"; };
@@ -336,6 +336,7 @@
 				8EBB0C4A26D97E5100BAB1A5 /* FirebaseUser.swift */,
 				C68338F520A42AEC00080BCE /* FirebaseMember.swift */,
 				C68338F720A42AEC00080BCE /* FirebaseEvent.swift */,
+				8E73339F2702D8B0009DCE2A /* Attendance.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -391,7 +392,6 @@
 				8E1F64041E47B85B004E8723 /* AttendanceTableViewController.swift */,
 				8E428C501E4C3CCD009CC0A2 /* AttendanceCell.swift */,
 				8E428C521E4F4C6B009CC0A2 /* OnsiteSignupViewController.swift */,
-				8E0F615326F68702007EDCAF /* AttendanceViewModel.swift */,
 			);
 			name = Events;
 			sourceTree = "<group>";
@@ -868,6 +868,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7333A02702D8B0009DCE2A /* Attendance.swift in Sources */,
 				8E18B0942106A79D00E02558 /* AddMembersViewController.swift in Sources */,
 				8E3DD1D020DA826B0075548C /* SettingsService.swift in Sources */,
 				8E1F64071E4A03D3004E8723 /* String+Utils.swift in Sources */,
@@ -915,7 +916,6 @@
 				8E279EEF1E44B82C005AA3F6 /* AppDelegate+Utils.swift in Sources */,
 				8E1D993020B1A84C005E4186 /* Date+Utils.swift in Sources */,
 				C6D9631220C2181900317C0C /* OrganizationService.swift in Sources */,
-				8E0F615426F68702007EDCAF /* AttendanceViewModel.swift in Sources */,
 				8EE005B41E3D955200272DC0 /* UIViewController+Utils.swift in Sources */,
 				8E428C4F1E4C3A23009CC0A2 /* MemberCell.swift in Sources */,
 				8E09584521ACE0B20037DA17 /* FeedbackViewController.swift in Sources */,

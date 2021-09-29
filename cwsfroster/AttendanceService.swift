@@ -10,38 +10,6 @@ import Firebase
 import RxSwift
 import RxCocoa
 
-// new UI: includes presignup
-enum AttendanceStatus: String, CaseIterable {
-    case notSignedUp
-    case signedUp
-    case notAttending
-    case attended
-    case noShow
-}
-
-struct Attendance: Comparable {
-    static func < (lhs: Attendance, rhs: Attendance) -> Bool {
-        guard let lname = lhs.member.name?.lowercased() else {
-            return false
-        }
-        guard let rname = rhs.member.name?.lowercased() else {
-            return true
-        }
-
-        return lname < rname
-    }
-
-    let member: FirebaseMember
-    let status: AttendanceStatus
-}
-
-// old UI: attended or not
-enum AttendedStatus: Int {
-    case None = 0
-    case Present = 1
-    case Freebie = 2
-}
-
 enum AttendanceError: Error {
     case notAuthenticated
     case invalidEvent
@@ -161,4 +129,53 @@ class AttendanceService: NSObject {
         completion(.success(()))
     }
 
+    /// Change attendance status for a member
+    func toggleAttendance(for member: FirebaseMember) {
+        print("BOBBYTEST toggle \(member.id) event \(event.id) present? \(event.attended(for: member.id) == .Present)")
+        if event.attended(for: member.id) == .Present {
+            // old attendance format. Updates events/id/attendees
+            event.removeAttendance(for: member.id)
+
+            // new attendances format
+            createOrUpdateAttendance(for: member, status: .notSignedUp) { result in
+                // no op
+            }
+        } else {
+            // old attendance format. Updates events/id/attendees
+            event.addAttendance(for: member.id)
+
+            // new attendances format
+            createOrUpdateAttendance(for: member, status: .attended) { result in
+                // no op
+            }
+        }
+    }
+
+    // MARK: Plus
+    func updateAttendance(for member: FirebaseMember, status: AttendanceStatus) {
+        createOrUpdateAttendance(for: member, status: status) { result in
+            // no op
+        }
+    }
+
+    // MARK: -
+    /// Migrate to AttendanceStatus for users who have switched to Plus.
+    func migrateAttendances(members: [FirebaseMember]) {
+        let membersAttending: [FirebaseMember] = members.filter { member in
+            event.attended(for: member.id) == .Present
+        }
+        let group = DispatchGroup()
+        for member in membersAttending {
+            group.enter()
+            createOrUpdateAttendance(for: member, status: .signedUp) { _ in
+                group.leave()
+            }
+        }
+        group.notify(queue: DispatchQueue.main) { [weak self] in
+            if membersAttending.isNotEmpty {
+                let params: [String: Any] = ["event": self?.event.id, "members": membersAttending.map { $0.id }]
+                LoggingService.log(event: .attendancesMigrated, message: nil, info: params, error: nil)
+            }
+        }
+    }
 }
