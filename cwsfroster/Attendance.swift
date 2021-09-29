@@ -7,7 +7,22 @@
 //
 
 // new UI: includes presignup
-enum AttendanceStatus: String, CaseIterable {
+enum AttendanceStatus: String, CaseIterable, CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .notSignedUp:
+            return "None"
+        case .signedUp:
+            return "Confirmed"
+        case .notAttending:
+            return "Not attending"
+        case .attended:
+            return "Attended"
+        case .noShow:
+            return "No Show"
+        }
+    }
+
     case notSignedUp
     case signedUp
     case notAttending

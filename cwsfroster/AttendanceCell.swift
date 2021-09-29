@@ -109,6 +109,6 @@ class AttendanceCell: UITableViewCell {
 
         configure(member: attendance.member, row: row)
 
-        attendanceLabel.text = attendance.status.rawValue
+        attendanceLabel.text = attendance.status.description
     }
 }
