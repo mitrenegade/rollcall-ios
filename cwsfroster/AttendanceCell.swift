@@ -88,6 +88,8 @@ class AttendanceCell: UITableViewCell {
     func configure(member: FirebaseMember, attended: AttendedStatus, row: Int) {
         configure(member: member, row: row)
 
+        attendanceLabel.text = nil
+
         if !FeatureManager.shared.hasPrepopulateAttendance {
             attendanceView.image = attendedStatusImage(attended)
         }

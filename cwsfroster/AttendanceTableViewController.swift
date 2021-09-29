@@ -95,6 +95,9 @@ class AttendanceTableViewController: UITableViewController {
                     self.members = members.sorted()
 
                     self.attendances = (attendances ?? [:]).compactMap({ (memberId: String, status: AttendanceStatus) in
+                        guard status != .notSignedUp else {
+                            return nil
+                        }
                         guard let member = members.first(where: { mem in
                             mem.id == memberId
                         }) else {
@@ -235,7 +238,7 @@ extension AttendanceTableViewController {
         let message = "Please select from the following options"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for status in AttendanceStatus.allCases {
-            alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: status.description, style: .default, handler: { (action) in
                 self.attendanceService?.createOrUpdateAttendance(for: member, status: status, completion: nil)
             }))
         }
