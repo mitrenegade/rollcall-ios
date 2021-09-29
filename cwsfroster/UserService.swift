@@ -59,6 +59,11 @@ class UserService: UserServiceProtocol {
 
     /// On login, observe the user/id endpoint for user details
     func startObservingUser(_ userID: String) {
+        guard !OFFLINE_MODE else {
+            userRelay.accept(FirebaseOfflineParser.shared.offlineUser())
+            return
+        }
+
         print("\(self) - startObservingUser \(userID)")
         let ref = firRef.child("users").child(userID)
         userHandle = ref.observe(.value, with: { [weak self] snapshot in
@@ -79,6 +84,11 @@ class UserService: UserServiceProtocol {
 
     // MARK: - FirAuth
     func startup() {
+        guard !OFFLINE_MODE else {
+            loginStateRelay.accept(.loggedIn)
+            return
+        }
+
         AuthService.shared.startup()
         AuthService.shared.loginState
             .asDriver()
@@ -166,6 +176,10 @@ class UserService: UserServiceProtocol {
     
     // MARK: - FirebaseUser (User details)
     var currentUserID: String? {
+        guard !OFFLINE_MODE else {
+            return FirebaseOfflineParser.shared.offlineUser()!.id
+        }
+
         guard let user = firAuth.currentUser else {
             return nil
         }

@@ -6,6 +6,8 @@
 //  Copyright © 2017 Bobby Ren. All rights reserved.
 //
 
+import RxSwift
+import RxCocoa
 import UIKit
 
 class AttendanceTableViewController: UITableViewController {
@@ -20,14 +22,17 @@ class AttendanceTableViewController: UITableViewController {
 
     private let event: FirebaseEvent?
 
+    private let attendanceService: AttendanceService?
+
     private var members: [FirebaseMember] = []
 
-    /// Used for preset attendances
-    private var attendances: [String: AttendanceStatus] = [:]
+    // MARK: - Attendance status, as an array of tuples. Sorted by member name
+
+    private var attendances: [Attendance] = []
 
     private weak var delegate: PracticeEditDelegate?
 
-    private let viewModel = AttendanceViewModel()
+//    private let attendanceService: AttendanceService?
 
     init(event: FirebaseEvent?, delegate: PracticeEditDelegate? = nil) {
         self.event = event
@@ -39,9 +44,19 @@ class AttendanceTableViewController: UITableViewController {
             sections = [.onsiteSignup, .members]
         }
 
+        if let event = event {
+            attendanceService = AttendanceService(event: event)
+        } else {
+            attendanceService = nil
+        }
+
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Init
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -52,9 +67,7 @@ class AttendanceTableViewController: UITableViewController {
         tableView.register(AttendanceCell.self, forCellReuseIdentifier: "AttendanceCell")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "OnSiteSignupCell")
 
-        self.listenFor("member:updated", action: #selector(reloadData), object: nil)
-        self.listenFor("member:created", action: #selector(reloadData), object: nil)
-        reloadData()
+        setupBindings()
     }
     
     @IBAction func didClickDone(_ sender: AnyObject?) {
@@ -63,28 +76,61 @@ class AttendanceTableViewController: UITableViewController {
         })
     }
     
-    @objc func reloadData() {
-        OrganizationService.shared.members { [weak self] (members, error) in
-            self?.members = members.sorted{
-                guard let n1 = $0.name?.uppercased() else { return false }
-                guard let n2 = $1.name?.uppercased() else { return true }
-                return n1 < n2
+    private func setupBindings() {
+        // don't need member create and update notifications because members will change
+//        let updatedObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+//        let createdObservable = NotificationCenter.default.rx.notification(Notification.Name("member:updated"))
+//        let membersObservable = OrganizationService.shared.membersObservable
+
+        OrganizationService.shared.members { [weak self] result in
+            switch result {
+            case .success(let members):
+                self?.members = members.sorted{
+                    guard let n1 = $0.name?.uppercased() else { return false }
+                    guard let n2 = $1.name?.uppercased() else { return true }
+                    return n1 < n2
+                }
+                self?.tableView.reloadData()
+            case .failure:
+                // no op
+                return
             }
-            self?.tableView.reloadData()
         }
 
-        if let event = event {
-            AttendanceService.shared.attendances(for: event) { [weak self] result in
-                switch result {
-                case .success(let attendances):
-                    self?.attendances = attendances
-                case .failure(let error):
-                    print("Error \(error)")
-                }
-            }
+        if FeatureManager.shared.hasPrepopulateAttendance,
+           let attendanceService = attendanceService {
+
+            // display all attendances after receiving members and attendances
+            Observable.combineLatest(OrganizationService.shared.membersObservable,
+                                     attendanceService.attendancesObservable)
+                .subscribe(onNext: { [weak self] members, attendances in
+                    guard let self = self,
+                          let attendances = attendances else {
+                        return
+                    }
+                    self.attendances = attendances.compactMap({ (memberId: String, status: AttendanceStatus) in
+                        guard let member = members.first(where: { mem in
+                            mem.id == memberId
+                        }) else {
+                            return nil
+                        }
+                        return Attendance(member: member, status: status)
+                    }).sorted()
+                    self.tableView.reloadData()
+                })
+                .disposed(by: disposeBag)
+
+            // migrate if necessary. This only gets triggered once
+            Observable.combineLatest(OrganizationService.shared.membersObservable,
+                                     attendanceService.needsAttendanceMigrationObservable)
+                .subscribe(onNext: { [weak self] members, needsAttendances in
+                    // no attendances exist for the event.
+                    self?.attendanceService?.migrateAttendances(members: members)
+                })
+                .disposed(by: disposeBag)
         }
     }
-    
+
 }
 
 // MARK: - Table view data source
@@ -125,11 +171,24 @@ extension AttendanceTableViewController {
             guard indexPath.row < members.count, let event = event else { return cell }
             let member = members[indexPath.row]
 
-            attendanceCell.configure(member: member, event: event, row: indexPath.row)
+            attendanceCell.configure(member: member, attended: event.attended(for: member.id), row: indexPath.row)
             return cell
-        } else { //if sections[indexPath.section] == .attendances {
+        } else if sections[indexPath.section] == .attendances {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
+
+            guard let attendanceCell = cell as? AttendanceCell else { return cell }
+
+            guard indexPath.row < attendances.count else {
+                return cell
+            }
+
+            // Plus
+            let attendance = attendances[indexPath.row]
+            attendanceCell.configure(attendance: attendance, row: indexPath.row)
+
             return cell
+        } else {
+            fatalError("Invalid section")
         }
     }
 
@@ -175,22 +234,22 @@ extension AttendanceTableViewController {
         let member = members[indexPath.row]
 
         if FeatureManager.shared.hasPrepopulateAttendance {
-            promptForUpdateAttendance(for: member, event: event)
+            promptForUpdateAttendance(for: member)
         } else {
-            viewModel.toggleAttendance(for: member, event: event)
+            attendanceService?.toggleAttendance(for: member)
         }
         tableView.reloadData()
     }
 
     // MARK: - Plus
-    private func promptForUpdateAttendance(for member: FirebaseMember, event: FirebaseEvent) {
-        // show action sheet to select attendance status, then call viewModel to update it
+    private func promptForUpdateAttendance(for member: FirebaseMember) {
+        // show action sheet to select attendance status, then call attendanceService to update it
         let title = "Update attendance"
         let message = "Please select from the following options"
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         for status in AttendanceStatus.allCases {
             alert.addAction(UIAlertAction(title: status.rawValue, style: .default, handler: { (action) in
-                self.viewModel.updateAttendance(for: member, event: event, status: status)
+                self.attendanceService?.createOrUpdateAttendance(for: member, status: status, completion: nil)
             }))
         }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

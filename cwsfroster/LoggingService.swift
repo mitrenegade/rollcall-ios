@@ -52,6 +52,8 @@ enum LoggingEvent: String {
 
     // subscriptions
     case subscriptionViewed
+    case fetchAttendancesError
+    case attendancesMigrated
 
     case unknown
 }

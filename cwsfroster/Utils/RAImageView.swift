@@ -26,7 +26,9 @@ class RAImageView: UIImageView {
         task?.cancel()
         task = nil
         loadingUrl = nil
-        activityIndicator?.stopAnimating()
+        DispatchQueue.main.async { [weak self] in
+            self?.activityIndicator?.stopAnimating()
+        }
     }
 
     fileprivate func load() {

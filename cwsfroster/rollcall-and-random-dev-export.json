@@ -396,7 +396,8 @@
   "users" : {
     "vmc80jYxYLNOkrV2Wy4SV1PVPii2" : {
       "createdAt" : 1.528599121452148E9,
-      "parseUsername" : "cwsftkd"
+      "parseUsername" : "cwsftkd",
+      "subscription" : "plus"
     }
   }
 }

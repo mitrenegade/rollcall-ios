@@ -31,7 +31,6 @@ class AttendanceCell: UITableViewCell {
         nameLabel.snp.makeConstraints {
             $0.leading.equalTo(photoView.snp.trailing).offset(8)
             $0.top.equalToSuperview().offset(8)
-            $0.trailing.equalToSuperview().offset(-8)
             $0.bottom.equalToSuperview().offset(-8)
             $0.height.equalTo(30)
         }
@@ -62,9 +61,10 @@ class AttendanceCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(member: FirebaseMember, event: FirebaseEvent, row: Int) {
+    // MARK: - Common cell configuration
+    private func configure(member: FirebaseMember, row: Int) {
         nameLabel.text = member.displayName
-        
+
         self.tag = row; // make sure photo loads for correct cell
 
         if let url = member.photoUrl {
@@ -82,12 +82,33 @@ class AttendanceCell: UITableViewCell {
         else {
             nameLabel.alpha = 1;
         }
+    }
 
-        let viewModel = AttendanceViewModel()
-        if FeatureManager.shared.hasPrepopulateAttendance {
-            // TODO
-        } else {
-            attendanceView.image = viewModel.attendedStatusImage(for: member, event: event)
+    // MARK: - Standard
+    func configure(member: FirebaseMember, attended: AttendedStatus, row: Int) {
+        configure(member: member, row: row)
+
+        if !FeatureManager.shared.hasPrepopulateAttendance {
+            attendanceView.image = attendedStatusImage(attended)
         }
+    }
+
+    private func attendedStatusImage(_ attended: AttendedStatus) -> UIImage? {
+        if attended != AttendedStatus.None {
+            return UIImage(named: "checked")
+        } else {
+            return UIImage(named: "unchecked")
+        }
+    }
+
+    // MARK: - Plus
+    func configure(attendance: Attendance, row: Int) {
+        guard FeatureManager.shared.hasPrepopulateAttendance else {
+            return
+        }
+
+        configure(member: attendance.member, row: row)
+
+        attendanceLabel.text = attendance.status.rawValue
     }
 }

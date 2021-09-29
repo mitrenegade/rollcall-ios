@@ -378,24 +378,30 @@ extension EventEditViewController: MFMailComposeViewControllerDelegate, UINaviga
         var message = "Date: \(dateString)\n"
         
         let attendees = practice.attendees
-        OrganizationService.shared.members { [weak self] (members, error) in
-            let attended = members.filter({ (member) -> Bool in
-                attendees.contains(member.id)
-            }).sorted{
-                guard let n1 = $0.name?.uppercased() else { return false }
-                guard let n2 = $1.name?.uppercased() else { return true }
-                return n1 < n2
-            }
-            
-            for member in attended {
-                if let name = member.name {
-                    message = "\(message)\n\(name) "
+        OrganizationService.shared.members { [weak self] result in
+            switch result {
+            case .success(let members):
+                let attended = members.filter({ (member) -> Bool in
+                    attendees.contains(member.id)
+                }).sorted{
+                    guard let n1 = $0.name?.uppercased() else { return false }
+                    guard let n2 = $1.name?.uppercased() else { return true }
+                    return n1 < n2
                 }
-                if let email = member.email {
-                    message = "\(message)\(email)"
+
+                for member in attended {
+                    if let name = member.name {
+                        message = "\(message)\n\(name) "
+                    }
+                    if let email = member.email {
+                        message = "\(message)\(email)"
+                    }
                 }
+                self?.sendEmail(title: title, message: message)
+            case .failure:
+                // no op
+                return
             }
-            self?.sendEmail(title: title, message: message)
         }
     }
     
