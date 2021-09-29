@@ -30,6 +30,14 @@ class AttendanceTableViewController: UITableViewController {
 
     private var attendances: [Attendance] = []
 
+    private var membersWithoutAttendance: [FirebaseMember] {
+        members.filter { member in
+            return !attendances.contains(where: { attendance in
+                attendance.member.id == member.id
+            })
+        }
+    }
+
     private weak var delegate: PracticeEditDelegate?
 
 //    private let attendanceService: AttendanceService?
@@ -136,8 +144,11 @@ extension AttendanceTableViewController {
         if sections[section] == .onsiteSignup {
             return 1
         } else if sections[section] == .members {
-            // TODO: check feature
-            return members.count
+            if FeatureManager.shared.hasPrepopulateAttendance {
+                return membersWithoutAttendance.count
+            } else {
+                return members.count
+            }
         } else if sections[section] == .attendances {
             return attendances.count
         }
@@ -157,9 +168,14 @@ extension AttendanceTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AttendanceCell", for: indexPath)
             
             guard let attendanceCell = cell as? AttendanceCell else { return cell }
-            // Configure the cell...
-            guard indexPath.row < members.count, let event = event else { return cell }
-            let member = members[indexPath.row]
+
+            var filteredMembers = members
+            if FeatureManager.shared.hasPrepopulateAttendance {
+                filteredMembers = membersWithoutAttendance
+            }
+
+            guard indexPath.row < filteredMembers.count, let event = event else { return cell }
+            let member = filteredMembers[indexPath.row]
 
             attendanceCell.configure(member: member, attended: event.attended(for: member.id), row: indexPath.row)
             return cell
@@ -194,8 +210,11 @@ extension AttendanceTableViewController {
         if sections[section] == .onsiteSignup {
             return "Onsite Signup"
         } else if sections[section] == .members {
-            // TODO: check feature
-            return "All members"
+            if FeatureManager.shared.hasPrepopulateAttendance {
+                return "Other members"
+            } else {
+                return "All members"
+            }
         } else if sections[section] == .attendances {
             return "Current Attendees"
         }
