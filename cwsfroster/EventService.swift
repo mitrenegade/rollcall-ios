@@ -31,13 +31,8 @@ class EventService: NSObject {
                      organization: String,
                      cost: Double? = nil,
                      completion:@escaping (FirebaseEvent?, NSError?) -> Void) {
-        
-        print ("Create events")
 
-        guard UserService.shared.isLoggedIn else { return }
-        
-        let newEventRef = firRef.child("events").child(FirebaseAPIService.uniqueId())
-        
+        let id = FirebaseAPIService.uniqueId()
         var params: [String: Any] = ["title": name, "date": date.timeIntervalSince1970, "organization": organization, "createdAt": Date().timeIntervalSince1970]
         if let notes = notes {
             params["notes"] = notes
@@ -49,6 +44,15 @@ class EventService: NSObject {
             params["cost"] = cost
         }
 
+        guard !OFFLINE_MODE else {
+            let event = FirebaseEvent(key: id, dict: params)
+            completion(event, nil)
+            return
+        }
+
+        guard UserService.shared.isLoggedIn else { return }
+
+        let newEventRef = firRef.child("events").child(id)
         newEventRef.setValue(params) { (error, ref) in
             if let error = error as NSError? {
                 print(error)
