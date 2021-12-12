@@ -255,6 +255,15 @@ extension EventEditViewController {
             }
         }
     }
+
+    // MARK: - Random drawing
+    @IBAction func didClickRandomDrawing(_ sender: Any?) {
+        guard let controller = storyboard?.instantiateViewController(withIdentifier: "RandomDrawingViewController") as? RandomDrawingViewController else {
+            fatalError("Random drawing controller does not exist")
+        }
+        controller.practice = practice
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
     private func goToAttendees(for newEvent: FirebaseEvent?) {
         let controller = AttendanceTableViewController(event: newEvent ?? practice,
@@ -272,14 +281,7 @@ extension EventEditViewController {
             }
         controller.practice = practice
     }
-    
-    open override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ToRandomDrawing", let controller = segue.destination as? RandomDrawingViewController {
-            if let practice = practice {
-                controller.practice = practice
-            }
-        }
-    }
+
 }
 
 // Notes
