@@ -15,11 +15,7 @@ class RandomDrawingViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     
     internal var members: [FirebaseMember]?
-    var practice: FirebaseEvent? {
-        didSet {
-            reloadData()
-        }
-    }
+    var practice: FirebaseEvent?
     var drawingResults: [FirebaseMember]?
     
     override func viewDidLoad() {
@@ -37,8 +33,11 @@ class RandomDrawingViewController: UIViewController {
         inputNumber.inputAccessoryView = keyboardDoneButtonView
         
         inputNumber.text = "\(members?.count ?? 0)"
+        inputNumber.clearsOnInsertion = true
         
         LoggingService.log(type: "RandomDrawingScreen")
+
+        reloadData()
     }
     
     fileprivate func reloadData() {
