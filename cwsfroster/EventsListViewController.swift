@@ -13,6 +13,8 @@ class EventsListViewController: UITableViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        tableView.backgroundColor = .white
+
         setupSettingsNavButton()
         setupPlusNavButton()
         reloadPractices()
@@ -84,6 +86,7 @@ extension EventsListViewController {
         cell.textLabel?.text = title
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         cell.textLabel?.textColor = .black
+        cell.backgroundColor = .white
         
         var details: String = practice.details ?? ""
         if TESTING {
