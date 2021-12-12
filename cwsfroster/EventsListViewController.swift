@@ -86,7 +86,7 @@ extension EventsListViewController {
         cell.textLabel?.text = title
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         cell.textLabel?.textColor = .black
-        cell.backgroundColor = .white
+        cell.backgroundColor = .systemBackground
         
         var details: String = practice.details ?? ""
         if TESTING {

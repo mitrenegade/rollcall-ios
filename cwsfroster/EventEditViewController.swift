@@ -12,7 +12,7 @@ import MessageUI
 
 fileprivate let FUTURE_DAYS = 14
 
-protocol PracticeEditDelegate: class {
+protocol PracticeEditDelegate: AnyObject {
 
     func didCreatePractice()
     func didEditPractice()
@@ -33,9 +33,21 @@ class EventEditViewController: UIViewController {
     weak var delegate: PracticeEditDelegate?
 
     @IBOutlet var labelTitle: UILabel!
-    @IBOutlet var inputDate: UITextField!
-    @IBOutlet var inputDetails: UITextField!
-    @IBOutlet var inputNotes: UITextView!
+    @IBOutlet var inputDate: UITextField! {
+        didSet {
+            inputDate.backgroundColor = .systemBackground
+        }
+    }
+    @IBOutlet var inputDetails: UITextField!  {
+        didSet {
+            inputDetails.backgroundColor = .systemBackground
+        }
+    }
+    @IBOutlet var inputNotes: UITextView! {
+        didSet {
+            inputNotes.backgroundColor = .systemBackground
+        }
+    }
 
     @IBOutlet var buttonAttendees: UIButton!
     @IBOutlet var constraintButtonAttendeesHeight: NSLayoutConstraint!
