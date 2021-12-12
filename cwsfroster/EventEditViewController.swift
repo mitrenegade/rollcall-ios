@@ -36,16 +36,19 @@ class EventEditViewController: UIViewController {
     @IBOutlet var inputDate: UITextField! {
         didSet {
             inputDate.backgroundColor = .systemBackground
+            inputDate.textColor = .label
         }
     }
     @IBOutlet var inputDetails: UITextField!  {
         didSet {
             inputDetails.backgroundColor = .systemBackground
+            inputDetails.textColor = .label
         }
     }
     @IBOutlet var inputNotes: UITextView! {
         didSet {
             inputNotes.backgroundColor = .systemBackground
+            inputNotes.textColor = .label
         }
     }
 
@@ -118,6 +121,8 @@ class EventEditViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        navigationController?.view.backgroundColor = .systemBackground
 
         inputDate.inputView = pickerView
         inputDate.inputAccessoryView = pickerKeyboardDoneButtonView
